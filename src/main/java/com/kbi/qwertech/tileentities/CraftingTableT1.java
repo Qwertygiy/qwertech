@@ -149,7 +149,7 @@ public class CraftingTableT1 extends TileEntityBase09FacingSingle implements IMT
 			this.causeBlockUpdate();
 			return returnit;
 		}
-		if (aSide != CS.SIDE_TOP)
+		if (aSide != CS.SIDE_UP)
 		{
 			return super.onToolClick2(aTool, aRemainingDurability, aQuality, aPlayer, aChatReturn, aPlayerInventory, aSneaking, aStack, aSide, aHitX, aHitY, aHitZ);
 		}

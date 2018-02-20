@@ -153,7 +153,7 @@ public class CraftingHelper extends TileEntityBase04MultiTileEntities implements
 	
 	@Override
 	public long onToolClick(String aTool, long aRemainingDurability, long aQuality, Entity aPlayer, List<String> aChatReturn, IInventory aPlayerInventory, boolean aSneaking, ItemStack aStack, byte aSide, float aHitX, float aHitY, float aHitZ) {
-		return getTable() != null ? getTable().onToolClick(aTool, aRemainingDurability, aQuality, aPlayer, aChatReturn, aPlayerInventory, aSneaking, aStack, aSide, aHitX, aHitY, aHitZ) : 0;
+		return getTable() != null ? getTable().onToolClick(aTool, aRemainingDurability, aQuality, aPlayer, aChatReturn, aPlayerInventory, aSneaking, aStack, CS.SIDE_TOP, aHitX, aHitY, aHitZ) : 0;
 	}
 
 	@Override
