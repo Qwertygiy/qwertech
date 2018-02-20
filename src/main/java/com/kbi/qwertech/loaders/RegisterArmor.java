@@ -212,6 +212,20 @@ public class RegisterArmor {
 			iconTitle.put("qwertech:armor/leggings/" + type, new ArmorIcon("qwertech:armor/leggings/" + type));
 			iconTitle.put("qwertech:armor/boots/" + type, new ArmorIcon("qwertech:armor/boots/" + type));
 		}
+		iconTitle.put("weightNone", new ArmorIcon("qwertech:armorui/armor/weightNone"));
+		iconTitle.put("weightLittle", new ArmorIcon("qwertech:armorui/armor/weightLittle"));
+		iconTitle.put("weightLight", new ArmorIcon("qwertech:armorui/armor/weightLight"));
+		iconTitle.put("weightMuch", new ArmorIcon("qwertech:armorui/armor/weightMuch"));
+		iconTitle.put("weightSignificant", new ArmorIcon("qwertech:armorui/armor/weightSignificant"));
+		iconTitle.put("noShield", new ArmorIcon("qwertech:armorui/armor/noShield"));
+		iconTitle.put("woodShield", new ArmorIcon("qwertech:armorui/armor/woodShield"));
+		iconTitle.put("bronzeShield", new ArmorIcon("qwertech:armorui/armor/bronzeShield"));
+		iconTitle.put("blueMetalShield", new ArmorIcon("qwertech:armorui/armor/blueMetalShield"));
+		iconTitle.put("purpleShield", new ArmorIcon("qwertech:armorui/armor/purpleShield"));
+		iconTitle.put("brokenWoodShield", new ArmorIcon("qwertech:armorui/armor/brokenWoodShield"));
+		iconTitle.put("brokenBronzeShield", new ArmorIcon("qwertech:armorui/armor/brokenBronzeShield"));
+		iconTitle.put("brokenBlueMetalShield", new ArmorIcon("qwertech:armorui/armor/brokenBlueMetalShield"));
+		iconTitle.put("brokenPurpleShield", new ArmorIcon("qwertech:armorui/armor/brokenPurpleShield"));
 	}
 	
 	public HashMap<EntityLivingBase, Double> entities = new HashMap();

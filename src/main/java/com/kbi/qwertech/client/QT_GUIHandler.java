@@ -2,15 +2,22 @@ package com.kbi.qwertech.client;
 
 import gregapi.oredict.OreDictMaterial;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
+
+import org.lwjgl.opengl.GL11;
 
 import com.kbi.qwertech.api.armor.IArmorStats;
 import com.kbi.qwertech.api.armor.MultiItemArmor;
 import com.kbi.qwertech.api.data.QTConfigs;
+import com.kbi.qwertech.armor.ArmorIcon;
 import com.kbi.qwertech.client.gui.GuiSplat;
+import com.kbi.qwertech.loaders.RegisterArmor;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
@@ -61,14 +68,23 @@ public class QT_GUIHandler {
 			if (protec < 100)
 			{
 				protec = 100 - protec;
-				minecraft.fontRenderer.drawString("Armor: " + (int)(protec) + "%", x, y, protec > 66 ? 60928 : protec > 50 ? 52224 : protec > 33 ? 13421568 : protec > 25 ? 13408512 : protec > 15 ? 10027008 : 13369344, true);
+				minecraft.fontRenderer.drawString((int)(protec) + "%", x, y - 16, protec > 66 ? 60928 : protec > 50 ? 52224 : protec > 33 ? 13421568 : protec > 25 ? 13408512 : protec > 15 ? 10027008 : 13369344, true);
 			}
+			
 			if (weight > 0)
 			{
-				String drawit = "Weight: " + (int)weight + "kg";
-				x = (event.resolution.getScaledWidth() / 2) + 91 - minecraft.fontRenderer.getStringWidth(drawit);
-				minecraft.fontRenderer.drawString(drawit, x, y, weight < 20 ? 60928 : weight < 30 ? 52224 : weight < 50 ? 13421568 : weight < 70 ? 13408512 : weight < 90 ? 13369344 : 15597568, true);
+				String drawit = (int)weight + "kg";
+				minecraft.fontRenderer.drawString(drawit, x + 20, y - 16, weight < 20 ? 60928 : weight < 30 ? 52224 : weight < 50 ? 13421568 : weight < 70 ? 13408512 : weight < 90 ? 13369344 : 15597568, true);
 			}
+			
+			GL11.glColor4f(1, 1, 1, 1);
+			
+			String protect = protec < 1 || protec > 99 ? "noShield" : protec < 16 ? "woodShield" : protec < 33 ? "bronzeShield" : protec < 50 ? "blueMetalShield" : "purpleShield";
+			minecraft.renderEngine.bindTexture(TextureMap.locationItemsTexture);
+			RenderItem.getInstance().renderIcon(x, y - 8, ((ArmorIcon)RegisterArmor.iconTitle.get(protect)).getIcon(0), 16, 16);
+
+			String weighty = weight < 1 ? "weightNone" : weight < 20 ? "weightLight" : weight < 40 ? "weightLittle" : weight < 70 ? "weightSignificant" : "weightMuch";
+			RenderItem.getInstance().renderIcon(x + 20, y - 8, ((ArmorIcon)RegisterArmor.iconTitle.get(weighty)).getIcon(0), 16, 16);
 		}
 	}
 	
