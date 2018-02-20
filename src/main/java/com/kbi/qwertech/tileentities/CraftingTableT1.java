@@ -65,6 +65,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.kbi.qwertech.QwerTech;
 import com.kbi.qwertech.api.data.QTI;
+import com.kbi.qwertech.api.recipe.RepairRecipe;
 import com.kbi.qwertech.api.recipe.managers.CraftingManagerHammer;
 import com.kbi.qwertech.network.packets.PacketInventorySync;
 
@@ -371,6 +372,7 @@ public class CraftingTableT1 extends TileEntityBase09FacingSingle implements IMT
 	}
 	
 	public IRecipe sLastRecipe = null;
+	public boolean isRepair = false;
 	
 	public ItemStack getHammeringOutput(World world, ItemStack... aRecipe)
 	{
@@ -383,6 +385,12 @@ public class CraftingTableT1 extends TileEntityBase09FacingSingle implements IMT
 			IRecipe check = list.get(i);
 			if (check.matches(aCrafting, worldObj))
 			{
+				if (check instanceof RepairRecipe)
+				{
+					isRepair = true;
+				} else {
+					isRepair = false;
+				}
 				return check.getCraftingResult(aCrafting);
 			}
 		}
@@ -756,6 +764,11 @@ public class CraftingTableT1 extends TileEntityBase09FacingSingle implements IMT
 			TOOL_SOUNDS = F;
 			// Contains itself, so it's an infinite use Container Item anyways.
 			if (ST.equal(slot(i), tContainer, F)) continue;
+
+			if (isRepair)
+			{
+				decrStackSize(i, 1);
+			}
 			
 			if (tNeeds) for (int j = 0; j < 9; j++) if (j == i) {
 				if (ST.equalTools(slot(i), slot(j), F) && slot(j).stackSize > 0) {

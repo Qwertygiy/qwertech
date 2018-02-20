@@ -61,7 +61,6 @@ public class RepairRecipe implements ICraftingRecipeGT, IRecipe
 	
 	public ItemStack returnCraftingResult(InventoryCrafting inventory, boolean destroy)
 	{
-		if (destroy) System.out.println("DESTROYING");
 		ItemStack toRepair = null;
 		int repairSlot = -1;
 		int nugs = 0;
@@ -130,7 +129,7 @@ public class RepairRecipe implements ICraftingRecipeGT, IRecipe
 					ItemStack returnable = toRepair.copy();
 					
 					returnable.setItemDamage(reducedDamage < 0 ? (int)reducedDamage : 0);
-					if (destroy) inventory.setInventorySlotContents(repairSlot, null);
+					//if (destroy) inventory.setInventorySlotContents(repairSlot, null);
 					return returnable;
 				}
 			} else
@@ -153,7 +152,7 @@ public class RepairRecipe implements ICraftingRecipeGT, IRecipe
 						//System.out.println("CS.U: " + CS.U + " CS.U * 8: " + CS.U * 8);
 						ItemStack returnable = toRepair.copy();
 						MultiItemArmor.setArmorDamage(returnable, reducedDamage > 0 ? (long)reducedDamage : 0);
-						if (destroy) inventory.setInventorySlotContents(repairSlot, null);
+						//if (destroy) inventory.setInventorySlotContents(repairSlot, null);
 						return returnable;
 					}
 				} else if (input instanceof MultiItemTool)
@@ -180,7 +179,7 @@ public class RepairRecipe implements ICraftingRecipeGT, IRecipe
 						double reducedDamage = currentDamage - (((double)addedMaterial/(double)totalMaterial) * totalDamage);
 						ItemStack returnable = toRepair.copy();
 						MultiItemTool.setToolDamage(returnable, reducedDamage > 0 ? (long)reducedDamage : 0);
-						if (destroy) inventory.setInventorySlotContents(repairSlot, null);
+						//if (destroy) inventory.setInventorySlotContents(repairSlot, null);
 						return returnable;
 					}
 				}
