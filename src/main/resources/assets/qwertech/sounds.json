@@ -1,0 +1,109 @@
+{
+  "metal.slide": {
+    "category": "player",
+    "sounds": [
+      {
+        "name": "tools/metal1",
+        "stream": false
+      },
+	  {
+		"name": "tools/metal2",
+        "stream": false
+	  },
+	  {
+		"name": "tools/metal3",
+        "stream": false
+	  }
+    ]
+  },
+  "metal.hit": {
+	"category": "player",
+	"sounds": [
+		{
+			"name": "tools/impactMetal1",
+			"stream": false
+		},
+		{
+			"name": "tools/impactMetal2",
+			"stream": false
+		},
+		{
+			"name": "dig.stone",
+			"type": "event",
+			"stream": false
+		},
+		{
+			"name": "step.stone",
+			"type": "event",
+			"stream": false
+		}
+	]
+  },
+  "achievement.normal": {
+	"category": "record",
+	"sounds": [
+		"achievement1",
+		"achievement2",
+		"achievement3",
+		"achievement4",
+		"achievement5",
+		"achievement6"
+	]
+  },
+  "mob.turkey.say": {
+	"category": "neutral",
+	"sounds": [
+		"mob/turkey/gobble1",
+		"mob/turkey/gobble2"
+	]
+  },
+  "mob.turkey.hurt": {
+	"category": "neutral",
+	"sounds": [
+		"mob/turkey/hurt1"
+	]
+  },
+  "mob.turkey.death": {
+	"category": "neutral",
+	"sounds": [
+		"mob/turkey/death1"
+	]
+  },
+  "mob.bullfrog.say": {
+	"category": "neutral",
+	"sounds": [
+		"mob/frog/bullfrog1",
+		"mob/frog/bullfrog2",
+		"mob/frog/bullfrog3",
+		"mob/frog/bullfrog4",
+		"mob/frog/bullfrog5"
+	]
+  },
+  "mob.bullfrog.hurt": {
+	"category": "neutral",
+	"sounds": [
+		"mob/frog/bullfrog1",
+		"mob/frog/bullfrog2",
+		"mob/frog/bullfrog3",
+		"mob/frog/bullfrog4",
+		"mob/frog/bullfrog5"
+	]
+  },
+  "mob.bullfrog.death": {
+	"category": "neutral",
+	"sounds": [
+		"mob/frog/bullfrogdeath",
+		"mob/frog/bullfrogdeath2"
+	]
+  },
+  "armor.upgrade.spring": {
+	"category": "player",
+	"sounds": [
+		"armor/spring1",
+		"armor/spring2",
+		"armor/spring3",
+		"armor/spring4",
+		"armor/spring5"
+	]
+  }
+}
