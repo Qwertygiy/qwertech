@@ -100,6 +100,8 @@ public class RegisterArmor {
 		addType("slime");
 		addType("curvedPlate");
 		addType("monocle");
+		addType("spur");
+		addType("feather");
 		
 		try
 		{
@@ -257,7 +259,11 @@ public class RegisterArmor {
 						//UPDATE THIS PART LATER D00D
 						
 						GL11.glPushMatrix();
-						GL11.glColor4f(j[0], j[1], j[2], j[3]);
+						
+						if (j != null && j.length == 4)
+						{
+							GL11.glColor4f(j[0], j[1], j[2], j[3]);
+						}
 						String texture = upgrade.getArmorTexture(event.stack, event.entityLiving, event.slot, null);
 						if (texture != null)
 						{

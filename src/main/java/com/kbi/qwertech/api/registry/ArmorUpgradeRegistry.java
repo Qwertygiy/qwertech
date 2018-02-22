@@ -56,5 +56,21 @@ public class ArmorUpgradeRegistry {
 		}
 		return null;
 	}
+	
+	public short getUpgradeID(ItemStack stack)
+	{
+		for (ItemStack stacker : upgradeItems.keySet())
+		{
+			if (ST.equal(stack, stacker, true))
+			{
+				int ID = upgradeItems.get(stacker);
+				if (upgradeList.containsKey(ID))
+				{
+					return (short)ID;
+				}
+			}
+		}
+		return (short)0;
+	}
 
 }

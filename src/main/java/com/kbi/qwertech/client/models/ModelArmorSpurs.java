@@ -20,7 +20,7 @@ public class ModelArmorSpurs extends ModelBiped {
         this.textureHeight = 8;
         this.bipedSpikeRight = new ModelRenderer(this, 0, 0);
         this.bipedSpikeRight.mirror = true;
-        this.bipedSpikeRight.setRotationPoint(-1.9F, 12.0F, 0.0F);
+        this.bipedSpikeRight.setRotationPoint(-2.4F, 12.0F, 0.0F);
         this.bipedSpikeRight.addBox(-3.0F, 9.0F, 0.5F, 1, 1, 3, 0.0F);
         this.bipedSpikeRight_1 = new ModelRenderer(this, 0, 0);
         this.bipedSpikeRight_1.mirror = true;
@@ -29,7 +29,7 @@ public class ModelArmorSpurs extends ModelBiped {
         this.setRotateAngle(bipedSpikeRight_1, 1.5707963267948966F, 0.0F, 0.0F);
         this.bipedSpikeLeft = new ModelRenderer(this, 0, 0);
         this.bipedSpikeLeft.mirror = true;
-        this.bipedSpikeLeft.setRotationPoint(1.9F, 12.0F, 0.0F);
+        this.bipedSpikeLeft.setRotationPoint(2.4F, 12.0F, 0.0F);
         this.bipedSpikeLeft.addBox(2.0F, 9.0F, 0.5F, 1, 1, 3, 0.0F);
         this.bipedSpikeLeft_1 = new ModelRenderer(this, 0, 0);
         this.bipedSpikeLeft_1.mirror = true;

@@ -138,7 +138,15 @@ public class QT_Armor_Renderer implements IItemRenderer {
 					} else {
 						GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 					}
-					IIcon icon = upgrade.getIcon(item, w);
+					IIcon icon = null;
+					
+					try {
+						icon = upgrade.getIcon(item, w);
+					} catch (Throwable t)
+					{
+						
+					}
+					
 					if (icon != null)
 					{
 						renderPlainItem(item, icon, type);

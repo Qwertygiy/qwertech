@@ -18,6 +18,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
@@ -105,12 +106,17 @@ public class Upgrade_SpringBoots extends UpgradeBase {
 		{
 			if (player.isSprinting())
 			{
-				player.setJumping(true);;
+				if (player instanceof EntityPlayer)
+				{
+					((EntityPlayer)player).jump();
+				} else {
+					player.setJumping(true);
+				}
 				UT.Sounds.send(world, "qwertech:armor.upgrade.spring", 0.4F, 1 + CS.RNGSUS.nextFloat(), player);
 				((MultiItemArmor)stack.getItem()).doDamage(stack, CS.RNGSUS.nextInt(10));
 			}
 		} else if (!player.isInWater()) {
-			player.limbSwingAmount = 0;
+			//work on legs later
 		}
 	}
 	

@@ -108,6 +108,7 @@ import com.kbi.qwertech.tileentities.CraftingTableT1;
 import com.kbi.qwertech.tileentities.CraftingTableT2;
 import com.kbi.qwertech.tileentities.CraftingTableT3;
 import com.kbi.qwertech.tileentities.CraftingTableT4;
+import com.kbi.qwertech.tileentities.UpgradeDesk;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -623,6 +624,13 @@ public final class QwerTech extends Abstract_Mod {
 		}
 		
 		machines.add("Crafting Helper", "", 400, 0, CraftingHelper.class, 15, 0, air, UT.NBT.make());
+		
+		OreDictMaterial[] upgradeDeskMats = new OreDictMaterial[] {MT.Bronze, MT.Co, MT.Au, MT.Obsidian, MT.Plastic, MT.Silver};
+		for (int q = 0; q < upgradeDeskMats.length; q++)
+		{
+			OreDictMaterial mat = upgradeDeskMats[q];
+			machines.add(mat.mNameLocal + " Upgrade Desk", "Upgrade Desks", 401 + q, 0, UpgradeDesk.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 1, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "RfR", "RSR", "CCC", Character.valueOf('C'), OP.plate.dat(mat), Character.valueOf('R'), OP.stick.dat(ANY.Steel), Character.valueOf('S'), OP.springSmall.dat(ANY.Steel));
+		}
 	}
 
 	@Override

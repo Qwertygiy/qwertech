@@ -169,6 +169,7 @@ public class MultiItemArmor extends ItemArmor implements IItemProjectile, IItemU
 			if (upgrades[q] == null)
 			{
 				aStack = setUpgrade(aStack, aUpgradeID, q);
+				break;
 			}
 		}
 		return aStack;
@@ -991,7 +992,7 @@ public class MultiItemArmor extends ItemArmor implements IItemProjectile, IItemU
 				for (int w = 0; w < uEnchants.length; w++)
 				{
 					allEnchants.add(uEnchants[w]);
-					allLevels.add(tLevels[w]);
+					allLevels.add(uLevels[w]);
 				}
 			}
 		}

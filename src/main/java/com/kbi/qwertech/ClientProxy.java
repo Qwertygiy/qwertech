@@ -1,16 +1,6 @@
 package com.kbi.qwertech;
 
-import gregapi.api.Abstract_Mod;
-import gregapi.code.ItemStackContainer;
-import gregapi.data.CS;
-import gregapi.data.LH;
-import gregapi.data.OP;
-
 import java.util.Iterator;
-
-import net.minecraftforge.client.MinecraftForgeClient;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 
 import com.kbi.qwertech.api.data.QTConfigs;
 import com.kbi.qwertech.api.data.QTI;
@@ -32,6 +22,7 @@ import com.kbi.qwertech.client.models.ModelFrog;
 import com.kbi.qwertech.client.models.ModelTurkey;
 import com.kbi.qwertech.client.tileentity.CraftingTable3DRenderer;
 import com.kbi.qwertech.client.tileentity.CraftingTableRenderer;
+import com.kbi.qwertech.client.tileentity.UpgradeDeskRenderer;
 import com.kbi.qwertech.entities.neutral.EntityTurkey;
 import com.kbi.qwertech.entities.passive.EntityFrog;
 import com.kbi.qwertech.entities.projectile.EntityBall;
@@ -43,12 +34,21 @@ import com.kbi.qwertech.tileentities.CraftingTableT1;
 import com.kbi.qwertech.tileentities.CraftingTableT2;
 import com.kbi.qwertech.tileentities.CraftingTableT3;
 import com.kbi.qwertech.tileentities.CraftingTableT4;
+import com.kbi.qwertech.tileentities.UpgradeDesk;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import gregapi.api.Abstract_Mod;
+import gregapi.code.ItemStackContainer;
+import gregapi.data.CS;
+import gregapi.data.LH;
+import gregapi.data.OP;
+import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 
 /**
  * @author Max Mustermann
@@ -117,6 +117,8 @@ public final class ClientProxy extends CommonProxy { // NO_UCD (unused code)
 		ClientRegistry.bindTileEntitySpecialRenderer(CraftingTableT2.class, new CraftingTableRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(CraftingTableT3.class, new CraftingTableRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(CraftingTableT4.class, new CraftingTable3DRenderer());
+		
+		ClientRegistry.bindTileEntitySpecialRenderer(UpgradeDesk.class, new UpgradeDeskRenderer());
 		
 		wallRenderID = RenderingRegistry.getNextAvailableRenderId();
 		RenderingRegistry.registerBlockHandler(wallRenderID, new RenderCorrugated());

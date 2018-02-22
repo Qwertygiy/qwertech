@@ -91,7 +91,7 @@ public class Upgrade_Shuriken extends UpgradeBase {
 	@Override
 	public IIcon getIcon(ItemStack aStack, int aRenderPass)
 	{
-		return ((IIconContainer)RegisterArmor.iconTitle.get("qwertech:armor/boots/spur")).getIcon(aRenderPass);
+		return ((IIconContainer)RegisterArmor.iconTitle.get("qwertech:armor/boots/spur")).getIcon(0);
 	}
 	
 	@Override
