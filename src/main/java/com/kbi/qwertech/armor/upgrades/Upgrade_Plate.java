@@ -95,12 +95,17 @@ public class Upgrade_Plate extends UpgradeBase {
 		for (int q = 0; q < 4; q++)
 		{
 			IArmorStats stats = ((MultiItemArmor)aStack.getItem()).getArmorStats(aStack);
-			if (stats != null && stats.isValidInSlot(q))
+			if (stats != null && stats.isValidInSlot(3 - q))
 			{
 				slot = slots[q];
 			}
 		}
 		return ((IIconContainer)RegisterArmor.iconTitle.get("qwertech:armor/" + slot + "/curvedPlate")).getIcon(aRenderPass);
+	}
+	
+	@Override
+	public short[] getRGBa(ItemStack aStack, int aRenderPass) {
+		return getMaterial().mRGBaSolid;
 	}
 	
 	@Override

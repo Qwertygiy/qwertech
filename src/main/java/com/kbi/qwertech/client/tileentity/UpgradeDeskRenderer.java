@@ -132,7 +132,7 @@ public class UpgradeDeskRenderer extends TileEntitySpecialRenderer {
         }
         
 		Minecraft.getMinecraft().renderEngine.bindTexture(resource);
-		model.setPrimaryColor(tileEntity.mMaterial.mRGBaSolid);
+		model.setPrimaryColor(tileEntity.getMaterial().mRGBaSolid);
 		model.render(null, 0F, 0F, 0F, 0F, 0F, 0.0625F, 0, 0, 0);
 
 		GL11.glScalef(1, -1, -1);

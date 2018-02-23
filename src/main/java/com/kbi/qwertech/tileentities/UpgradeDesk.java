@@ -21,6 +21,7 @@ import gregapi.block.multitileentity.IMultiTileEntity.IMTE_GetSubItems;
 import gregapi.block.multitileentity.IMultiTileEntity.IMTE_SetBlockBoundsBasedOnState;
 import gregapi.block.multitileentity.MultiTileEntityBlockInternal;
 import gregapi.data.CS;
+import gregapi.data.LH;
 import gregapi.data.MT;
 import gregapi.old.Textures;
 import gregapi.oredict.OreDictMaterial;
@@ -118,18 +119,21 @@ public class UpgradeDesk extends TileEntityBase09FacingSingle implements IMTE_Ge
 		return false;
 	}
 	
-	public OreDictMaterial mMaterial = MT.NULL;
-	
-	@Override
-	public void readFromNBT2(NBTTagCompound aNBT) {
-		super.readFromNBT2(aNBT);
-		if (aNBT.hasKey(NBT_MATERIAL)) mMaterial = OreDictMaterial.get(aNBT.getString(NBT_MATERIAL));
-	}
-	
 	@Override
 	public boolean getSubItems(MultiTileEntityBlockInternal aBlock, Item aItem,
 			CreativeTabs aTab, List aList, short aID) {
 		return SHOW_HIDDEN_MATERIALS || !mMaterial.mHidden;
+	}
+	
+	public OreDictMaterial getMaterial()
+	{
+		return this.mMaterial;
+	}
+	
+	@Override
+	public boolean allowCovers(byte aSide)
+	{
+		return false;
 	}
 	
 	@Override
@@ -138,6 +142,7 @@ public class UpgradeDesk extends TileEntityBase09FacingSingle implements IMTE_Ge
 		if (aSide == CS.SIDE_DOWN) return false;
 		ItemStack aStack = aPlayer.getHeldItem();
 		ItemStack currentOne = this.slot(0);
+		mUpdated = true; //force a refresh
 		if (aStack != null)
 		{
 			if (currentOne != null)
@@ -145,14 +150,17 @@ public class UpgradeDesk extends TileEntityBase09FacingSingle implements IMTE_Ge
 				if (currentOne.getItem() instanceof MultiItemArmor)
 				{
 					IArmorUpgrade upgrade = ArmorUpgradeRegistry.instance.getUpgrade(aStack);
-					if (upgrade != null)
+					if (upgrade != null && upgrade.isCompatibleWith(currentOne))
 					{
 						((MultiItemArmor)currentOne.getItem()).addUpgrade(currentOne, ArmorUpgradeRegistry.instance.getUpgradeID(aStack));
-						aPlayer.setCurrentItemOrArmor(0, null);
+						aStack.stackSize = aStack.stackSize - 1;
+						aPlayer.setCurrentItemOrArmor(0, aStack.stackSize > 0 ? aStack : null);
 					} else {
 						UT.Sounds.send(CS.SFX.MC_AHA, this);
+						UT.Entities.chat(aPlayer, "You cannot place " + LH.Chat.BLINKING_RED + aStack.getDisplayName() + LH.Chat.WHITE + " on " + currentOne.getDisplayName());
 					}
 				} else {
+					UT.Entities.chat(aPlayer, "You cannot upgrade " + LH.Chat.BLINKING_RED + currentOne.getDisplayName());
 					//not armor
 				}
 			} else {
