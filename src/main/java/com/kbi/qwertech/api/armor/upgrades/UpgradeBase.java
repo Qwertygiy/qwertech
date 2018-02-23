@@ -3,9 +3,11 @@ package com.kbi.qwertech.api.armor.upgrades;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.kbi.qwertech.api.armor.IArmorStats;
+import com.kbi.qwertech.api.armor.MultiItemArmor;
+
 import gregapi.data.CS;
 import gregapi.data.MT;
-import gregapi.old.Textures;
 import gregapi.oredict.OreDictMaterial;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.model.ModelBiped;
@@ -20,9 +22,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
-
-import com.kbi.qwertech.api.armor.IArmorStats;
-import com.kbi.qwertech.api.armor.MultiItemArmor;
 
 public class UpgradeBase implements IArmorUpgrade {
 
@@ -98,7 +97,7 @@ public class UpgradeBase implements IArmorUpgrade {
 
 	@Override
 	public short[] getRGBa(ItemStack aStack, int aRenderPass) {
-		return null;
+		return MT.Empty.mRGBaSolid;
 	}
 
 	@Override

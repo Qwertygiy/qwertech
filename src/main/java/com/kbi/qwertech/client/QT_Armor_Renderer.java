@@ -132,10 +132,9 @@ public class QT_Armor_Renderer implements IItemRenderer {
 				for (int w = 0; w < upgrade.getRenderPasses(); w++)
 				{
 					short[] color = upgrade.getRGBa(item, w);
-					if (color != null)
-					{
+					try {
 						GL11.glColor4f(color[0], color[1], color[2], color[3]);
-					} else {
+					} catch (Throwable t) {
 						GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 					}
 					IIcon icon = null;

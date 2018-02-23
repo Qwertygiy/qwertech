@@ -105,7 +105,7 @@ public class Upgrade_Plate extends UpgradeBase {
 	
 	@Override
 	public short[] getRGBa(ItemStack aStack, int aRenderPass) {
-		return getMaterial().mRGBaSolid;
+		return this.getMaterial().mRGBaSolid;
 	}
 	
 	@Override
