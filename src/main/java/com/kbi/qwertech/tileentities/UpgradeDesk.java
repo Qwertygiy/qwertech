@@ -7,6 +7,7 @@ import static gregapi.data.CS.T;
 
 import java.util.List;
 
+import com.kbi.qwertech.QwerTech;
 import com.kbi.qwertech.api.armor.MultiItemArmor;
 import com.kbi.qwertech.api.armor.upgrades.IArmorUpgrade;
 import com.kbi.qwertech.api.data.QTI;
@@ -20,6 +21,7 @@ import gregapi.block.multitileentity.IMultiTileEntity.IMTE_GetSelectedBoundingBo
 import gregapi.block.multitileentity.IMultiTileEntity.IMTE_GetSubItems;
 import gregapi.block.multitileentity.IMultiTileEntity.IMTE_SetBlockBoundsBasedOnState;
 import gregapi.block.multitileentity.MultiTileEntityBlockInternal;
+import gregapi.block.multitileentity.MultiTileEntityContainer;
 import gregapi.data.CS;
 import gregapi.data.LH;
 import gregapi.data.MT;
@@ -30,6 +32,7 @@ import gregapi.render.ITexture;
 import gregapi.render.TextureSet;
 import gregapi.tileentity.base.TileEntityBase09FacingSingle;
 import gregapi.util.UT;
+import gregapi.util.WD;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -38,6 +41,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.World;
 
 public class UpgradeDesk extends TileEntityBase09FacingSingle implements IMTE_GetLightOpacity, IMTE_GetSubItems, IMTE_GetSelectedBoundingBoxFromPool, IMTE_AddCollisionBoxesToList, IMTE_GetBlocksMovement, IMTE_SetBlockBoundsBasedOnState	 {
 
@@ -196,14 +200,29 @@ public class UpgradeDesk extends TileEntityBase09FacingSingle implements IMTE_Ge
 		{
 			aList.add(newBB	);
 		}
-		newBB = this.box(0,0,0.45, 1, 0.75, 0.55);
-		if (aAABB != null && aAABB.intersectsWith(newBB))
+		if (this.mFacing == CS.SIDE_Z_NEG || this.mFacing == CS.SIDE_Z_POS)
 		{
-			aList.add(newBB	);
+			newBB = this.box(0,0,0.45, 1, 0.75, 0.55);
+			if (aAABB != null && aAABB.intersectsWith(newBB))
+			{
+				aList.add(newBB	);
+			}
+		} else {
+			newBB = this.box(0.45,0,0, 0.55, 0.75, 1);
+			if (aAABB != null && aAABB.intersectsWith(newBB))
+			{
+				aList.add(newBB	);
+			}
 		}
 		//aAABB.setBounds(0, 0, 0.4, 1, 1, 0.6);
 		
 		//aList.add(this.box(0,0,0.4,1,1,0.6));
+	}
+	
+	@Override
+	public boolean onPlaced(ItemStack aStack, EntityPlayer aPlayer, MultiTileEntityContainer aMTEContainer, World aWorld, int aX, int aY, int aZ, byte aSide, float aHitX, float aHitY, float aHitZ)
+	{
+		return super.onPlaced(aStack, aPlayer, aMTEContainer, aWorld, aX, aY, aZ, aSide == CS.SIDE_Y_NEG || aSide == CS.SIDE_Y_POS ? CS.SIDE_Z_POS : aSide, aHitX, aHitY, aHitZ);
 	}
 
 	@Override
