@@ -7,6 +7,7 @@ import gregapi.oredict.OreDictMaterial;
 import gregapi.oredict.OreDictPrefix;
 import gregapi.recipes.ICraftingRecipeGT;
 import gregapi.util.OM;
+import gregapi.util.ST;
 import gregapi.util.UT;
 
 import java.util.ArrayList;
@@ -250,7 +251,7 @@ public class QTArmor implements ICraftingRecipeGT, IRecipe
 	
 	                if (target instanceof ItemStack)
 	                {
-	                    if (!OreDictionary.itemMatches((ItemStack)target, slot, false))
+	                    if (!ST.equal((ItemStack)target, slot))
 	                    {
 	                        return false;
 	                    }
@@ -279,6 +280,8 @@ public class QTArmor implements ICraftingRecipeGT, IRecipe
 							{
 								return false;
 							}
+						} else {
+							return false;
 						}
 	                }
 	            }
