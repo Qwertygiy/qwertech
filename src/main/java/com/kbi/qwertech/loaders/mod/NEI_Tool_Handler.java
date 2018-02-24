@@ -79,11 +79,21 @@ public class NEI_Tool_Handler extends ShapelessRecipeHandler {
 			super(input, output);
 		}
 		
+		int lasCheck = -1;
+		
 		@Override
 		public List<PositionedStack> getCycledIngredients(int cycle, List<PositionedStack> ingredients)
 		{
 			for (int itemIndex = 0; itemIndex < ingredients.size(); itemIndex++) {
-				if (ST.equal(ST.make(Items.apple, 1, 20), (ingredients.get(itemIndex)).items[cycle % ingredients.get(itemIndex).items.length]))
+				PositionedStack stack = ingredients.get(itemIndex);
+				int cycleSpot = cycle % stack.items.length;
+				if (cycleSpot == lasCheck)
+				{
+					//we have recieved an infinite loop, this recipe should not have been displayed, error elsewhere
+					return ingredients;
+				}
+				if (lasCheck == -1) lasCheck = cycleSpot;
+				if (ST.equal(ST.make(Items.apple, 1, 20), stack.items[cycleSpot]))
 				{
 					cycle = cycle + 1;
 					return getCycledIngredients(cycle, ingredients);
@@ -91,6 +101,7 @@ public class NEI_Tool_Handler extends ShapelessRecipeHandler {
 					setRenderPermutation(ingredients.get(itemIndex), cycle);
 				}
 			}
+			lasCheck = -1;
 			return ingredients;
 		}
 		
