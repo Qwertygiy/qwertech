@@ -71,7 +71,6 @@ public class QT_Armor_Renderer implements IItemRenderer {
 	public void renderPlainItem(ItemStack p_78443_2_, IIcon iicon, ItemRenderType type)
 	{
 		if (iicon == null) return;
-		//GL11.glPushMatrix();
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         Minecraft.getMinecraft().renderEngine.bindTexture(Minecraft.getMinecraft().renderEngine.getResourceLocation(p_78443_2_.getItemSpriteNumber()));
         TextureUtil.func_152777_a(false, false, 1.0F);
@@ -98,14 +97,12 @@ public class QT_Armor_Renderer implements IItemRenderer {
         Minecraft.getMinecraft().renderEngine.bindTexture(Minecraft.getMinecraft().renderEngine.getResourceLocation(p_78443_2_.getItemSpriteNumber()));
         TextureUtil.func_147945_b();
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);
-        //GL11.glPopMatrix();
 	}
 	
 	
 
 	@Override
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
-		//GL11.glPushMatrix();
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		
 		for (int i = 0; i < item.getItem().getRenderPasses(item.getItemDamage()); i++)
@@ -132,11 +129,8 @@ public class QT_Armor_Renderer implements IItemRenderer {
 				for (int w = 0; w < upgrade.getRenderPasses(); w++)
 				{
 					short[] color = upgrade.getRGBa(item, w);
-					try {
-						GL11.glColor4f(color[0], color[1], color[2], color[3]);
-					} catch (Throwable t) {
-						GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-					}
+					GL11.glColor4f(((float)color[0])/255F, ((float)color[1])/255F, ((float)color[2])/255F, 1);
+					
 					IIcon icon = null;
 					
 					try {
@@ -154,7 +148,6 @@ public class QT_Armor_Renderer implements IItemRenderer {
 			}
 		}
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		//GL11.glPopMatrix();
 	}
 
 }
