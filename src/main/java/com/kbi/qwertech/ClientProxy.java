@@ -9,6 +9,7 @@ import com.kbi.qwertech.client.GT_Tool_Renderer;
 import com.kbi.qwertech.client.Material_Item_Renderer;
 import com.kbi.qwertech.client.QT_Armor_Renderer;
 import com.kbi.qwertech.client.QT_Food_Renderer;
+import com.kbi.qwertech.client.QT_Machine_Renderer;
 import com.kbi.qwertech.client.QT_Tool_Renderer;
 import com.kbi.qwertech.client.blocks.RenderCorrugated;
 import com.kbi.qwertech.client.entity.neutral.RenderTurkey;
@@ -42,6 +43,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import gregapi.api.Abstract_Mod;
+import gregapi.block.multitileentity.MultiTileEntityRegistry;
 import gregapi.code.ItemStackContainer;
 import gregapi.data.CS;
 import gregapi.data.LH;
@@ -98,6 +100,7 @@ public final class ClientProxy extends CommonProxy { // NO_UCD (unused code)
 				MinecraftForgeClient.registerItemRenderer(stickLong.next().mItem, itemRenderer);
 			}*/
 		}
+		MinecraftForgeClient.registerItemRenderer(MultiTileEntityRegistry.getRegistry("qwertech.machines").getItem(401).getItem(), new QT_Machine_Renderer());
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityFoil.class,
 				new RenderEntityFoil());

@@ -3,6 +3,8 @@ package com.kbi.qwertech.client.tileentity;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import com.kbi.qwertech.api.armor.IArmorStats;
+import com.kbi.qwertech.api.armor.MultiItemArmor;
 import com.kbi.qwertech.client.models.ModelUpgradeStation;
 import com.kbi.qwertech.tileentities.CraftingTableT1;
 import com.kbi.qwertech.tileentities.UpgradeDesk;
@@ -10,8 +12,10 @@ import com.kbi.qwertech.tileentities.UpgradeDesk;
 import gregapi.data.CS;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.Item;
@@ -25,11 +29,15 @@ import net.minecraft.world.World;
 public class UpgradeDeskRenderer extends TileEntitySpecialRenderer {
 	
 	public ModelUpgradeStation model;
+	public RenderPlayer RP;
 	public ResourceLocation resource = new ResourceLocation("qwertech:textures/blocks/modeled/upgradestand.png");
+	public static UpgradeDeskRenderer instance;
 	
 	public UpgradeDeskRenderer()
 	{
 		model = new ModelUpgradeStation();
+		RP = new RenderPlayer();
+		instance = this;
 	}
 	
 	public void renderItemIn2D(Tessellator tess, float maxU, float minV, float minU, float maxV, int width, int height, float scale)
@@ -139,7 +147,28 @@ public class UpgradeDeskRenderer extends TileEntitySpecialRenderer {
 		
 		if (tileEntity.slotHas(0))
 		{
-			renderItem(tileEntity.slot(0), 0, 0, -0.66, 0.033, tileEntity.getWorld(), 3, 1);
+			ItemStack aStack = tileEntity.slot(0);
+			Item aItem = aStack.getItem();
+			if (aItem instanceof MultiItemArmor)
+			{
+				IArmorStats tStats = ((MultiItemArmor) aItem).getArmorStats(aStack);
+				if (tStats != null)
+				{
+					int isIt = -1;
+					for (int q = 0; q < 4 && isIt == -1; q++)
+					{
+						if (tStats.isValidInSlot(q))
+						{
+							isIt = q;
+						}
+					}
+					//need to set up fake player. am tired.
+					//net.minecraftforge.client.event.RenderPlayerEvent.SetArmorModel event = new net.minecraftforge.client.event.RenderPlayerEvent.SetArmorModel(Minecraft.getMinecraft().thePlayer, RP, 3 - isIt, 0F, aStack);
+					//net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event);
+				}
+			} else {
+				renderItem(aStack, 0, 0, -0.66, 0.033, tileEntity.getWorld(), 3, 1);
+			}
 		}
 		
 		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
