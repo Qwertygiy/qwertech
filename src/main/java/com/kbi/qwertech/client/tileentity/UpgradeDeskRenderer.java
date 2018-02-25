@@ -1,5 +1,7 @@
 package com.kbi.qwertech.client.tileentity;
 
+import java.util.UUID;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
@@ -8,23 +10,35 @@ import com.kbi.qwertech.api.armor.MultiItemArmor;
 import com.kbi.qwertech.client.models.ModelUpgradeStation;
 import com.kbi.qwertech.tileentities.CraftingTableT1;
 import com.kbi.qwertech.tileentities.UpgradeDesk;
+import com.mojang.authlib.GameProfile;
 
 import gregapi.data.CS;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.AbstractClientPlayer;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Session;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.common.util.FakePlayerFactory;
 
 public class UpgradeDeskRenderer extends TileEntitySpecialRenderer {
 	
@@ -32,6 +46,7 @@ public class UpgradeDeskRenderer extends TileEntitySpecialRenderer {
 	public RenderPlayer RP;
 	public ResourceLocation resource = new ResourceLocation("qwertech:textures/blocks/modeled/upgradestand.png");
 	public static UpgradeDeskRenderer instance;
+	private EntityPlayer playerModel;
 	
 	public UpgradeDeskRenderer()
 	{
@@ -142,8 +157,6 @@ public class UpgradeDeskRenderer extends TileEntitySpecialRenderer {
 		Minecraft.getMinecraft().renderEngine.bindTexture(resource);
 		model.setPrimaryColor(tileEntity.getMaterial().mRGBaSolid);
 		model.render(null, 0F, 0F, 0F, 0F, 0F, 0.0625F, 0, 0, 0);
-
-		GL11.glScalef(1, -1, -1);
 		
 		if (tileEntity.slotHas(0))
 		{
@@ -162,11 +175,39 @@ public class UpgradeDeskRenderer extends TileEntitySpecialRenderer {
 							isIt = q;
 						}
 					}
-					//need to set up fake player. am tired.
-					//net.minecraftforge.client.event.RenderPlayerEvent.SetArmorModel event = new net.minecraftforge.client.event.RenderPlayerEvent.SetArmorModel(Minecraft.getMinecraft().thePlayer, RP, 3 - isIt, 0F, aStack);
-					//net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event);
-				}
+					GL11.glDisable(GL11.GL_CULL_FACE);
+					GL11.glTranslatef(0, isIt == 3 ? -0.66F : isIt == 2 ? -0.25F : isIt == 1 ? 0.33F : isIt == 0 ? 1.1F : 0, 0);
+			        
+					if (playerModel == null)
+					{
+						playerModel = new EntityPlayerSP(Minecraft.getMinecraft(), tileEntity.getWorld(), new Session("0", "0", "0", "0"), 0);
+					}
+					
+					net.minecraftforge.client.event.RenderPlayerEvent.SetArmorModel event = new net.minecraftforge.client.event.RenderPlayerEvent.SetArmorModel(playerModel, RP, 3 - isIt, 0F, aStack);
+					net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event);
+					
+			        this.bindTexture(RenderBiped.getArmorResource(playerModel, aStack, isIt, null));
+			        ModelBiped modelbiped = net.minecraftforge.client.ForgeHooksClient.getArmorModel(playerModel, aStack, isIt, null);
+			        modelbiped.onGround = 0;
+			        modelbiped.isRiding = false;
+			        modelbiped.isChild = false;
+
+			        //Move outside if to allow for more then just CLOTH
+			        int j = ((MultiItemArmor)aItem).getColor(aStack);
+			        if (j != -1)
+			        {
+			        	float f1 = (float)(j >> 16 & 255) / 255.0F;
+			            float f2 = (float)(j >> 8 & 255) / 255.0F;
+			            float f3 = (float)(j & 255) / 255.0F;
+			            GL11.glColor3f(f1, f2, f3);
+			        }
+			        
+			        modelbiped.render(playerModel, 0, 0, 0, 0, 0, 0.0625F);
+			        GL11.glColor3f(1.0F, 1.0F, 1.0F);
+			        GL11.glEnable(GL11.GL_CULL_FACE);
+			    }
 			} else {
+				GL11.glScalef(1, -1, -1);
 				renderItem(aStack, 0, 0, -0.66, 0.033, tileEntity.getWorld(), 3, 1);
 			}
 		}
