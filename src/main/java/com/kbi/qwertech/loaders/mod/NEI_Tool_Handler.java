@@ -1,5 +1,6 @@
 package com.kbi.qwertech.loaders.mod;
 
+import gregapi.code.ICondition;
 import gregapi.data.ANY;
 import gregapi.data.CS;
 import gregapi.data.MT;
@@ -71,12 +72,32 @@ public class NEI_Tool_Handler extends ShapelessRecipeHandler {
 	
 	public class ToolCraftingCachedRecipe extends CachedShapelessRecipe
 	{
+		ICondition matCondition = ICondition.TRUE;
+		
 		public ToolCraftingCachedRecipe(ItemStack output) {
 			super(output);
 		}
  
 		public ToolCraftingCachedRecipe(Object[] input, ItemStack output) {
 			super(input, output);
+		}
+		
+		public ToolCraftingCachedRecipe(Object[] input, ItemStack output, ICondition condition)
+		{
+			super(input, output);
+			matCondition = condition;
+		}
+		
+		public boolean isConditionTrue(ItemStack toCheck)
+		{
+			OreDictItemData tDt = OM.data(toCheck);
+			if (tDt == null) tDt = OM.anydata(toCheck); //not sure this would do anything (shrug)
+			if (tDt == null) return true;
+			if (matCondition.isTrue(tDt.mMaterial.mMaterial) && matCondition.isTrue(tDt.mPrefix))
+			{
+				return true;
+			}
+			return false;
 		}
 		
 		int lasCheck = -1;
@@ -185,7 +206,7 @@ public class NEI_Tool_Handler extends ShapelessRecipeHandler {
 			}
 			if (recipe != null)
 			{
-				if (recipe.contains(recipe.ingredients, ingredient)) {
+				if (recipe.contains(recipe.ingredients, ingredient) && recipe.isConditionTrue(ingredient)) {
 					recipe.setIngredientPermutation(recipe.ingredients, ingredient);
 					arecipes.add(recipe);
 				} }
@@ -408,9 +429,14 @@ public class NEI_Tool_Handler extends ShapelessRecipeHandler {
 				{
 					Collections.reverse((List)items.get(t));
 				}
+				if (items.get(t) == null || (items.get(t) instanceof List && ((List)items.get(t)).size() <= 1))
+				{
+					//System.out.println("We hve filed to lod" + t);
+					return null;
+				}
 			}
 			//System.out.println("Removed " + removed + " unsuitable materials from NEI recipe");
-			return new ToolCraftingCachedRecipe(items.toArray(), recipe.getRecipeOutput());
+			return new ToolCraftingCachedRecipe(items.toArray(), recipe.getRecipeOutput(), recipe.mCondition);
 		} catch (Exception e) {
 			codechicken.nei.NEIClientConfig.logger.error("Error loading recipe: ", e); }
 		return null;

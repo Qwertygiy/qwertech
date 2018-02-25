@@ -36,6 +36,7 @@ import gregapi.old.Textures;
 import gregapi.oredict.OreDictItemData;
 import gregapi.oredict.OreDictManager;
 import gregapi.oredict.OreDictMaterial;
+import gregapi.oredict.OreDictMaterialCondition;
 import gregapi.oredict.OreDictPrefix;
 import gregapi.recipes.handlers.RecipeMapHandlerPrefix;
 import gregapi.render.IIconContainer;
@@ -299,28 +300,28 @@ public final class QwerTech extends Abstract_Mod {
 		final OreDictPrefix mattockHead = OreDictPrefix.createPrefix("toolHeadMattock"); // This newly created OreDict Prefix is named "exampleprefix", so an Aluminium Item with this Prefix would be named "exampleprefixAluminium" in the OreDict.
 		mattockHead.setCategoryName("Mattock Heads"); // That is what the Creative Tab of it would be named.
 		mattockHead.setLocalItemName("", " Mattock Head"); // Generic Items will follow this naming Guideline, so for example "Small Aluminium Example" for an Aluminium Item with that Prefix.
-		mattockHead.setCondition(new And(TOOLS, HAS_TOOL_STATS, NO_ADVANCED_TOOLS.NOT, OP.toolHeadHoe, OP.toolHeadAxe)); // The Condition under which Items of this Prefix should generate in general. In this case TRUE to have ALL the Items.
+		mattockHead.setCondition(new And(OP.toolHeadHoe, OP.toolHeadAxe)); // The Condition under which Items of this Prefix should generate in general. In this case TRUE to have ALL the Items.
 		mattockHead.add(UNIFICATABLE, BURNABLE, RECYCLABLE, SCANNABLE, TOOL_HEAD, NEEDS_HANDLE						).setStacksize(16).aspects(TC.INSTRUMENTUM, 2, TC.MESSIS, 1);// Items of this can be recycled for Resources.
 		mattockHead.setMaterialStats(gregapi.data.CS.U * 5); // Any Item of this example Prefix has the value of 1 Material Unit (U), this is exactly equal to one Ingot/Dust/Gem.
 		
 		final OreDictPrefix mattockHeadRaw = OreDictPrefix.createPrefix("toolHeadRawMattock"); // This newly created OreDict Prefix is named "exampleprefix", so an Aluminium Item with this Prefix would be named "exampleprefixAluminium" in the OreDict.
 		mattockHeadRaw.setCategoryName("Raw Mattock Heads"); // That is what the Creative Tab of it would be named.
 		mattockHeadRaw.setLocalItemName("Raw ", " Mattock Head"); // Generic Items will follow this naming Guideline, so for example "Small Aluminium Example" for an Aluminium Item with that Prefix.
-		mattockHeadRaw.setCondition(new And(TOOLS, HAS_TOOL_STATS, NO_ADVANCED_TOOLS.NOT, OP.toolHeadHoe, OP.toolHeadAxe)); // The Condition under which Items of this Prefix should generate in general. In this case TRUE to have ALL the Items.
+		mattockHeadRaw.setCondition(new And(OP.toolHeadHoe, OP.toolHeadAxe)); // The Condition under which Items of this Prefix should generate in general. In this case TRUE to have ALL the Items.
 		mattockHeadRaw.add(UNIFICATABLE, BURNABLE, RECYCLABLE, SCANNABLE, TOOL_HEAD, NEEDS_HANDLE, NEEDS_SHARPENING	).setStacksize(16, 8).aspects(TC.INSTRUMENTUM, 2, TC.MESSIS, 1);// Items of this can be recycled for Resources.
 		mattockHeadRaw.setMaterialStats(gregapi.data.CS.U * 5); // Any Item of this example Prefix has the value of 1 Material Unit (U), this is exactly equal to one Ingot/Dust/Gem.
 		
 		final OreDictPrefix maceHead = OreDictPrefix.createPrefix("toolHeadMace");
 		maceHead.setCategoryName("Mace Heads");
 		maceHead.setLocalItemName("", " Mace Head");
-		maceHead.setCondition(new And(TOOLS, HAS_TOOL_STATS, NO_ADVANCED_TOOLS.NOT));
+		maceHead.setCondition(new And(HAS_TOOL_STATS, OreDictMaterialCondition.typemin(3)));
 		maceHead.add(UNIFICATABLE, BURNABLE, RECYCLABLE, SCANNABLE, TOOL_HEAD, NEEDS_HANDLE						).setStacksize(16).aspects(TC.TELUM, 2, TC.PERDITIO, 1);
 		maceHead.setMaterialStats(gregapi.data.CS.U * 5);
 		
 		final OreDictPrefix maceHeadRaw = OreDictPrefix.createPrefix("toolHeadRawMace");
 		maceHeadRaw.setCategoryName("Raw Mace Heads");
 		maceHeadRaw.setLocalItemName("Raw ", " Mace Head");
-		maceHeadRaw.setCondition(new And(TOOLS, HAS_TOOL_STATS, NO_ADVANCED_TOOLS.NOT));
+		maceHeadRaw.setCondition(new And(HAS_TOOL_STATS, OreDictMaterialCondition.typemin(3)));
 		maceHeadRaw.add(UNIFICATABLE, BURNABLE, RECYCLABLE, SCANNABLE, TOOL_HEAD, NEEDS_HANDLE, NEEDS_SHARPENING	).setStacksize(16, 8).aspects(TC.TELUM, 2, TC.PERDITIO, 1);
 		maceHeadRaw.setMaterialStats(gregapi.data.CS.U * 5);
 		
