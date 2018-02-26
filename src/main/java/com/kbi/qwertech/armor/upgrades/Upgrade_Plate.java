@@ -34,6 +34,8 @@ import com.kbi.qwertech.api.armor.IArmorStats;
 import com.kbi.qwertech.api.armor.MultiItemArmor;
 import com.kbi.qwertech.api.armor.upgrades.UpgradeBase;
 import com.kbi.qwertech.api.registry.ArmorUpgradeRegistry;
+import com.kbi.qwertech.client.models.ModelArmorFeather;
+import com.kbi.qwertech.client.models.ModelArmorPlates;
 import com.kbi.qwertech.client.models.ModelArmorSpring;
 import com.kbi.qwertech.loaders.RegisterArmor;
 
@@ -106,6 +108,32 @@ public class Upgrade_Plate extends UpgradeBase {
 	@Override
 	public short[] getRGBa(ItemStack aStack, int aRenderPass) {
 		return this.getMaterial().mRGBaSolid;
+	}
+	
+	@Override
+	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
+	{
+		return type == "overlay" ? "qwertech:textures/armor/blank.png" : "qwertech:textures/armor/upgrade/plate.png";
+	}
+	
+	Object model;
+	
+	@Override
+	public ModelBiped getArmorModel(ItemStack stack, EntityLivingBase entity, int slot)
+	{
+		if (model == null)
+		{
+			model = new ModelArmorPlates();
+		}
+		ModelArmorPlates m = (ModelArmorPlates)model;
+		
+		m.bipedBodyPlate.isHidden = slot != 1;
+		m.bipedHeadPlate.isHidden = slot != 0;
+		m.bipedLeftBootPlate.isHidden = slot != 3;
+		m.bipedRightBootPlate.isHidden = slot != 3;
+		m.bipedLegPlate.isHidden = slot != 2;
+		
+		return (ModelBiped)model;
 	}
 	
 	@Override

@@ -197,6 +197,11 @@ public class RegisterArmor {
 		upgrade = new Upgrade_Feather();
 		upgrade.addUpgradeStack(ST.make(Items.feather, 1, 0));
 		ArmorUpgradeRegistry.instance.addUpgrade(18, upgrade);
+		
+		upgrade = new Upgrade_Feather();
+		upgrade.addUpgradeStack(QTI.turkeyFeather.get(1));
+		((Upgrade_Feather)upgrade).setRGBa(MT.WoodPolished.mRGBaSolid);
+		ArmorUpgradeRegistry.instance.addUpgrade(19, upgrade);
 	}
 	
 	private void addType(String type)
@@ -241,7 +246,7 @@ public class RegisterArmor {
 			/*
 			 * Draw our own upgrades, with blackjack and cookers 
 			 */
-			GL11.glPushMatrix();
+			GL11.glColor4f(1F, 1F, 1F, 1F);
 			IArmorUpgrade[] upgrades = MultiItemArmor.getUpgrades(event.stack);
 			for (int q = 0; q < upgrades.length; q++)
 			{
@@ -258,11 +263,10 @@ public class RegisterArmor {
 						short[] j = upgrade.getRGBa(event.stack, 0);
 						//UPDATE THIS PART LATER D00D
 						
-						GL11.glPushMatrix();
 						
 						if (j != null && j.length == 4)
 						{
-							GL11.glColor4f(j[0], j[1], j[2], j[3]);
+							GL11.glColor4f(((float)j[0])/255F, ((float)j[1])/255F, ((float)j[2])/255F, ((float)j[3])/255F);
 						}
 						String texture = upgrade.getArmorTexture(event.stack, event.entityLiving, event.slot, null);
 						if (texture != null)
@@ -271,11 +275,11 @@ public class RegisterArmor {
 						}
 						drawIt.setLivingAnimations(event.entityLiving, event.entityLiving.limbSwing - event.entityLiving.limbSwingAmount, event.entityLiving.prevLimbSwingAmount + (event.entityLiving.limbSwingAmount - event.entityLiving.prevLimbSwingAmount), 0);
 						drawIt.render(event.entityLiving, event.entityLiving.limbSwing - event.entityLiving.limbSwingAmount, event.entityLiving.prevLimbSwingAmount + (event.entityLiving.limbSwingAmount - event.entityLiving.prevLimbSwingAmount), event.entityLiving.ticksExisted, event.entityLiving.rotationYawHead - event.entityLiving.renderYawOffset, event.entityLiving.prevRotationPitch + (event.entityLiving.rotationPitch - event.entityLiving.prevRotationPitch), 0.0625F);
-						GL11.glPopMatrix();
+						GL11.glColor4f(1F, 1F, 1F, 1F);
+						
 					}
 				}
 			}
-			GL11.glPopMatrix();
 		}
 	}
 	

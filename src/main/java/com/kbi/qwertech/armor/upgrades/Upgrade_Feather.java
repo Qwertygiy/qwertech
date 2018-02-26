@@ -60,7 +60,7 @@ public class Upgrade_Feather extends UpgradeBase {
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
 	{
-		return type == "overlay" ? "qwertech:textures/armor/blank.png" : "qwertech:textures/armor/upgrade/feather.png";
+		return type == "overlay" ? "qwertech:textures/armor/blank.png" : "qwertech:textures/armor/upgrade/featherwhite.png";
 	}
 	
 	Object model;
@@ -74,6 +74,19 @@ public class Upgrade_Feather extends UpgradeBase {
 			model = new ModelArmorFeather();
 		}
 		return (ModelBiped)model;
+	}
+	
+	public short[] color = MT.Empty.mRGBaSolid;
+	
+	@Override
+	public short[] getRGBa(ItemStack tStack, int pass)
+	{
+		return color;
+	}
+	
+	public void setRGBa(short[] colorable)
+	{
+		color = colorable;
 	}
 	
 	@Override
