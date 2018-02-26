@@ -38,6 +38,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
@@ -57,7 +58,7 @@ public class UpgradeDesk extends TileEntityBase09FacingSingle implements IMTE_Ge
 	@Override
 	public AxisAlignedBB getCollisionBoundingBoxFromPool()
 	{
-		return this.box(new float[]{0, 0, 0, 1, 0.5F, 1});
+		return this.box(new float[]{0, 0, 0, 1, 0.25F, 1});
 		//return null;
 	}
 	
@@ -202,13 +203,23 @@ public class UpgradeDesk extends TileEntityBase09FacingSingle implements IMTE_Ge
 		}
 		if (this.mFacing == CS.SIDE_Z_NEG || this.mFacing == CS.SIDE_Z_POS)
 		{
-			newBB = this.box(0,0,0.45, 1, 0.75, 0.55);
+			if (slotHas(0) && slot(0).getItem() instanceof ItemArmor)
+			{
+				newBB = this.box(0, 0, 0.33, 1, 1.25, 0.66);
+			} else {
+				newBB = this.box(0,0,0.45, 1, 0.75, 0.55);
+			}
 			if (aAABB != null && aAABB.intersectsWith(newBB))
 			{
 				aList.add(newBB	);
 			}
 		} else {
-			newBB = this.box(0.45,0,0, 0.55, 0.75, 1);
+			if (slotHas(0) && slot(0).getItem() instanceof ItemArmor)
+			{
+				newBB = this.box(0.33, 0, 0, 0.66, 1.25, 1);
+			} else {
+				newBB = this.box(0.45,0,0, 0.55, 0.75, 1);
+			}
 			if (aAABB != null && aAABB.intersectsWith(newBB))
 			{
 				aList.add(newBB	);
@@ -237,7 +248,7 @@ public class UpgradeDesk extends TileEntityBase09FacingSingle implements IMTE_Ge
 
 	@Override
 	public void setBlockBoundsBasedOnState(Block aBlock) {
-		aBlock.setBlockBounds(0, 0, 0, 1, 0.5F, 1);
+		aBlock.setBlockBounds(0, 0, 0, 1, 0.25F, 1);
 	}
 
 }
