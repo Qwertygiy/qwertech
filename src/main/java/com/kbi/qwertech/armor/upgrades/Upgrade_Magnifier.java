@@ -95,10 +95,10 @@ public class Upgrade_Magnifier extends UpgradeBase {
 	public boolean onClickedWearing(ItemStack armorStack, int slot,
 			World world, EntityPlayer player, Action action, int x, int y,
 			int z, int face, PlayerInteractEvent event) {
-		if (action == action.RIGHT_CLICK_BLOCK)
+		if (action == action.RIGHT_CLICK_BLOCK && player.isSneaking())
 		{
 			List<String> tChatReturn = new ArrayListNoNulls<String>();
-			long tDamage = IBlockToolable.Util.onToolClick("magnifyingglass", Long.MAX_VALUE, (long)1, player, tChatReturn, player.inventory, player.isSneaking(), armorStack, world, (byte)face, x, y, z, 0.0F, 0.0F, 0.0F);
+			long tDamage = IBlockToolable.Util.onToolClick("magnifyingglass", Long.MAX_VALUE, (long)1, player, tChatReturn, player.inventory, player.isSneaking(), armorStack, world, (byte)face, x, y, z, 0.5F, 0.5F, 0.5F);
 			UT.Entities.sendchat(player, tChatReturn, F);
 			if (tDamage > 0) {
 	    		if (!UT.Entities.hasInfiniteItems(player)) 
