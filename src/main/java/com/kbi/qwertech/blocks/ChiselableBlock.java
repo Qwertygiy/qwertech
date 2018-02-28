@@ -166,7 +166,7 @@ public class ChiselableBlock extends PrefixBlock implements IBlockSyncData.IBloc
 			TileEntity tTileEntity = createTileEntity(aWorld, aX, aY, aZ, aSide, aMetaData, aNBT);
 			WD.te(aWorld, aX, aY, aZ, tTileEntity, aCauseBlockUpdates);
 			aWorld.scheduleBlockUpdate(aX, aY, aZ, this, 2);
-			if (!aWorld.isRemote) GT_API_Proxy.SCHEDULED_TILEENTITY_UPDATES.add((ChiselableTileEntity)tTileEntity);
+			GT_API_Proxy.SCHEDULED_TILEENTITY_UPDATES.add((ChiselableTileEntity)tTileEntity);
 			return T;
 		}
 		return F;
@@ -221,7 +221,7 @@ public class ChiselableBlock extends PrefixBlock implements IBlockSyncData.IBloc
 
 		if (aTool.equals(CS.TOOL_chisel)) {
 			ItemStack tChiseledBlock = this.getItemStackFromBlock(aWorld, aX, aY, aZ, aSide);
-			if (tChiseledBlock != null) {
+			if (tChiseledBlock != null && !aWorld.isRemote) {
 				System.out.println("We're trying to chisel here!");
 				short design = getDesign(aWorld, aX, aY, aZ);
 				System.out.println("We found design " + design);
@@ -231,7 +231,6 @@ public class ChiselableBlock extends PrefixBlock implements IBlockSyncData.IBloc
 					NBTTagCompound taggy = UT.NBT.make();
 					taggy.setShort("d", (short)(design + 1));
 					setDesign(aWorld, aX, aY, aZ, getExtendedMetaData(aWorld, aX, aY, aZ), (short)(design + 1));
-					//placeBlock(aWorld, aX, aY, aZ, aSide, getExtendedMetaData(aWorld, aX, aY, aZ), taggy, true, true);
 				} else {
 					return super.onToolClick(aTool, aRemainingDurability, aQuality, aPlayer, aChatReturn, aPlayerInventory, aSneaking, aStack, aWorld, aSide, aX, aY, aZ, aHitX, aHitY, aHitZ);
 				}
@@ -264,7 +263,7 @@ public class ChiselableBlock extends PrefixBlock implements IBlockSyncData.IBloc
 		nbt.setShort("m", aMetaData);
 		aTileEntity.readFromNBT(nbt);
 		((ChiselableTileEntity)aTileEntity).onScheduledUpdate();
-		((World)aWorld).markBlockForUpdate(aX, aY, aZ);
+		System.out.println("Successful I hope");
 	}
 	
 	public short getDesign(TileEntity aTileEntity) {
@@ -279,7 +278,10 @@ public class ChiselableBlock extends PrefixBlock implements IBlockSyncData.IBloc
 	/*the old Prefixblock bit*/
 	@Override public void receiveDataShort				(IBlockAccess aWorld, int aX, int aY, int aZ, short  aData, INetworkHandler aNetworkHandler) {}
 	
-	@Override public void receiveData(IBlockAccess aWorld, int aX, int aY, int aZ, INetworkHandler aNetworkHandler, short aID1, short aID2) {setDesign(aWorld, aX, aY, aZ, aID1, aID2);}
+	@Override public void receiveData(IBlockAccess aWorld, int aX, int aY, int aZ, INetworkHandler aNetworkHandler, short aID1, short aID2) {
+		System.out.println("Recieving packet for " + aID2); 
+		setDesign(aWorld, aX, aY, aZ, aID1, aID2);
+	}
 	@Override
 	public void receiveDataByte(IBlockAccess aWorld, int aX, int aY, int aZ, byte aData, INetworkHandler aNetworkHandler, short aID1, short aID2) {}
 	@Override

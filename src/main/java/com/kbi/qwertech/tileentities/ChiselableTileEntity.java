@@ -62,7 +62,17 @@ public class ChiselableTileEntity extends PrefixBlockTileEntity {
 	@Override public boolean renderBlock(Block aBlock, RenderBlocks aRenderer) {return F;}
 	@Override public boolean setBlockBounds(Block aBlock, int aRenderPass, boolean[] aShouldSideBeRendered) {return F;}
 	@Override public int getRenderPasses(Block aBlock, boolean[] aShouldSideBeRendered) {return 1;}
-	@Override public void readFromNBT(NBTTagCompound aNBT) {super.readFromNBT(aNBT); mDesign = aNBT.getShort("d"); if (mDesign == 32767) {mDesign = 0;} aNBT.setShort("d", mDesign); mItemNBT = aNBT;}
+	@Override public void readFromNBT(NBTTagCompound aNBT) {
+		super.readFromNBT(aNBT); 
+		mDesign = aNBT.getShort("d"); 
+		if (mDesign >= 32767 || mDesign < 0) 
+		{
+			System.out.println("Invalid design: " + mDesign);
+			mDesign = 0;
+		} 
+		aNBT.setShort("d", mDesign); 
+		mItemNBT = aNBT;
+	}
 	@Override public void writeToNBT(NBTTagCompound aNBT) {super.writeToNBT(aNBT); aNBT.setShort("d", mDesign); mItemNBT = aNBT;}
 	@Override public void processPacket(INetworkHandler aNetworkHandler) {/**/}
 }

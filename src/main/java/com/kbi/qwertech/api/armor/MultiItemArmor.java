@@ -895,9 +895,16 @@ public class MultiItemArmor extends ItemArmor implements IItemProjectile, IItemU
 			ItemStack tStack = ST.make(this, 1, i);
 			isItemStackUsable(tStack);
 			aList.add(tStack);
-			for (int w = 0; w < example.length; w++)
+			if (i < 8)
 			{
-				ItemStack returnable = getArmorWithStats(i, example[w]);
+				for (int w = 0; w < example.length; w++)
+				{
+					ItemStack returnable = getArmorWithStats(i, example[w]);
+					isItemStackUsable(returnable);
+					aList.add(returnable);
+				}
+			} else {
+				ItemStack returnable = getArmorWithStats(i, MT.Rubber);
 				isItemStackUsable(returnable);
 				aList.add(returnable);
 			}
@@ -1249,7 +1256,7 @@ public class MultiItemArmor extends ItemArmor implements IItemProjectile, IItemU
 					upgrade.onAnimalDamage(world, entity, stack, source, amount, event);
 				}
 			}
-			if (event.isCanceled()) return true;
+			if (event.isCanceled() || event.source.isUnblockable()) return true;
 			Map<Integer, Integer> enchants = EnchantmentHelper.getEnchantments(stack);
 			for (int id : enchants.keySet())
 			{
@@ -1277,6 +1284,7 @@ public class MultiItemArmor extends ItemArmor implements IItemProjectile, IItemU
 			}*/
 			float i = (50.0F * tStats.getDamageProtection()) - quality;
             float f1 = amount * i;
+
             if (entity instanceof EntityPlayer)
 			{
 				doDamage(stack, (long)(f1), entity);

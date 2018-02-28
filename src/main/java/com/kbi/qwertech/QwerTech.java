@@ -157,7 +157,7 @@ public final class QwerTech extends Abstract_Mod {
 	private static MultiItemTool qwerTool;
 	private static MultiItemRandom qwerFood;
 	public static BlockCorrugated corrugatedBlock;
-	public static ChiselableBlock chiselableBlock;
+	//public static ChiselableBlock chiselableBlock;
 	public static int knucklesTexID;
 	public static int slingshotTexID;
 	public static int stringshotTexID;
@@ -288,8 +288,8 @@ public final class QwerTech extends Abstract_Mod {
 		chiselBlock.add(UNIFICATABLE, BURNABLE, RECYCLABLE, SCANNABLE).setStacksize(64).aspects(TC.LUCRUM, 1, TC.SENSUS, 1);
 		chiselBlock.setMaterialStats(gregapi.data.CS.U * 9);*/
 		
-		chiselableBlock = new ChiselableBlock(QwerTech.MOD_DATA, "qwertech.blocks.chisel", OP.blockSolid, null, ChiselableBlockItem.class, null, null, Material.iron, Block.soundTypeAnvil, "pickaxe", 1, 1, 0, 0, 3, 0, 0, 0, 1, 1, 1, false, true, false, false, true, true, false, false, true, true, true, true, true, true, OreDictMaterial.MATERIAL_ARRAY);
-		GameRegistry.registerTileEntity(ChiselableTileEntity.class, "qwertech.te.chiselable");
+		//chiselableBlock = new ChiselableBlock(QwerTech.MOD_DATA, "qwertech.blocks.chisel", OP.blockSolid, null, ChiselableBlockItem.class, null, null, Material.iron, Block.soundTypeAnvil, "pickaxe", 1, 1, 0, 0, 3, 0, 0, 0, 1, 1, 1, false, true, false, false, true, true, false, false, true, true, true, true, true, true, OreDictMaterial.MATERIAL_ARRAY);
+		//GameRegistry.registerTileEntity(ChiselableTileEntity.class, "qwertech.te.chiselable");
 		
 		machines = new MultiTileEntityRegistry("qwertech.machines");
 		
@@ -626,7 +626,7 @@ public final class QwerTech extends Abstract_Mod {
 		
 		machines.add("Crafting Helper", "", 400, 0, CraftingHelper.class, 15, 0, air, UT.NBT.make());
 		
-		OreDictMaterial[] upgradeDeskMats = new OreDictMaterial[] {MT.Bronze, MT.Co, MT.Au, MT.Obsidian, MT.Plastic, MT.Silver};
+		OreDictMaterial[] upgradeDeskMats = new OreDictMaterial[] {MT.Bronze, MT.Co, MT.Au, MT.Obsidian, MT.Plastic, MT.Ag};
 		for (int q = 0; q < upgradeDeskMats.length; q++)
 		{
 			OreDictMaterial mat = upgradeDeskMats[q];
