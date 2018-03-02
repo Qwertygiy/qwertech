@@ -70,6 +70,7 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import com.kbi.qwertech.api.data.QTConfigs;
 import com.kbi.qwertech.api.data.QTI;
+import com.kbi.qwertech.api.data.QTMT;
 import com.kbi.qwertech.api.data.WOOD;
 import com.kbi.qwertech.api.recipe.AnyQTTool;
 import com.kbi.qwertech.api.recipe.WoodSpecificCrafting;
@@ -245,6 +246,8 @@ public final class QwerTech extends Abstract_Mod {
 	@Override
 	public void onModPreInit2(FMLPreInitializationEvent aEvent) {
 		instance = this;
+		
+		QTMT.ChemicalX.toString();
 		
 		this.doConfigurations();
 		
