@@ -295,7 +295,12 @@ public class RegisterAchievements {
     	EntityPlayerMP ep = (EntityPlayerMP)event.entityPlayer;
     	if ((ep.func_147099_x().hasAchievementUnlocked(event.achievement) == false) && ((event.achievement.parentAchievement == null) || (ep.func_147099_x().hasAchievementUnlocked(event.achievement.parentAchievement) == true)))
     	{
-    		if (QTConfigs.announceFanfare) UT.Sounds.send("qwertech:achievement.normal", 0.3F, 1F, event.entityPlayer);
+    		if (QTConfigs.announceFanfare) 
+    		{
+    			if (event.achievement == AchievementList.openInventory || event.achievement == AchievementList.mineWood || event.achievement == AchievementList.buildWorkBench || event.achievement == AchievementList.buildPickaxe || event.achievement == achievementAges.get("stoneAge") || event.achievement == achievementAges.get("rockstart"))
+    			{} else
+    			UT.Sounds.send("qwertech:achievement.normal", 0.3F, 1F, event.entityPlayer);
+    		}
 	    	if (event.achievement == AchievementList.openInventory)
 	    	{
 	    		issueAchievement(event.entityPlayer, "stoneAge");
