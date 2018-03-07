@@ -1,73 +1,5 @@
 package com.kbi.qwertech;
 
-import static gregapi.data.TD.ItemGenerator.TOOLS;
-import static gregapi.data.TD.Prefix.BURNABLE;
-import static gregapi.data.TD.Prefix.NEEDS_HANDLE;
-import static gregapi.data.TD.Prefix.NEEDS_SHARPENING;
-import static gregapi.data.TD.Prefix.RECYCLABLE;
-import static gregapi.data.TD.Prefix.SCANNABLE;
-import static gregapi.data.TD.Prefix.TOOL_HEAD;
-import static gregapi.data.TD.Prefix.UNIFICATABLE;
-import static gregapi.data.TD.Properties.HAS_TOOL_STATS;
-import static gregapi.data.TD.Properties.NO_ADVANCED_TOOLS;
-import gregapi.api.Abstract_Mod;
-import gregapi.api.Abstract_Proxy;
-import gregapi.block.ItemBlockBase;
-import gregapi.block.multitileentity.MultiTileEntityBlock;
-import gregapi.block.multitileentity.MultiTileEntityRegistry;
-import gregapi.code.ICondition.And;
-import gregapi.code.ModData;
-import gregapi.config.ConfigCategories;
-import gregapi.data.ANY;
-import gregapi.data.CS;
-import gregapi.data.CS.ModIDs;
-import gregapi.data.LH;
-import gregapi.data.MT;
-import gregapi.data.OP;
-import gregapi.data.RM;
-import gregapi.data.TC;
-import gregapi.data.TD;
-import gregapi.item.multiitem.MultiItemRandom;
-import gregapi.item.multiitem.MultiItemTool;
-import gregapi.item.multiitem.food.FoodStatDrink;
-import gregapi.item.prefixitem.PrefixItem;
-import gregapi.network.NetworkHandler;
-import gregapi.old.Textures;
-import gregapi.oredict.OreDictItemData;
-import gregapi.oredict.OreDictManager;
-import gregapi.oredict.OreDictMaterial;
-import gregapi.oredict.OreDictMaterialCondition;
-import gregapi.oredict.OreDictPrefix;
-import gregapi.recipes.handlers.RecipeMapHandlerPrefix;
-import gregapi.render.IIconContainer;
-import gregapi.render.TextureSet;
-import gregapi.util.CR;
-import gregapi.util.ST;
-import gregapi.util.UT;
-import gregtech.loaders.b.Loader_OreProcessing;
-import gregtech.tileentity.tools.MultiTileEntityMold;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockDispenser;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.EnumAction;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
-import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.RecipeSorter;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-
 import com.kbi.qwertech.api.data.QTConfigs;
 import com.kbi.qwertech.api.data.QTI;
 import com.kbi.qwertech.api.data.QTMT;
@@ -81,50 +13,69 @@ import com.kbi.qwertech.api.recipe.managers.CraftingManager3D;
 import com.kbi.qwertech.api.recipe.managers.CraftingManagerHammer;
 import com.kbi.qwertech.api.registry.ArmorUpgradeRegistry;
 import com.kbi.qwertech.blocks.BlockCorrugated;
-import com.kbi.qwertech.blocks.ChiselableBlock;
 import com.kbi.qwertech.client.QT_GUIHandler;
 import com.kbi.qwertech.entities.projectile.EntityShuriken;
-import com.kbi.qwertech.items.ChiselableBlockItem;
 import com.kbi.qwertech.items.MultiItemTool_QT;
 import com.kbi.qwertech.items.behavior.Dispenser_Shuriken;
-import com.kbi.qwertech.items.stats.QT_Tool_Bat;
-import com.kbi.qwertech.items.stats.QT_Tool_Javelin;
-import com.kbi.qwertech.items.stats.QT_Tool_Knuckles;
-import com.kbi.qwertech.items.stats.QT_Tool_Mace;
-import com.kbi.qwertech.items.stats.QT_Tool_Mattock;
-import com.kbi.qwertech.items.stats.QT_Tool_Slingshot;
-import com.kbi.qwertech.items.stats.QT_Tool_Stake;
-import com.kbi.qwertech.items.stats.QT_Tool_SturdyAxe;
-import com.kbi.qwertech.items.stats.QT_Tool_SturdyPickaxe;
-import com.kbi.qwertech.items.stats.QT_Tool_SturdyShovel;
-import com.kbi.qwertech.loaders.RegisterAchievements;
-import com.kbi.qwertech.loaders.RegisterArmor;
-import com.kbi.qwertech.loaders.RegisterItems;
-import com.kbi.qwertech.loaders.RegisterLoot;
-import com.kbi.qwertech.loaders.RegisterMobs;
+import com.kbi.qwertech.items.stats.*;
+import com.kbi.qwertech.loaders.*;
 import com.kbi.qwertech.loaders.mod.ModLoadBase;
 import com.kbi.qwertech.network.packets.PacketInventorySync;
-import com.kbi.qwertech.tileentities.ChiselableTileEntity;
-import com.kbi.qwertech.tileentities.CraftingHelper;
-import com.kbi.qwertech.tileentities.CraftingTableT1;
-import com.kbi.qwertech.tileentities.CraftingTableT2;
-import com.kbi.qwertech.tileentities.CraftingTableT3;
-import com.kbi.qwertech.tileentities.CraftingTableT4;
-import com.kbi.qwertech.tileentities.UpgradeDesk;
-
-import cpw.mods.fml.common.FMLCommonHandler;
+import com.kbi.qwertech.tileentities.*;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Optional.Interface;
 import cpw.mods.fml.common.Optional.InterfaceList;
 import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartedEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.event.FMLServerStoppedEvent;
-import cpw.mods.fml.common.event.FMLServerStoppingEvent;
+import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.registry.GameRegistry;
+import gregapi.api.Abstract_Mod;
+import gregapi.api.Abstract_Proxy;
+import gregapi.block.ItemBlockBase;
+import gregapi.block.multitileentity.MultiTileEntityBlock;
+import gregapi.block.multitileentity.MultiTileEntityRegistry;
+import gregapi.code.ICondition.And;
+import gregapi.code.ModData;
+import gregapi.config.ConfigCategories;
+import gregapi.data.*;
+import gregapi.data.CS.ModIDs;
+import gregapi.item.multiitem.MultiItemRandom;
+import gregapi.item.multiitem.MultiItemTool;
+import gregapi.item.multiitem.food.FoodStatDrink;
+import gregapi.item.prefixitem.PrefixItem;
+import gregapi.network.NetworkHandler;
+import gregapi.old.Textures;
+import gregapi.oredict.*;
+import gregapi.recipes.handlers.RecipeMapHandlerPrefix;
+import gregapi.render.IIconContainer;
+import gregapi.render.TextureSet;
+import gregapi.util.CR;
+import gregapi.util.ST;
+import gregapi.util.UT;
+import gregtech.loaders.b.Loader_OreProcessing;
+import gregtech.tileentity.tools.MultiTileEntityMold;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockDispenser;
+import net.minecraft.block.material.Material;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.EnumAction;
+import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.RecipeSorter;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+
+import static gregapi.data.TD.Prefix.*;
+import static gregapi.data.TD.Properties.HAS_TOOL_STATS;
 
 @InterfaceList(value = {
 		@Interface(iface = "squeek.applecore.api.food.IEdible", modid = ModIDs.APC)
@@ -209,7 +160,8 @@ public final class QwerTech extends Abstract_Mod {
 		QTConfigs.announceFanfare = tMainConfig.get("achievements", "AnnounceFanfare", true, "If achievements annoy you, turn this off").setShowInGui(true).getBoolean(true);
 		QTConfigs.removeVanillaCrafting = tMainConfig.get("recipes", "RemoveCrafting", true, "Replace vanilla crafting table with QwerTech crafting tables").setShowInGui(true).getBoolean(true);
 		QTConfigs.allHammers = tMainConfig.get("recipes", "AllHammerRecipes", true, "Disable to keep advanced hammer recipes in crafting grids").setShowInGui(true).getBoolean(true);
-		
+		QTConfigs.anyHammers = tMainConfig.get("recipes", "PutPlateHammeringBackInCraftingTable", false, "Set to true to disable QwerTech from moving plate-hammering, gem-smashing, and related basic recipes to the crafting anvils").setShowInGui(true).getBoolean(false);
+
 		tMainConfig.save();
 		
 		Configuration t3DConfig = new Configuration(new File(CS.DirectoriesGT.CONFIG_GT, "3Ditems.cfg"));
@@ -259,12 +211,13 @@ public final class QwerTech extends Abstract_Mod {
 		RecipeSorter.register("qwertech:wooded", WoodSpecificCrafting.class, RecipeSorter.Category.SHAPED, "after:minecraft:shaped");
 		
 		new ArmorUpgradeRegistry();
+		new RegisterMaterials();
 		RegisterItems.run();
 		
-		new FoodStatDrink(UT.Fluids.create("tomatosauce", "Tomato Sauce", null, 1, 1000L, 300L, new Set[] { CS.FluidsGT.SIMPLE, CS.FluidsGT.FOOD }), "Spaghetti, spaghetti, all over the place", 3, 0.4F, 20.0F, 350.0F, 0.5F, 0, 0, 0, 5, 0, EnumAction.drink, false, false, false, new int[] { Potion.hunger.id, 100, 1, 20 });
-		new FoodStatDrink(UT.Fluids.create("mildsalsa", "Mild Salsa", null, 1, 1000L, 300L, new Set[] { CS.FluidsGT.SIMPLE, CS.FluidsGT.FOOD }), "AKA Chunky Ketchup", 3, 0.4F, 20.0F, 310.0F, 0.3F, 0, 0, 0, 5, 0, EnumAction.drink, false, false, false, new int[] { Potion.hunger.id, 100, 1, 20 });
-		new FoodStatDrink(UT.Fluids.create("salsa", "Medium Salsa", null, 1, 1000L, 300L, new Set[] { CS.FluidsGT.SIMPLE, CS.FluidsGT.FOOD }), "With a little kick", 3, 0.4F, 20.0F, 310.0F, 0.5F, 0, 0, 0, 5, 0, EnumAction.drink, false, false, false, new int[] { Potion.hunger.id, 100, 1, 20 });
-		new FoodStatDrink(UT.Fluids.create("hotsalsa", "Hot Salsa", null, 1, 1000L, 300L, new Set[] { CS.FluidsGT.SIMPLE, CS.FluidsGT.FOOD }), "Vegan fire", 3, 0.4F, 20.0F, 310.0F, 0.7F, 0, 0, 0, 5, 0, EnumAction.drink, false, false, false, new int[] { Potion.hunger.id, 100, 1, 20 });
+		new FoodStatDrink(UT.Fluids.create("tomatosauce", "Tomato Sauce", null, 1, 1000L, 300L,  CS.FluidsGT.SIMPLE, CS.FluidsGT.FOOD), "Spaghetti, spaghetti, all over the place", 3, 0.4F, 20.0F, 350.0F, 0.5F, 0, 0, 0, 5, 0, EnumAction.drink, false, false, false, Potion.hunger.id, 100, 1, 20 );
+		new FoodStatDrink(UT.Fluids.create("mildsalsa", "Mild Salsa", null, 1, 1000L, 300L, CS.FluidsGT.SIMPLE, CS.FluidsGT.FOOD ), "AKA Chunky Ketchup", 3, 0.4F, 20.0F, 310.0F, 0.3F, 0, 0, 0, 5, 0, EnumAction.drink, false, false, false, Potion.hunger.id, 100, 1, 20 );
+		new FoodStatDrink(UT.Fluids.create("salsa", "Medium Salsa", null, 1, 1000L, 300L, CS.FluidsGT.SIMPLE, CS.FluidsGT.FOOD ), "With a little kick", 3, 0.4F, 20.0F, 310.0F, 0.5F, 0, 0, 0, 5, 0, EnumAction.drink, false, false, false, Potion.hunger.id, 100, 1, 20 );
+		new FoodStatDrink(UT.Fluids.create("hotsalsa", "Hot Salsa", null, 1, 1000L, 300L, CS.FluidsGT.SIMPLE, CS.FluidsGT.FOOD ), "Vegan fire", 3, 0.4F, 20.0F, 310.0F, 0.7F, 0, 0, 0, 5, 0, EnumAction.drink, false, false, false, Potion.hunger.id, 100, 1, 20 );
 		
 		corrugatedBlock = new BlockCorrugated(ItemBlockBase.class, "qt.block.corrugated", Material.iron, Block.soundTypeMetal, 16, new IIconContainer[]{new Textures.BlockIcons.CustomIcon("qwertech:wall")});
 		LH.add("qt.block.corrugated.0.name", "Corrugated Iron Wall");
@@ -432,30 +385,30 @@ public final class QwerTech extends Abstract_Mod {
 			qwerTool = new MultiItemTool_QT(MODID, "qwertech.tools");
 			QTI.qwerTool.set(qwerTool);
 			qwerTool.setFull3D();
-			qwerTool.addTool(0, "Mattock", "Tills soil and chops logs", new QT_Tool_Mattock().setMaterialAmount(mattockHead.mAmount), new Object[] { "craftingToolAxe", "craftingToolHoe", TC.stack(TC.INSTRUMENTUM, 2L), TC.stack(TC.METO, 2L), TC.stack(TC.ARBOR, 2L), "toolMattock" });
+			qwerTool.addTool(0, "Mattock", "Tills soil and chops logs", new QT_Tool_Mattock().setMaterialAmount(mattockHead.mAmount), "craftingToolAxe", "craftingToolHoe", TC.stack(TC.INSTRUMENTUM, 2L), TC.stack(TC.METO, 2L), TC.stack(TC.ARBOR, 2L), "toolMattock" );
 			mattockHead.addListener(new OreProcessing_QTTool(0, ConfigCategories.Recipes.gregtechtools + "." + "Mattock", true, false, 0L, 0L, null, new String[][]{{ "PPI", "PIh", "fH " }}, new String[][] { { "PPI", "PIh", "f  " } }, null, null, null, null, null, TD.Atomic.ANTIMATTER.NOT));
 			GameRegistry.addRecipe(new AnyQTTool(0L, mattockHead, true));
-			qwerTool.addTool(2, "Slingshot", "Rock and roll", new QT_Tool_Slingshot().setMaterialAmount(CS.U3 + (CS.U / 2)), new Object[] { TC.stack(TC.INSTRUMENTUM, 2L), TC.stack(TC.TELUM, 2L), TC.stack(TC.TERRA, 2L), "toolSlingshot"});
-			mattockHead.addListener(new OreProcessing_QTTool(2, ConfigCategories.Recipes.gregtechtools + "." + "Slingshot", true, false, 0L, 0L, null, new String[][]{{"XXX", "SfS", " S "}}, (String[][])null, new ItemStack(Items.string), null, null, null, null, TD.Atomic.ANTIMATTER.NOT));
-			qwerTool.addTool(4,  "Knuckles", "Hit it!", new QT_Tool_Knuckles().setMaterialAmount(OP.ring.mAmount * 4), new Object[]{TC.stack(TC.TELUM, 1), TC.stack(TC.PERDITIO, 1), "toolKnuckles"});
-			mattockHead.addListener(new OreProcessing_QTTool(4, ConfigCategories.Recipes.gregtechtools + "." + "Knuckles", false, false, 0L, 0L, MT.Empty, new String[][]{{"OOO", "Oh ", "   "}}, (String[][])null, null, null, null, null, null, TD.Atomic.ANTIMATTER.NOT));
-			qwerTool.addTool(6, "Mace", "Club with teeth", new QT_Tool_Mace().setMaterialAmount(maceHead.mAmount), new Object[]{TC.stack(TC.TELUM, 3), TC.stack(TC.PERDITIO, 2), "toolMace"});
-			maceHead.addListener(new OreProcessing_QTTool(6, ConfigCategories.Recipes.gregtechtools + "." + "Mace", true, false, 0L, 0L, null, (String[][])null, new String[][]{{"DID", "III", "DhD"}, {"DGD", "GGG", "DhD"}}, null, null, null, null, null, TD.Atomic.ANTIMATTER.NOT));
+			qwerTool.addTool(2, "Slingshot", "Rock and roll", new QT_Tool_Slingshot().setMaterialAmount(CS.U3 + (CS.U / 2)),  TC.stack(TC.INSTRUMENTUM, 2L), TC.stack(TC.TELUM, 2L), TC.stack(TC.TERRA, 2L), "toolSlingshot");
+			mattockHead.addListener(new OreProcessing_QTTool(2, ConfigCategories.Recipes.gregtechtools + "." + "Slingshot", true, false, 0L, 0L, null, new String[][]{{"XXX", "SfS", " S "}}, null, new ItemStack(Items.string), null, null, null, null, TD.Atomic.ANTIMATTER.NOT));
+			qwerTool.addTool(4,  "Knuckles", "Hit it!", new QT_Tool_Knuckles().setMaterialAmount(OP.ring.mAmount * 4), TC.stack(TC.TELUM, 1), TC.stack(TC.PERDITIO, 1), "toolKnuckles");
+			mattockHead.addListener(new OreProcessing_QTTool(4, ConfigCategories.Recipes.gregtechtools + "." + "Knuckles", false, false, 0L, 0L, MT.Empty, new String[][]{{"OOO", "Oh ", "   "}}, null, null, null, null, null, null, TD.Atomic.ANTIMATTER.NOT));
+			qwerTool.addTool(6, "Mace", "Club with teeth", new QT_Tool_Mace().setMaterialAmount(maceHead.mAmount), TC.stack(TC.TELUM, 3), TC.stack(TC.PERDITIO, 2), "toolMace");
+			maceHead.addListener(new OreProcessing_QTTool(6, ConfigCategories.Recipes.gregtechtools + "." + "Mace", true, false, 0L, 0L, null, null, new String[][]{{"DID", "III", "DhD"}, {"DGD", "GGG", "DhD"}}, null, null, null, null, null, TD.Atomic.ANTIMATTER.NOT));
 			GameRegistry.addRecipe(new AnyQTTool(6L, maceHead, true));
-			qwerTool.addTool(8, "Spear", "Stabby McStabface", new QT_Tool_Javelin().setMaterialAmount(OP.stickLong.mAmount + OP.toolHeadArrow.mAmount), new Object[] {TC.stack(TC.TELUM, 2), TC.stack(TC.MOTUS, 1), "toolSpear"});
+			qwerTool.addTool(8, "Spear", "Stabby McStabface", new QT_Tool_Javelin().setMaterialAmount(OP.stickLong.mAmount + OP.toolHeadArrow.mAmount), TC.stack(TC.TELUM, 2), TC.stack(TC.MOTUS, 1), "toolSpear");
 			GameRegistry.addRecipe(new AnyQTTool(8L, OP.toolHeadArrow, OP.stickLong, false));
-			qwerTool.addTool(10, "Stake", "GIT ME MY POKIN' STICK, MARTHA", new QT_Tool_Stake().setMaterialAmount(OP.stick.mAmount), new Object[] {TC.stack(TC.TELUM, 2), TC.stack(TC.MOTUS, 1), "toolSharpStick"});
-			OP.stick.addListener(new OreProcessing_QTTool(10, ConfigCategories.Recipes.gregtechtools + "." + "Stake", true, false, 0L, 0L, null, new String[][]{{"kS"}, {"Sk"}}, (String[][])null, null, null, null, null, null, TD.Atomic.ANTIMATTER.NOT));
+			qwerTool.addTool(10, "Stake", "GIT ME MY POKIN' STICK, MARTHA", new QT_Tool_Stake().setMaterialAmount(OP.stick.mAmount), TC.stack(TC.TELUM, 2), TC.stack(TC.MOTUS, 1), "toolSharpStick");
+			OP.stick.addListener(new OreProcessing_QTTool(10, ConfigCategories.Recipes.gregtechtools + "." + "Stake", true, false, 0L, 0L, null, new String[][]{{"kS"}, {"Sk"}}, null, null, null, null, null, null, TD.Atomic.ANTIMATTER.NOT));
 			OP.stick.addListener(new OreProcessing_NonCrafting(RM.Sharpening, (ItemStack)null, qwerTool.getToolWithStats(10, MT.Empty, MT.Empty), TD.Atomic.ANTIMATTER.NOT));
 			
-			qwerTool.addTool(12, "Bat", "Underwood Light Switch", new QT_Tool_Bat().setMaterialAmount(OP.stick.mAmount), new Object[] {TC.stack(TC.TELUM, 2), "toolBat"});
-			OP.stickLong.addListener(new OreProcessing_QTTool(12, ConfigCategories.Recipes.gregtechtools + "." + "Bat", false, false, 0L, 0L, MT.Empty, new String[][]{{"yL"}, {"Ly"}}, (String[][])null, null, null, null, null, null, TD.Atomic.ANTIMATTER.NOT));
+			qwerTool.addTool(12, "Bat", "Underwood Light Switch", new QT_Tool_Bat().setMaterialAmount(OP.stick.mAmount), TC.stack(TC.TELUM, 2), "toolBat");
+			OP.stickLong.addListener(new OreProcessing_QTTool(12, ConfigCategories.Recipes.gregtechtools + "." + "Bat", false, false, 0L, 0L, MT.Empty, new String[][]{{"yL"}, {"Ly"}}, null, null, null, null, null, null, TD.Atomic.ANTIMATTER.NOT));
 			
-			qwerTool.addTool(14, "Sturdy Axe", "Fells whole trees in a single chop", new QT_Tool_SturdyAxe().setMaterialAmount(OP.toolHeadAxe.mAmount), new Object[] {"craftingToolAxe", TC.stack(TC.INSTRUMENTUM, 2), TC.stack(TC.ARBOR, 1), TC.stack(TC.MACHINA, 1)}, "axe");
+			qwerTool.addTool(14, "Sturdy Axe", "Fells whole trees in a single chop", new QT_Tool_SturdyAxe().setMaterialAmount(OP.toolHeadAxe.mAmount), "craftingToolAxe", TC.stack(TC.INSTRUMENTUM, 2), TC.stack(TC.ARBOR, 1), TC.stack(TC.MACHINA, 1), "axe");
 			
-			qwerTool.addTool(16, "Sturdy Shovel", "Diggy diggy hole", new QT_Tool_SturdyShovel().setMaterialAmount(OP.toolHeadShovel.mAmount), new Object[] {"craftingToolShovel", TC.stack(TC.INSTRUMENTUM, 2), TC.stack(TC.TERRA, 1)}, "shovel");
-			
-			qwerTool.addTool(18, "Sturdy Pickaxe", "This is boring", new QT_Tool_SturdyPickaxe().setMaterialAmount(OP.toolHeadPickaxe.mAmount), new Object[] {"craftingToolPickaxe", TC.stack(TC.INSTRUMENTUM, 2), TC.stack(TC.PERDITIO, 1)}, "pickaxe");
+			qwerTool.addTool(16, "Sturdy Shovel", "Diggy diggy hole", new QT_Tool_SturdyShovel().setMaterialAmount(OP.toolHeadShovel.mAmount), "craftingToolShovel", TC.stack(TC.INSTRUMENTUM, 2), TC.stack(TC.TERRA, 1), "shovel");
+
+			qwerTool.addTool(18, "Sturdy Pickaxe", "This is boring", new QT_Tool_SturdyPickaxe().setMaterialAmount(OP.toolHeadPickaxe.mAmount), "craftingToolPickaxe", TC.stack(TC.INSTRUMENTUM, 2), TC.stack(TC.PERDITIO, 1), "pickaxe");
 			
 			//mattockHeadRaw.addListener(new Loader_OreProcessing.OreProcessing_Sharpening(mattockHead, 1L, true, TD.Atomic.ANTIMATTER.NOT));
 			//maceHeadRaw.addListener(new Loader_OreProcessing.OreProcessing_Sharpening(maceHead, 1L, true, TD.Atomic.ANTIMATTER.NOT));
@@ -496,6 +449,8 @@ public final class QwerTech extends Abstract_Mod {
         //MinecraftForge.EVENT_BUS.register(new RegisterMobs());
         new RegisterMobs();
         MinecraftForge.EVENT_BUS.register(new QT_GUIHandler());
+
+        RegisterMaterials.instance.registerRecipes();
         
         RegisterLoot.init();
         
@@ -553,16 +508,16 @@ public final class QwerTech extends Abstract_Mod {
 		}
 		machines.add("Wooden Crafting Table", "Crafting Tables", 0, 0, CraftingTableT1.class, 0, 16, wood, UT.NBT.make(null, CS.NBT_MATERIAL, MT.Wood, CS.NBT_INV_SIZE, 11, CS.NBT_TEXTURE, "qwertech:wood", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(MT.Wood.fRGBaSolid)));
 		
-		GameRegistry.addRecipe(new WoodSpecificCrafting(machines.getItem(0), new Object[]{"PP", "PP", Character.valueOf('P'), "plankWood"}));
+		GameRegistry.addRecipe(new WoodSpecificCrafting(machines.getItem(0), "PP", "PP", 'P', "plankWood"));
 		
 		OreDictMaterial[] tier1 = new OreDictMaterial[]{MT.Plastic, MT.Bi, MT.Cu, MT.Au, MT.Pb, MT.TinAlloy};
 		for (int q = 0; q < tier1.length; q++)
 		{
 			OreDictMaterial mat = tier1[q];
-			machines.add(mat.mNameLocal + " Crafting Table", "Crafting Tables", 257 + q, 0, CraftingTableT1.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 11, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", "CCC", "CCC", Character.valueOf('C'), OP.chunkGt.dat(mat));
+			machines.add(mat.mNameLocal + " Crafting Table", "Crafting Tables", 257 + q, 0, CraftingTableT1.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 11, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", "CCC", "CCC", 'C', OP.chunkGt.dat(mat));
 		}
 		
-		machines.add("Sandstone Crafting Table", "Crafting Tables", 256, 0, CraftingTableT1.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, MT.Sand, CS.NBT_INV_SIZE, 11, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(MT.Sand.fRGBaSolid)), "CCC", "CCC", "CCC", Character.valueOf('C'), ST.make(Blocks.sandstone, 1, CS.W));
+		machines.add("Sandstone Crafting Table", "Crafting Tables", 256, 0, CraftingTableT1.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, MT.Sand, CS.NBT_INV_SIZE, 11, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(MT.Sand.fRGBaSolid)), "CCC", "CCC", "CCC", 'C', ST.make(Blocks.sandstone, 1, CS.W));
 		
 		OreDictMaterial[] tier2i = new OreDictMaterial[]{MT.Brass, MT.Ag, MT.Al, MT.Constantan, MT.AluminiumBrass, MT.Ni, MT.Ge};
 		OreDictMaterial[] tier2g = new OreDictMaterial[]{MT.Almandine, MT.Topaz, MT.Alexandrite, MT.Spinel, MT.Opal, MT.Maxixe, MT.Pyrope, MT.Goshenite};
@@ -571,17 +526,17 @@ public final class QwerTech extends Abstract_Mod {
 		for (int q = 0; q < tier2i.length; q++)
 		{
 			OreDictMaterial mat = tier2i[q];
-			machines.add(mat.mNameLocal + " Crafting Table", "Crafting Tables", 270 + q, 0, CraftingTableT2.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 11, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", "CCC", "CCC", Character.valueOf('C'), OP.chunkGt.dat(mat));
+			machines.add(mat.mNameLocal + " Crafting Table", "Crafting Tables", 270 + q, 0, CraftingTableT2.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 11, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", "CCC", "CCC", 'C', OP.chunkGt.dat(mat));
 		}
 		for (int q = 0; q < tier2g.length; q++)
 		{
 			OreDictMaterial mat = tier2g[q];
-			machines.add(mat.mNameLocal + " Crafting Table", "Crafting Tables", 280 + q, 0, CraftingTableT2.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 11, CS.NBT_TEXTURE, "qwertech:gem", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", "CCC", "CCC", Character.valueOf('C'), OP.gemFlawed.dat(mat));
+			machines.add(mat.mNameLocal + " Crafting Table", "Crafting Tables", 280 + q, 0, CraftingTableT2.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 11, CS.NBT_TEXTURE, "qwertech:gem", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", "CCC", "CCC", 'C', OP.gemFlawed.dat(mat));
 		}
 		for (int q = 0; q < tier2r.length; q++)
 		{
 			OreDictMaterial mat = tier2r[q];
-			machines.add(mat.mNameLocal + " Crafting Table", "Crafting Tables", 290 + q, 0, CraftingTableT2.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 11, CS.NBT_TEXTURE, "qwertech:rock", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", "CCC", "CCC", Character.valueOf('C'), OP.rockGt.dat(mat));
+			machines.add(mat.mNameLocal + " Crafting Table", "Crafting Tables", 290 + q, 0, CraftingTableT2.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 11, CS.NBT_TEXTURE, "qwertech:rock", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", "CCC", "CCC", 'C', OP.rockGt.dat(mat));
 		}
 		
 		OreDictMaterial[] tier3i = new OreDictMaterial[]{MT.Bronze, MT.WroughtIron, MT.Electrum, MT.Alumite, MT.Co, MT.CobaltBrass, MT.Pt, MT.Cr, MT.Os, MT.MeteoricIron};
@@ -591,24 +546,24 @@ public final class QwerTech extends Abstract_Mod {
 		for (int q = 0; q < tier3i.length; q++)
 		{
 			OreDictMaterial mat = tier3i[q];
-			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 300 + q, 0, CraftingTableT3.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 11, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", Character.valueOf('C'), OP.chunkGt.dat(mat));
+			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 300 + q, 0, CraftingTableT3.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 11, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", 'C', OP.chunkGt.dat(mat));
 			CR.shapeless(ST.make(Blocks.crafting_table, 1, 0), CR.DEF, new Object[]{machines.getItem(300 + q)});
 		}
 		for (int q = 0; q < tier3g.length; q++)
 		{
 			OreDictMaterial mat = tier3g[q];
-			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 310 + q, 0, CraftingTableT3.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 11, CS.NBT_TEXTURE, "qwertech:gem", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", Character.valueOf('C'), OP.gemFlawed.dat(mat));
+			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 310 + q, 0, CraftingTableT3.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 11, CS.NBT_TEXTURE, "qwertech:gem", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", 'C', OP.gemFlawed.dat(mat));
 			CR.shapeless(ST.make(Blocks.crafting_table, 1, 0), CR.DEF, new Object[]{machines.getItem(310 + q)});
 		}
 		for (int q = 0; q < tier3r.length; q++)
 		{
 			OreDictMaterial mat = tier3r[q];
-			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 320 + q, 0, CraftingTableT3.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 11, CS.NBT_TEXTURE, "qwertech:rock", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", Character.valueOf('C'), OP.rockGt.dat(mat));
+			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 320 + q, 0, CraftingTableT3.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 11, CS.NBT_TEXTURE, "qwertech:rock", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", 'C', OP.rockGt.dat(mat));
 			CR.shapeless(ST.make(Blocks.crafting_table, 1, 0), CR.DEF, new Object[]{machines.getItem(320 + q)});
 		}
 		
-		Class toUse = CraftingTableT4.class;
-		if (QTConfigs.enable3DCrafting == false)
+		Class<? extends TileEntity> toUse = CraftingTableT4.class;
+		if (!QTConfigs.enable3DCrafting)
 		{
 			toUse = CraftingTableT3.class;
 		}
@@ -616,7 +571,7 @@ public final class QwerTech extends Abstract_Mod {
 		for (int q = 0; q < tier4i.length; q++)
 		{
 			OreDictMaterial mat = tier4i[q];
-			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 330 + q, 0, toUse, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 29, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", Character.valueOf('C'), OP.chunkGt.dat(mat));
+			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 330 + q, 0, toUse, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 29, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", 'C', OP.chunkGt.dat(mat));
 			CR.shapeless(ST.make(Blocks.crafting_table, 1, 0), CR.DEF, new Object[]{machines.getItem(330 + q)});
 		}
 		
@@ -624,7 +579,7 @@ public final class QwerTech extends Abstract_Mod {
 		for (int q = 0; q < tier5i.length; q++)
 		{
 			OreDictMaterial mat = tier5i[q];
-			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 340 + q, 0, toUse, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 29, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", Character.valueOf('C'), OP.chunkGt.dat(mat));
+			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 340 + q, 0, toUse, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 29, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", 'C', OP.chunkGt.dat(mat));
 		}
 		
 		machines.add("Crafting Helper", "", 400, 0, CraftingHelper.class, 15, 0, air, UT.NBT.make());
@@ -633,7 +588,7 @@ public final class QwerTech extends Abstract_Mod {
 		for (int q = 0; q < upgradeDeskMats.length; q++)
 		{
 			OreDictMaterial mat = upgradeDeskMats[q];
-			machines.add(mat.mNameLocal + " Upgrade Desk", "Upgrade Desks", 401 + q, 0, UpgradeDesk.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 1, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "RfR", "RSR", "CCC", Character.valueOf('C'), OP.plate.dat(mat), Character.valueOf('R'), OP.stick.dat(ANY.Steel), Character.valueOf('S'), OP.springSmall.dat(ANY.Steel));
+			machines.add(mat.mNameLocal + " Upgrade Desk", "Upgrade Desks", 401 + q, 0, UpgradeDesk.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 1, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "RfR", "RSR", "CCC", 'C', OP.plate.dat(mat), 'R', OP.stick.dat(ANY.Steel), 'S', OP.springSmall.dat(ANY.Steel));
 		}
 	}
 
@@ -643,8 +598,15 @@ public final class QwerTech extends Abstract_Mod {
 		
 		ModLoadBase.runPostInit();
 		CraftingManagerHammer.replacems.put(ST.make(Items.feather, 1, 0), "itemFeather");
-		CS.GT.mAfterPostInit.add(CraftingManagerHammer.getInstance());
-		CS.GT.mAfterPostInit.add(CraftingManager3D.getInstance());
+		//CS.GT.mAfterPostInit.add(CraftingManagerHammer.getInstance());
+		//CS.GT.mAfterPostInit.add(CraftingManager3D.getInstance());
+	}
+
+	@Mod.EventHandler
+	public void onModsLoaded(FMLLoadCompleteEvent aEvent)
+	{
+		CraftingManagerHammer.getInstance().run();
+		CraftingManager3D.getInstance().run();
 	}
 
 	@Override

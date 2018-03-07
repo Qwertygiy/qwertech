@@ -1,6 +1,13 @@
 package com.kbi.qwertech.api.recipe.managers;
 
+import com.kbi.qwertech.api.data.QTConfigs;
+import com.kbi.qwertech.api.data.QTI;
+import com.kbi.qwertech.api.recipe.HammerablePrefixRecipe;
+import com.kbi.qwertech.api.recipe.HammerableShapedRecipe;
+import com.kbi.qwertech.api.recipe.QTArmor;
+import com.kbi.qwertech.api.recipe.RepairRecipe;
 import gregapi.code.ICondition;
+import gregapi.config.ConfigCategories;
 import gregapi.data.CS;
 import gregapi.data.MT;
 import gregapi.data.OP;
@@ -10,11 +17,7 @@ import gregapi.oredict.OreDictMaterialStack;
 import gregapi.oredict.OreDictPrefix;
 import gregapi.recipes.ICraftingRecipeGT;
 import gregapi.util.ST;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
+import gregtech.loaders.b.Loader_OreProcessing;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
@@ -25,12 +28,9 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
-import com.kbi.qwertech.api.data.QTConfigs;
-import com.kbi.qwertech.api.data.QTI;
-import com.kbi.qwertech.api.recipe.HammerablePrefixRecipe;
-import com.kbi.qwertech.api.recipe.HammerableShapedRecipe;
-import com.kbi.qwertech.api.recipe.QTArmor;
-import com.kbi.qwertech.api.recipe.RepairRecipe;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class CraftingManagerHammer implements Runnable {
 
@@ -38,14 +38,16 @@ public class CraftingManagerHammer implements Runnable {
     /** A list of all the recipes added */
     private List recipes = new ArrayList();
     
-    public static HashMap<ItemStack, String> replacems = new HashMap();
+    public static HashMap<ItemStack, String> replacems = new HashMap<ItemStack, String>();
+
+    private static List oldRecipes = CraftingManager.getInstance().getRecipeList();
 
     /**
      * Returns the static instance of this class
      */
     public static CraftingManagerHammer getInstance()
     {
-        /** The static instance of this class */
+        /* The static instance of this class */
         return instance;
     }
     
@@ -53,7 +55,6 @@ public class CraftingManagerHammer implements Runnable {
     {
     	if (QTConfigs.allHammers)
     	{
-	    	List oldRecipes = CraftingManager.getInstance().getRecipeList();
 	    	System.out.println("Parsing through " + oldRecipes.size() + " recipes to remove hammers...");
 	    	int count = 0;
 	    	for (int q = 0; q < oldRecipes.size(); q++)
@@ -63,7 +64,7 @@ public class CraftingManagerHammer implements Runnable {
 	    		if (recipe instanceof ShapelessOreRecipe)
 	    		{
 	    			List items = ((ShapelessOreRecipe)recipe).getInput();
-	    			for (int w = 0; w < items.size() && removeIt == false; w++)
+	    			for (int w = 0; w < items.size() && !removeIt; w++)
 	        		{
 	        			Object slot = items.get(w);
 	        			if (slot instanceof ItemStack)
@@ -97,7 +98,7 @@ public class CraftingManagerHammer implements Runnable {
 	    		} else if (recipe instanceof ShapedOreRecipe)
 	    		{
 	    			Object[] items = ((ShapedOreRecipe)recipe).getInput();
-	    			for (int w = 0; w < items.length && removeIt == false; w++)
+	    			for (int w = 0; w < items.length && !removeIt; w++)
 	        		{
 	        			Object slot = items[w];
 	        			if (slot instanceof ItemStack)
@@ -137,7 +138,36 @@ public class CraftingManagerHammer implements Runnable {
 	    		}
 	    	}
 	    	System.out.println("Parsing complete, found " + count + " hammer recipes");
-    	}
+    	} else {
+			if (QTConfigs.anyHammers) {
+				String tCategory = ConfigCategories.Recipes.gregtechrecipes + ".";
+				OP.ingotDouble.addListener(new Loader_OreProcessing.OreProcessing_CraftFrom(1L, tCategory + "ingots2ingotDouble", new String[][]{{"h", "I", "I"}}, null, null, null, null, null, new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT, TD.Processing.SMITHABLE)));
+				OP.ingotTriple.addListener(new Loader_OreProcessing.OreProcessing_CraftFrom(1L, tCategory + "ingots2ingotTriple", new String[][]{{"h", "I", "X"}}, OP.ingotDouble, null, null, null, null, new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT, TD.Processing.SMITHABLE)));
+				OP.ingotQuadruple.addListener(new Loader_OreProcessing.OreProcessing_CraftFrom(1L, tCategory + "ingots2ingotQuadruple", new String[][]{{"h", "I", "X"}}, OP.ingotTriple, null, null, null, null, new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT, TD.Processing.SMITHABLE)));
+				OP.ingotQuintuple.addListener(new Loader_OreProcessing.OreProcessing_CraftFrom(1L, tCategory + "ingots2ingotQuintuple", new String[][]{{"h", "I", "X"}}, OP.ingotQuadruple, null, null,null, null, new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT, TD.Processing.SMITHABLE)));
+				OP.plateTiny.addListener(new Loader_OreProcessing.OreProcessing_CraftFrom(1L, tCategory + "chunkGt2plateTiny", new String[][]{{"h", "X"}}, OP.chunkGt, null, null, null, null, new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT, TD.Processing.SMITHABLE)));
+				OP.plate.addListener(new Loader_OreProcessing.OreProcessing_CraftFrom(1L, tCategory + "plateCurved2plate", new String[][]{{"h", "X"}}, OP.plateCurved, null, null, null, null, new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE)));
+				OP.plate.addListener(new Loader_OreProcessing.OreProcessing_CraftFrom(1L, tCategory + "ingots2plate", new String[][]{{"h", "X"}}, OP.ingotDouble, null, null, null, null, new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT, TD.Processing.SMITHABLE)));
+				OP.plateDouble.addListener(new Loader_OreProcessing.OreProcessing_CraftFrom(1L, tCategory + "ingots2plateDouble", new String[][]{{"h", "X"}}, OP.ingotTriple, null, null, null, null, new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT, TD.Processing.SMITHABLE)));
+				OP.plateTriple.addListener(new Loader_OreProcessing.OreProcessing_CraftFrom(1L, tCategory + "ingots2plateTriple", new String[][]{{"h", "X"}}, OP.ingotQuadruple, null, null, null, null, new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT, TD.Processing.SMITHABLE)));
+				OP.plateQuadruple.addListener(new Loader_OreProcessing.OreProcessing_CraftFrom(1L, tCategory + "ingots2plateQuadruple", new String[][]{{"h", "X"}}, OP.ingotQuintuple, null, null, null, null, new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT, TD.Processing.SMITHABLE)));
+				OP.plateDouble.addListener(new Loader_OreProcessing.OreProcessing_CraftFrom(1L, tCategory + "ingots2plateDouble", new String[][]{{"h", "P", "P"}}, null, null, null, null, null, new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT, TD.Processing.SMITHABLE)));
+				OP.plateTriple.addListener(new Loader_OreProcessing.OreProcessing_CraftFrom(1L, tCategory + "plates2plateTriple", new String[][]{{"h", "P", "X"}}, OP.plateDouble, null, null, null, null, new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT, TD.Processing.SMITHABLE)));
+				OP.plateQuadruple.addListener(new Loader_OreProcessing.OreProcessing_CraftFrom(1L, tCategory + "plates2plateQuadruple", new String[][]{{"h", "P", "X"}}, OP.plateTriple, null, null, null, null, new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT, TD.Processing.SMITHABLE)));
+				OP.plateQuintuple.addListener(new Loader_OreProcessing.OreProcessing_CraftFrom(1L, tCategory + "plates2plateQuintuple", new String[][]{{"h", "P", "X"}}, OP.plateQuadruple, null, null, null, null, new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT, TD.Processing.SMITHABLE)));
+				OP.plateCurved.addListener(new Loader_OreProcessing.OreProcessing_CraftFrom(1L, tCategory + "plate2plateCurved", new String[][]{{"h", "P", "z"}}, null, null, null, null, null, new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE)));
+				OP.ring.addListener(new Loader_OreProcessing.OreProcessing_CraftFrom(1L, tCategory + "stick2ring", new String[][]{{"hS", " o"}}, null, null, null, null, null, new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE)));
+				OP.spring.addListener(new Loader_OreProcessing.OreProcessing_CraftFrom(1L, tCategory + "stick2spring", new String[][]{{"zXh"}}, OP.stickLong, null, null, null, null, new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE)));
+				OP.springSmall.addListener(new Loader_OreProcessing.OreProcessing_CraftFrom(1L, tCategory + "wire2springSmall", new String[][]{{"oXh"}}, OP.wireGt01, null, null, null, null, new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE)));
+				OP.springSmall.addListener(new Loader_OreProcessing.OreProcessing_CraftFrom(1L, tCategory + "stick2springSmall", new String[][]{{"oSh"}}, null, null, null, null, null, new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE)));
+				OP.foil.addListener(new Loader_OreProcessing.OreProcessing_CraftFrom(2L, tCategory + "plate2foil", new String[][]{{"hPz"}}, null, null, null, null, null, new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE)));
+				OP.casingSmall.addListener(new Loader_OreProcessing.OreProcessing_CraftFrom(1L, tCategory + "plate2casingSmall", new String[][]{{"h P"}}, null, null, null, null, null, new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT, TD.Processing.SMITHABLE)));
+				OP.stickLong.addListener(new Loader_OreProcessing.OreProcessing_CraftFrom(1L, tCategory + "sticks2stickLong", new String[][]{{"ShS"}}, null, null, null, null, null, new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT, TD.Processing.SMITHABLE)));
+				OP.rotor.addListener(new Loader_OreProcessing.OreProcessing_CraftFrom(1L, tCategory + "rotor", new String[][]{{"YhY", "TXf", "YdY"}}, OP.ring, OP.plateCurved, null, null, null, new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT, TD.Processing.SMITHABLE)));
+				OP.toolHeadBuzzSaw.addListener(new Loader_OreProcessing.OreProcessing_CraftFrom(1L, tCategory + "toolHeadBuzzSaw", new String[][]{{"wPh", "P P", "fPx"}}, null, null, null, null, null, new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT)));
+				OP.toolHeadBuzzSaw.addListener(new Loader_OreProcessing.OreProcessing_CraftFrom(1L, tCategory + "toolHeadBuzzSaw", new String[][]{{"wCh", "C C", "fCx"}}, null, null, null, null, null, new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT)));
+			}
+		}
     }
 
     private CraftingManagerHammer()
@@ -180,10 +210,10 @@ public class CraftingManagerHammer implements Runnable {
     	this.addRecipe(new HammerablePrefixRecipe(OP.plateTiny,  		new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE), 							new Object[]{OP.nugget}));
     	this.addRecipe(new HammerablePrefixRecipe(OP.stickLong, 		new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE), 							new Object[]{OP.stick,			OP.stick}					));
 
-    	this.addRecipe(new HammerableShapedRecipe(OP.rotor,				new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT, TD.Processing.SMITHABLE), new String[]{"Y Y", "TXf", "YdY"}, Character.valueOf('Y'), OP.plateCurved, Character.valueOf('X'), OP.ring, Character.valueOf('T'), OP.screw, Character.valueOf('f'), "craftingToolFile", Character.valueOf('d'), "craftingToolScrewdriver"));
+    	this.addRecipe(new HammerableShapedRecipe(OP.rotor,				new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT, TD.Processing.SMITHABLE), new String[]{"Y Y", "TXf", "YdY"}, 'Y', OP.plateCurved, 'X', OP.ring, 'T', OP.screw, 'f', "craftingToolFile", 'd', "craftingToolScrewdriver"));
     	
-    	this.addRecipe(new HammerableShapedRecipe(OP.toolHeadBuzzSaw,	new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT, TD.Processing.SMITHABLE), new String[]{"wP ", "P P", "fPx"}, Character.valueOf('P'), OP.plate, Character.valueOf('x'), "craftingToolWireCutter", Character.valueOf('f'), "craftingToolFile", Character.valueOf('w'), "craftingToolWrench"));
-    	this.addRecipe(new HammerableShapedRecipe(OP.toolHeadBuzzSaw,	new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT, TD.Processing.SMITHABLE), new String[]{"wC ", "C C", "fCx"}, Character.valueOf('C'), OP.plateGem, Character.valueOf('x'), "craftingToolWireCutter", Character.valueOf('f'), "craftingToolFile", Character.valueOf('w'), "craftingToolWrench"));
+    	this.addRecipe(new HammerableShapedRecipe(OP.toolHeadBuzzSaw,	new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT, TD.Processing.SMITHABLE), new String[]{"wP ", "P P", "fPx"}, 'P', OP.plate, 'x', "craftingToolWireCutter", 'f', "craftingToolFile", 'w', "craftingToolWrench"));
+    	this.addRecipe(new HammerableShapedRecipe(OP.toolHeadBuzzSaw,	new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT, TD.Processing.SMITHABLE), new String[]{"wC ", "C C", "fCx"}, 'C', OP.plateGem, 'x', "craftingToolWireCutter", 'f', "craftingToolFile", 'w', "craftingToolWrench"));
     	
     	this.addRecipe(new HammerablePrefixRecipe(OP.gemExquisite, 2,	new ICondition.And(TD.Atomic.ANTIMATTER.NOT), 													new Object[]{OP.gemLegendary}					));
     	this.addRecipe(new HammerablePrefixRecipe(OP.gemFlawless, 2,	new ICondition.And(TD.Atomic.ANTIMATTER.NOT), 													new Object[]{OP.gemExquisite}					));
@@ -197,15 +227,15 @@ public class CraftingManagerHammer implements Runnable {
     	
     	if (QTConfigs.enableArmor)
     	{
-    		this.addRecipe(new QTArmor(7,				new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE), new Object[]{"D D", "P P", Character.valueOf('D'), OP.plateDouble, Character.valueOf('P'), OP.plate}));
-    		this.addRecipe(new QTArmor(6,				new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE), new Object[]{"DTD", "D D", "D D", Character.valueOf('D'), OP.plateDouble, Character.valueOf('T'), OP.plateTriple}));
-    		this.addRecipe(new QTArmor(5,				new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE), new Object[]{"D D", "DTD", "PDP", Character.valueOf('D'), OP.plateDouble, Character.valueOf('P'), OP.plate, Character.valueOf('T'), OP.plateTriple}));
-    		this.addRecipe(new QTArmor(4,				new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE), new Object[]{"TDT", "D D", Character.valueOf('D'), OP.plateDouble, Character.valueOf('T'), OP.plateTriple}));
+    		this.addRecipe(new QTArmor(7,				new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE), "D D", "P P", 'D', OP.plateDouble, 'P', OP.plate));
+    		this.addRecipe(new QTArmor(6,				new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE), "DTD", "D D", "D D", 'D', OP.plateDouble, 'T', OP.plateTriple));
+    		this.addRecipe(new QTArmor(5,				new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE), "D D", "DTD", "PDP", 'D', OP.plateDouble, 'P', OP.plate, 'T', OP.plateTriple));
+    		this.addRecipe(new QTArmor(4,				new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE), "TDT", "D D", 'D', OP.plateDouble, 'T', OP.plateTriple));
     		
-    		this.addRecipe(new QTArmor(3,				new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE), new Object[]{"L L", "CsC", Character.valueOf('L'), OreDictPrefix.get("link"), Character.valueOf('C'), OreDictPrefix.get("chain"), Character.valueOf('s'), "craftingToolSaw"}));
-    		this.addRecipe(new QTArmor(2,				new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE), new Object[]{"CLC", "LsL", "L L", Character.valueOf('L'), OreDictPrefix.get("link"), Character.valueOf('C'), OreDictPrefix.get("chain"), Character.valueOf('s'), "craftingToolSaw"}));
-    		this.addRecipe(new QTArmor(1,				new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE), new Object[]{"LsL", "CLC", "LLL", Character.valueOf('L'), OreDictPrefix.get("link"), Character.valueOf('C'), OreDictPrefix.get("chain"), Character.valueOf('s'), "craftingToolSaw"}));
-    		this.addRecipe(new QTArmor(0,				new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE), new Object[]{"LLL", "LLL", "LsL", Character.valueOf('L'), OreDictPrefix.get("link"), Character.valueOf('s'), "craftingToolSaw"}));
+    		this.addRecipe(new QTArmor(3,				new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE), "L L", "CsC", 'L', OreDictPrefix.get("link"), 'C', OreDictPrefix.get("chain"), 's', "craftingToolSaw"));
+    		this.addRecipe(new QTArmor(2,				new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE), "CLC", "LsL", "L L", 'L', OreDictPrefix.get("link"), 'C', OreDictPrefix.get("chain"), 's', "craftingToolSaw"));
+    		this.addRecipe(new QTArmor(1,				new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE), "LsL", "CLC", "LLL", 'L', OreDictPrefix.get("link"), 'C', OreDictPrefix.get("chain"), 's', "craftingToolSaw"));
+    		this.addRecipe(new QTArmor(0,				new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE), "LLL", "LLL", "LsL", 'L', OreDictPrefix.get("link"), 's', "craftingToolSaw"));
     	
     		this.addRecipe(new RepairRecipe(QTI.qwerArmor.getItem(), null));
     	}

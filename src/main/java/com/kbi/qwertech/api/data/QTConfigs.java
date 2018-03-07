@@ -17,6 +17,7 @@ public class QTConfigs {
 	
 	public static boolean removeVanillaCrafting;
 	public static boolean allHammers;
+	public static boolean anyHammers;
 	
 	public static boolean add3DGregTools;
 	public static boolean add3DQwerTools;

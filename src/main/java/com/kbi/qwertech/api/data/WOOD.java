@@ -10,7 +10,7 @@ import java.util.HashMap;
 public class WOOD {
 	
 	public static final OreDictMaterial[] woodList = new OreDictMaterial[256];
-	public static final HashMap<String, Integer> woodMap = new HashMap();
+	public static final HashMap<String, Integer> woodMap = new HashMap<String, Integer>();
 	
 	public static final ModData
 	NAT = new ModData("Natura", "Natura");
@@ -63,7 +63,7 @@ public class WOOD {
 	Mahogany			= 		makeWood(54,	 "Mahogany"			, "Mahogany",			MD.FR,		111, 	61, 	55, 	255													),
 	Padauk				= 		makeWood(55,	 "Padauk"			, "Padauk",				MD.FR,		179, 	99, 	59, 	255		,"Paduak"									),
 	Palm				= 		makeWood(56,	 "Palm"				, "Palm",				MD.FR,		201, 	124, 	69, 	255													),
-	Papaya				= 		makeWood(57,	 "Papaya"			, "Padauk",				MD.FR,		218, 	200, 	109, 	255													),
+	Papaya				= 		makeWood(57,	 "Papaya"			, "Papaya",				MD.FR,		218, 	200, 	109, 	255													),
 	Plum				= 		makeWood(58,	 "Plum"				, "Plum",				MD.FR,		171, 	99, 	123, 	255													),
 	Poplar				= 		makeWood(59,	 "Poplar"			, "Poplar",				MD.FR,		204, 	204, 	123, 	255													),
 	Sequoia				= 		makeWood(60,	 "Sequoia"			, "Sequoia",			MD.FR,		142, 	87, 	84, 	255													),
