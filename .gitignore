@@ -1,12 +1,15 @@
  
 /.gradle/
 /.settings/
+/.idea/
 /bin/
 /build/
 /eclipse/
 /gradle/
 /jars/
 /lib/
+/out/
+/Unused Lib/
 /.classpath
 /.directory
 /.project
