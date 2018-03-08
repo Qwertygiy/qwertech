@@ -1,17 +1,15 @@
 package com.kbi.qwertech.loaders.mod;
 
+import com.kbi.qwertech.api.recipe.RepairRecipe;
+import com.kbi.qwertech.api.recipe.managers.CraftingManagerHammer;
+import com.kbi.qwertech.api.registry.MobScrapeRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 import gregapi.code.ModData;
 import gregapi.data.CS;
 import gregapi.data.MD;
 import gregapi.data.MT;
 import gregapi.data.OP;
 import gregapi.oredict.OreDictMaterialStack;
-
-import com.kbi.qwertech.api.recipe.RepairRecipe;
-import com.kbi.qwertech.api.recipe.managers.CraftingManagerHammer;
-import com.kbi.qwertech.api.registry.MobScrapeRegistry;
-
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ModLoad_TE_FOUNDATION extends ModLoadBase {
 	
@@ -68,7 +66,7 @@ public class ModLoad_TE_FOUNDATION extends ModLoadBase {
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "armor.bootsCopper"), new OreDictMaterialStack(MT.Cu, CS.U * 4)));
 			
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.swordCopper"), new OreDictMaterialStack(MT.Cu, CS.U * 2)));
-			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.shovelCopper"), new OreDictMaterialStack(MT.Cu, CS.U * 1)));
+			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.shovelCopper"), new OreDictMaterialStack(MT.Cu, CS.U)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.pickaxeCopper"), new OreDictMaterialStack(MT.Cu, CS.U * 3)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.axeCopper"), new OreDictMaterialStack(MT.Cu, CS.U * 3)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.hoeCopper"), new OreDictMaterialStack(MT.Cu, CS.U * 2)));
@@ -81,7 +79,7 @@ public class ModLoad_TE_FOUNDATION extends ModLoadBase {
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "armor.bootsTin"), new OreDictMaterialStack(MT.Sn, CS.U * 4)));
 			
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.swordTin"), new OreDictMaterialStack(MT.Sn, CS.U * 2)));
-			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.shovelTin"), new OreDictMaterialStack(MT.Sn, CS.U * 1)));
+			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.shovelTin"), new OreDictMaterialStack(MT.Sn, CS.U)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.pickaxeTin"), new OreDictMaterialStack(MT.Sn, CS.U * 3)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.axeTin"), new OreDictMaterialStack(MT.Sn, CS.U * 3)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.hoeTin"), new OreDictMaterialStack(MT.Sn, CS.U * 2)));
@@ -94,7 +92,7 @@ public class ModLoad_TE_FOUNDATION extends ModLoadBase {
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "armor.bootsSilver"), new OreDictMaterialStack(MT.Sn, CS.U * 4)));
 			
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.swordSilver"), new OreDictMaterialStack(MT.Ag, CS.U * 2)));
-			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.shovelSilver"), new OreDictMaterialStack(MT.Ag, CS.U * 1)));
+			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.shovelSilver"), new OreDictMaterialStack(MT.Ag, CS.U)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.pickaxeSilver"), new OreDictMaterialStack(MT.Ag, CS.U * 3)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.axeSilver"), new OreDictMaterialStack(MT.Ag, CS.U * 3)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.hoeSilver"), new OreDictMaterialStack(MT.Ag, CS.U * 2)));
@@ -107,7 +105,7 @@ public class ModLoad_TE_FOUNDATION extends ModLoadBase {
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "armor.bootsTin"), new OreDictMaterialStack(MT.Pb, CS.U * 4)));
 			
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.swordLead"), new OreDictMaterialStack(MT.Pb, CS.U * 2)));
-			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.shovelLead"), new OreDictMaterialStack(MT.Pb, CS.U * 1)));
+			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.shovelLead"), new OreDictMaterialStack(MT.Pb, CS.U)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.pickaxeLead"), new OreDictMaterialStack(MT.Pb, CS.U * 3)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.axeLead"), new OreDictMaterialStack(MT.Pb, CS.U * 3)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.hoeLead"), new OreDictMaterialStack(MT.Pb, CS.U * 2)));
@@ -120,7 +118,7 @@ public class ModLoad_TE_FOUNDATION extends ModLoadBase {
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "armor.bootsNickel"), new OreDictMaterialStack(MT.Ni, CS.U * 4)));
 			
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.swordNickel"), new OreDictMaterialStack(MT.Ni, CS.U * 2)));
-			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.shovelNickel"), new OreDictMaterialStack(MT.Ni, CS.U * 1)));
+			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.shovelNickel"), new OreDictMaterialStack(MT.Ni, CS.U)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.pickaxeNickel"), new OreDictMaterialStack(MT.Ni, CS.U * 3)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.axeNickel"), new OreDictMaterialStack(MT.Ni, CS.U * 3)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.hoeNickel"), new OreDictMaterialStack(MT.Ni, CS.U * 2)));
@@ -133,7 +131,7 @@ public class ModLoad_TE_FOUNDATION extends ModLoadBase {
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "armor.bootsElectrum"), new OreDictMaterialStack(MT.Electrum, CS.U * 4)));
 			
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.swordElectrum"), new OreDictMaterialStack(MT.Electrum, CS.U * 2)));
-			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.shovelElectrum"), new OreDictMaterialStack(MT.Electrum, CS.U * 1)));
+			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.shovelElectrum"), new OreDictMaterialStack(MT.Electrum, CS.U)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.pickaxeElectrum"), new OreDictMaterialStack(MT.Electrum, CS.U * 3)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.axeElectrum"), new OreDictMaterialStack(MT.Electrum, CS.U * 3)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.hoeElectrum"), new OreDictMaterialStack(MT.Electrum, CS.U * 2)));
@@ -146,7 +144,7 @@ public class ModLoad_TE_FOUNDATION extends ModLoadBase {
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "armor.bootsInvar"), new OreDictMaterialStack(MT.Invar, CS.U * 4)));
 			
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.swordInvar"), new OreDictMaterialStack(MT.Invar, CS.U * 2)));
-			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.shovelInvar"), new OreDictMaterialStack(MT.Invar, CS.U * 1)));
+			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.shovelInvar"), new OreDictMaterialStack(MT.Invar, CS.U)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.pickaxeInvar"), new OreDictMaterialStack(MT.Invar, CS.U * 3)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.axeInvar"), new OreDictMaterialStack(MT.Invar, CS.U * 3)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.hoeInvar"), new OreDictMaterialStack(MT.Invar, CS.U * 2)));
@@ -159,7 +157,7 @@ public class ModLoad_TE_FOUNDATION extends ModLoadBase {
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "armor.bootsBronze"), new OreDictMaterialStack(MT.Bronze, CS.U * 4)));
 			
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.swordBronze"), new OreDictMaterialStack(MT.Bronze, CS.U * 2)));
-			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.shovelBronze"), new OreDictMaterialStack(MT.Bronze, CS.U * 1)));
+			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.shovelBronze"), new OreDictMaterialStack(MT.Bronze, CS.U)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.pickaxeBronze"), new OreDictMaterialStack(MT.Bronze, CS.U * 3)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.axeBronze"), new OreDictMaterialStack(MT.Bronze, CS.U * 3)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.hoeBronze"), new OreDictMaterialStack(MT.Bronze, CS.U * 2)));
@@ -172,7 +170,7 @@ public class ModLoad_TE_FOUNDATION extends ModLoadBase {
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "armor.bootsPlatinum"), new OreDictMaterialStack(MT.Pt, CS.U * 4)));
 			
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.swordPlatinum"), new OreDictMaterialStack(MT.Pt, CS.U * 2)));
-			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.shovelPlatinum"), new OreDictMaterialStack(MT.Pt, CS.U * 1)));
+			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.shovelPlatinum"), new OreDictMaterialStack(MT.Pt, CS.U)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.pickaxePlatinum"), new OreDictMaterialStack(MT.Pt, CS.U * 3)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.axePlatinum"), new OreDictMaterialStack(MT.Pt, CS.U * 3)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "tool.hoePlatinum"), new OreDictMaterialStack(MT.Pt, CS.U * 2)));

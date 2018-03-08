@@ -1,6 +1,11 @@
 package com.kbi.qwertech.loaders.mod;
 
+import com.google.common.io.ByteSource;
+import com.google.common.io.Files;
+import com.kbi.qwertech.QwerTech;
+import com.kbi.qwertech.api.data.QTConfigs;
 import gregapi.code.ModData;
+import net.minecraft.client.Minecraft;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,13 +15,6 @@ import java.net.URL;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
-
-import net.minecraft.client.Minecraft;
-
-import com.google.common.io.ByteSource;
-import com.google.common.io.Files;
-import com.kbi.qwertech.QwerTech;
-import com.kbi.qwertech.api.data.QTConfigs;
 
 public class ModLoad_JourneyMap extends ModLoadBase {
 
@@ -49,7 +47,7 @@ public class ModLoad_JourneyMap extends ModLoadBase {
 						if (!entry.isDirectory())
 						{
 							Files.createParentDirs(toFile);
-							new ZipEntryByteSource(zipFile, entry).copyTo(Files.asByteSink(toFile, new com.google.common.io.FileWriteMode[0]));
+							new ZipEntryByteSource(zipFile, entry).copyTo(Files.asByteSink(toFile));
 						}
 					}
 				}
@@ -100,12 +98,12 @@ public class ModLoad_JourneyMap extends ModLoadBase {
 	public static void copyResources(File targetDirectory, String assetsPath, String setName, boolean overwrite)
 	{
 		System.out.println("Starting attempt to copy resources at " + assetsPath + " to " + targetDirectory);
-		String fromPath = null;
-		File toDir = null;
+		String fromPath;
+		File toDir;
 		try
 		{	
 			URL resourceDir = QwerTech.class.getResource(assetsPath);
-			String toPath = String.format("%s/%s", new Object[] { assetsPath, setName });
+			String toPath = String.format("%s/%s", assetsPath, setName);
 			toDir = new File(targetDirectory, setName);
 			if (isInJar())
 			{
@@ -177,7 +175,7 @@ public class ModLoad_JourneyMap extends ModLoadBase {
 
 		public String toString()
 		{
-			return String.format("ZipEntryByteSource( %s / %s )", new Object[] { file, entry });
+			return String.format("ZipEntryByteSource( %s / %s )", file, entry);
 		}
 	}
 

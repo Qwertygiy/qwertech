@@ -1,5 +1,6 @@
 package com.kbi.qwertech.api.recipe.listeners;
 
+import com.kbi.qwertech.api.data.QTI;
 import gregapi.code.ICondition;
 import gregapi.code.IItemContainer;
 import gregapi.data.CS;
@@ -14,14 +15,11 @@ import gregapi.oredict.OreDictMaterial;
 import gregapi.oredict.OreDictPrefix;
 import gregapi.util.CR;
 import gregapi.util.ST;
-
-import java.util.Arrays;
-import java.util.HashMap;
-
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
-import com.kbi.qwertech.api.data.QTI;
+import java.util.Arrays;
+import java.util.HashMap;
 
 public class OreProcessing_QTTool
 implements IOreDictListenerEvent
@@ -69,7 +67,7 @@ implements IOreDictListenerEvent
 	
 	public void replaceData(Object[] recipeList, OreDictMaterial material)
 	{
-		OreDictMaterial handle = this.mUseNormalHandle == true ? this.mHandleOverride : material.mHandleMaterial;
+		OreDictMaterial handle = this.mUseNormalHandle ? this.mHandleOverride : material.mHandleMaterial;
 		for (int q = 0; q < recipeList.length; q++)
 		{
 			if (recipeList[q] instanceof ItemStack && ((ItemStack)recipeList[q]).getItem() instanceof MultiItemTool)
@@ -194,7 +192,7 @@ implements IOreDictListenerEvent
 				tCapacity = 0L;
 				if ((this.mSpecialObjectV instanceof IItemContainer))
 				{
-					ItemStack tBattery = ((IItemContainer)this.mSpecialObjectV).get(1L, new Object[0]);
+					ItemStack tBattery = ((IItemContainer)this.mSpecialObjectV).get(1L);
 					if ((tBattery != null) && ((tBattery.getItem() instanceof IItemEnergy))) {
 						tCapacity += ((IItemEnergy)tBattery.getItem()).getEnergyCapacity(TD.Energy.EU, tBattery);
 					}
@@ -206,7 +204,7 @@ implements IOreDictListenerEvent
 				}
 				if ((this.mSpecialObjectW instanceof IItemContainer))
 				{
-					ItemStack tBattery = ((IItemContainer)this.mSpecialObjectW).get(1L, new Object[0]);
+					ItemStack tBattery = ((IItemContainer)this.mSpecialObjectW).get(1L);
 					if ((tBattery != null) && ((tBattery.getItem() instanceof IItemEnergy))) {
 						tCapacity += ((IItemEnergy)tBattery.getItem()).getEnergyCapacity(TD.Energy.EU, tBattery);
 					}
@@ -222,11 +220,11 @@ implements IOreDictListenerEvent
 			{
 				createHashMap(aEvent.mMaterial);
 				
-				recObj = new Object[(letterData.size() * 2) + 0];
+				recObj = new Object[(letterData.size() * 2)];
 				for (int q = 0; q < letterData.size(); q++)
 				{
 					Character c = (Character)letterData.keySet().toArray()[q];
-					recObj[(q * 2) + 0] = Character.valueOf(c);
+					recObj[(q * 2)] = c;
 					recObj[(q * 2) + 1] = letterData.get(c);
 				}
 				
@@ -236,10 +234,7 @@ implements IOreDictListenerEvent
 					for (int i = 0; i < this.mToolRecipes.length; i++) {
 						if ((this.mToolRecipes[i] != null) && (this.mToolRecipes[i].length > 0) && ((this.mCategoryName == null) || (CS.ConfigsGT.RECIPES.get(this.mCategoryName + ".toolrecipes." + i, aEvent.mMaterial.mNameInternal, true)))) {
 							Object[] recipeStrings = new Object[this.mToolRecipes[i].length];
-							for (int q = 0; q < this.mToolRecipes[i].length; q++)
-							{
-								recipeStrings[q] = this.mToolRecipes[i][q];
-							}
+							System.arraycopy(this.mToolRecipes[i], 0, recipeStrings, 0, this.mToolRecipes[i].length);
 							Object[] result = Arrays.copyOf(recipeStrings, recObj.length + recipeStrings.length);
 							System.arraycopy(recObj, 0, result, recipeStrings.length, recObj.length);
 							CR.shaped(tTool, CR.DEF_NCC | (this.mDismantleable ? CR.DISMANTLE : 0L), result);
@@ -250,10 +245,7 @@ implements IOreDictListenerEvent
 					for (int i = 0; i < this.mToolHeadRecipes.length; i++) {
 						if ((this.mToolHeadRecipes[i] != null) && (this.mToolHeadRecipes[i].length > 0) && ((this.mCategoryName == null) || (CS.ConfigsGT.RECIPES.get(this.mCategoryName + ".toolheadrecipe." + i, aEvent.mMaterial.mNameInternal, true)))) {
 							Object[] recipeStrings = new Object[this.mToolHeadRecipes[i].length];
-							for (int q = 0; q < this.mToolHeadRecipes[i].length; q++)
-							{
-								recipeStrings[q] = this.mToolHeadRecipes[i][q];
-							}
+							System.arraycopy(this.mToolHeadRecipes[i], 0, recipeStrings, 0, this.mToolHeadRecipes[i].length);
 							Object[] result = Arrays.copyOf(recipeStrings, recObj.length + recipeStrings.length);
 							System.arraycopy(recObj, 0, result, recipeStrings.length, recObj.length);
 							CR.shaped(tStack, CR.DEF_NCC | (this.mDismantleable ? CR.DISMANTLE : 0L), result);

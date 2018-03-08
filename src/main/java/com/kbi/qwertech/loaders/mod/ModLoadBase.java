@@ -68,20 +68,20 @@ public abstract class ModLoadBase {
 	/**
 	 * Override this to use MobGearRegistry
 	 */
-	public void registerMobGear() {};
-	
-	/**
+	public void registerMobGear() {}
+
+    /**
 	 * Override this to use MobScrapeRegistry
 	 */
-	public void registerMobScrapes() {};
-	
-	/**
+	public void registerMobScrapes() {}
+
+    /**
 	 * Override this to remove or replace recipes
 	 */
-	public void tweakRecipes() {};
-	
-	/**
+	public void tweakRecipes() {}
+
+    /**
 	 * Override this to add OreDictionary names, prefixes, or materials to items.
 	 */
-	public void addOreDict() {};
+	public void addOreDict() {}
 }

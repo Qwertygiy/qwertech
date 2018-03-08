@@ -1,25 +1,21 @@
 package com.kbi.qwertech.client;
 
-import gregapi.oredict.OreDictMaterial;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
-
-import org.lwjgl.opengl.GL11;
-
 import com.kbi.qwertech.api.armor.IArmorStats;
 import com.kbi.qwertech.api.armor.MultiItemArmor;
 import com.kbi.qwertech.api.data.QTConfigs;
 import com.kbi.qwertech.armor.ArmorIcon;
 import com.kbi.qwertech.client.gui.GuiSplat;
 import com.kbi.qwertech.loaders.RegisterArmor;
-
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import gregapi.oredict.OreDictMaterial;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
+import org.lwjgl.opengl.GL11;
 
 public class QT_GUIHandler {
 	public static int[] splats;

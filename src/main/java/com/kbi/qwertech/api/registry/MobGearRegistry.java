@@ -1,17 +1,16 @@
 package com.kbi.qwertech.api.registry;
 
 import gregapi.data.CS;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.item.ItemStack;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * The registry of custom items to be given to mobs upon spawning.
@@ -348,12 +347,8 @@ public class MobGearRegistry {
 	 */
 	public boolean isRegistered(String key)
 	{
-		if (this.mobList.get(key) != null)
-		{
-			return true;
-		}
-		return false;
-	}
+        return this.mobList.get(key) != null;
+    }
 	
 	/**
 	 * Checks to see if the mob has been registered yet.
@@ -362,12 +357,8 @@ public class MobGearRegistry {
 	 */
 	public <T extends Entity> boolean isRegistered(Class<T> mob)
 	{
-		if (this.listMob.get(mob) != null)
-		{
-			return true;
-		}
-		return false;
-	}
+        return this.listMob.get(mob) != null;
+    }
 	
 	/**
 	 * Checks to see if the mob has been registered in any or all difficulties for ease of use.

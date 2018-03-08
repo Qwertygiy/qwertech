@@ -2,7 +2,6 @@ package com.kbi.qwertech.items.behavior;
 
 import gregapi.item.multiitem.MultiItem;
 import gregapi.item.multiitem.behaviors.IBehavior.AbstractBehaviorDefault;
-import gregapi.item.multiitem.behaviors.IBehavior.Behaviour_None;
 import gregapi.util.UT;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,7 +22,7 @@ public class Behavior_Spawn extends AbstractBehaviorDefault {
 	{
 		if (aWorld.isRemote) return true;
 		try {
-			Entity entity = (Entity)spawn.getConstructor(new Class[] {World.class}).newInstance(new Object[] {aWorld});
+			Entity entity = (Entity)spawn.getConstructor(World.class).newInstance(new Object[] {aWorld});
 			NBTTagCompound tagger = UT.NBT.getNBT(aStack);
 			entity.readFromNBT(tagger);
 			entity.setPosition(aX + hitX + entity.width, aY + hitY + entity.height, aZ + hitZ + entity.width);

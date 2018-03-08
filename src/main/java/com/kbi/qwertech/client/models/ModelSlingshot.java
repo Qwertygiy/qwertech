@@ -1,16 +1,14 @@
 package com.kbi.qwertech.client.models;
 
 import gregapi.oredict.OreDictMaterial;
-
-import java.util.Random;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
-
 import org.lwjgl.opengl.GL11;
+
+import java.util.Random;
 
 /**
  * ModelSlingshot - Qwertygiy
@@ -181,7 +179,7 @@ public class ModelSlingshot extends ModelBase {
 	        	GL11.glColor4f(1F, 1F, 1F, 1F);
 	        	GL11.glPopMatrix();
 	        }
-        } else if (this.isLaunching == true) {
+        } else if (this.isLaunching) {
         	this.rand.setSeed(this.rand.nextLong());
         	this.foilModel = new ModelFoil(this.rand);
         	this.isLaunching = false;

@@ -1,15 +1,9 @@
 package com.kbi.qwertech.api.recipe;
 
+import com.kbi.qwertech.QwerTech;
+import com.kbi.qwertech.api.data.WOOD;
 import gregapi.data.OP;
 import gregapi.oredict.OreDictManager;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import net.minecraft.block.Block;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
@@ -19,8 +13,8 @@ import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
-import com.kbi.qwertech.QwerTech;
-import com.kbi.qwertech.api.data.WOOD;
+import java.util.*;
+import java.util.Map.Entry;
 
 public class WoodSpecificCrafting implements IRecipe
 {
@@ -43,7 +37,7 @@ public class WoodSpecificCrafting implements IRecipe
     {
         output = result.copy();
 
-        String shape = "";
+        StringBuilder shape = new StringBuilder();
         int idx = 0;
 
         if (recipe[idx] instanceof Boolean)
@@ -66,7 +60,7 @@ public class WoodSpecificCrafting implements IRecipe
             for (String s : parts)
             {
                 width = s.length();
-                shape += s;
+                shape.append(s);
             }
 
             height = parts.length;
@@ -76,7 +70,7 @@ public class WoodSpecificCrafting implements IRecipe
             while (recipe[idx] instanceof String)
             {
                 String s = (String)recipe[idx++];
-                shape += s;
+                shape.append(s);
                 width = s.length();
                 height++;
             }
@@ -84,13 +78,13 @@ public class WoodSpecificCrafting implements IRecipe
 
         if (width * height != shape.length())
         {
-            String ret = "Invalid shaped ore recipe: ";
+            StringBuilder ret = new StringBuilder("Invalid shaped ore recipe: ");
             for (Object tmp :  recipe)
             {
-                ret += tmp + ", ";
+                ret.append(tmp).append(", ");
             }
-            ret += output;
-            throw new RuntimeException(ret);
+            ret.append(output);
+            throw new RuntimeException(ret.toString());
         }
 
         HashMap<Character, Object> itemMap = new HashMap<Character, Object>();
@@ -121,19 +115,19 @@ public class WoodSpecificCrafting implements IRecipe
             }
             else
             {
-                String ret = "Invalid shaped ore recipe: ";
+                StringBuilder ret = new StringBuilder("Invalid shaped ore recipe: ");
                 for (Object tmp :  recipe)
                 {
-                    ret += tmp + ", ";
+                    ret.append(tmp).append(", ");
                 }
-                ret += output;
-                throw new RuntimeException(ret);
+                ret.append(output);
+                throw new RuntimeException(ret.toString());
             }
         }
 
         input = new Object[width * height];
         int x = 0;
-        for (char chr : shape.toCharArray())
+        for (char chr : shape.toString().toCharArray())
         {
             input[x++] = itemMap.get(chr);
         }
@@ -179,7 +173,7 @@ public class WoodSpecificCrafting implements IRecipe
     		for (int q = 0; q < validNames.size(); q++)
     		{
     			String name = validNames.get(q);
-    			if (name != "plankWood" && name.startsWith("plankWood") && !name.contains("Any"))
+    			if (!name.equals("plankWood") && name.startsWith("plankWood") && !name.contains("Any"))
     			{
     				result = name;
     			}
@@ -317,11 +311,7 @@ public class WoodSpecificCrafting implements IRecipe
                 }
             }
         }
-        if (validNames.size() > 0 && (validNames.size() > 1 || isGeneric))
-        {
-        	return true;
-        }
-        return false;
+        return validNames.size() > 0 && (validNames.size() > 1 || isGeneric);
     }
 
     public WoodSpecificCrafting setMirrored(boolean mirror)

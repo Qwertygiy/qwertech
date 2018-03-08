@@ -1,9 +1,7 @@
 package com.kbi.qwertech.tileentities;
 
-import static gregapi.data.CS.F;
-import static gregapi.data.CS.OPPOSITES;
-import static gregapi.data.CS.PX_P;
-import static gregapi.data.CS.T;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import gregapi.block.multitileentity.IMultiTileEntity;
 import gregapi.data.CS;
 import gregapi.data.LH.Chat;
@@ -13,18 +11,16 @@ import gregapi.render.BlockTextureDefault;
 import gregapi.render.BlockTextureMulti;
 import gregapi.render.IIconContainer;
 import gregapi.render.ITexture;
-import gregapi.util.ST;
-
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
+
+import static gregapi.data.CS.*;
 
 public class CraftingTableT3 extends CraftingTableT1 implements IMultiTileEntity.IMTE_SyncDataByte {
 	

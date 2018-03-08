@@ -77,6 +77,7 @@ public class EntityMoveHelperJumpy extends EntityMoveHelper
     /**
      * Limits the given angle to a upper and lower limit.
      */
+    @SuppressWarnings("SameParameterValue")
     private float limitAngle(float p_75639_1_, float p_75639_2_, float p_75639_3_)
     {
         float f3 = MathHelper.wrapAngleTo180_float(p_75639_2_ - p_75639_1_);

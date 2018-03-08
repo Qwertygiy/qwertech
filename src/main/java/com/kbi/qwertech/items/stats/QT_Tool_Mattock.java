@@ -7,15 +7,14 @@ import gregapi.item.multiitem.behaviors.Behavior_Tool;
 import gregapi.item.multiitem.tools.ToolStats;
 import gregapi.render.IIconContainer;
 import gregapi.util.ST;
-
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent;
+
+import java.util.List;
 
 public class QT_Tool_Mattock
   extends ToolStats
@@ -99,21 +98,21 @@ public class QT_Tool_Mattock
   {
     if (!aBlock.isWood(aPlayer.worldObj, aX, aY, aZ))
     {
-      if (!OP.log.contains(new ItemStack[] { ST.make(aBlock, 1L, aMetaData) })) {}
+      if (!OP.log.contains(ST.make(aBlock, 1L, aMetaData))) {}
     }
     else {
       return aDefault * 2.0F;
     }
     if (aBlock.getMaterial() != Material.wood)
     {
-      if (!OP.plank.contains(new ItemStack[] { ST.make(aBlock, 1L, aMetaData) })) {}
+      if (!OP.plank.contains(ST.make(aBlock, 1L, aMetaData))) {}
     }
     else {
       return aDefault / 2.0F;
     }
     if (aBlock.getMaterial() != Material.ground && aBlock.getMaterial() != Material.grass)
     {
-    	if (!OP.dirt.contains(new ItemStack[] { ST.make(aBlock, 1L, aMetaData) })) {}
+    	if (!OP.dirt.contains(ST.make(aBlock, 1L, aMetaData))) {}
     }
     else {
     	return aDefault * 2.0F;
@@ -124,7 +123,7 @@ public class QT_Tool_Mattock
 	@Override
   public IIconContainer getIcon(boolean aIsToolHead, ItemStack aStack)
   {
-    return aIsToolHead ? (IIconContainer)MultiItemTool.getPrimaryMaterial(aStack, MT.Steel).mTextureSetsItems.get(gregapi.oredict.OreDictPrefix.get("toolHeadMattock").mIconIndexItem) : (IIconContainer)MultiItemTool.getSecondaryMaterial(aStack, MT.Wood).mTextureSetsItems.get(OP.stick.mIconIndexItem);
+    return aIsToolHead ? MultiItemTool.getPrimaryMaterial(aStack, MT.Steel).mTextureSetsItems.get(gregapi.oredict.OreDictPrefix.get("toolHeadMattock").mIconIndexItem) : MultiItemTool.getSecondaryMaterial(aStack, MT.Wood).mTextureSetsItems.get(OP.stick.mIconIndexItem);
   }
   
 	@Override

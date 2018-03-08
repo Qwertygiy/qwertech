@@ -1,11 +1,11 @@
 package com.kbi.qwertech.loaders.mod;
 
+import com.kbi.qwertech.api.recipe.RepairRecipe;
+import com.kbi.qwertech.api.recipe.managers.CraftingManagerHammer;
+import com.kbi.qwertech.api.registry.MobScrapeRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 import gregapi.code.ModData;
-import gregapi.data.CS;
-import gregapi.data.IL;
-import gregapi.data.MD;
-import gregapi.data.MT;
-import gregapi.data.OP;
+import gregapi.data.*;
 import gregapi.oredict.OreDictMaterialStack;
 import gregapi.util.ST;
 import net.minecraft.block.Block;
@@ -13,12 +13,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraftforge.oredict.OreDictionary;
-
-import com.kbi.qwertech.api.recipe.RepairRecipe;
-import com.kbi.qwertech.api.recipe.managers.CraftingManagerHammer;
-import com.kbi.qwertech.api.registry.MobScrapeRegistry;
-
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ModLoad_TF extends ModLoadBase {
 	
@@ -330,7 +324,7 @@ public class ModLoad_TF extends ModLoadBase {
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "item.ironwoodBoots"), new OreDictMaterialStack(MT.IronWood, CS.U * 4)));
 			
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "item.ironwoodSword"), new OreDictMaterialStack(MT.IronWood, CS.U * 2)));
-			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "item.ironwoodShovel"), new OreDictMaterialStack(MT.IronWood, CS.U * 1)));
+			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "item.ironwoodShovel"), new OreDictMaterialStack(MT.IronWood, CS.U)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "item.ironwoodPick"), new OreDictMaterialStack(MT.IronWood, CS.U * 3)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "item.ironwoodAxe"), new OreDictMaterialStack(MT.IronWood, CS.U * 3)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "item.ironwoodHoe"), new OreDictMaterialStack(MT.IronWood, CS.U * 2)));
@@ -349,7 +343,7 @@ public class ModLoad_TF extends ModLoadBase {
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "item.steeleafBoots"), new OreDictMaterialStack(MT.Steeleaf, CS.U * 4)));
 			
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "item.steeleafSword"), new OreDictMaterialStack(MT.Steeleaf, CS.U * 2)));
-			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "item.steeleafShovel"), new OreDictMaterialStack(MT.Steeleaf, CS.U * 1)));
+			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "item.steeleafShovel"), new OreDictMaterialStack(MT.Steeleaf, CS.U)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "item.steeleafPick"), new OreDictMaterialStack(MT.Steeleaf, CS.U * 3)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "item.steeleafAxe"), new OreDictMaterialStack(MT.Steeleaf, CS.U * 3)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "item.steeleafHoe"), new OreDictMaterialStack(MT.Steeleaf, CS.U * 2)));

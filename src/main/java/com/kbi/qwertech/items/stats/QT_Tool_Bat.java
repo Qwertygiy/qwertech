@@ -1,5 +1,8 @@
 package com.kbi.qwertech.items.stats;
 
+import com.kbi.qwertech.QwerTech;
+import com.kbi.qwertech.items.behavior.Behavior_Scrape;
+import com.kbi.qwertech.items.behavior.Behavior_Swing;
 import gregapi.data.MT;
 import gregapi.item.multiitem.MultiItemTool;
 import gregapi.item.multiitem.tools.ToolStats;
@@ -13,10 +16,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-import com.kbi.qwertech.QwerTech;
-import com.kbi.qwertech.items.behavior.Behavior_Scrape;
-import com.kbi.qwertech.items.behavior.Behavior_Swing;
-
 public class QT_Tool_Bat extends ToolStats {
 	@Override
 	public int getToolDamagePerContainerCraft()
@@ -26,11 +25,7 @@ public class QT_Tool_Bat extends ToolStats {
 
 	@Override
 	public boolean isMinableBlock(Block arg0, byte arg1) {
-		if (arg0.getMaterial() == Material.glass)
-		{
-			return true;
-		}
-		return false;
+		return arg0.getMaterial() == Material.glass;
 	}
 	
 	@Override
@@ -124,7 +119,7 @@ public class QT_Tool_Bat extends ToolStats {
 			{
 				return MultiItemTool.getPrimaryMaterial(aStack, MT.Wood).mTextureSetsItems.get(QwerTech.batTexID);
 			}
-		    return aIsToolHead ? (IIconContainer)MultiItemTool.getSecondaryMaterial(aStack, MT.Steel).mTextureSetsItems.get(QwerTech.batSpikeTexID) : (IIconContainer)MultiItemTool.getPrimaryMaterial(aStack, MT.Wood).mTextureSetsItems.get(QwerTech.batTexID);
+		    return aIsToolHead ? MultiItemTool.getSecondaryMaterial(aStack, MT.Steel).mTextureSetsItems.get(QwerTech.batSpikeTexID) : MultiItemTool.getPrimaryMaterial(aStack, MT.Wood).mTextureSetsItems.get(QwerTech.batTexID);
 		  }
 		  
 			@Override

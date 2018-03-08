@@ -1,9 +1,7 @@
 package com.kbi.qwertech.items.stats;
 
+import com.kbi.qwertech.entities.EntityHelperFunctions;
 import gregtech.items.tools.early.GT_Tool_Pickaxe;
-
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -12,7 +10,7 @@ import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent;
 
-import com.kbi.qwertech.entities.EntityHelperFunctions;
+import java.util.List;
 
 public class QT_Tool_SturdyPickaxe extends GT_Tool_Pickaxe {
 	
@@ -112,15 +110,15 @@ public class QT_Tool_SturdyPickaxe extends GT_Tool_Pickaxe {
 			int x = aX;
 			int y = aY;
 			int z = aZ;
-			if (checkPos[0] == true)
+			if (checkPos[0])
 			{
 				y = checkLoc[0] ? y + 1 : y - 1;
 				returnable = returnable + breakCheck(aPlayer, aPlayer.worldObj, x, y, z, chop);
-				if (checkPos[1] == true)
+				if (checkPos[1])
 				{
 					z = checkLoc[1] ? z + 1 : z - 1;
 					returnable = returnable + breakCheck(aPlayer, aPlayer.worldObj, x, y, z, chop);
-				} else if (checkPos[2] == true)
+				} else if (checkPos[2])
 				{
 					x = checkLoc[2] ? x + 1 : x - 1;
 					returnable = returnable + breakCheck(aPlayer, aPlayer.worldObj, x, y, z, chop);
@@ -130,11 +128,11 @@ public class QT_Tool_SturdyPickaxe extends GT_Tool_Pickaxe {
 			x = aX;
 			y = aY;
 			z = aZ;
-			if (checkPos[1] == true)
+			if (checkPos[1])
 			{
 				z = checkLoc[1] ? z + 1 : z - 1;
 				returnable = returnable + breakCheck(aPlayer, aPlayer.worldObj, x, y, z, chop);
-				if (checkPos[2] == true)
+				if (checkPos[2])
 				{
 					x = checkLoc[2] ? x + 1 : x - 1;
 					returnable = returnable + breakCheck(aPlayer, aPlayer.worldObj, x, y, z, chop);
@@ -144,7 +142,7 @@ public class QT_Tool_SturdyPickaxe extends GT_Tool_Pickaxe {
 			x = aX;
 			y = aY;
 			z = aZ;
-			if (checkPos[2] == true)
+			if (checkPos[2])
 			{
 				x = checkLoc[2] ? x + 1 : x - 1;
 				returnable = returnable + breakCheck(aPlayer, aPlayer.worldObj, x, y, z, chop);

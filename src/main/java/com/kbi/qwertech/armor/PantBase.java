@@ -1,11 +1,10 @@
 package com.kbi.qwertech.armor;
 
+import com.kbi.qwertech.api.armor.ArmorBase;
+import com.kbi.qwertech.loaders.RegisterArmor;
 import gregapi.render.IIconContainer;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
-
-import com.kbi.qwertech.api.armor.ArmorBase;
-import com.kbi.qwertech.loaders.RegisterArmor;
 
 public class PantBase extends ArmorBase {
 	public PantBase()
@@ -40,7 +39,7 @@ public class PantBase extends ArmorBase {
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
 	{
-		if (type != "overlay")
+		if (!type.equals("overlay"))
 		{
 			return "qwertech:textures/armor/chainmail.png";
 		} else {

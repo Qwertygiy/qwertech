@@ -1,6 +1,5 @@
 package com.kbi.qwertech.api.recipe.listeners;
 
-import static gregapi.data.CS.F;
 import gregapi.code.ICondition;
 import gregapi.data.TD;
 import gregapi.item.multiitem.MultiItemTool;
@@ -13,6 +12,8 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
+import static gregapi.data.CS.F;
+
 public class OreProcessing_NonCrafting
 implements IOreDictListenerEvent
 {
@@ -21,18 +22,16 @@ implements IOreDictListenerEvent
 	private final Object mInput;
 	private final Object mOutput;
 	
-	public OreProcessing_NonCrafting(RecipeMap aHandler, ItemStack input, ItemStack output, ICondition aCondition){this(aHandler, (Object)input, (Object)output, aCondition);}
-	public OreProcessing_NonCrafting(RecipeMap aHandler, Item input, ItemStack output, ICondition aCondition){this(aHandler, (Object)ST.make(input, 1, 0), (Object)output, aCondition);}
-	public OreProcessing_NonCrafting(RecipeMap aHandler, ItemStack input, OreDictPrefix output, ICondition aCondition){this(aHandler, (Object)input, (Object)output, aCondition);}
-	public OreProcessing_NonCrafting(RecipeMap aHandler, Item input, OreDictPrefix output, ICondition aCondition){this(aHandler, (Object)ST.make(input, 1, 0), (Object)output, aCondition);}
-	public OreProcessing_NonCrafting(RecipeMap aHandler, ItemStack input, Item output, ICondition aCondition){this(aHandler, (Object)input, (Object)ST.make(output, 1, 0), aCondition);}
-	public OreProcessing_NonCrafting(RecipeMap aHandler, Item input, Item output, ICondition aCondition){this(aHandler, (Object)ST.make(input, 1, 0), (Object)ST.make(output, 1, 0), aCondition);}
-	public OreProcessing_NonCrafting(RecipeMap aHandler, Block input, ItemStack output, ICondition aCondition){this(aHandler, (Object)ST.make(input, 1, 0), (Object)output, aCondition);}
-	public OreProcessing_NonCrafting(RecipeMap aHandler, Block input, OreDictPrefix output, ICondition aCondition){this(aHandler, (Object)ST.make(input, 1, 0), (Object)output, aCondition);}
-	public OreProcessing_NonCrafting(RecipeMap aHandler, Block input, Item output, ICondition aCondition){this(aHandler, (Object)ST.make(input, 1, 0), (Object)ST.make(output, 1, 0), aCondition);}
-	public OreProcessing_NonCrafting(RecipeMap aHandler, Block input, Block output, ICondition aCondition){this(aHandler, (Object)ST.make(input, 1, 0), (Object)ST.make(output, 1, 0), aCondition);}
-	public OreProcessing_NonCrafting(RecipeMap aHandler, ItemStack input, Block output, ICondition aCondition){this(aHandler, (Object)input, (Object)ST.make(output, 1, 0), aCondition);}
-	public OreProcessing_NonCrafting(RecipeMap aHandler, Item input, Block output, ICondition aCondition){this(aHandler, (Object)ST.make(input, 1, 0), (Object)ST.make(output, 1, 0), aCondition);}
+	public OreProcessing_NonCrafting(RecipeMap aHandler, Item input, ItemStack output, ICondition aCondition){this(aHandler, ST.make(input, 1, 0), output, aCondition);}
+	public OreProcessing_NonCrafting(RecipeMap aHandler, Item input, OreDictPrefix output, ICondition aCondition){this(aHandler, ST.make(input, 1, 0), output, aCondition);}
+	public OreProcessing_NonCrafting(RecipeMap aHandler, ItemStack input, Item output, ICondition aCondition){this(aHandler, input, ST.make(output, 1, 0), aCondition);}
+	public OreProcessing_NonCrafting(RecipeMap aHandler, Item input, Item output, ICondition aCondition){this(aHandler, ST.make(input, 1, 0), ST.make(output, 1, 0), aCondition);}
+	public OreProcessing_NonCrafting(RecipeMap aHandler, Block input, ItemStack output, ICondition aCondition){this(aHandler, ST.make(input, 1, 0), output, aCondition);}
+	public OreProcessing_NonCrafting(RecipeMap aHandler, Block input, OreDictPrefix output, ICondition aCondition){this(aHandler, ST.make(input, 1, 0), output, aCondition);}
+	public OreProcessing_NonCrafting(RecipeMap aHandler, Block input, Item output, ICondition aCondition){this(aHandler, ST.make(input, 1, 0), ST.make(output, 1, 0), aCondition);}
+	public OreProcessing_NonCrafting(RecipeMap aHandler, Block input, Block output, ICondition aCondition){this(aHandler, ST.make(input, 1, 0), ST.make(output, 1, 0), aCondition);}
+	public OreProcessing_NonCrafting(RecipeMap aHandler, ItemStack input, Block output, ICondition aCondition){this(aHandler, input, ST.make(output, 1, 0), aCondition);}
+	public OreProcessing_NonCrafting(RecipeMap aHandler, Item input, Block output, ICondition aCondition){this(aHandler, ST.make(input, 1, 0), ST.make(output, 1, 0), aCondition);}
 	
 	public OreProcessing_NonCrafting(RecipeMap aHandler, Object input, Object output, ICondition aCondition)
 	{

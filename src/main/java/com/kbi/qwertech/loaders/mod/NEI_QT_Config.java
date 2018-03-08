@@ -1,18 +1,17 @@
 package com.kbi.qwertech.loaders.mod;
 
-import static gregapi.data.CS.CODE_CLIENT;
-import static gregapi.data.CS.GAPI;
+import com.kbi.qwertech.QwerTech;
+import com.kbi.qwertech.tileentities.CraftingTableT1.GUIClientAdvancedCraftingTable;
+import com.kbi.qwertech.tileentities.CraftingTableT2.GUIClientAdvancedCraftingTable2;
+import cpw.mods.fml.common.Optional.Interface;
+import cpw.mods.fml.common.Optional.InterfaceList;
+import cpw.mods.fml.common.event.FMLInterModComms;
 import gregapi.NEI_RecipeMap;
 import gregapi.data.MD;
 import gregapi.data.RM;
 
-import com.kbi.qwertech.QwerTech;
-import com.kbi.qwertech.tileentities.CraftingTableT1.GUIClientAdvancedCraftingTable;
-import com.kbi.qwertech.tileentities.CraftingTableT2.GUIClientAdvancedCraftingTable2;
-import com.kbi.qwertech.tileentities.CraftingTableT3.GUIClientAdvancedCraftingTable3;
-import cpw.mods.fml.common.Optional.Interface;
-import cpw.mods.fml.common.Optional.InterfaceList;
-import cpw.mods.fml.common.event.FMLInterModComms;
+import static gregapi.data.CS.CODE_CLIENT;
+import static gregapi.data.CS.GAPI;
 
 @InterfaceList(value = {
 		@Interface(iface = "codechicken.nei.api.IConfigureNEI", modid = "NotEnoughItems")

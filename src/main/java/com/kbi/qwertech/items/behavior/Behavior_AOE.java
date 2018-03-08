@@ -2,13 +2,11 @@ package com.kbi.qwertech.items.behavior;
 
 import gregapi.item.multiitem.MultiItem;
 import gregapi.item.multiitem.behaviors.IBehavior.AbstractBehaviorDefault;
-import gregapi.item.multiitem.behaviors.IBehavior.Behaviour_None;
-
-import java.util.Random;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+
+import java.util.Random;
 
 public class Behavior_AOE extends AbstractBehaviorDefault{
 	

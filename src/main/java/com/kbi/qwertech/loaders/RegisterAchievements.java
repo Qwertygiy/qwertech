@@ -1,12 +1,17 @@
 package com.kbi.qwertech.loaders;
 
+import com.kbi.qwertech.api.data.QTConfigs;
+import com.kbi.qwertech.api.data.QTI;
+import com.kbi.qwertech.entities.neutral.EntityTurkey;
+import com.kbi.qwertech.entities.projectile.EntityBall;
+import com.kbi.qwertech.entities.projectile.EntityFoil;
+import com.kbi.qwertech.entities.projectile.EntityRock;
+import com.kbi.qwertech.items.behavior.Behavior_Slingshot;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.gameevent.PlayerEvent;
 import gregapi.block.multitileentity.MultiTileEntityBlock;
 import gregapi.block.multitileentity.MultiTileEntityRegistry;
-import gregapi.data.CS;
-import gregapi.data.IL;
-import gregapi.data.MT;
-import gregapi.data.OP;
-import gregapi.data.TD;
+import gregapi.data.*;
 import gregapi.item.multiitem.MultiItemTool;
 import gregapi.oredict.OreDictItemData;
 import gregapi.oredict.OreDictManager;
@@ -16,11 +21,6 @@ import gregapi.util.OM;
 import gregapi.util.ST;
 import gregapi.util.UT;
 import gregtech.tileentity.tools.MultiTileEntityMold;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntitySkeleton;
@@ -36,27 +36,14 @@ import net.minecraft.stats.AchievementList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.AchievementPage;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.player.AchievementEvent;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
-import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
-import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
-import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ExplosionEvent;
 
-import com.kbi.qwertech.api.data.QTConfigs;
-import com.kbi.qwertech.api.data.QTI;
-import com.kbi.qwertech.entities.neutral.EntityTurkey;
-import com.kbi.qwertech.entities.projectile.EntityBall;
-import com.kbi.qwertech.entities.projectile.EntityFoil;
-import com.kbi.qwertech.entities.projectile.EntityRock;
-import com.kbi.qwertech.items.behavior.Behavior_Slingshot;
-
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.PlayerEvent;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class RegisterAchievements {
 	
@@ -293,7 +280,7 @@ public class RegisterAchievements {
     public void onAchieved(AchievementEvent event)
     {
     	EntityPlayerMP ep = (EntityPlayerMP)event.entityPlayer;
-    	if ((ep.func_147099_x().hasAchievementUnlocked(event.achievement) == false) && ((event.achievement.parentAchievement == null) || (ep.func_147099_x().hasAchievementUnlocked(event.achievement.parentAchievement) == true)))
+    	if ((!ep.func_147099_x().hasAchievementUnlocked(event.achievement)) && ((event.achievement.parentAchievement == null) || (ep.func_147099_x().hasAchievementUnlocked(event.achievement.parentAchievement))))
     	{
     		if (QTConfigs.announceFanfare) 
     		{
@@ -309,7 +296,7 @@ public class RegisterAchievements {
 	    	{
 	    		event.entityPlayer.addExperience(this.achievementXP.get(event.achievement.statId));
 	    	} else {
-	    		if (event.achievement.getSpecial() == true)
+	    		if (event.achievement.getSpecial())
 	    		{
 	    			event.entityPlayer.addExperience(50);
 	    		} else {
@@ -346,7 +333,7 @@ public class RegisterAchievements {
 	    	Block og = event.world.getBlock(event.x, event.y, event.z);
 	    	Class bc = og.getClass();
 	    	//System.out.println("Interacted with " + bc.getName());
-	    	if (bc.getName() == "gregapi.block.multitileentity.MultiTileEntityBlock") {
+	    	if (bc.getName().equals("gregapi.block.multitileentity.MultiTileEntityBlock")) {
 	    		//System.out.println("We have a GT block!");
 	    		MultiTileEntityBlock GTB = (MultiTileEntityBlock)og;
 	    		ArrayList<ItemStack> rawdrop = GTB.getDrops(event.world, event.x, event.y, event.z, 0, 0);
@@ -366,7 +353,7 @@ public class RegisterAchievements {
 	    		}
 	    		if (event.world.getTileEntity(event.x, event.y, event.z) != null) {
 	    			Class TE = event.world.getTileEntity(event.x, event.y, event.z).getClass();
-	    			if (TE.getName() == "gregtech.tileentity.tools.MultiTileEntityMold") {
+	    			if (TE.getName().equals("gregtech.tileentity.tools.MultiTileEntityMold")) {
 	    				TileEntityBase07Paintable moldTE = (MultiTileEntityMold)event.world.getTileEntity(event.x, event.y, event.z);
 	    				if (moldTE.slot(0) != null && moldTE.canExtractItem2(0, moldTE.slot(0), (byte)0) && event.entityPlayer.getHeldItem() == null)
 	    				{
@@ -467,13 +454,13 @@ public class RegisterAchievements {
 	    	if (hurt instanceof EntitySkeleton)			
 	    	{
 	    		System.out.println("We stabbed a skelly!");
-	    		if ((tool != null) && (MultiItemTool.getPrimaryMaterial(tool) == MT.Stone))
+	    		if (MultiItemTool.getPrimaryMaterial(tool) == MT.Stone)
 	    		{
 	    			issueAchievement(event.entityPlayer, "stoneWeapon");
 	    		}
 	    	} else if (hurt instanceof EntityCow)
 	    	{
-	    		if ((tool != null) && (MultiItemTool.getPrimaryMaterial(tool) == MT.Flint))
+	    		if (MultiItemTool.getPrimaryMaterial(tool) == MT.Flint)
 	    		{
 	    			issueAchievement(event.entityPlayer, "cookCow");
 	    		}
@@ -513,12 +500,12 @@ public class RegisterAchievements {
     			TileEntity mte = aRegistry.getNewTileEntity(result);
     			String MachineType = mte.getClass().getName();
     			System.out.println("Crafted a" + MachineType);
-    			if (MachineType == ("gregtech.tileentity.tools.MultiTileEntityMold")) {
+    			if (MachineType.equals("gregtech.tileentity.tools.MultiTileEntityMold")) {
     				issueAchievement(event.player, "craftMold");
-    			} else if(MachineType == ("gregtech.tileentity.energy.MultiTileEntityBoilerTank")) {
+    			} else if(MachineType.equals("gregtech.tileentity.energy.MultiTileEntityBoilerTank")) {
     				issueAchievement(event.player, "bronzeAge");
     				issueAchievement(event.player, "craftBoiler");
-    			} else if(MachineType == ("gregtech.tileentity.energy.MultiTileEntityTurbineSteam")) {
+    			} else if(MachineType.equals("gregtech.tileentity.energy.MultiTileEntityTurbineSteam")) {
     				issueAchievement(event.player, "bronzeAge");
     				issueAchievement(event.player, "craftTurbine");
     			} else if (MachineType.toLowerCase().contains(("craftingtable"))) {
@@ -531,7 +518,7 @@ public class RegisterAchievements {
     					issueAchievement(event.player, "stoneCraft");
     					issueAchievement(event.player, "bronzeCraft");
     				}
-    			} else if(MachineType == ("gregapi.tileentity.machines.MultiTileEntityBasicMachine")) {
+    			} else if(MachineType.equals("gregapi.tileentity.machines.MultiTileEntityBasicMachine")) {
     				if (result.getDisplayName().contains("Lathe"))
     				{
     					issueAchievement(event.player, "craftLathe");
@@ -692,7 +679,7 @@ public class RegisterAchievements {
 			}
 			if (ammo != null)
 			{
-				if ((BS.mDamage > 0L) && ((event.entityPlayer == null) || (!UT.Entities.hasInfiniteItems(event.entityPlayer)))) {
+				if ((BS.mDamage > 0L) && (!UT.Entities.hasInfiniteItems(event.entityPlayer))) {
 					((MultiItemTool)event.item.getItem()).doDamage(event.item, UT.Code.units(BS.mDamage, 10000L, BS.mDamage, true), event.entityPlayer);
 					ammo.stackSize = ammo.stackSize - 1;
 					if (ammo.stackSize < 1) {

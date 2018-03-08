@@ -1,31 +1,24 @@
 package com.kbi.qwertech.api.armor;
 
-import static gregapi.data.CS.COMPAT_TC;
-import static gregapi.data.CS.D1;
-import static gregapi.data.CS.ERR;
-import static gregapi.data.CS.F;
-import static gregapi.data.CS.GAPI;
-import static gregapi.data.CS.RNGSUS;
-import static gregapi.data.CS.T;
-import static gregapi.data.CS.TOOL_SOUNDS;
-import static gregapi.data.CS.V;
+import com.kbi.qwertech.api.armor.upgrades.IArmorUpgrade;
+import com.kbi.qwertech.api.client.models.ModelArmorBasic;
+import com.kbi.qwertech.api.registry.ArmorUpgradeRegistry;
+import cpw.mods.fml.common.Optional;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import gregapi.code.ArrayListNoNulls;
 import gregapi.code.ItemStackSet;
 import gregapi.code.ObjectStack;
 import gregapi.code.TagData;
 import gregapi.damage.DamageSources;
+import gregapi.data.CS.*;
 import gregapi.data.LH;
 import gregapi.data.MT;
-import gregapi.data.TD;
-import gregapi.data.CS.ModIDs;
 import gregapi.data.TC.TC_AspectStack;
+import gregapi.data.TD;
 import gregapi.enchants.Enchantment_Radioactivity;
-import gregapi.item.IItemEnergy;
-import gregapi.item.IItemGT;
-import gregapi.item.IItemNoGTOverride;
-import gregapi.item.IItemProjectile;
-import gregapi.item.IItemUpdatable;
-import gregapi.item.ItemBase;
+import gregapi.item.*;
 import gregapi.item.multiitem.behaviors.IBehavior;
 import gregapi.item.multiitem.energy.EnergyStatDebug;
 import gregapi.lang.LanguageHandler;
@@ -34,31 +27,10 @@ import gregapi.oredict.OreDictMaterial;
 import gregapi.util.OM;
 import gregapi.util.ST;
 import gregapi.util.UT;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import org.lwjgl.opengl.GL11;
-
-import com.kbi.qwertech.api.armor.upgrades.IArmorUpgrade;
-import com.kbi.qwertech.api.client.models.ModelArmorBasic;
-import com.kbi.qwertech.api.registry.ArmorUpgradeRegistry;
-
-import cpw.mods.fml.common.Optional;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import micdoodle8.mods.galacticraft.core.energy.EnergyConfigHandler;
 import net.minecraft.block.BlockDispenser;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
@@ -82,13 +54,16 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fluids.FluidStack;
-import micdoodle8.mods.galacticraft.core.energy.EnergyConfigHandler;
+
+import java.util.*;
+import java.util.Map.Entry;
+
+import static gregapi.data.CS.*;
 
 @Optional.InterfaceList(value = {
 		  @Optional.Interface(iface = "ic2.api.item.ISpecialElectricItem", modid = ModIDs.IC2)
@@ -799,8 +774,6 @@ public class MultiItemArmor extends ItemArmor implements IItemProjectile, IItemU
 		if (aRenderPass < tStats.getRenderPasses()) {
 			IIcon rIcon = tStats.getIcon(aStack, aRenderPass);
 			return rIcon == null ? Textures.ItemIcons.VOID.getIcon(0) : rIcon;
-		} else {
-			
 		}
 		if (aPlayer == null) {
 			aRenderPass = aRenderPass - tStats.getRenderPasses();
@@ -1067,13 +1040,11 @@ public class MultiItemArmor extends ItemArmor implements IItemProjectile, IItemU
      * @return True if the given ItemStack can be inserted in the slot
      */
     @Override
-    public boolean isValidArmor(ItemStack stack, int armorType, Entity entity)
-    {
-    	isItemStackUsable(stack);
-    	IArmorStats tStats = getArmorStatsInternal(stack.getItemDamage());
-		if (tStats != null) return tStats.isValidInSlot(armorType);
-        return false;
-    }
+    public boolean isValidArmor(ItemStack stack, int armorType, Entity entity) {
+		isItemStackUsable(stack);
+		IArmorStats tStats = getArmorStatsInternal(stack.getItemDamage());
+		return tStats != null && tStats.isValidInSlot(armorType);
+	}
 	
 	@Override
 	public boolean itemInteractionForEntity(ItemStack aStack, EntityPlayer aPlayer, EntityLivingBase aEntity) {
@@ -1307,7 +1278,7 @@ public class MultiItemArmor extends ItemArmor implements IItemProjectile, IItemU
      *
      * @param world
      * @param player
-     * @param itemStack
+     * @param stack
      */
     public void onArmorTicked(World world, EntityLivingBase player, ItemStack stack)
     {

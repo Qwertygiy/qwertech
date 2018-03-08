@@ -1,5 +1,7 @@
 package com.kbi.qwertech.api.recipe;
 
+import com.kbi.qwertech.api.armor.MultiItemArmor;
+import com.kbi.qwertech.api.data.QTI;
 import gregapi.code.ICondition;
 import gregapi.data.MT;
 import gregapi.oredict.OreDictItemData;
@@ -9,11 +11,6 @@ import gregapi.recipes.ICraftingRecipeGT;
 import gregapi.util.OM;
 import gregapi.util.ST;
 import gregapi.util.UT;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-
 import net.minecraft.block.Block;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
@@ -22,8 +19,9 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
-import com.kbi.qwertech.api.armor.MultiItemArmor;
-import com.kbi.qwertech.api.data.QTI;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 public class QTArmor implements ICraftingRecipeGT, IRecipe
 {
@@ -53,7 +51,7 @@ public class QTArmor implements ICraftingRecipeGT, IRecipe
 	  this.primaryMaterial = material;
 	  this.tempPrimary = material;
 	  
-	  String shape = "";
+	  StringBuilder shape = new StringBuilder();
       int idx = 0;
 
       if (recipe[idx] instanceof Boolean)
@@ -76,7 +74,7 @@ public class QTArmor implements ICraftingRecipeGT, IRecipe
           for (String s : parts)
           {
               width = s.length();
-              shape += s;
+              shape.append(s);
           }
 
           height = parts.length;
@@ -86,7 +84,7 @@ public class QTArmor implements ICraftingRecipeGT, IRecipe
           while (recipe[idx] instanceof String)
           {
               String s = (String)recipe[idx++];
-              shape += s;
+              shape.append(s);
               width = s.length();
               height++;
           }
@@ -94,13 +92,13 @@ public class QTArmor implements ICraftingRecipeGT, IRecipe
 
       if (width * height != shape.length())
       {
-          String ret = "Invalid armor recipe: ";
+          StringBuilder ret = new StringBuilder("Invalid armor recipe: ");
           for (Object tmp :  recipe)
           {
-              ret += tmp + ", ";
+              ret.append(tmp).append(", ");
           }
-          ret += aArmorID;
-          throw new RuntimeException(ret);
+          ret.append(aArmorID);
+          throw new RuntimeException(ret.toString());
       }
 
       HashMap<Character, Object> itemMap = new HashMap<Character, Object>();
@@ -134,19 +132,19 @@ public class QTArmor implements ICraftingRecipeGT, IRecipe
           }
           else
           {
-              String ret = "Invalid armor recipe: ";
+              StringBuilder ret = new StringBuilder("Invalid armor recipe: ");
               for (Object tmp :  recipe)
               {
-                  ret += tmp + ", ";
+                  ret.append(tmp).append(", ");
               }
-              ret += aArmorID;
-              throw new RuntimeException(ret);
+              ret.append(aArmorID);
+              throw new RuntimeException(ret.toString());
           }
       }
 
       input = new Object[width * height];
       int x = 0;
-      for (char chr : shape.toCharArray())
+      for (char chr : shape.toString().toCharArray())
       {
           input[x++] = itemMap.get(chr);
       }
@@ -154,7 +152,7 @@ public class QTArmor implements ICraftingRecipeGT, IRecipe
   
   public static Object[] stringify(Object[] ODs)
   {
-	  String ret = "Adding QTArmor3D recipe: ";
+	  StringBuilder ret = new StringBuilder("Adding QTArmor3D recipe: ");
 	  Object[] returnable = new Object[ODs.length];
 	  for (int i = 0; i < ODs.length; i++)
 	  {
@@ -167,13 +165,13 @@ public class QTArmor implements ICraftingRecipeGT, IRecipe
 				  lestack.setItemDamage(OreDictionary.WILDCARD_VALUE);
 				  returnable[i] = lestack;
 			  } else {
-				  returnable[i] = ((OreDictItemData)ODs[i]).toString();
+				  returnable[i] = ODs[i].toString();
 			  }
 			  
 		  } else {
 			  returnable[i] = ODs[i];
 		  }
-		  ret += returnable[i] + ", ";
+		  ret.append(returnable[i]).append(", ");
 	  }
 	  System.out.println(ret);
 	  return returnable;
@@ -191,11 +189,8 @@ public class QTArmor implements ICraftingRecipeGT, IRecipe
 			{
 				this.tempPrimary = p2;
 				return true;
-			} else if (p2 == this.tempPrimary || p2.mToThis.contains(this.tempPrimary) || this.tempPrimary.mToThis.contains(p2) || p2.mReRegistrations.contains(this.tempPrimary) || this.tempPrimary.mReRegistrations.contains(p2))
-			{
-				return true;
-			}
-			return false;
+			} else
+				return p2 == this.tempPrimary || p2.mToThis.contains(this.tempPrimary) || this.tempPrimary.mToThis.contains(p2) || p2.mReRegistrations.contains(this.tempPrimary) || this.tempPrimary.mReRegistrations.contains(p2);
 		}
 		return false;
 	}

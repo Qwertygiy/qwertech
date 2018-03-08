@@ -1,5 +1,6 @@
 package com.kbi.qwertech.items.stats;
 
+import com.kbi.qwertech.QwerTech;
 import gregapi.data.MT;
 import gregapi.item.multiitem.MultiItemTool;
 import gregapi.item.multiitem.tools.ToolStats;
@@ -11,8 +12,6 @@ import net.minecraft.entity.monster.EntityGolem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.IExtendedEntityProperties;
-
-import com.kbi.qwertech.QwerTech;
 
 public class QT_Tool_Stake extends ToolStats {
 
@@ -65,10 +64,7 @@ public class QT_Tool_Stake extends ToolStats {
 		if (WEP != null)
 		{
 			Object isVampire = UT.Reflection.callMethod(WEP, "isVampire", false, false, true);
-			if (isVampire instanceof Boolean && (Boolean)isVampire == true)
-			{
-				return true;
-			}
+			return isVampire instanceof Boolean && (Boolean) isVampire;
 		}
 		return false;
 	}

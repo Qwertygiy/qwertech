@@ -2,7 +2,6 @@ package com.kbi.qwertech.loaders.mod;
 
 import com.kbi.qwertech.api.recipe.RepairRecipe;
 import com.kbi.qwertech.api.recipe.managers.CraftingManagerHammer;
-
 import cpw.mods.fml.common.registry.GameRegistry;
 import gregapi.code.ModData;
 import gregapi.data.CS;
@@ -39,7 +38,7 @@ public class ModLoad_IC2C extends ModLoadBase {
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(getMod().mID, "itemArmorBronzeBoots"), new OreDictMaterialStack(MT.Bronze, CS.U * 4)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(getMod().mID, "itemToolBronzePickaxe"), new OreDictMaterialStack(MT.Bronze, CS.U * 3)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(getMod().mID, "itemToolBronzeAxe"), new OreDictMaterialStack(MT.Bronze, CS.U * 3)));
-			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(getMod().mID, "itemToolBronzeShovel"), new OreDictMaterialStack(MT.Bronze, CS.U * 1)));
+			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(getMod().mID, "itemToolBronzeShovel"), new OreDictMaterialStack(MT.Bronze, CS.U)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(getMod().mID, "itemToolBronzeHoe"), new OreDictMaterialStack(MT.Bronze, CS.U * 2)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(getMod().mID, "itemToolBronzeSword"), new OreDictMaterialStack(MT.Bronze, CS.U * 2)));
 			

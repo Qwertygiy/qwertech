@@ -1,18 +1,20 @@
 package com.kbi.qwertech.tileentities;
 
-import static gregapi.data.CS.ERR;
-import static gregapi.data.CS.F;
-import static gregapi.data.CS.OPPOSITES;
-import static gregapi.data.CS.SHOW_HIDDEN_MATERIALS;
-import static gregapi.data.CS.T;
-import static gregapi.data.CS.TOOL_SOUNDS;
+import com.kbi.qwertech.QwerTech;
+import com.kbi.qwertech.api.data.QTI;
+import com.kbi.qwertech.api.recipe.RepairRecipe;
+import com.kbi.qwertech.api.recipe.managers.CraftingManagerHammer;
+import com.kbi.qwertech.network.packets.PacketInventorySync;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import gregapi.block.multitileentity.IMultiTileEntity.IMTE_GetLightOpacity;
 import gregapi.block.multitileentity.IMultiTileEntity.IMTE_GetSubItems;
 import gregapi.block.multitileentity.IMultiTileEntity.IMTE_OnBlockClicked;
 import gregapi.block.multitileentity.MultiTileEntityBlockInternal;
 import gregapi.block.multitileentity.MultiTileEntityContainer;
 import gregapi.data.CS;
-import gregapi.data.CS.SFX;
+import gregapi.data.CS.*;
 import gregapi.data.LH.Chat;
 import gregapi.data.OP;
 import gregapi.gui.ContainerClient;
@@ -27,15 +29,7 @@ import gregapi.render.BlockTextureMulti;
 import gregapi.render.IIconContainer;
 import gregapi.render.ITexture;
 import gregapi.tileentity.base.TileEntityBase09FacingSingle;
-import gregapi.util.CR;
-import gregapi.util.OM;
-import gregapi.util.ST;
-import gregapi.util.UT;
-import gregapi.util.WD;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import gregapi.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderGlobal;
@@ -49,29 +43,19 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemHoe;
-import net.minecraft.item.ItemPickaxe;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
+import net.minecraft.item.*;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.stats.AchievementList;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
-
 import org.lwjgl.opengl.GL11;
 
-import com.kbi.qwertech.QwerTech;
-import com.kbi.qwertech.api.data.QTI;
-import com.kbi.qwertech.api.recipe.RepairRecipe;
-import com.kbi.qwertech.api.recipe.managers.CraftingManagerHammer;
-import com.kbi.qwertech.network.packets.PacketInventorySync;
+import java.util.ArrayList;
+import java.util.List;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import static gregapi.data.CS.*;
 
 public class CraftingTableT1 extends TileEntityBase09FacingSingle implements IMTE_GetSubItems, IMTE_OnBlockClicked, IMTE_GetLightOpacity	 {
 
@@ -385,12 +369,7 @@ public class CraftingTableT1 extends TileEntityBase09FacingSingle implements IMT
 			IRecipe check = list.get(i);
 			if (check.matches(aCrafting, worldObj))
 			{
-				if (check instanceof RepairRecipe)
-				{
-					isRepair = true;
-				} else {
-					isRepair = false;
-				}
+				isRepair = check instanceof RepairRecipe;
 				return check.getCraftingResult(aCrafting);
 			}
 		}
@@ -432,8 +411,7 @@ public class CraftingTableT1 extends TileEntityBase09FacingSingle implements IMT
 	@Override
 	public boolean allowCovers(byte side)
 	{
-		if (side < 2) return false;
-		return true;
+		return side >= 2;
 	}
 	
 	@Override

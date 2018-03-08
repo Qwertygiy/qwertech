@@ -1,5 +1,6 @@
 package com.kbi.qwertech.items.stats;
 
+import com.kbi.qwertech.QwerTech;
 import gregapi.data.MT;
 import gregapi.data.OP;
 import gregapi.item.multiitem.MultiItemTool;
@@ -7,8 +8,6 @@ import gregapi.item.multiitem.tools.ToolStats;
 import gregapi.render.IIconContainer;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
-
-import com.kbi.qwertech.QwerTech;
 
 public class QT_Tool_Javelin extends ToolStats {
 
@@ -33,7 +32,7 @@ public class QT_Tool_Javelin extends ToolStats {
 	@Override
 	  public IIconContainer getIcon(boolean aIsToolHead, ItemStack aStack)
 	  {
-	    return aIsToolHead ? (IIconContainer)MultiItemTool.getPrimaryMaterial(aStack, MT.Steel).mTextureSetsItems.get(QwerTech.javelinHeadTexID) : (IIconContainer)MultiItemTool.getSecondaryMaterial(aStack, MT.Wood).mTextureSetsItems.get(OP.stickLong.mIconIndexItem);
+	    return aIsToolHead ? MultiItemTool.getPrimaryMaterial(aStack, MT.Steel).mTextureSetsItems.get(QwerTech.javelinHeadTexID) : MultiItemTool.getSecondaryMaterial(aStack, MT.Wood).mTextureSetsItems.get(OP.stickLong.mIconIndexItem);
 	  }
 	  
 		@Override

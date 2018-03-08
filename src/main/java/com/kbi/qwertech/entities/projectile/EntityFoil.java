@@ -4,9 +4,6 @@ import gregapi.data.OP;
 import gregapi.data.TD;
 import gregapi.oredict.OreDictMaterial;
 import gregapi.util.UT;
-
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
@@ -15,6 +12,8 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.Random;
 
 public class EntityFoil extends EntityRock {
 	
@@ -125,7 +124,7 @@ public class EntityFoil extends EntityRock {
 					
 					if (mop.entityHit instanceof EntityLivingBase) {
 						UT.Enchantments.applyBullshitA((EntityLivingBase)mop.entityHit, this.getThrower() == null ? this : this.getThrower(), OP.chunk.mat(this.getMaterial(), 1));
-						UT.Enchantments.applyBullshitB((this.getThrower() instanceof EntityLivingBase) ? (EntityLivingBase)this.getThrower() : null, mop.entityHit, OP.chunk.mat(this.getMaterial(), 1));
+						UT.Enchantments.applyBullshitB((this.getThrower() instanceof EntityLivingBase) ? this.getThrower() : null, mop.entityHit, OP.chunk.mat(this.getMaterial(), 1));
 					}
 					
 					if (this.getMaterial().contains(TD.Properties.FLAMMABLE) || this.isBurning())

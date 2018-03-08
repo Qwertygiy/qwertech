@@ -1,6 +1,6 @@
 package com.kbi.qwertech.api.recipe;
 
-import static gregapi.data.CS.F;
+import com.kbi.qwertech.api.data.QTI;
 import gregapi.code.ICondition;
 import gregapi.data.MT;
 import gregapi.data.OP;
@@ -13,18 +13,17 @@ import gregapi.recipes.ICraftingRecipeGT;
 import gregapi.util.OM;
 import gregapi.util.ST;
 import gregapi.util.UT;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
-import com.kbi.qwertech.api.data.QTI;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+
+import static gregapi.data.CS.F;
 
 public class AnyQTTool implements ICraftingRecipeGT, IRecipe
 {
@@ -105,7 +104,7 @@ public class AnyQTTool implements ICraftingRecipeGT, IRecipe
   
   public static Object[] stringify(Object[] ODs)
   {
-	  String ret = "Adding AnyQTTool recipe: ";
+	  StringBuilder ret = new StringBuilder("Adding AnyQTTool recipe: ");
 	  Object[] returnable = new Object[ODs.length];
 	  for (int i = 0; i < ODs.length; i++)
 	  {
@@ -118,13 +117,13 @@ public class AnyQTTool implements ICraftingRecipeGT, IRecipe
 				  lestack.setItemDamage(OreDictionary.WILDCARD_VALUE);
 				  returnable[i] = lestack;
 			  } else {
-				  returnable[i] = ((OreDictItemData)ODs[i]).toString();
+				  returnable[i] = ODs[i].toString();
 			  }
 			  
 		  } else {
 			  returnable[i] = ODs[i];
 		  }
-		  ret += returnable[i] + ", ";
+		  ret.append(returnable[i]).append(", ");
 	  }
 	  System.out.println(ret);
 	  return returnable;
@@ -144,28 +143,20 @@ public class AnyQTTool implements ICraftingRecipeGT, IRecipe
   				if (this.tempSecondary == MT.Butter)
   				{
   					this.tempSecondary = p2.mHandleMaterial;
-  				} else if (this.tempSecondary != p2.mHandleMaterial && !this.tempSecondary.mToThis.contains(p2.mHandleMaterial) && !p2.mHandleMaterial.mToThis.contains(this.tempSecondary) && !p2.mHandleMaterial.mReRegistrations.contains(this.tempSecondary) && !this.tempSecondary.mReRegistrations.contains(p2.mHandleMaterial))
-  				{
-  					return false;
-  				}
+  				} else
+					return this.tempSecondary == p2.mHandleMaterial || this.tempSecondary.mToThis.contains(p2.mHandleMaterial) || p2.mHandleMaterial.mToThis.contains(this.tempSecondary) || p2.mHandleMaterial.mReRegistrations.contains(this.tempSecondary) || this.tempSecondary.mReRegistrations.contains(p2.mHandleMaterial);
   				return true;
-  			} else if (p2 == this.tempPrimary || p2.mToThis.contains(this.tempPrimary) || this.tempPrimary.mToThis.contains(p2) || p2.mReRegistrations.contains(this.tempPrimary) || this.tempPrimary.mReRegistrations.contains(p2))
-  			{
-  				return true;
-  			}
-  			return false;
-  		} else if (p == MT.Empty) //we're looking for any secondary!
+  			} else
+				return p2 == this.tempPrimary || p2.mToThis.contains(this.tempPrimary) || this.tempPrimary.mToThis.contains(p2) || p2.mReRegistrations.contains(this.tempPrimary) || this.tempPrimary.mReRegistrations.contains(p2);
+		} else if (p == MT.Empty) //we're looking for any secondary!
   		{
   			if (this.tempSecondary == MT.Empty)
   			{
   				this.tempSecondary = p2;
   				return true;
-  			} else if (p2 == this.tempSecondary || p2.mToThis.contains(this.tempSecondary) || this.tempSecondary.mToThis.contains(p2) || p2.mReRegistrations.contains(this.tempSecondary) || this.tempSecondary.mReRegistrations.contains(p2))
-  			{
-  				return true;
-  			}
-  			return false;
-  		} else if (p == MT.Butter)
+  			} else
+				return p2 == this.tempSecondary || p2.mToThis.contains(this.tempSecondary) || this.tempSecondary.mToThis.contains(p2) || p2.mReRegistrations.contains(this.tempSecondary) || this.tempSecondary.mReRegistrations.contains(p2);
+		} else if (p == MT.Butter)
   		{
   			if (this.tempSecondary == MT.Butter)
   			{
@@ -187,10 +178,9 @@ public class AnyQTTool implements ICraftingRecipeGT, IRecipe
   	{
   		this.tempPrimary = this.primaryMaterial;
   		this.tempSecondary = this.secondaryMaterial;
-  		ArrayList<Object> recipeCheck = new ArrayList<Object>();
-  		recipeCheck.addAll(Arrays.asList(recipePieces));
+		ArrayList<Object> recipeCheck = new ArrayList<Object>(Arrays.asList(recipePieces));
 		if (recipeCheck.size() > aGrid.getSizeInventory()) {return F;}
-		ItemStack tStack = null;
+		ItemStack tStack;
 		for (int i = 0; i < aGrid.getSizeInventory(); i++)
 		{
 			tStack = aGrid.getStackInSlot(i);
@@ -233,7 +223,7 @@ public class AnyQTTool implements ICraftingRecipeGT, IRecipe
 							match = compareMats(nex.mMaterial.mMaterial, tData.mMaterial.mMaterial);
 						}
 					} else if (next instanceof String && tData != null) {
-						if (tData.toString() == (String)next)
+						if (tData.toString().equals((String) next))
 						{
 							match = true;
 						}

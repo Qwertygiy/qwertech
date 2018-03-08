@@ -1,35 +1,30 @@
 package com.kbi.qwertech;
 
-import com.kbi.qwertech.api.armor.MultiItemArmor;
-import com.kbi.qwertech.api.registry.ArmorUpgradeRegistry;
 import com.kbi.qwertech.loaders.RegisterArmor;
 import com.kbi.qwertech.loaders.RegisterMobs;
-
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
+import cpw.mods.fml.common.event.*;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import gregapi.api.Abstract_Mod;
+import gregapi.api.Abstract_Proxy;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.*;
-import net.minecraftforge.event.brewing.*;
-import net.minecraftforge.event.entity.*;
-import net.minecraftforge.event.entity.item.*;
+import net.minecraftforge.event.AnvilUpdateEvent;
+import net.minecraftforge.event.CommandEvent;
+import net.minecraftforge.event.ServerChatEvent;
+import net.minecraftforge.event.brewing.PotionBrewEvent;
+import net.minecraftforge.event.entity.EntityEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
+import net.minecraftforge.event.entity.PlaySoundAtEntityEvent;
+import net.minecraftforge.event.entity.item.ItemEvent;
+import net.minecraftforge.event.entity.item.ItemExpireEvent;
+import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.living.*;
-import net.minecraftforge.event.entity.minecart.*;
+import net.minecraftforge.event.entity.minecart.MinecartCollisionEvent;
+import net.minecraftforge.event.entity.minecart.MinecartEvent;
+import net.minecraftforge.event.entity.minecart.MinecartUpdateEvent;
 import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.terraingen.*;
 import net.minecraftforge.event.world.*;
-import gregapi.api.Abstract_Mod;
-import gregapi.api.Abstract_Proxy;
-import gregapi.data.LH;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartedEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.event.FMLServerStoppedEvent;
-import cpw.mods.fml.common.event.FMLServerStoppingEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 
 /**

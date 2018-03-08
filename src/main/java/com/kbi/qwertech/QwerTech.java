@@ -423,16 +423,16 @@ public final class QwerTech extends Abstract_Mod {
 		
 		chain.addListener(new ShapelessCraftFrom(1, null, new String[][]{{"X X", " f ", "X X"}, {" X ", "XfX", " X "}}, link, null, null, null, null, TD.Atomic.ANTIMATTER.NOT));
 		
-		MultiTileEntityMold.MOLD_RECIPES.put(Integer.valueOf(CS.B[1] | CS.B[2] | CS.B[3] | CS.B[4] | CS.B[7] | CS.B[8] | CS.B[12] | CS.B[13] | CS.B[18] | CS.B[19] | CS.B[23] | CS.B[24]), mattockHeadRaw);
-		MultiTileEntityMold.MOLD_RECIPES.put(Integer.valueOf(CS.B[0] | CS.B[1] | CS.B[2] | CS.B[3] | CS.B[6] | CS.B[7] | CS.B[11] | CS.B[12] | CS.B[17] | CS.B[18] | CS.B[22] | CS.B[23]), mattockHeadRaw);
-		MultiTileEntityMold.MOLD_RECIPES.put(Integer.valueOf(CS.B[0] | CS.B[5] | CS.B[6] | CS.B[7] | CS.B[10] | CS.B[11] | CS.B[12] | CS.B[3] | CS.B[4] | CS.B[15] | CS.B[8] | CS.B[9]), mattockHeadRaw);
-		MultiTileEntityMold.MOLD_RECIPES.put(Integer.valueOf(CS.B[5] | CS.B[10] | CS.B[11] | CS.B[12] | CS.B[15] | CS.B[16] | CS.B[17] | CS.B[8] | CS.B[9] | CS.B[20] | CS.B[13] | CS.B[14]), mattockHeadRaw);
-		MultiTileEntityMold.MOLD_RECIPES.put(Integer.valueOf(CS.B[10] | CS.B[11] | CS.B[4] | CS.B[15] | CS.B[16] | CS.B[7] | CS.B[8] | CS.B[9] | CS.B[12] | CS.B[13] | CS.B[14] | CS.B[19]), mattockHeadRaw);
-		MultiTileEntityMold.MOLD_RECIPES.put(Integer.valueOf(CS.B[15] | CS.B[16] | CS.B[9] | CS.B[20] | CS.B[21] | CS.B[12] | CS.B[13] | CS.B[14] | CS.B[17] | CS.B[18] | CS.B[19] | CS.B[24]), mattockHeadRaw);
-		MultiTileEntityMold.MOLD_RECIPES.put(Integer.valueOf(CS.B[2] | CS.B[3] | CS.B[7] | CS.B[8] | CS.B[11] | CS.B[12] | CS.B[16] | CS.B[17] | CS.B[20] | CS.B[21] | CS.B[22] | CS.B[23]), mattockHeadRaw);
-		MultiTileEntityMold.MOLD_RECIPES.put(Integer.valueOf(CS.B[3] | CS.B[4] | CS.B[8] | CS.B[9] | CS.B[12] | CS.B[13] | CS.B[17] | CS.B[18] | CS.B[21] | CS.B[22] | CS.B[23] | CS.B[24]), mattockHeadRaw);
+		MultiTileEntityMold.MOLD_RECIPES.put(CS.B[1] | CS.B[2] | CS.B[3] | CS.B[4] | CS.B[7] | CS.B[8] | CS.B[12] | CS.B[13] | CS.B[18] | CS.B[19] | CS.B[23] | CS.B[24], mattockHeadRaw);
+		MultiTileEntityMold.MOLD_RECIPES.put(CS.B[0] | CS.B[1] | CS.B[2] | CS.B[3] | CS.B[6] | CS.B[7] | CS.B[11] | CS.B[12] | CS.B[17] | CS.B[18] | CS.B[22] | CS.B[23], mattockHeadRaw);
+		MultiTileEntityMold.MOLD_RECIPES.put(CS.B[0] | CS.B[5] | CS.B[6] | CS.B[7] | CS.B[10] | CS.B[11] | CS.B[12] | CS.B[3] | CS.B[4] | CS.B[15] | CS.B[8] | CS.B[9], mattockHeadRaw);
+		MultiTileEntityMold.MOLD_RECIPES.put(CS.B[5] | CS.B[10] | CS.B[11] | CS.B[12] | CS.B[15] | CS.B[16] | CS.B[17] | CS.B[8] | CS.B[9] | CS.B[20] | CS.B[13] | CS.B[14], mattockHeadRaw);
+		MultiTileEntityMold.MOLD_RECIPES.put(CS.B[10] | CS.B[11] | CS.B[4] | CS.B[15] | CS.B[16] | CS.B[7] | CS.B[8] | CS.B[9] | CS.B[12] | CS.B[13] | CS.B[14] | CS.B[19], mattockHeadRaw);
+		MultiTileEntityMold.MOLD_RECIPES.put(CS.B[15] | CS.B[16] | CS.B[9] | CS.B[20] | CS.B[21] | CS.B[12] | CS.B[13] | CS.B[14] | CS.B[17] | CS.B[18] | CS.B[19] | CS.B[24], mattockHeadRaw);
+		MultiTileEntityMold.MOLD_RECIPES.put(CS.B[2] | CS.B[3] | CS.B[7] | CS.B[8] | CS.B[11] | CS.B[12] | CS.B[16] | CS.B[17] | CS.B[20] | CS.B[21] | CS.B[22] | CS.B[23], mattockHeadRaw);
+		MultiTileEntityMold.MOLD_RECIPES.put(CS.B[3] | CS.B[4] | CS.B[8] | CS.B[9] | CS.B[12] | CS.B[13] | CS.B[17] | CS.B[18] | CS.B[21] | CS.B[22] | CS.B[23] | CS.B[24], mattockHeadRaw);
 		
-		MultiTileEntityMold.MOLD_RECIPES.put(Integer.valueOf(CS.B[0] | CS.B[4] | CS.B[6] | CS.B[7] | CS.B[8] | CS.B[11] | CS.B[12] | CS.B[13] | CS.B[16] | CS.B[17] | CS.B[18] | CS.B[20] | CS.B[24]), maceHeadRaw);
+		MultiTileEntityMold.MOLD_RECIPES.put(CS.B[0] | CS.B[4] | CS.B[6] | CS.B[7] | CS.B[8] | CS.B[11] | CS.B[12] | CS.B[13] | CS.B[16] | CS.B[17] | CS.B[18] | CS.B[20] | CS.B[24], maceHeadRaw);
 		
 		if (QTConfigs.enableArmor)
 		{
@@ -467,21 +467,21 @@ public final class QwerTech extends Abstract_Mod {
 	        RM.Mixer.addRecipe2(true, 16L, 16L, OreDictionary.getOres("cropChilipepper").get(0), OreDictionary.getOres("cropChilipepper").get(0), UT.Fluids.make("salsa", 500), UT.Fluids.make("hotsalsa", 500), (ItemStack[])null);
         }
         
-        GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, (Object[])null, new Object[]{OP.toolHeadScrewdriver, OP.toolHeadScrewdriver}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
-		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, (Object[])null, new Object[]{OP.toolHeadScrewdriver, OP.toolHeadFile}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
-		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, (Object[])null, new Object[]{OP.toolHeadFile, 		OP.toolHeadFile}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
-		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, (Object[])null, new Object[]{OP.toolHeadScrewdriver, OP.toolHeadChisel}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
-		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, (Object[])null, new Object[]{OP.toolHeadFile, 		OP.toolHeadChisel}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
-		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, (Object[])null, new Object[]{OP.toolHeadChisel, 		OP.toolHeadChisel}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
-		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, (Object[])null, new Object[]{OP.screw, 				OP.toolHeadScrewdriver}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
-		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, (Object[])null, new Object[]{OP.screw, 				OP.toolHeadFile}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
-		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, (Object[])null, new Object[]{OP.screw, 				OP.toolHeadChisel}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
-		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, (Object[])null, new Object[]{OP.screw, 				OP.screw}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
-		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, (Object[])null, new Object[]{OP.toolHeadArrow, 		OP.toolHeadScrewdriver}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
-		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, (Object[])null, new Object[]{OP.toolHeadArrow, 		OP.toolHeadFile}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
-		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, (Object[])null, new Object[]{OP.toolHeadArrow, 		OP.toolHeadChisel}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
-		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, (Object[])null, new Object[]{OP.toolHeadArrow, 		OP.screw}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
-		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, (Object[])null, new Object[]{OP.toolHeadArrow, 		OP.toolHeadArrow}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
+        GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, null, new Object[]{OP.toolHeadScrewdriver, OP.toolHeadScrewdriver}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
+		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, null, new Object[]{OP.toolHeadScrewdriver, OP.toolHeadFile}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
+		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, null, new Object[]{OP.toolHeadFile, 		OP.toolHeadFile}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
+		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, null, new Object[]{OP.toolHeadScrewdriver, OP.toolHeadChisel}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
+		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, null, new Object[]{OP.toolHeadFile, 		OP.toolHeadChisel}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
+		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, null, new Object[]{OP.toolHeadChisel, 		OP.toolHeadChisel}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
+		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, null, new Object[]{OP.screw, 				OP.toolHeadScrewdriver}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
+		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, null, new Object[]{OP.screw, 				OP.toolHeadFile}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
+		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, null, new Object[]{OP.screw, 				OP.toolHeadChisel}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
+		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, null, new Object[]{OP.screw, 				OP.screw}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
+		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, null, new Object[]{OP.toolHeadArrow, 		OP.toolHeadScrewdriver}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
+		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, null, new Object[]{OP.toolHeadArrow, 		OP.toolHeadFile}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
+		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, null, new Object[]{OP.toolHeadArrow, 		OP.toolHeadChisel}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
+		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, null, new Object[]{OP.toolHeadArrow, 		OP.screw}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
+		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, null, new Object[]{OP.toolHeadArrow, 		OP.toolHeadArrow}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
         
 		GameRegistry.addRecipe(new AnyQTTool(14L, new And(TD.Atomic.ANTIMATTER.NOT), true, new Object[]{OP.toolHeadAxe, OP.plate}, new Object[]{OP.stickLong}));
 		
@@ -493,7 +493,7 @@ public final class QwerTech extends Abstract_Mod {
 		for (int q = 0; q < 16; q++)
 		{
 			//CR.shaped(ST.make(corrugatedBlock, 1, q), CR.DEF, "hPz", Character.valueOf('P'), OP.plateDouble.mat(wallmats[q], 1));
-			CraftingManagerHammer.getInstance().addRecipe(new ShapedOreRecipe(ST.make(corrugatedBlock, 1,q), new Object[]{"P", "z", Character.valueOf('P'), OP.plateDouble.dat(wallmats[q]).toString(), Character.valueOf('z'), "craftingToolBendingCylinder"}));
+			CraftingManagerHammer.getInstance().addRecipe(new ShapedOreRecipe(ST.make(corrugatedBlock, 1,q), "P", "z", 'P', OP.plateDouble.dat(wallmats[q]).toString(), 'z', "craftingToolBendingCylinder"));
 			RM.RollFormer.addRecipe1(true, 16, 768, OP.plateDouble.mat(wallmats[q], 1), ST.make(corrugatedBlock,  1, q));
 			RM.RollingMill.addRecipe1(true, 16, 768, ST.make(corrugatedBlock, 1, q), OP.plateDouble.mat(wallmats[q], 1));
 		}

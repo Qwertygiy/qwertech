@@ -60,7 +60,7 @@ public class RegisterMaterials {
 		RM.Electrolyzer.addRecipe1(true, 32, 500, OP.gem.mat(MT.InfusedOrder, 1), UT.Fluids.make("potion.mineralwater", 144*4), QTMT.ChemicalX.liquid(CS.U * 4, true), QTMT.ChemicalY.liquid(CS.U * 2, true));
 		RM.Electrolyzer.addRecipe1(true, 32, 500, OP.gem.mat(MT.ManaQuartz, 1), UT.Fluids.make("potion.mineralwater", 144*2), QTMT.ChemicalX.liquid(CS.U * 2, true), OP.dust.mat(MT.NetherQuartz, 1));
 		RM.Electrolyzer.addRecipe1(true, 32, 500, OP.ingot.mat(MT.Knightmetal, 1), UT.Fluids.make("potion.mineralwater", 144*2), QTMT.ChemicalX.liquid(CS.U * 2, true), OP.dust.mat(MT.Fe, 1));
-		RM.Electrolyzer.addRecipe1(true, 32, 500, OP.ingot.mat(MT.FierySteel, 1), UT.Fluids.make("potion.mineralwater", 144),QTMT.ChemicalX.liquid(CS.U * 1, true), OP.dust.mat(MT.Steel, 1));
+		RM.Electrolyzer.addRecipe1(true, 32, 500, OP.ingot.mat(MT.FierySteel, 1), UT.Fluids.make("potion.mineralwater", 144),QTMT.ChemicalX.liquid(CS.U, true), OP.dust.mat(MT.Steel, 1));
 		RM.Electrolyzer.addRecipe1(true, 32, 500, OP.ingot.mat(MT.AstralSilver, 1), UT.Fluids.make("potion.mineralwater", 144*2), QTMT.ChemicalX.liquid(CS.U * 2, true), OP.dust.mat(MT.Ag, 1));
 		RM.Electrolyzer.addRecipe1(true, 32, 500, OP.ingot.mat(MT.Midasium, 1), UT.Fluids.make("potion.mineralwater", 144*2), QTMT.ChemicalX.liquid(CS.U * 2, true), OP.dust.mat(MT.Au, 1));
 		RM.Electrolyzer.addRecipe1(true, 32, 500, OP.ingot.mat(MT.Mithril, 1), UT.Fluids.make("potion.mineralwater", 144*2), QTMT.ChemicalX.liquid(CS.U * 2, true), OP.dust.mat(MT.Pt, 1));

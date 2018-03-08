@@ -1,18 +1,23 @@
 package com.kbi.qwertech.loaders;
-import gregapi.data.CS;
-import gregapi.data.IL;
-import gregapi.data.MD;
-import gregapi.data.MT;
-import gregapi.data.OP;
+
+import com.kbi.qwertech.QwerTech;
+import com.kbi.qwertech.api.armor.MultiItemArmor;
+import com.kbi.qwertech.api.data.QTConfigs;
+import com.kbi.qwertech.api.data.QTI;
+import com.kbi.qwertech.api.registry.MobBreedRegistry;
+import com.kbi.qwertech.api.registry.MobGearRegistry;
+import com.kbi.qwertech.api.registry.MobScrapeRegistry;
+import com.kbi.qwertech.entities.ai.*;
+import com.kbi.qwertech.entities.neutral.EntityTurkey;
+import com.kbi.qwertech.entities.passive.EntityFrog;
+import com.kbi.qwertech.entities.projectile.*;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.registry.EntityRegistry;
+import gregapi.data.*;
 import gregapi.item.multiitem.MultiItemTool;
 import gregapi.oredict.OreDictMaterial;
 import gregapi.util.ST;
 import gregapi.util.UT;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityCreature;
@@ -23,20 +28,8 @@ import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.ai.EntityAITempt;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.monster.EntityBlaze;
-import net.minecraft.entity.monster.EntityCaveSpider;
-import net.minecraft.entity.monster.EntityMagmaCube;
-import net.minecraft.entity.monster.EntityPigZombie;
-import net.minecraft.entity.monster.EntitySilverfish;
-import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.entity.monster.EntitySlime;
-import net.minecraft.entity.monster.EntitySnowman;
-import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.passive.EntityBat;
-import net.minecraft.entity.passive.EntityChicken;
-import net.minecraft.entity.passive.EntityCow;
-import net.minecraft.entity.passive.EntityOcelot;
+import net.minecraft.entity.monster.*;
+import net.minecraft.entity.passive.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -49,29 +42,9 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 
-import com.kbi.qwertech.QwerTech;
-import com.kbi.qwertech.api.armor.MultiItemArmor;
-import com.kbi.qwertech.api.data.QTConfigs;
-import com.kbi.qwertech.api.data.QTI;
-import com.kbi.qwertech.api.registry.MobBreedRegistry;
-import com.kbi.qwertech.api.registry.MobGearRegistry;
-import com.kbi.qwertech.api.registry.MobScrapeRegistry;
-import com.kbi.qwertech.entities.ai.EntityAIHydrationLimit;
-import com.kbi.qwertech.entities.ai.EntityAISwing;
-import com.kbi.qwertech.entities.ai.EntityAITemperatureLimit;
-import com.kbi.qwertech.entities.ai.EntityAITemptAdvanced;
-import com.kbi.qwertech.entities.ai.EntityAIUseCompass;
-import com.kbi.qwertech.entities.neutral.EntityTurkey;
-import com.kbi.qwertech.entities.passive.EntityFrog;
-import com.kbi.qwertech.entities.projectile.EntityBall;
-import com.kbi.qwertech.entities.projectile.EntityEgg;
-import com.kbi.qwertech.entities.projectile.EntityFoil;
-import com.kbi.qwertech.entities.projectile.EntityRock;
-import com.kbi.qwertech.entities.projectile.EntityShuriken;
-
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.registry.EntityRegistry;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class RegisterMobs {
 	
@@ -188,19 +161,20 @@ public class RegisterMobs {
 	 */
 	private static OreDictMaterial[] getMaterials(ItemStack item, int MD)
 	{
-		OreDictMaterial primary = MT.Bronze;
+		OreDictMaterial primary;
 		OreDictMaterial secondary = MT.Wood;
 		switch(MD)
 		{
 		case 12:
 		case 24:
-			if (new Random().nextBoolean() == true)
+			if (new Random().nextBoolean())
 			{
 				primary = rocks.get(new Random().nextInt(rocks.size()));
 				secondary = MT.Bone;
 			} else {
 				primary = metals.get(new Random().nextInt(metals.size()));
 			}
+			break;
 		default:
 			primary = metals.get(new Random().nextInt(metals.size()));
 		}
@@ -515,25 +489,25 @@ public class RegisterMobs {
 			} else if (entityClass.equals(EntityCaveSpider.class))
 			{
 				newBottle = QTI.jarCaveSpider.get(1);
-			} else if (entityClass.getName() == "twilightforest.entity.passive.EntityTFBunny")
+			} else if (entityClass.getName().equals("twilightforest.entity.passive.EntityTFBunny"))
 			{
 				newBottle = QTI.jarTFBunny.get(1);
-			} else if (entityClass.getName() == "twilightforest.entity.passive.EntityTFBird")
+			} else if (entityClass.getName().equals("twilightforest.entity.passive.EntityTFBird"))
 			{
 				newBottle = QTI.jarTFBird.get(1);
-			} else if (entityClass.getName() == "twilightforest.entity.EntityTFSwarmSpider")
+			} else if (entityClass.getName().equals("twilightforest.entity.EntityTFSwarmSpider"))
 			{
 				newBottle = QTI.jarTFSpider.get(1);
-			} else if (entityClass.getName() == "twilightforest.entity.passive.EntityTFSquirrel")
+			} else if (entityClass.getName().equals("twilightforest.entity.passive.EntityTFSquirrel"))
 			{
 				newBottle = QTI.jarTFSquirrel.get(1);
-			} else if (entityClass.getName() == "twilightforest.entity.passive.EntityTFRaven")
+			} else if (entityClass.getName().equals("twilightforest.entity.passive.EntityTFRaven"))
 			{
 				newBottle = QTI.jarTFRaven.get(1);
-			} else if (entityClass.getName() == "twilightforest.entity.passive.EntityTFTinyBird")
+			} else if (entityClass.getName().equals("twilightforest.entity.passive.EntityTFTinyBird"))
 			{
 				newBottle = QTI.jarTFTinyBird.get(1);
-			} else if (entityClass.getName() == "twilightforest.entity.EntityTFMazeSlime" && ((EntitySlime)event.target).getSlimeSize() == 1)
+			} else if (entityClass.getName().equals("twilightforest.entity.EntityTFMazeSlime") && ((EntitySlime)event.target).getSlimeSize() == 1)
 			{
 				newBottle = QTI.jarTFMazeSlime.get(1);
 			}
@@ -734,11 +708,11 @@ public class RegisterMobs {
 	    				UT.NBT.set(item, nbt);
 	    				((EntityLiving)event.entity).setEquipmentDropChance(0, 0.5F);
 	    			}
-	    			((EntityLiving)event.entity).setCurrentItemOrArmor(0, item);
+	    			event.entity.setCurrentItemOrArmor(0, item);
 	    			enchantEquipment((EntityLiving)event.entity);
     			}
     		} else {
-    			((EntityLiving)event.entity).setCurrentItemOrArmor(0, (ItemStack)null);
+    			event.entity.setCurrentItemOrArmor(0, null);
     		}
     	} else {
     		//System.out.println("Could not register a mob spawn for " + event.entity.getClass().getName());

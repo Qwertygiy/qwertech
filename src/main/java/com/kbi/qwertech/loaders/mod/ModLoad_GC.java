@@ -2,7 +2,6 @@ package com.kbi.qwertech.loaders.mod;
 
 import com.kbi.qwertech.api.recipe.RepairRecipe;
 import com.kbi.qwertech.api.recipe.managers.CraftingManagerHammer;
-
 import cpw.mods.fml.common.registry.GameRegistry;
 import gregapi.code.ModData;
 import gregapi.data.ANY;
@@ -26,7 +25,7 @@ public class ModLoad_GC extends ModLoadBase {
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(getMod().mID, "steel_pickaxe"), new OreDictMaterialStack(ANY.Steel, CS.U * 3)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(getMod().mID, "steel_axe"), new OreDictMaterialStack(ANY.Steel, CS.U * 3)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(getMod().mID, "steel_hoe"), new OreDictMaterialStack(ANY.Steel, CS.U * 2)));
-			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(getMod().mID, "steel_shovel"), new OreDictMaterialStack(ANY.Steel, CS.U * 1)));
+			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(getMod().mID, "steel_shovel"), new OreDictMaterialStack(ANY.Steel, CS.U)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(getMod().mID, "steel_sword"), new OreDictMaterialStack(ANY.Steel, CS.U * 2)));
 			
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(getMod().mID, "helmet"), new OreDictMaterialStack(ANY.Steel, CS.U * 5)));

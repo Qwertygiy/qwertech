@@ -1,14 +1,13 @@
 package com.kbi.qwertech.items.stats;
 
+import com.kbi.qwertech.QwerTech;
+import com.kbi.qwertech.items.behavior.Behavior_Slingshot;
 import gregapi.data.MT;
 import gregapi.item.multiitem.MultiItemTool;
 import gregapi.item.multiitem.tools.ToolStats;
 import gregapi.render.IIconContainer;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
-
-import com.kbi.qwertech.QwerTech;
-import com.kbi.qwertech.items.behavior.Behavior_Slingshot;
 
 public class QT_Tool_Slingshot extends ToolStats {
 
@@ -33,7 +32,7 @@ public class QT_Tool_Slingshot extends ToolStats {
 	@Override
 	  public IIconContainer getIcon(boolean aIsToolHead, ItemStack aStack)
 	  {
-	    return aIsToolHead ? (IIconContainer)MultiItemTool.getPrimaryMaterial(aStack, MT.Steel).mTextureSetsItems.get(QwerTech.slingshotTexID) : (IIconContainer)MultiItemTool.getPrimaryMaterial(aStack, MT.Steel).mTextureSetsItems.get(QwerTech.stringshotTexID);
+	    return aIsToolHead ? MultiItemTool.getPrimaryMaterial(aStack, MT.Steel).mTextureSetsItems.get(QwerTech.slingshotTexID) : MultiItemTool.getPrimaryMaterial(aStack, MT.Steel).mTextureSetsItems.get(QwerTech.stringshotTexID);
 	  }
 	  
 		@Override

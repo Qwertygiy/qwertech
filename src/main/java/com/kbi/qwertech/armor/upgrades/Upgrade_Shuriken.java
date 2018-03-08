@@ -1,44 +1,19 @@
 package com.kbi.qwertech.armor.upgrades;
 
-import java.util.List;
-
-import gregapi.data.CS;
+import com.kbi.qwertech.api.armor.upgrades.UpgradeBase;
+import com.kbi.qwertech.client.models.ModelArmorSpurs;
+import com.kbi.qwertech.loaders.RegisterArmor;
 import gregapi.data.LH;
-import gregapi.data.MT;
 import gregapi.oredict.OreDictMaterial;
 import gregapi.render.IIconContainer;
-import gregapi.util.UT;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.entity.AbstractClientPlayer;
-import net.minecraft.client.entity.EntityClientPlayerMP;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.server.S06PacketUpdateHealth;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.MathHelper;
-import net.minecraft.world.World;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
-import com.kbi.qwertech.api.armor.IArmorStats;
-import com.kbi.qwertech.api.armor.MultiItemArmor;
-import com.kbi.qwertech.api.armor.upgrades.UpgradeBase;
-import com.kbi.qwertech.api.registry.ArmorUpgradeRegistry;
-import com.kbi.qwertech.client.models.ModelArmorSpring;
-import com.kbi.qwertech.client.models.ModelArmorSpurs;
-import com.kbi.qwertech.loaders.RegisterArmor;
-
-import cpw.mods.fml.common.eventhandler.Event.Result;
+import java.util.List;
 
 public class Upgrade_Shuriken extends UpgradeBase {
 
@@ -97,7 +72,7 @@ public class Upgrade_Shuriken extends UpgradeBase {
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
 	{
-		return type == "overlay" ? "qwertech:textures/armor/blank.png" : "qwertech:textures/armor/upgrade/spur.png";
+		return type.equals("overlay") ? "qwertech:textures/armor/blank.png" : "qwertech:textures/armor/upgrade/spur.png";
 	}
 	
 	Object model;

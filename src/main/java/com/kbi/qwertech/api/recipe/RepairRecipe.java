@@ -1,5 +1,7 @@
 package com.kbi.qwertech.api.recipe;
 
+import com.kbi.qwertech.api.armor.IArmorStats;
+import com.kbi.qwertech.api.armor.MultiItemArmor;
 import gregapi.data.CS;
 import gregapi.data.MT;
 import gregapi.data.OP;
@@ -13,14 +15,11 @@ import gregapi.oredict.OreDictMaterialStack;
 import gregapi.recipes.ICraftingRecipeGT;
 import gregapi.util.ST;
 import gregapi.util.UT;
-
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
-import com.kbi.qwertech.api.armor.IArmorStats;
-import com.kbi.qwertech.api.armor.MultiItemArmor;
 
 public class RepairRecipe implements ICraftingRecipeGT, IRecipe
 {
@@ -52,11 +51,7 @@ public class RepairRecipe implements ICraftingRecipeGT, IRecipe
 
 	@Override
 	public boolean matches(InventoryCrafting inventory, World p_77569_2_) {
-		if (returnCraftingResult(inventory, false) != null)
-		{
-			return true;
-		}
-		return false;
+		return returnCraftingResult(inventory, false) != null;
 	}
 	
 	public ItemStack returnCraftingResult(InventoryCrafting inventory, boolean destroy)

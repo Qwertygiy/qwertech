@@ -1,11 +1,9 @@
 package com.kbi.qwertech.blocks;
 
+import com.kbi.qwertech.CommonProxy;
 import gregapi.block.BlockBaseMeta;
 import gregapi.data.MT;
 import gregapi.render.IIconContainer;
-
-import java.util.List;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemBlock;
@@ -15,7 +13,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import com.kbi.qwertech.CommonProxy;
+import java.util.List;
 
 public class BlockCorrugated extends BlockBaseMeta {
 	
@@ -82,12 +80,7 @@ public class BlockCorrugated extends BlockBaseMeta {
 	@Override
 	public boolean isSideSolid(IBlockAccess world, int x, int y, int z, ForgeDirection side)
 	{
-		if (side == ForgeDirection.UP || side == ForgeDirection.DOWN)
-		{
-			return true;
-		} else {
-			return false;
-		}
+        return side == ForgeDirection.UP || side == ForgeDirection.DOWN;
 	}
 	
 	@Override

@@ -1,9 +1,7 @@
 package com.kbi.qwertech.items.stats;
 
+import com.kbi.qwertech.entities.EntityHelperFunctions;
 import gregtech.items.tools.early.GT_Tool_Shovel;
-
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -12,7 +10,7 @@ import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent;
 
-import com.kbi.qwertech.entities.EntityHelperFunctions;
+import java.util.List;
 
 public class QT_Tool_SturdyShovel extends GT_Tool_Shovel {
 	
@@ -110,15 +108,15 @@ boolean LOCK = false;
 			int x = aX;
 			int y = aY;
 			int z = aZ;
-			if (checkPos[0] == true)
+			if (checkPos[0])
 			{
 				if (checkLoc[0]) {y += 1;} else {y -= 1;}
 				returnable = returnable + breakCheck(aPlayer, aPlayer.worldObj, x, y, z, chop);
-				if (checkPos[1] == true)
+				if (checkPos[1])
 				{
 					if (checkLoc[1]) {z += 1;} else {z -= 1;}
 					returnable = returnable + breakCheck(aPlayer, aPlayer.worldObj, x, y, z, chop);
-				} else if (checkPos[2] == true)
+				} else if (checkPos[2])
 				{
 					if (checkLoc[2]) {x += 1;} else {x -= 1;}
 					returnable = returnable + breakCheck(aPlayer, aPlayer.worldObj, x, y, z, chop);
@@ -128,11 +126,11 @@ boolean LOCK = false;
 			x = aX;
 			y = aY;
 			z = aZ;
-			if (checkPos[1] == true)
+			if (checkPos[1])
 			{
 				if (checkLoc[1]) {z += 1;} else {z -= 1;}
 				returnable = returnable + breakCheck(aPlayer, aPlayer.worldObj, x, y, z, chop);
-				if (checkPos[2] == true)
+				if (checkPos[2])
 				{
 					if (checkLoc[2]) {x += 1;} else {x -= 1;}
 					returnable = returnable + breakCheck(aPlayer, aPlayer.worldObj, x, y, z, chop);
@@ -142,7 +140,7 @@ boolean LOCK = false;
 			x = aX;
 			y = aY;
 			z = aZ;
-			if (checkPos[2] == true)
+			if (checkPos[2])
 			{
 				if (checkLoc[2]) {x += 1;} else {x -= 1;}
 				returnable = returnable + breakCheck(aPlayer, aPlayer.worldObj, x, y, z, chop);

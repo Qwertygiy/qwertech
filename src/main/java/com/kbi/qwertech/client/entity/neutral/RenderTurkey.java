@@ -1,13 +1,12 @@
 package com.kbi.qwertech.client.entity.neutral;
 
+import com.kbi.qwertech.entities.neutral.EntityTurkey;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
-
-import com.kbi.qwertech.entities.neutral.EntityTurkey;
 
 public class RenderTurkey extends RenderLiving {
 
@@ -29,7 +28,7 @@ public class RenderTurkey extends RenderLiving {
         return texture;
     }
 
-    /**
+    /*
      * Defines what float the third param in setRotationAngles of ModelBase is
      */
     /*protected float handleRotationFloat(EntityTurkey p_77044_1_, float p_77044_2_)

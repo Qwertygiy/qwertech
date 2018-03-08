@@ -2,7 +2,6 @@ package com.kbi.qwertech.items.behavior;
 
 import gregapi.item.multiitem.MultiItem;
 import gregapi.item.multiitem.behaviors.IBehavior.AbstractBehaviorDefault;
-import gregapi.item.multiitem.behaviors.IBehavior.Behaviour_None;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;

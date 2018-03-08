@@ -1,26 +1,19 @@
 package com.kbi.qwertech.client;
 
+import com.kbi.qwertech.client.tileentity.UpgradeDeskRenderer;
+import gregapi.block.multitileentity.MultiTileEntityRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureUtil;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
-
-import com.kbi.qwertech.client.models.ModelBaseTool;
-import com.kbi.qwertech.client.models.ModelClub;
-import com.kbi.qwertech.client.models.ModelEgg;
-import com.kbi.qwertech.client.tileentity.UpgradeDeskRenderer;
-
-import gregapi.block.multitileentity.MultiTileEntityRegistry;
 
 public class QT_Machine_Renderer implements IItemRenderer {
 	
@@ -34,12 +27,8 @@ public class QT_Machine_Renderer implements IItemRenderer {
 
 	@Override
 	public boolean handleRenderType(ItemStack item, ItemRenderType type) {
-		if (item.getItemDamage() > 400 && item.getItemDamage() < 410)
-		{
-			return true;
-		}
-		return false;
-	}
+        return item.getItemDamage() > 400 && item.getItemDamage() < 410;
+    }
 
 	@Override
 	public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item,

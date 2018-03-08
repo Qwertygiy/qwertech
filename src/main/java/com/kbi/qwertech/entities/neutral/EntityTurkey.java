@@ -1,5 +1,7 @@
 package com.kbi.qwertech.entities.neutral;
 
+import com.kbi.qwertech.api.data.QTI;
+import com.kbi.qwertech.entities.ai.EntityAITemptAdvanced;
 import gregapi.data.MT;
 import gregapi.data.OP;
 import gregapi.oredict.OreDictManager;
@@ -8,15 +10,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
-import net.minecraft.entity.ai.EntityAIFollowParent;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILeapAtTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMate;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -25,9 +19,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
-
-import com.kbi.qwertech.api.data.QTI;
-import com.kbi.qwertech.entities.ai.EntityAITemptAdvanced;
 
 public class EntityTurkey extends EntityAnimal {
 	
@@ -73,7 +64,7 @@ public class EntityTurkey extends EntityAnimal {
 	public void entityInit()
 	{
 		super.entityInit();
-		this.dataWatcher.addObject(16, Byte.valueOf((byte)0));
+		this.dataWatcher.addObject(16, (byte) 0);
 	}
 
 	@Override
@@ -201,11 +192,11 @@ public class EntityTurkey extends EntityAnimal {
 
         if (p_70916_1_)
         {
-            this.dataWatcher.updateObject(16, Byte.valueOf((byte)(b0 | 2)));
+            this.dataWatcher.updateObject(16, (byte) (b0 | 2));
         }
         else
         {
-            this.dataWatcher.updateObject(16, Byte.valueOf((byte)(b0 & -3)));
+            this.dataWatcher.updateObject(16, (byte) (b0 & -3));
         }
     }
     

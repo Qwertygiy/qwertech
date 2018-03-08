@@ -1,49 +1,19 @@
 package com.kbi.qwertech.api.registry;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.monster.*;
+import net.minecraft.entity.passive.*;
+import net.minecraft.item.ItemStack;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.monster.EntityBlaze;
-import net.minecraft.entity.monster.EntityCaveSpider;
-import net.minecraft.entity.monster.EntityCreeper;
-import net.minecraft.entity.monster.EntityEnderman;
-import net.minecraft.entity.monster.EntityGhast;
-import net.minecraft.entity.monster.EntityIronGolem;
-import net.minecraft.entity.monster.EntityMagmaCube;
-import net.minecraft.entity.monster.EntityPigZombie;
-import net.minecraft.entity.monster.EntitySilverfish;
-import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.entity.monster.EntitySlime;
-import net.minecraft.entity.monster.EntitySnowman;
-import net.minecraft.entity.monster.EntitySpider;
-import net.minecraft.entity.monster.EntityWitch;
-import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.entity.passive.EntityBat;
-import net.minecraft.entity.passive.EntityChicken;
-import net.minecraft.entity.passive.EntityCow;
-import net.minecraft.entity.passive.EntityHorse;
-import net.minecraft.entity.passive.EntityMooshroom;
-import net.minecraft.entity.passive.EntityOcelot;
-import net.minecraft.entity.passive.EntityPig;
-import net.minecraft.entity.passive.EntitySheep;
-import net.minecraft.entity.passive.EntitySquid;
-import net.minecraft.entity.passive.EntityVillager;
-import net.minecraft.entity.passive.EntityWolf;
-import net.minecraft.item.ItemStack;
-
 public class MobScrapeRegistry {
 	private static HashMap<String, Class> mobList = new HashMap();
 	private static HashMap<Class, String> listMob = new HashMap();
 	private static HashMap<String, List<ItemStack>> listGear = new HashMap();
-
-	/**
-	 * Gets the string assigned to this class, if it exists.
-	 * @param mob The class of the mob to be registered.
-	 * @return The string name of this mob.
-	 */
 	
 	public MobScrapeRegistry()
 	{
@@ -75,7 +45,12 @@ public class MobScrapeRegistry {
 		registerMobKey(EntityZombie.class, "zombie");
 		registerMobKey(EntityPigZombie.class, "zombie pigman");
 	}
-	
+
+	/**
+	 * Gets the string assigned to this class, if it exists.
+	 * @param mob The class of the mob to be registered.
+	 * @return The string name of this mob.
+	 */
 	public static <T extends Entity> String getKey(Class<T> mob)
 	{
 		return listMob.get(mob);
@@ -205,12 +180,8 @@ public class MobScrapeRegistry {
 	 */
 	public static boolean isRegistered(String key)
 	{
-		if (mobList.get(key) != null)
-		{
-			return true;
-		}
-		return false;
-	}
+        return mobList.get(key) != null;
+    }
 	
 	/**
 	 * Checks to see if the mob has been registered yet.
@@ -219,10 +190,6 @@ public class MobScrapeRegistry {
 	 */
 	public static <T extends Entity> boolean isRegistered(Class<T> mob)
 	{
-		if (listMob.get(mob) != null)
-		{
-			return true;
-		}
-		return false;
-	}
+        return listMob.get(mob) != null;
+    }
 }

@@ -1,43 +1,11 @@
 package com.kbi.qwertech.loaders.mod;
 
-import static gregapi.data.CS.F;
-import static gregapi.data.CS.T;
-import gregapi.data.MT;
-import gregapi.gui.ContainerClient;
-import gregapi.oredict.OreDictItemData;
-import gregapi.oredict.OreDictMaterial;
-import gregapi.oredict.OreDictPrefix;
-import gregapi.util.OM;
-import gregapi.util.ST;
-import gregapi.util.UT;
-
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-
-import org.lwjgl.opengl.GL11;
-
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.NEIClientConfig;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.guihook.GuiContainerManager;
 import codechicken.nei.guihook.IContainerInputHandler;
-import codechicken.nei.recipe.GuiCraftingRecipe;
-import codechicken.nei.recipe.GuiUsageRecipe;
-import codechicken.nei.recipe.RecipeInfo;
-import codechicken.nei.recipe.ShapedRecipeHandler;
-import codechicken.nei.recipe.ShapelessRecipeHandler;
-import codechicken.nei.recipe.TemplateRecipeHandler;
-
+import codechicken.nei.recipe.*;
 import com.kbi.qwertech.QwerTech;
 import com.kbi.qwertech.api.armor.MultiItemArmor;
 import com.kbi.qwertech.api.recipe.CraftingRecipe3D;
@@ -49,6 +17,30 @@ import com.kbi.qwertech.client.tileentity.CraftingTable3DRenderer;
 import com.kbi.qwertech.tileentities.CraftingTableT4;
 import com.kbi.qwertech.tileentities.CraftingTableT4.GUIClientAdvancedCraftingTable4;
 import cpw.mods.fml.common.event.FMLInterModComms;
+import gregapi.data.MT;
+import gregapi.gui.ContainerClient;
+import gregapi.oredict.OreDictItemData;
+import gregapi.oredict.OreDictMaterial;
+import gregapi.oredict.OreDictPrefix;
+import gregapi.util.OM;
+import gregapi.util.ST;
+import gregapi.util.UT;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
+import org.lwjgl.opengl.GL11;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+import static gregapi.data.CS.F;
+import static gregapi.data.CS.T;
 
 public class NEI_3D_Handler extends ShapedRecipeHandler {
 
@@ -139,7 +131,7 @@ public class NEI_3D_Handler extends ShapedRecipeHandler {
         }
         
         private boolean transferRect(GuiContainer gui, boolean usage) {
-            return canHandle(gui) && new Rectangle(145, 90, 20, 23).contains(new Point(GuiDraw.getMousePosition().x - ((ContainerClient)gui).getLeft() - RecipeInfo.getGuiOffset(gui)[0], GuiDraw.getMousePosition().y - ((ContainerClient)gui).getTop() - RecipeInfo.getGuiOffset(gui)[1])) && (usage ? GuiUsageRecipe.openRecipeGui("crafting3d", new Object[0]) : GuiCraftingRecipe.openRecipeGui("crafting3d", new Object[0]));
+            return canHandle(gui) && new Rectangle(145, 90, 20, 23).contains(new Point(GuiDraw.getMousePosition().x - ((ContainerClient)gui).getLeft() - RecipeInfo.getGuiOffset(gui)[0], GuiDraw.getMousePosition().y - ((ContainerClient)gui).getTop() - RecipeInfo.getGuiOffset(gui)[1])) && (usage ? GuiUsageRecipe.openRecipeGui("crafting3d") : GuiCraftingRecipe.openRecipeGui("crafting3d"));
         }
 
 		@Override
@@ -286,10 +278,7 @@ public class NEI_3D_Handler extends ShapedRecipeHandler {
     		{
     			return true;
     		}
-    		if (one.getItem() instanceof MultiItemArmor && ST.equal(one, two, true))
-    		{
-    			return true;
-    		}
+			return one.getItem() instanceof MultiItemArmor && ST.equal(one, two, true);
     	}
 		return false;
 	}
@@ -419,13 +408,12 @@ public class NEI_3D_Handler extends ShapedRecipeHandler {
 	
 	public Cached3DRecipe shapelessHammerRecipe(HammerablePrefixRecipe recipe, OreDictPrefix prefix, OreDictMaterial mat)
 	{
-		ArrayList<Object> items = new ArrayList();
 		ArrayList<List<ItemStack>> returning = new ArrayList();
 		for (int q = 0; q < 9; q++)
 		{
 			returning.add(null);
 		}
-		items.addAll(Arrays.asList(recipe.recipePieces));    
+		ArrayList<Object> items = new ArrayList(Arrays.asList(recipe.recipePieces));
 		for (Object item : items) {
 			if (((item instanceof List)) && (((List)item).isEmpty()))
 				return null;
@@ -581,7 +569,7 @@ public class NEI_3D_Handler extends ShapedRecipeHandler {
             {
             	NBTTagCompound tag = UT.NBT.getNBT(output);
             	NBTTagCompound armor = tag.getCompoundTag("QT.ArmorStats");
-            	if (mat != MT.NULL)
+            	if (mat != MT.NULL && mat != null)
             	{
             		armor.setShort("a", mat.mID);
             		armor.setString("b", mat.toString());

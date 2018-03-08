@@ -1,5 +1,6 @@
 package com.kbi.qwertech.client;
 
+import com.kbi.qwertech.client.models.*;
 import gregapi.data.IL;
 import gregapi.data.MT;
 import gregapi.data.OP;
@@ -15,19 +16,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
-
 import org.lwjgl.opengl.GL11;
-
-import com.kbi.qwertech.client.models.ModelAxe;
-import com.kbi.qwertech.client.models.ModelBaseTool;
-import com.kbi.qwertech.client.models.ModelBat;
-import com.kbi.qwertech.client.models.ModelKnuckles;
-import com.kbi.qwertech.client.models.ModelMace;
-import com.kbi.qwertech.client.models.ModelMattock;
-import com.kbi.qwertech.client.models.ModelPick;
-import com.kbi.qwertech.client.models.ModelPokeyStick;
-import com.kbi.qwertech.client.models.ModelShovel;
-import com.kbi.qwertech.client.models.ModelSlingshot;
 
 public class QT_Tool_Renderer implements IItemRenderer {
 	
@@ -92,7 +81,7 @@ public class QT_Tool_Renderer implements IItemRenderer {
 		slingshotRenderer.setHandleMaterial(MultiItemTool.getPrimaryMaterial(item, MT.Brass));
     	float typeData = 0;
     	float itemInUse = 0;
-    	if ((EntityPlayer)data[1] != null)
+    	if (data[1] != null)
     	{
     		ItemStack launchable = getLaunchable((EntityPlayer)data[1]);
     		EntityPlayer player = (EntityPlayer)data[1];

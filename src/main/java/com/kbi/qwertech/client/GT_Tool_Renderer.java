@@ -1,5 +1,6 @@
 package com.kbi.qwertech.client;
 
+import com.kbi.qwertech.client.models.*;
 import gregapi.data.MT;
 import gregapi.data.OP;
 import gregapi.item.multiitem.MultiItemTool;
@@ -15,21 +16,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
-
-import com.kbi.qwertech.client.models.ModelBaseTool;
-import com.kbi.qwertech.client.models.ModelBigKnife;
-import com.kbi.qwertech.client.models.ModelChisel;
-import com.kbi.qwertech.client.models.ModelClub;
-import com.kbi.qwertech.client.models.ModelCrowbar;
-import com.kbi.qwertech.client.models.ModelDoubleAxe;
-import com.kbi.qwertech.client.models.ModelHammer;
-import com.kbi.qwertech.client.models.ModelKnife;
-import com.kbi.qwertech.client.models.ModelScrewdriver;
-import com.kbi.qwertech.client.models.ModelScythe;
-import com.kbi.qwertech.client.models.ModelWrench;
 
 public class GT_Tool_Renderer implements IItemRenderer {
 	
@@ -200,174 +188,174 @@ public class GT_Tool_Renderer implements IItemRenderer {
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
 		GL11.glPushMatrix();
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		if (item.getItemDamage() == 12 || item.getItemDamage() == 14) {
-			switch (type) {
-		      case EQUIPPED:
-		      //case EQUIPPED_FIRST_PERSON:
-		      {
-		    	renderModel(hammerRenderer, item, (Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/hammer.png"), 0, 0, -20, -0.1F, 0.25F, 0F);
-		    	break;
-		      }
-		      case EQUIPPED_FIRST_PERSON:
-		      {
-		    	renderModel(hammerRenderer, item, (Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/hammer.png"), 15, 0, -45, 0F, 0.4F, -0.1F);
-		    	break;
-		      }
-		      default:
-		        break;
-		    }
-		} else if (item.getItemDamage() == 22) {
-			switch (type) {
-		      case EQUIPPED:
-		      {		    	
-		    	renderModel(screwdriverRenderer, item, (Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/screwdriver.png"), 0, 0, -130, 0.8F, 0.25F, -0.03F);
-		    	break;
-		      }
-		      case EQUIPPED_FIRST_PERSON:
-		      {
-		    	renderModel(screwdriverRenderer, item, (Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/screwdriver.png"), 15, 0, -155, 0.8F, 0.25F, -0.03F);
-		    	break;
-		      }
-		      default:
-		        break;
-			}
-		} else if (item.getItemDamage() == 48) {
-			switch (type) {
-		      case EQUIPPED:
-		      {		    	
-		    	renderModel(chiselRenderer, item, (Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/chisel.png"), 0, 0, -130, 0.8F, 0.25F, -0.03F);
-		    	break;
-		      }
-		      case EQUIPPED_FIRST_PERSON:
-		      {
-		    	renderModel(chiselRenderer, item, (Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/chisel.png"), 15, 0, -155, 0.8F, 0.25F, -0.03F);
-		    	break;
-		      }
-		      default:
-		        break;
-			}
-		} else if (item.getItemDamage() == 34) {
-			switch (type) {
-		      case EQUIPPED:
-		      //case EQUIPPED_FIRST_PERSON:
-		      {
-		    	renderModel(knifeRenderer, item, (Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/knife.png"), 0, 0, -20, -0.1F, 0.25F, 0F);
-		    	break;
-		      }
-		      case EQUIPPED_FIRST_PERSON:
-		      {   	
-		    	renderModel(knifeRenderer, item, (Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/knife.png"), 15, 0, -45, 0F, 0.5F, 0F);
-		    	break;
-		      }
-		      default:
-		        break;
-		    }
-		} else if (item.getItemDamage() == 36) {
-			switch (type) {
-		      case EQUIPPED:
-		      //case EQUIPPED_FIRST_PERSON:
-		      {
-		    	renderModel(bigKnifeRenderer, item, (Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/bigknife.png"), 0, 0, -20, -0.1F, 0.25F, 0F);
-		    	break;
-		      }
-		      case EQUIPPED_FIRST_PERSON:
-		      {	
-		    	renderModel(bigKnifeRenderer, item, (Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/bigknife.png"), 15, 0, -45, 0.0F, 0.5F, 0.0F);
-		    	break;
-		      }
-		      default:
-		        break;
-		    }
-		} else if (item.getItemDamage() == 58) {
-			switch (type) {
-		      case EQUIPPED:
-		      //case EQUIPPED_FIRST_PERSON:
-		      {
-		    	renderModel(doubleAxeRenderer, item, (Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/doubleaxe.png"), 0, 0, -20, -0.1F, 0.25F, 0.0F);
-		    	break;
-		      }
-		      case EQUIPPED_FIRST_PERSON:
-		      { 	
-		    	renderModel(doubleAxeRenderer, item, (Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/doubleaxe.png"), 15, 0, -45, 0F, 0.5F, 0F);
-		    	break;
-		      }
-		      default:
-		        break;
-		    }
-		} else if (item.getItemDamage() == 20) {
-			switch (type) {
-		      case EQUIPPED:
-		      //case EQUIPPED_FIRST_PERSON:
-		      {
-		    	renderModel(crowbarRenderer, item, (Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/crowbar.png"), 0, 0, -20, -0.1F, 0.33F, 0F);
-		    	break;
-		      }
-		      case EQUIPPED_FIRST_PERSON:
-		      {
-		    	renderModel(crowbarRenderer, item, (Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/crowbar.png"), 15, 0, -45, -0F, 0.5F, 0F);
-		    	break;
-		      }
-		      default:
-		        break;
-		    }
-		} else if (item.getItemDamage() == 40) {
-			switch (type) {
-		      case EQUIPPED:
-		      //case EQUIPPED_FIRST_PERSON:
-		      {
-		    	renderModel(scytheRenderer, item, (Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/scythe.png"), 0, 0, -20, -0.1F, 0.25F, 0F);
-		    	break;
-		      }
-		      case EQUIPPED_FIRST_PERSON:
-		      {
-		    	renderModel(scytheRenderer, item, (Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/scythe.png"), 15, -45, -45, -0F, 0.5F, 0F);
-		    	break;
-		      }
-		      default:
-		        break;
-		    }
-		} else if (item.getItemDamage() == 16) {
-			switch (type) {
-		      case EQUIPPED:
-		      //case EQUIPPED_FIRST_PERSON:
-		      {
-		    	renderModel(wrenchRenderer, item, (Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/wrench.png"), 0, 0, -20, -0.1F, 0.25F, 0F);
-		    	break;
-		      }
-		      case EQUIPPED_FIRST_PERSON:
-		      {
-		    	renderModel(wrenchRenderer, item, (Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/wrench.png"), 15, 0, -45, -0F, 0.5F, 0F);
-		    	break;
-		      }
-		      default:
-		        break;
-		    }
-		} else if (item.getItemDamage() == 24) {
-			switch (type) {
-		      case EQUIPPED:
-		      //case EQUIPPED_FIRST_PERSON:
-		      {
-		    	renderModel(clubRenderer, item, (Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/club.png"), 0, 0, -20, -0.1F, 0.25F, 0F);
-		    	break;
-		      }
-		      case EQUIPPED_FIRST_PERSON:
-		      {
-		    	renderModel(clubRenderer, item, (Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/club.png"), 15, 0, -45, -0F, 0.5F, 0F);
-		    	break;
-		      }
-		      default:
-		        break;
-		    }
-		} else {
-			for (int i = 0; i < item.getItem().getRenderPasses(item.getItemDamage()); i++)
-            {
-                int j = item.getItem().getColorFromItemStack(item, i);
-                float f5 = (j >> 16 & 255) / 255.0F;
-                float f2 = (j >> 8 & 255) / 255.0F;
-                float f3 = (j & 255) / 255.0F;
-                GL11.glColor4f(f5, f2, f3, 1.0F);
-                renderPlainItem((EntityLivingBase)data[1], item, i, type);
-            }
+		switch (item.getItemDamage()) {
+			case 12:
+			case 14:
+				switch (type) {
+					case EQUIPPED:
+						//case EQUIPPED_FIRST_PERSON:
+					{
+						renderModel(hammerRenderer, item, (Entity) data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/hammer.png"), 0, 0, -20, -0.1F, 0.25F, 0F);
+						break;
+					}
+					case EQUIPPED_FIRST_PERSON: {
+						renderModel(hammerRenderer, item, (Entity) data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/hammer.png"), 15, 0, -45, 0F, 0.4F, -0.1F);
+						break;
+					}
+					default:
+						break;
+				}
+				break;
+			case 22:
+				switch (type) {
+					case EQUIPPED: {
+						renderModel(screwdriverRenderer, item, (Entity) data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/screwdriver.png"), 0, 0, -130, 0.8F, 0.25F, -0.03F);
+						break;
+					}
+					case EQUIPPED_FIRST_PERSON: {
+						renderModel(screwdriverRenderer, item, (Entity) data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/screwdriver.png"), 15, 0, -155, 0.8F, 0.25F, -0.03F);
+						break;
+					}
+					default:
+						break;
+				}
+				break;
+			case 48:
+				switch (type) {
+					case EQUIPPED: {
+						renderModel(chiselRenderer, item, (Entity) data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/chisel.png"), 0, 0, -130, 0.8F, 0.25F, -0.03F);
+						break;
+					}
+					case EQUIPPED_FIRST_PERSON: {
+						renderModel(chiselRenderer, item, (Entity) data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/chisel.png"), 15, 0, -155, 0.8F, 0.25F, -0.03F);
+						break;
+					}
+					default:
+						break;
+				}
+				break;
+			case 34:
+				switch (type) {
+					case EQUIPPED:
+						//case EQUIPPED_FIRST_PERSON:
+					{
+						renderModel(knifeRenderer, item, (Entity) data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/knife.png"), 0, 0, -20, -0.1F, 0.25F, 0F);
+						break;
+					}
+					case EQUIPPED_FIRST_PERSON: {
+						renderModel(knifeRenderer, item, (Entity) data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/knife.png"), 15, 0, -45, 0F, 0.5F, 0F);
+						break;
+					}
+					default:
+						break;
+				}
+				break;
+			case 36:
+				switch (type) {
+					case EQUIPPED:
+						//case EQUIPPED_FIRST_PERSON:
+					{
+						renderModel(bigKnifeRenderer, item, (Entity) data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/bigknife.png"), 0, 0, -20, -0.1F, 0.25F, 0F);
+						break;
+					}
+					case EQUIPPED_FIRST_PERSON: {
+						renderModel(bigKnifeRenderer, item, (Entity) data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/bigknife.png"), 15, 0, -45, 0.0F, 0.5F, 0.0F);
+						break;
+					}
+					default:
+						break;
+				}
+				break;
+			case 58:
+				switch (type) {
+					case EQUIPPED:
+						//case EQUIPPED_FIRST_PERSON:
+					{
+						renderModel(doubleAxeRenderer, item, (Entity) data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/doubleaxe.png"), 0, 0, -20, -0.1F, 0.25F, 0.0F);
+						break;
+					}
+					case EQUIPPED_FIRST_PERSON: {
+						renderModel(doubleAxeRenderer, item, (Entity) data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/doubleaxe.png"), 15, 0, -45, 0F, 0.5F, 0F);
+						break;
+					}
+					default:
+						break;
+				}
+				break;
+			case 20:
+				switch (type) {
+					case EQUIPPED:
+						//case EQUIPPED_FIRST_PERSON:
+					{
+						renderModel(crowbarRenderer, item, (Entity) data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/crowbar.png"), 0, 0, -20, -0.1F, 0.33F, 0F);
+						break;
+					}
+					case EQUIPPED_FIRST_PERSON: {
+						renderModel(crowbarRenderer, item, (Entity) data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/crowbar.png"), 15, 0, -45, -0F, 0.5F, 0F);
+						break;
+					}
+					default:
+						break;
+				}
+				break;
+			case 40:
+				switch (type) {
+					case EQUIPPED:
+						//case EQUIPPED_FIRST_PERSON:
+					{
+						renderModel(scytheRenderer, item, (Entity) data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/scythe.png"), 0, 0, -20, -0.1F, 0.25F, 0F);
+						break;
+					}
+					case EQUIPPED_FIRST_PERSON: {
+						renderModel(scytheRenderer, item, (Entity) data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/scythe.png"), 15, -45, -45, -0F, 0.5F, 0F);
+						break;
+					}
+					default:
+						break;
+				}
+				break;
+			case 16:
+				switch (type) {
+					case EQUIPPED:
+						//case EQUIPPED_FIRST_PERSON:
+					{
+						renderModel(wrenchRenderer, item, (Entity) data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/wrench.png"), 0, 0, -20, -0.1F, 0.25F, 0F);
+						break;
+					}
+					case EQUIPPED_FIRST_PERSON: {
+						renderModel(wrenchRenderer, item, (Entity) data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/wrench.png"), 15, 0, -45, -0F, 0.5F, 0F);
+						break;
+					}
+					default:
+						break;
+				}
+				break;
+			case 24:
+				switch (type) {
+					case EQUIPPED:
+						//case EQUIPPED_FIRST_PERSON:
+					{
+						renderModel(clubRenderer, item, (Entity) data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/club.png"), 0, 0, -20, -0.1F, 0.25F, 0F);
+						break;
+					}
+					case EQUIPPED_FIRST_PERSON: {
+						renderModel(clubRenderer, item, (Entity) data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/club.png"), 15, 0, -45, -0F, 0.5F, 0F);
+						break;
+					}
+					default:
+						break;
+				}
+				break;
+			default:
+				for (int i = 0; i < item.getItem().getRenderPasses(item.getItemDamage()); i++) {
+					int j = item.getItem().getColorFromItemStack(item, i);
+					float f5 = (j >> 16 & 255) / 255.0F;
+					float f2 = (j >> 8 & 255) / 255.0F;
+					float f3 = (j & 255) / 255.0F;
+					GL11.glColor4f(f5, f2, f3, 1.0F);
+					renderPlainItem((EntityLivingBase) data[1], item, i, type);
+				}
+				break;
 		}
 		GL11.glPopMatrix();
 	}

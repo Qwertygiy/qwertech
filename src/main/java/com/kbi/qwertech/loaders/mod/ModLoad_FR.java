@@ -2,7 +2,7 @@ package com.kbi.qwertech.loaders.mod;
 
 import com.kbi.qwertech.api.recipe.RepairRecipe;
 import com.kbi.qwertech.api.recipe.managers.CraftingManagerHammer;
-
+import cpw.mods.fml.common.registry.GameRegistry;
 import gregapi.code.ModData;
 import gregapi.data.CS;
 import gregapi.data.MD;
@@ -11,7 +11,6 @@ import gregapi.oredict.OreDictMaterialStack;
 import gregapi.util.ST;
 import net.minecraft.block.Block;
 import net.minecraftforge.oredict.OreDictionary;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ModLoad_FR extends ModLoadBase {
 
@@ -42,11 +41,11 @@ public class ModLoad_FR extends ModLoadBase {
 	{
 		CraftingManagerHammer hammer = CraftingManagerHammer.getInstance();
 		try {
-			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "bronzeShovel"), new OreDictMaterialStack(MT.Bronze, CS.U * 1)));
+			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "bronzeShovel"), new OreDictMaterialStack(MT.Bronze, CS.U)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "bronzePickaxe"), new OreDictMaterialStack(MT.Bronze, CS.U * 3)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "wrench"), new OreDictMaterialStack(MT.Bronze, CS.U * 4)));
-			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "grafter"), new OreDictMaterialStack(MT.Bronze, CS.U * 1)));
-			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "grafterProven"), new OreDictMaterialStack(MT.StainlessSteel, CS.U * 1)));
+			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "grafter"), new OreDictMaterialStack(MT.Bronze, CS.U)));
+			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "grafterProven"), new OreDictMaterialStack(MT.StainlessSteel, CS.U)));
 		} catch (Throwable t)
 		{
 			t.printStackTrace();

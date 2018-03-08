@@ -1,51 +1,21 @@
 package com.kbi.qwertech.client;
 
-import static org.lwjgl.opengl.GL11.GL_ALPHA_TEST;
-import static org.lwjgl.opengl.GL11.GL_BLEND;
-import static org.lwjgl.opengl.GL11.GL_CULL_FACE;
-import static org.lwjgl.opengl.GL11.GL_GREATER;
-import static org.lwjgl.opengl.GL11.GL_LIGHTING;
-import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
-import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
-import static org.lwjgl.opengl.GL11.glAlphaFunc;
-import static org.lwjgl.opengl.GL11.glDisable;
-import static org.lwjgl.opengl.GL11.glEnable;
-import gregapi.data.MT;
-import gregapi.data.OP;
-import gregapi.item.multiitem.MultiItemTool;
-import gregapi.old.Textures;
-import gregapi.oredict.OreDictMaterial;
-import gregapi.render.RenderHelper;
+import com.kbi.qwertech.api.armor.MultiItemArmor;
+import com.kbi.qwertech.api.armor.upgrades.IArmorUpgrade;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.texture.TextureUtil;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import com.kbi.qwertech.api.armor.MultiItemArmor;
-import com.kbi.qwertech.api.armor.upgrades.IArmorUpgrade;
-import com.kbi.qwertech.client.models.ModelBaseTool;
-import com.kbi.qwertech.client.models.ModelBigKnife;
-import com.kbi.qwertech.client.models.ModelChisel;
-import com.kbi.qwertech.client.models.ModelClub;
-import com.kbi.qwertech.client.models.ModelCrowbar;
-import com.kbi.qwertech.client.models.ModelDoubleAxe;
-import com.kbi.qwertech.client.models.ModelHammer;
-import com.kbi.qwertech.client.models.ModelKnife;
-import com.kbi.qwertech.client.models.ModelScrewdriver;
-import com.kbi.qwertech.client.models.ModelScythe;
-import com.kbi.qwertech.client.models.ModelWrench;
+import static org.lwjgl.opengl.GL11.*;
 
 public class QT_Armor_Renderer implements IItemRenderer {
 	
@@ -82,7 +52,7 @@ public class QT_Armor_Renderer implements IItemRenderer {
         float f4 = 0.0F;
         float f5 = 0.3F;
         float f6 = 1.5F;
-        if (type != type.INVENTORY)
+        if (type != ItemRenderType.INVENTORY)
         {
 	        ItemRenderer.renderItemIn2D(tessellator, f1, f2, f, f3, iicon.getIconWidth(), iicon.getIconHeight(), 0.0625F);
         } else {
@@ -120,7 +90,7 @@ public class QT_Armor_Renderer implements IItemRenderer {
             }
         }
 		
-		IArmorUpgrade[] upgrades = ((MultiItemArmor)item.getItem()).getUpgrades(item);
+		IArmorUpgrade[] upgrades = MultiItemArmor.getUpgrades(item);
 		for (int q = 0; q < upgrades.length; q++)
 		{
 			IArmorUpgrade upgrade = upgrades[q];
@@ -135,7 +105,7 @@ public class QT_Armor_Renderer implements IItemRenderer {
 					
 					try {
 						icon = upgrade.getIcon(item, w);
-					} catch (Throwable t)
+					} catch (Throwable ignored)
 					{
 						
 					}

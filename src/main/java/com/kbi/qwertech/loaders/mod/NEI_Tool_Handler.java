@@ -1,5 +1,13 @@
 package com.kbi.qwertech.loaders.mod;
 
+import codechicken.nei.PositionedStack;
+import codechicken.nei.recipe.GuiCraftingRecipe;
+import codechicken.nei.recipe.GuiUsageRecipe;
+import codechicken.nei.recipe.ShapelessRecipeHandler;
+import codechicken.nei.recipe.TemplateRecipeHandler;
+import com.kbi.qwertech.QwerTech;
+import com.kbi.qwertech.api.recipe.AnyQTTool;
+import cpw.mods.fml.common.event.FMLInterModComms;
 import gregapi.code.ICondition;
 import gregapi.data.ANY;
 import gregapi.data.CS;
@@ -10,34 +18,20 @@ import gregapi.oredict.OreDictMaterial;
 import gregapi.oredict.OreDictPrefix;
 import gregapi.util.OM;
 import gregapi.util.ST;
-
-import java.awt.Rectangle;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.oredict.OreDictionary;
-import codechicken.nei.PositionedStack;
-import codechicken.nei.recipe.GuiCraftingRecipe;
-import codechicken.nei.recipe.GuiUsageRecipe;
-import codechicken.nei.recipe.ShapelessRecipeHandler;
-import codechicken.nei.recipe.TemplateRecipeHandler;
 
-import com.kbi.qwertech.QwerTech;
-import com.kbi.qwertech.api.recipe.AnyQTTool;
-
-import cpw.mods.fml.common.event.FMLInterModComms;
+import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 public class NEI_Tool_Handler extends ShapelessRecipeHandler {
 
 	public NEI_Tool_Handler() {
-		this.transferRects.add(new TemplateRecipeHandler.RecipeTransferRect(new Rectangle(65, 13, 36, 18), getOverlayIdentifier(), new Object[0]));
+		this.transferRects.add(new TemplateRecipeHandler.RecipeTransferRect(new Rectangle(65, 13, 36, 18), getOverlayIdentifier()));
 	    if (!NEI_QT_Config.sIsAdded)
 	    {
 	      System.out.println("Creating QT NEI handler");
@@ -93,11 +87,7 @@ public class NEI_Tool_Handler extends ShapelessRecipeHandler {
 			OreDictItemData tDt = OM.data(toCheck);
 			if (tDt == null) tDt = OM.anydata(toCheck); //not sure this would do anything (shrug)
 			if (tDt == null) return true;
-			if (matCondition.isTrue(tDt.mMaterial.mMaterial) && matCondition.isTrue(tDt.mPrefix))
-			{
-				return true;
-			}
-			return false;
+			return matCondition.isTrue(tDt.mMaterial.mMaterial) && matCondition.isTrue(tDt.mPrefix);
 		}
 		
 		int lasCheck = -1;
@@ -220,8 +210,7 @@ public class NEI_Tool_Handler extends ShapelessRecipeHandler {
 	
 	public ToolCraftingCachedRecipe shapelessQTRecipe(AnyQTTool recipe, OreDictPrefix prefix, OreDictMaterial mat)
 	{
-		ArrayList<Object> items = new ArrayList();
-		items.addAll(Arrays.asList(recipe.recipePieces));    
+		ArrayList<Object> items = new ArrayList(Arrays.asList(recipe.recipePieces));
 		for (Object item : items) {
 			if (((item instanceof List)) && (((List)item).isEmpty()))
 				return null;

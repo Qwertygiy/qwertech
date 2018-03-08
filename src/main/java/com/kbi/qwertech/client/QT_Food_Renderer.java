@@ -1,5 +1,8 @@
 package com.kbi.qwertech.client;
 
+import com.kbi.qwertech.client.models.ModelBaseTool;
+import com.kbi.qwertech.client.models.ModelClub;
+import com.kbi.qwertech.client.models.ModelEgg;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -11,13 +14,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
-
-import com.kbi.qwertech.client.models.ModelBaseTool;
-import com.kbi.qwertech.client.models.ModelClub;
-import com.kbi.qwertech.client.models.ModelEgg;
 
 public class QT_Food_Renderer implements IItemRenderer {
 	
@@ -137,7 +135,7 @@ public class QT_Food_Renderer implements IItemRenderer {
 	
 	public void renderType(short[] primary, short[] secondary, String type, ItemStack item, Entity entity, boolean isFP)
 	{
-		if (type == "club")
+		if (type.equals("club"))
 		{
 			if (!isFP)
 			{
@@ -146,7 +144,7 @@ public class QT_Food_Renderer implements IItemRenderer {
 				GL11.glScalef(0.8F, 0.8F, 0.8F);
 				renderModel(primary, secondary, clubRenderer, item, entity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/club.png"), 15, 0, -45, -0F, 0.5F, 0F);
 			}
-		} else if (type == "egg")
+		} else if (type.equals("egg"))
 		{
 			if (!isFP)
 			{
@@ -166,8 +164,8 @@ public class QT_Food_Renderer implements IItemRenderer {
 		{
 			isFirst = true;
 		}
-		short[] primary = new short[]{0, 0, 0, 0};
-		short[] secondary = new short[]{0, 0, 0, 0};
+		short[] primary;
+		short[] secondary;
 		switch(item.getItemDamage())
 		{
 			case 7:

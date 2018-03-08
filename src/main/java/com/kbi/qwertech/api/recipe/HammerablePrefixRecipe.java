@@ -1,6 +1,5 @@
 package com.kbi.qwertech.api.recipe;
 
-import static gregapi.data.CS.F;
 import gregapi.code.ICondition;
 import gregapi.data.MT;
 import gregapi.item.multiitem.MultiItemTool;
@@ -11,16 +10,17 @@ import gregapi.oredict.OreDictPrefix;
 import gregapi.recipes.ICraftingRecipeGT;
 import gregapi.util.OM;
 import gregapi.util.ST;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+
+import static gregapi.data.CS.F;
 
 public class HammerablePrefixRecipe implements ICraftingRecipeGT, IRecipe {
 
@@ -87,10 +87,7 @@ public class HammerablePrefixRecipe implements ICraftingRecipeGT, IRecipe {
 		  {
 			  returnable[i] = ((OreDictPrefix)primaryPrefix[i]).dat(primaryMat);
 		  }
-		  for (int p = 0; p < extras.length; p++)
-		  {
-			  returnable[primaryPrefix.length + p] = extras[p];
-		  }
+		  System.arraycopy(extras, 0, returnable, primaryPrefix.length + 0, extras.length);
 		  return returnable;
 	  }
 	
@@ -106,12 +103,9 @@ public class HammerablePrefixRecipe implements ICraftingRecipeGT, IRecipe {
   			{
   				this.tempPrimary = p2;
   				return true;
-  			} else if (p2 == this.tempPrimary || p2.mToThis.contains(this.tempPrimary) || this.tempPrimary.mToThis.contains(p2) || p2.mReRegistrations.contains(this.tempPrimary) || this.tempPrimary.mReRegistrations.contains(p2))
-  			{
-  				return true;
-  			}
-  			return false;
-  		}
+  			} else
+				return p2 == this.tempPrimary || p2.mToThis.contains(this.tempPrimary) || this.tempPrimary.mToThis.contains(p2) || p2.mReRegistrations.contains(this.tempPrimary) || this.tempPrimary.mReRegistrations.contains(p2);
+		}
   		return false;
   	}
 
@@ -120,10 +114,9 @@ public class HammerablePrefixRecipe implements ICraftingRecipeGT, IRecipe {
   		this.tempPrimary = this.primaryMaterial;
   		this.tempHeight = -1;
   		this.tempWidth = -1;
-  		ArrayList<Object> recipeCheck = new ArrayList<Object>();
-  		recipeCheck.addAll(Arrays.asList(recipePieces));
+		ArrayList<Object> recipeCheck = new ArrayList<Object>(Arrays.asList(recipePieces));
 		if (recipeCheck.size() > aGrid.getSizeInventory()) {return F;}
-		ItemStack tStack = null;
+		ItemStack tStack;
 		for (int i = 0; i < aGrid.getSizeInventory(); i++)
 		{
 			tStack = aGrid.getStackInSlot(i);
@@ -183,7 +176,7 @@ public class HammerablePrefixRecipe implements ICraftingRecipeGT, IRecipe {
 							match = compareMats(nex.mMaterial.mMaterial, tData.mMaterial.mMaterial);
 						}
 					} else if (next instanceof String && tData != null) {
-						if (tData.toString() == (String)next)
+						if (tData.toString().equals((String) next))
 						{
 							match = true;
 						}

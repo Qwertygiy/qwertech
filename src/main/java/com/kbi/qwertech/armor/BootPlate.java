@@ -1,9 +1,7 @@
 package com.kbi.qwertech.armor;
 
-import gregapi.render.IIconContainer;
-
 import com.kbi.qwertech.loaders.RegisterArmor;
-
+import gregapi.render.IIconContainer;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 
@@ -29,7 +27,7 @@ public class BootPlate extends BootBase {
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
 	{
-		if (type != "overlay")
+		if (!type.equals("overlay"))
 		{
 			return "qwertech:textures/armor/plate.png";
 		} else {

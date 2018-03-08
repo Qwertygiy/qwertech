@@ -1,12 +1,10 @@
 package com.kbi.qwertech.entities.ai;
 
+import com.kbi.qwertech.api.data.QTI;
+import com.kbi.qwertech.items.behavior.Behavior_Swing;
 import gregapi.item.multiitem.MultiItem;
 import gregapi.item.multiitem.MultiItemTool;
 import gregapi.item.multiitem.behaviors.IBehavior;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.IProjectile;
@@ -14,8 +12,8 @@ import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Vec3;
 
-import com.kbi.qwertech.api.data.QTI;
-import com.kbi.qwertech.items.behavior.Behavior_Swing;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EntityAISwing extends EntityAIBase {
 	
@@ -34,7 +32,7 @@ public class EntityAISwing extends EntityAIBase {
 			ItemStack is = this.thisEntity.getHeldItem();
 			if (is != null && is.getItem() == QTI.qwerTool.getItem())
 			{
-				ArrayList<IBehavior<MultiItem>> behaviors = ((MultiItemTool)QTI.qwerTool.getItem()).mItemBehaviors.get((short)((MultiItemTool)QTI.qwerTool.getItem()).getDamage(is));
+				ArrayList<IBehavior<MultiItem>> behaviors = ((MultiItemTool)QTI.qwerTool.getItem()).mItemBehaviors.get((short) QTI.qwerTool.getItem().getDamage(is));
 				if (behaviors != null)
 				{
 					for (int q = 0; q < behaviors.size(); q++)

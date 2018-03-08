@@ -1,13 +1,12 @@
 package com.kbi.qwertech.api.registry;
 
 import gregapi.util.ST;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 
 public class MobBreedRegistry {
 	
@@ -40,7 +39,7 @@ public class MobBreedRegistry {
 		    }
 		    addingTo.add(addition);
 			return true;
-		} catch (Exception e){
+		} catch (Exception ignored){
 
 		}
 		return false;

@@ -1,5 +1,9 @@
 package com.kbi.qwertech.entities.projectile;
 
+import com.kbi.qwertech.QwerTech;
+import cpw.mods.fml.common.registry.IThrowableEntity;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import gregapi.code.ArrayListNoNulls;
 import gregapi.data.CS;
 import gregapi.data.MT;
@@ -7,9 +11,6 @@ import gregapi.oredict.OreDictMaterial;
 import gregapi.oredict.OreDictMaterialStack;
 import gregapi.oredict.OreDictPrefix;
 import gregapi.util.UT;
-
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -24,18 +25,10 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.S2BPacketChangeGameState;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 
-import com.kbi.qwertech.QwerTech;
-
-import cpw.mods.fml.common.registry.IThrowableEntity;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
 
 public class EntityShuriken extends EntityArrow implements IProjectile, IThrowableEntity
 {
@@ -351,7 +344,7 @@ public class EntityShuriken extends EntityArrow implements IProjectile, IThrowab
                         k += this.rand.nextInt(k / 2 + 2);
                     }
 
-                    DamageSource damagesource = null;
+                    DamageSource damagesource;
 
                     if (this.shootingEntity == null)
                     {
@@ -458,7 +451,6 @@ public class EntityShuriken extends EntityArrow implements IProjectile, IThrowab
 
             for (this.rotationPitch = (float)(Math.atan2(this.motionY, f2) * 180.0D / Math.PI); this.rotationPitch - this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F)
             {
-                ;
             }
 
             while (this.rotationPitch - this.prevRotationPitch >= 180.0F)
@@ -637,11 +629,11 @@ public class EntityShuriken extends EntityArrow implements IProjectile, IThrowab
 
         if (p_70243_1_)
         {
-            this.dataWatcher.updateObject(16, Byte.valueOf((byte)(b0 | 1)));
+            this.dataWatcher.updateObject(16, (byte) (b0 | 1));
         }
         else
         {
-            this.dataWatcher.updateObject(16, Byte.valueOf((byte)(b0 & -2)));
+            this.dataWatcher.updateObject(16, (byte) (b0 & -2));
         }
     }
 

@@ -1,5 +1,6 @@
 package com.kbi.qwertech.client.tileentity;
 
+import com.kbi.qwertech.tileentities.CraftingTableT1;
 import gregapi.data.CS;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -15,11 +16,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
-
-import com.kbi.qwertech.tileentities.CraftingTableT1;
 
 public class CraftingTableRenderer extends TileEntitySpecialRenderer {
 
@@ -135,11 +133,9 @@ public class CraftingTableRenderer extends TileEntitySpecialRenderer {
 		GL11.glDisable(GL11.GL_LIGHTING);
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240.0F, 240.0F);
 		GL11.glTranslatef(0.5F, 0.5F, 0.5F);
-		boolean sideways = false;
 		short dir = tileEntity.getFacing();
 		if (dir == CS.SIDE_Y_NEG || dir == CS.SIDE_X_NEG || dir == CS.SIDE_X_POS)
 		{
-			sideways = true;
 			GL11.glRotatef(90, 0, 1, 0);
 		}
 		

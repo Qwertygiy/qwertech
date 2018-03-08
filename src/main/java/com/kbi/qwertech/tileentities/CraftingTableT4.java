@@ -1,11 +1,11 @@
 package com.kbi.qwertech.tileentities;
 
-import static gregapi.data.CS.ERR;
-import static gregapi.data.CS.F;
-import static gregapi.data.CS.T;
-import static gregapi.data.CS.TOOL_SOUNDS;
+import com.kbi.qwertech.api.recipe.managers.CraftingManager3D;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import gregapi.data.CS;
-import gregapi.data.CS.SFX;
+import gregapi.data.CS.*;
 import gregapi.data.LH.Chat;
 import gregapi.gui.ContainerClient;
 import gregapi.gui.ContainerCommon;
@@ -16,11 +16,6 @@ import gregapi.util.CR;
 import gregapi.util.OM;
 import gregapi.util.ST;
 import gregapi.util.UT;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import com.kbi.qwertech.api.recipe.managers.CraftingManager3D;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
@@ -28,18 +23,16 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemHoe;
-import net.minecraft.item.ItemPickaxe;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
+import net.minecraft.item.*;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.stats.AchievementList;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static gregapi.data.CS.*;
 
 public class CraftingTableT4 extends CraftingTableT3 {
 	
@@ -70,8 +63,8 @@ public class CraftingTableT4 extends CraftingTableT3 {
 				{18, 9, 0, 21, 12, 3, 24, 15, 6, 19, 10, 1, 22, 13, 4, 25, 16, 7, 20, 11, 2, 23, 14, 5, 26, 17, 8}};
 		
 		int thechoice = 0;
-		int ex = 0;
-		int zee = 0;
+		int ex;
+		int zee;
 		{
 			for (int e = 0; e < 3; e++)
 			{
@@ -86,19 +79,22 @@ public class CraftingTableT4 extends CraftingTableT3 {
 				}
 			}
 		}
-		
-		if (mFacing == CS.SIDE_X_POS)
-		{
-			thechoice = 2;
-		} else if (mFacing == CS.SIDE_X_NEG)
-		{
-			thechoice = 3;
-		} else if (mFacing == CS.SIDE_Z_POS || mFacing == CS.SIDE_Y_POS)
-		{
-			thechoice = 1;
-		} else if (mFacing == CS.SIDE_Z_NEG || mFacing == CS.SIDE_Y_NEG)
-		{
-			thechoice = 0;
+
+		switch (mFacing) {
+			case CS.SIDE_X_POS:
+				thechoice = 2;
+				break;
+			case CS.SIDE_X_NEG:
+				thechoice = 3;
+				break;
+			case CS.SIDE_Z_POS:
+			case CS.SIDE_Y_POS:
+				thechoice = 1;
+				break;
+			case CS.SIDE_Z_NEG:
+			case CS.SIDE_Y_NEG:
+				thechoice = 0;
+				break;
 		}
 		currentBoxes = new ArrayList(27);
 		for (int q = 0; q < aList.size(); q++)

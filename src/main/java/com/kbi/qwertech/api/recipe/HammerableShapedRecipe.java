@@ -7,11 +7,6 @@ import gregapi.oredict.OreDictMaterial;
 import gregapi.oredict.OreDictPrefix;
 import gregapi.recipes.ICraftingRecipeGT;
 import gregapi.util.OM;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-
 import net.minecraft.block.Block;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
@@ -19,6 +14,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 public class HammerableShapedRecipe implements IRecipe, ICraftingRecipeGT {
 
@@ -54,7 +53,7 @@ public class HammerableShapedRecipe implements IRecipe, ICraftingRecipeGT {
 		this.outputPrefix = output;
 		this.outputAmount = amount;
 
-        String shape = "";
+        StringBuilder shape = new StringBuilder();
         int idx = 0;
 
         if (recipe[idx] instanceof Boolean)
@@ -77,7 +76,7 @@ public class HammerableShapedRecipe implements IRecipe, ICraftingRecipeGT {
             for (String s : parts)
             {
                 width = s.length();
-                shape += s;
+                shape.append(s);
             }
 
             height = parts.length;
@@ -87,7 +86,7 @@ public class HammerableShapedRecipe implements IRecipe, ICraftingRecipeGT {
             while (recipe[idx] instanceof String)
             {
                 String s = (String)recipe[idx++];
-                shape += s;
+                shape.append(s);
                 width = s.length();
                 height++;
             }
@@ -95,13 +94,13 @@ public class HammerableShapedRecipe implements IRecipe, ICraftingRecipeGT {
 
         if (width * height != shape.length())
         {
-            String ret = "Invalid shaped ore recipe: ";
+            StringBuilder ret = new StringBuilder("Invalid shaped ore recipe: ");
             for (Object tmp :  recipe)
             {
-                ret += tmp + ", ";
+                ret.append(tmp).append(", ");
             }
-            ret += output;
-            throw new RuntimeException(ret);
+            ret.append(output);
+            throw new RuntimeException(ret.toString());
         }
 
         HashMap<Character, Object> itemMap = new HashMap<Character, Object>();
@@ -135,19 +134,19 @@ public class HammerableShapedRecipe implements IRecipe, ICraftingRecipeGT {
             }
             else
             {
-                String ret = "Invalid shaped ore recipe: ";
+                StringBuilder ret = new StringBuilder("Invalid shaped ore recipe: ");
                 for (Object tmp :  recipe)
                 {
-                    ret += tmp + ", ";
+                    ret.append(tmp).append(", ");
                 }
-                ret += output;
-                throw new RuntimeException(ret);
+                ret.append(output);
+                throw new RuntimeException(ret.toString());
             }
         }
 
         input = new Object[width * height];
         int x = 0;
-        for (char chr : shape.toCharArray())
+        for (char chr : shape.toString().toCharArray())
         {
             input[x++] = itemMap.get(chr);
         }
@@ -165,12 +164,9 @@ public class HammerableShapedRecipe implements IRecipe, ICraftingRecipeGT {
 			{
 				this.tempPrimary = p2;
 				return true;
-			} else if (p2 == this.tempPrimary || p2.mToThis.contains(this.tempPrimary) || this.tempPrimary.mToThis.contains(p2) || p2.mReRegistrations.contains(this.tempPrimary) || this.tempPrimary.mReRegistrations.contains(p2))
-			{
-				return true;
-			}
-			return false;
-		}
+			} else
+                return p2 == this.tempPrimary || p2.mToThis.contains(this.tempPrimary) || this.tempPrimary.mToThis.contains(p2) || p2.mReRegistrations.contains(this.tempPrimary) || this.tempPrimary.mReRegistrations.contains(p2);
+        }
 		return false;
 	}
 

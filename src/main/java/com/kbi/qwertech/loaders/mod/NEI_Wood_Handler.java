@@ -1,38 +1,33 @@
 package com.kbi.qwertech.loaders.mod;
 
+import codechicken.nei.NEIClientConfig;
+import codechicken.nei.PositionedStack;
+import codechicken.nei.recipe.*;
+import com.kbi.qwertech.QwerTech;
+import com.kbi.qwertech.api.data.WOOD;
+import com.kbi.qwertech.api.recipe.WoodSpecificCrafting;
+import cpw.mods.fml.common.event.FMLInterModComms;
 import gregapi.data.MT;
 import gregapi.oredict.OreDictItemData;
 import gregapi.oredict.OreDictManager;
 import gregapi.util.OM;
 import gregapi.util.ST;
-import java.awt.Rectangle;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.oredict.OreDictionary;
-import codechicken.nei.NEIClientConfig;
-import codechicken.nei.PositionedStack;
-import codechicken.nei.recipe.GuiCraftingRecipe;
-import codechicken.nei.recipe.GuiUsageRecipe;
-import codechicken.nei.recipe.ShapedRecipeHandler;
-import codechicken.nei.recipe.ShapelessRecipeHandler;
-import codechicken.nei.recipe.TemplateRecipeHandler;
 
-import com.kbi.qwertech.QwerTech;
-import com.kbi.qwertech.api.data.WOOD;
-import com.kbi.qwertech.api.recipe.WoodSpecificCrafting;
-import cpw.mods.fml.common.event.FMLInterModComms;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class NEI_Wood_Handler extends ShapedRecipeHandler {
 
 	ShapelessRecipeHandler SRH = new ShapelessRecipeHandler();
 	
 	public NEI_Wood_Handler() {
-		this.transferRects.add(new TemplateRecipeHandler.RecipeTransferRect(new Rectangle(65, 13, 36, 18), getOverlayIdentifier(), new Object[0]));
+		this.transferRects.add(new TemplateRecipeHandler.RecipeTransferRect(new Rectangle(65, 13, 36, 18), getOverlayIdentifier()));
 	    if (!NEI_QT_Config.sIsAdded)
 	    {
 	      System.out.println("Creating QT NEI wood handler");
@@ -151,12 +146,8 @@ public class NEI_Wood_Handler extends ShapedRecipeHandler {
     	} else {
     		OreDictItemData data1 = OM.anydata(one);
     		OreDictItemData data2 = OM.anydata(two);
-    		if (data1 != null && data2 != null && data1.mPrefix == data2.mPrefix && (data1.mMaterial.mMaterial == data2.mMaterial.mMaterial || data1.mMaterial.mMaterial == MT.NULL || data2.mMaterial.mMaterial == MT.NULL || (data1.mMaterial.mMaterial == MT.Steel || data2.mMaterial.mMaterial == MT.Steel)))
-    		{
-    			return true;
-    		}
+			return data1 != null && data2 != null && data1.mPrefix == data2.mPrefix && (data1.mMaterial.mMaterial == data2.mMaterial.mMaterial || data1.mMaterial.mMaterial == MT.NULL || data2.mMaterial.mMaterial == MT.NULL || (data1.mMaterial.mMaterial == MT.Steel || data2.mMaterial.mMaterial == MT.Steel));
     	}
-		return false;
 	}
 	
 	@Override
@@ -168,6 +159,10 @@ public class NEI_Wood_Handler extends ShapedRecipeHandler {
 				CachedRecipe recipe = null;
 				if (irecipe instanceof WoodSpecificCrafting) {
 					recipe = shapedWoodRecipe((WoodSpecificCrafting)irecipe);
+				}
+				if (recipe != null)
+				{
+					arecipes.add(recipe);
 				}
 			}
 		} else {
@@ -183,7 +178,7 @@ public class NEI_Wood_Handler extends ShapedRecipeHandler {
 			if (irecipe instanceof WoodSpecificCrafting)
 			{
 				if (result.getItem() == irecipe.getRecipeOutput().getItem()) {
-					CachedRecipe recipe = null;
+					CachedRecipe recipe;
 					OreDictItemData mData = OM.anydata(result);
 					recipe = shapedWoodRecipe((WoodSpecificCrafting)irecipe, result, null);
 					if (recipe != null)
@@ -254,7 +249,7 @@ public class NEI_Wood_Handler extends ShapedRecipeHandler {
             		for (int ore : ores)
             		{
             			String result = OreDictionary.getOreName(ore);
-            			if (result.startsWith("plankWood") && result != "plankWood")
+            			if (result.startsWith("plankWood") && !result.equals("plankWood"))
             			{      
             				if (WOOD.woodMap.get(result.substring(5)) != null)
             				{

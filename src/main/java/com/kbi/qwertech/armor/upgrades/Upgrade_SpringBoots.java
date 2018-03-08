@@ -1,7 +1,10 @@
 package com.kbi.qwertech.armor.upgrades;
 
-import java.util.List;
-
+import com.kbi.qwertech.api.armor.MultiItemArmor;
+import com.kbi.qwertech.api.armor.upgrades.UpgradeBase;
+import com.kbi.qwertech.client.models.ModelArmorSpring;
+import com.kbi.qwertech.loaders.RegisterArmor;
+import cpw.mods.fml.common.eventhandler.Event.Result;
 import gregapi.data.CS;
 import gregapi.data.LH;
 import gregapi.data.MT;
@@ -9,7 +12,6 @@ import gregapi.oredict.OreDictMaterial;
 import gregapi.render.IIconContainer;
 import gregapi.util.UT;
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,16 +20,10 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
-import com.kbi.qwertech.api.armor.MultiItemArmor;
-import com.kbi.qwertech.api.armor.upgrades.UpgradeBase;
-import com.kbi.qwertech.client.models.ModelArmorSpring;
-import com.kbi.qwertech.loaders.RegisterArmor;
-
-import cpw.mods.fml.common.eventhandler.Event.Result;
+import java.util.List;
 
 public class Upgrade_SpringBoots extends UpgradeBase {
 
@@ -44,7 +40,7 @@ public class Upgrade_SpringBoots extends UpgradeBase {
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
 	{
-		return type == "overlay" ? "qwertech:textures/armor/blank.png" : "qwertech:textures/armor/upgrade/spring.png";
+		return type.equals("overlay") ? "qwertech:textures/armor/blank.png" : "qwertech:textures/armor/upgrade/spring.png";
 	}
 	
 	Object model;

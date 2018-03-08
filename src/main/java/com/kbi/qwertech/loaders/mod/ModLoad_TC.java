@@ -2,7 +2,7 @@ package com.kbi.qwertech.loaders.mod;
 
 import com.kbi.qwertech.api.recipe.RepairRecipe;
 import com.kbi.qwertech.api.recipe.managers.CraftingManagerHammer;
-
+import cpw.mods.fml.common.registry.GameRegistry;
 import gregapi.code.ModData;
 import gregapi.data.CS;
 import gregapi.data.MD;
@@ -11,7 +11,6 @@ import gregapi.oredict.OreDictMaterialStack;
 import gregapi.util.ST;
 import net.minecraft.block.Block;
 import net.minecraftforge.oredict.OreDictionary;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ModLoad_TC extends ModLoadBase {
 
@@ -45,7 +44,7 @@ public class ModLoad_TC extends ModLoadBase {
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "ItemHoeThaumium"), new OreDictMaterialStack(MT.Thaumium, CS.U * 2)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "ItemPickThaumium"), new OreDictMaterialStack(MT.Thaumium, CS.U * 3)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "ItemSwordThaumium"), new OreDictMaterialStack(MT.Thaumium, CS.U * 2)));
-			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "ItemShovelThaumium"), new OreDictMaterialStack(MT.Thaumium, CS.U * 1)));
+			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "ItemShovelThaumium"), new OreDictMaterialStack(MT.Thaumium, CS.U)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "ItemAxeThaumium"), new OreDictMaterialStack(MT.Thaumium, CS.U * 3)));
 			
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "ItemHelmetThaumium"), new OreDictMaterialStack(MT.Thaumium, CS.U * 5)));
@@ -56,7 +55,7 @@ public class ModLoad_TC extends ModLoadBase {
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "ItemHoeVoid"), new OreDictMaterialStack(MT.VoidMetal, CS.U * 2)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "ItemPickVoid"), new OreDictMaterialStack(MT.VoidMetal, CS.U * 3)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "ItemSwordVoid"), new OreDictMaterialStack(MT.VoidMetal, CS.U * 2)));
-			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "ItemShovelVoid"), new OreDictMaterialStack(MT.VoidMetal, CS.U * 1)));
+			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "ItemShovelVoid"), new OreDictMaterialStack(MT.VoidMetal, CS.U)));
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "ItemAxeVoid"), new OreDictMaterialStack(MT.VoidMetal, CS.U * 3)));
 			
 			hammer.addRecipe(new RepairRecipe(GameRegistry.findItem(this.getMod().mID, "ItemHelmetVoid"), new OreDictMaterialStack(MT.VoidMetal, CS.U * 5)));

@@ -1,18 +1,15 @@
 package com.kbi.qwertech.items.behavior;
 
+import com.kbi.qwertech.entities.neutral.EntityTurkey;
+import com.kbi.qwertech.entities.projectile.EntityEgg;
 import gregapi.item.multiitem.MultiItem;
 import gregapi.item.multiitem.behaviors.IBehavior;
-import gregapi.item.multiitem.behaviors.IBehavior.Behaviour_None;
 import gregapi.util.UT;
-
-import java.util.List;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-import com.kbi.qwertech.entities.neutral.EntityTurkey;
-import com.kbi.qwertech.entities.projectile.EntityEgg;
+import java.util.List;
 
 public class Behavior_ThrowEgg extends gregapi.item.multiitem.behaviors.IBehavior.AbstractBehaviorDefault implements IBehavior<MultiItem> {
 	

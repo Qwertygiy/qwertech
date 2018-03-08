@@ -1,13 +1,14 @@
 package com.kbi.qwertech.entities.projectile;
 
+import com.kbi.qwertech.QwerTech;
+import com.kbi.qwertech.api.data.QTConfigs;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import gregapi.data.MT;
 import gregapi.data.OP;
 import gregapi.data.TD;
 import gregapi.oredict.OreDictMaterial;
 import gregapi.util.UT;
-
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -23,11 +24,7 @@ import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import com.kbi.qwertech.QwerTech;
-import com.kbi.qwertech.api.data.QTConfigs;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.Random;
 
 public class EntityRock extends EntityThrowable {
 	
@@ -97,7 +94,7 @@ public class EntityRock extends EntityThrowable {
 	public int getDamage()
 	{
 		int bySpeed = Math.round(this.strength * 2);
-		int returnable = 1;
+		int returnable;
 		if (this.material.mToolQuality != 0) {
 			returnable = this.material.mToolQuality + this.objectType + 1 + bySpeed;
 		} else {
@@ -125,8 +122,7 @@ public class EntityRock extends EntityThrowable {
 	
 	public short getType()
 	{
-		short t = this.dataWatcher.getWatchableObjectShort(12);
-		return t;
+		return this.dataWatcher.getWatchableObjectShort(12);
 	}
 	
 	public void setType(short t)
@@ -226,7 +222,7 @@ public class EntityRock extends EntityThrowable {
 					
 					if (mop.entityHit instanceof EntityLivingBase) {
 						UT.Enchantments.applyBullshitA((EntityLivingBase)mop.entityHit, this.getThrower() == null ? this : this.getThrower(), OP.arrowGtWood.mat(this.getMaterial(), 1));
-						UT.Enchantments.applyBullshitB((this.getThrower() instanceof EntityLivingBase) ? (EntityLivingBase)this.getThrower() : null, mop.entityHit, OP.arrowGtWood.mat(this.getMaterial(), 1));
+						UT.Enchantments.applyBullshitB((this.getThrower() instanceof EntityLivingBase) ? this.getThrower() : null, mop.entityHit, OP.arrowGtWood.mat(this.getMaterial(), 1));
 					}
 					
 					if (this.getMaterial().contains(TD.Properties.FLAMMABLE) || this.isBurning())

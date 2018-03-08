@@ -1,38 +1,19 @@
 package com.kbi.qwertech.tileentities;
 
-import static gregapi.data.CS.F;
-import static gregapi.data.CS.NBT_MATERIAL;
-import static gregapi.data.CS.SHOW_HIDDEN_MATERIALS;
-import static gregapi.data.CS.T;
-
-import java.util.List;
-
-import com.kbi.qwertech.QwerTech;
 import com.kbi.qwertech.api.armor.MultiItemArmor;
 import com.kbi.qwertech.api.armor.upgrades.IArmorUpgrade;
 import com.kbi.qwertech.api.data.QTI;
 import com.kbi.qwertech.api.registry.ArmorUpgradeRegistry;
 import com.kbi.qwertech.network.packets.PacketInventorySync;
-
-import gregapi.block.multitileentity.IMultiTileEntity.IMTE_AddCollisionBoxesToList;
-import gregapi.block.multitileentity.IMultiTileEntity.IMTE_GetBlocksMovement;
-import gregapi.block.multitileentity.IMultiTileEntity.IMTE_GetLightOpacity;
-import gregapi.block.multitileentity.IMultiTileEntity.IMTE_GetSelectedBoundingBoxFromPool;
-import gregapi.block.multitileentity.IMultiTileEntity.IMTE_GetSubItems;
-import gregapi.block.multitileentity.IMultiTileEntity.IMTE_SetBlockBoundsBasedOnState;
+import gregapi.block.multitileentity.IMultiTileEntity.*;
 import gregapi.block.multitileentity.MultiTileEntityBlockInternal;
 import gregapi.block.multitileentity.MultiTileEntityContainer;
 import gregapi.data.CS;
 import gregapi.data.LH;
-import gregapi.data.MT;
-import gregapi.old.Textures;
 import gregapi.oredict.OreDictMaterial;
-import gregapi.render.BlockTextureDefault;
 import gregapi.render.ITexture;
-import gregapi.render.TextureSet;
 import gregapi.tileentity.base.TileEntityBase09FacingSingle;
 import gregapi.util.UT;
-import gregapi.util.WD;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -40,9 +21,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
+
+import java.util.List;
+
+import static gregapi.data.CS.*;
 
 public class UpgradeDesk extends TileEntityBase09FacingSingle implements IMTE_GetLightOpacity, IMTE_GetSubItems, IMTE_GetSelectedBoundingBoxFromPool, IMTE_AddCollisionBoxesToList, IMTE_GetBlocksMovement, IMTE_SetBlockBoundsBasedOnState	 {
 
@@ -157,7 +141,7 @@ public class UpgradeDesk extends TileEntityBase09FacingSingle implements IMTE_Ge
 					IArmorUpgrade upgrade = ArmorUpgradeRegistry.instance.getUpgrade(aStack);
 					if (upgrade != null && upgrade.isCompatibleWith(currentOne))
 					{
-						((MultiItemArmor)currentOne.getItem()).addUpgrade(currentOne, ArmorUpgradeRegistry.instance.getUpgradeID(aStack));
+						MultiItemArmor.addUpgrade(currentOne, ArmorUpgradeRegistry.instance.getUpgradeID(aStack));
 						aStack.stackSize = aStack.stackSize - 1;
 						aPlayer.setCurrentItemOrArmor(0, aStack.stackSize > 0 ? aStack : null);
 					} else {

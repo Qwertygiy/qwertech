@@ -1,21 +1,11 @@
 package com.kbi.qwertech.client.tileentity;
 
-import java.util.UUID;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
 import com.kbi.qwertech.api.armor.IArmorStats;
 import com.kbi.qwertech.api.armor.MultiItemArmor;
 import com.kbi.qwertech.client.models.ModelUpgradeStation;
-import com.kbi.qwertech.tileentities.CraftingTableT1;
 import com.kbi.qwertech.tileentities.UpgradeDesk;
-import com.mojang.authlib.GameProfile;
-
 import gregapi.data.CS;
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.ItemRenderer;
@@ -24,11 +14,8 @@ import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -36,9 +23,8 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Session;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.common.util.FakePlayerFactory;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 public class UpgradeDeskRenderer extends TileEntitySpecialRenderer {
 	
@@ -143,16 +129,17 @@ public class UpgradeDeskRenderer extends TileEntitySpecialRenderer {
         GL11.glTranslatef(0.5F, 0.5F, 0.5F);
         
         short dir = tileEntity.getFacing();
-        if (dir == CS.SIDE_Z_NEG)
-        {
-        	GL11.glRotatef(180, 0, 1, 0);
-        } else if (dir == CS.SIDE_X_NEG)
-        {
-        	GL11.glRotatef(90, 0, 1, 0);
-        } else if (dir == CS.SIDE_X_POS)
-        {
-        	GL11.glRotatef(-90, 0, 1, 0);
-        }
+		switch (dir) {
+			case CS.SIDE_Z_NEG:
+				GL11.glRotatef(180, 0, 1, 0);
+				break;
+			case CS.SIDE_X_NEG:
+				GL11.glRotatef(90, 0, 1, 0);
+				break;
+			case CS.SIDE_X_POS:
+				GL11.glRotatef(-90, 0, 1, 0);
+				break;
+		}
         
 		Minecraft.getMinecraft().renderEngine.bindTexture(resource);
 		model.setPrimaryColor(tileEntity.getMaterial().mRGBaSolid);

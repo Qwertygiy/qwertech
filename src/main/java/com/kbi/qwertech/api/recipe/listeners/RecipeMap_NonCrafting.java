@@ -1,7 +1,5 @@
 package com.kbi.qwertech.api.recipe.listeners;
 
-import static gregapi.data.CS.F;
-import static gregapi.data.CS.T;
 import gregapi.code.ICondition;
 import gregapi.data.CS;
 import gregapi.data.TD;
@@ -15,6 +13,9 @@ import gregapi.util.OM;
 import gregapi.util.ST;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
+
+import static gregapi.data.CS.F;
+import static gregapi.data.CS.T;
 
 public class RecipeMap_NonCrafting implements IRecipeMapHandler {
 	private final Object mInput;
@@ -30,18 +31,8 @@ public class RecipeMap_NonCrafting implements IRecipeMapHandler {
 		this.mInput = aInput;
 		this.mOutput = aOutput;
 		this.mCondition = aCondition;
-		if (aInput instanceof ItemStack)
-		{
-			this.isInputPrefix = false;
-		} else {
-			this.isInputPrefix = true;
-		}
-		if (aOutput instanceof ItemStack)
-		{
-			this.isOutputPrefix = false;
-		} else {
-			this.isOutputPrefix = true;
-		}
+		this.isInputPrefix = !(aInput instanceof ItemStack);
+		this.isOutputPrefix = !(aOutput instanceof ItemStack);
 	}
 
 	@Override
@@ -49,9 +40,9 @@ public class RecipeMap_NonCrafting implements IRecipeMapHandler {
 			OreDictItemData aData) {
 		if (isDone()) return F;
 		if (isInputPrefix) {
-			return aData != null && aData.hasValidMaterialData() && aData.mPrefix == (OreDictPrefix)mInput && addRecipeForMaterial(aMap, aData.mMaterial.mMaterial);
+			return aData != null && aData.hasValidMaterialData() && aData.mPrefix == mInput && addRecipeForMaterial(aMap, aData.mMaterial.mMaterial);
 		} else {
-			return (aStack == (ItemStack)mInput && addRecipeForMaterial(aMap, aData.mMaterial.mMaterial));
+			return (aStack == mInput && addRecipeForMaterial(aMap, aData.mMaterial.mMaterial));
 		}
 	}
 	
@@ -67,9 +58,9 @@ public class RecipeMap_NonCrafting implements IRecipeMapHandler {
 		if (isDone()) return F;
 		if (this.isOutputPrefix)
 		{
-			return aData != null && aData.hasValidMaterialData() && aData.mPrefix == (OreDictPrefix)mOutput && addRecipeForMaterial(aMap, aData.mMaterial.mMaterial);
+			return aData != null && aData.hasValidMaterialData() && aData.mPrefix == mOutput && addRecipeForMaterial(aMap, aData.mMaterial.mMaterial);
 		} else {
-			return (aStack == (ItemStack)mOutput && addRecipeForMaterial(aMap, aData.mMaterial.mMaterial));
+			return (aStack == mOutput && addRecipeForMaterial(aMap, aData.mMaterial.mMaterial));
 		}
 	}
 

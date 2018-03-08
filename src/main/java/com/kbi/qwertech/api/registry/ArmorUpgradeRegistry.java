@@ -1,14 +1,11 @@
 package com.kbi.qwertech.api.registry;
 
+import com.kbi.qwertech.api.armor.upgrades.IArmorUpgrade;
 import gregapi.util.ST;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import net.minecraft.item.ItemStack;
 
-import com.kbi.qwertech.api.armor.upgrades.IArmorUpgrade;
+import java.util.HashMap;
+import java.util.List;
 
 public class ArmorUpgradeRegistry {
 

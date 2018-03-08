@@ -1,13 +1,10 @@
 package com.kbi.qwertech.items;
 
+import com.kbi.qwertech.items.behavior.Behavior_AOE;
+import com.mojang.authlib.GameProfile;
 import gregapi.item.multiitem.MultiItem;
 import gregapi.item.multiitem.MultiItemTool;
 import gregapi.item.multiitem.behaviors.IBehavior;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,8 +14,9 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 
-import com.kbi.qwertech.items.behavior.Behavior_AOE;
-import com.mojang.authlib.GameProfile;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class MultiItemTool_QT extends MultiItemTool {
 
@@ -36,7 +34,7 @@ public class MultiItemTool_QT extends MultiItemTool {
 			{
 				isAOE = true;
 			}
-		} catch (Exception e) {
+		} catch (Exception ignored) {
 			
 		}
 		if (isAOE) {
@@ -73,7 +71,7 @@ public class MultiItemTool_QT extends MultiItemTool {
 			{
 				return true;
 			}
-		} catch (Exception e) {
+		} catch (Exception ignored) {
 			
 		}
 		return super.onLeftClickEntity(aStack, aPlayer, aEntity);

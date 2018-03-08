@@ -1,13 +1,6 @@
 package com.kbi.qwertech.api.recipe;
 
 import gregapi.oredict.OreDictItemData;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import net.minecraft.block.Block;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
@@ -16,6 +9,12 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class CraftingRecipe3D implements IRecipe
 {
@@ -45,7 +44,7 @@ public class CraftingRecipe3D implements IRecipe
     {
         output = result.copy();
 
-        String shape = "";
+        StringBuilder shape = new StringBuilder();
         int idx = 0;
 
         if (recipe[idx] instanceof Boolean)
@@ -68,7 +67,7 @@ public class CraftingRecipe3D implements IRecipe
             for (String s : parts)
             {
                 width = s.length();
-                shape += s;
+                shape.append(s);
             }
 
             height = parts.length;
@@ -78,7 +77,7 @@ public class CraftingRecipe3D implements IRecipe
             while (recipe[idx] instanceof String)
             {
                 String s = (String)recipe[idx++];
-                shape += s;
+                shape.append(s);
                 width = s.length();
                 height++;
             }
@@ -87,13 +86,13 @@ public class CraftingRecipe3D implements IRecipe
         if (width * height != shape.length())
         {
         	System.out.println("HEIGHT IS " + height + " AND WIDTH IS " + width + " AND SHAPE IS " + shape.length());
-            String ret = "Invalid shaped ore recipe: ";
+            StringBuilder ret = new StringBuilder("Invalid shaped ore recipe: ");
             for (Object tmp :  recipe)
             {
-                ret += tmp + ", ";
+                ret.append(tmp).append(", ");
             }
-            ret += output;
-            throw new RuntimeException(ret);
+            ret.append(output);
+            throw new RuntimeException(ret.toString());
         }
 
         HashMap<Character, Object> itemMap = new HashMap<Character, Object>();
@@ -121,23 +120,23 @@ public class CraftingRecipe3D implements IRecipe
             }
             else if (in instanceof OreDictItemData)
             {
-            	itemMap.put(chr, OreDictionary.getOres(((OreDictItemData)in).toString()));
+            	itemMap.put(chr, OreDictionary.getOres(in.toString()));
             } 
             else
             {
-                String ret = "Invalid shaped ore recipe: ";
+                StringBuilder ret = new StringBuilder("Invalid shaped ore recipe: ");
                 for (Object tmp :  recipe)
                 {
-                    ret += tmp + ", ";
+                    ret.append(tmp).append(", ");
                 }
-                ret += output;
-                throw new RuntimeException(ret);
+                ret.append(output);
+                throw new RuntimeException(ret.toString());
             }
         }
 
         input = new Object[width * height];
         int x = 0;
-        for (char chr : shape.toCharArray())
+        for (char chr : shape.toString().toCharArray())
         {
             input[x++] = itemMap.get(chr);
         }

@@ -1,19 +1,15 @@
 package com.kbi.qwertech.items.behavior;
 
+import com.kbi.qwertech.api.data.QTConfigs;
+import com.kbi.qwertech.api.registry.MobScrapeRegistry;
 import gregapi.data.LH;
 import gregapi.data.MT;
 import gregapi.data.OP;
 import gregapi.item.multiitem.MultiItem;
 import gregapi.item.multiitem.MultiItemTool;
 import gregapi.item.multiitem.behaviors.IBehavior.AbstractBehaviorDefault;
-import gregapi.item.multiitem.behaviors.IBehavior.Behaviour_None;
 import gregapi.item.multiitem.tools.IToolStats;
 import gregapi.oredict.OreDictMaterial;
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.monster.EntityMob;
@@ -28,8 +24,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 
-import com.kbi.qwertech.api.data.QTConfigs;
-import com.kbi.qwertech.api.registry.MobScrapeRegistry;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 
 public class Behavior_Scrape extends AbstractBehaviorDefault{
 	
@@ -45,11 +42,10 @@ public class Behavior_Scrape extends AbstractBehaviorDefault{
 	@Override public List<String> getAdditionalToolTips(MultiItem aItem, List<String> aList, ItemStack aStack) 
 	{
 		IToolStats tStats = ((MultiItemTool)aItem).getToolStats(aStack);
-		float damage = 0;
 		OreDictMaterial secondary = MultiItemTool.getSecondaryMaterial(aStack, MT.NULL);
 		if (tStats != null && secondary != MT.NULL && secondary != MT.Empty) 
 		{
-			damage = tStats.getBaseDamage() + secondary.mToolQuality;
+			float damage = tStats.getBaseDamage() + secondary.mToolQuality;
 			for (int q = 0; q < aList.size(); q++)
 			{
 				if (aList.get(q).contains("Attack Damage"))

@@ -1,5 +1,6 @@
 package com.kbi.qwertech.items.stats;
 
+import com.kbi.qwertech.QwerTech;
 import gregapi.data.ANY;
 import gregapi.data.MT;
 import gregapi.data.OP;
@@ -7,9 +8,6 @@ import gregapi.item.multiitem.MultiItemTool;
 import gregapi.item.multiitem.tools.ToolStats;
 import gregapi.render.IIconContainer;
 import gregapi.util.OM;
-
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -19,7 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent;
 
-import com.kbi.qwertech.QwerTech;
+import java.util.List;
 
 public class QT_Tool_Mace
   extends ToolStats
@@ -223,7 +221,7 @@ public class QT_Tool_Mace
 	@Override
   public IIconContainer getIcon(boolean aIsToolHead, ItemStack aStack)
   {
-    return aIsToolHead ? (IIconContainer)MultiItemTool.getPrimaryMaterial(aStack, MT.Steel).mTextureSetsItems.get(gregapi.oredict.OreDictPrefix.get("toolHeadMace").mIconIndexItem) : (IIconContainer)MultiItemTool.getSecondaryMaterial(aStack, MT.Wood).mTextureSetsItems.get(OP.stick.mIconIndexItem);
+    return aIsToolHead ? MultiItemTool.getPrimaryMaterial(aStack, MT.Steel).mTextureSetsItems.get(gregapi.oredict.OreDictPrefix.get("toolHeadMace").mIconIndexItem) : MultiItemTool.getSecondaryMaterial(aStack, MT.Wood).mTextureSetsItems.get(OP.stick.mIconIndexItem);
   }
   
 	@Override

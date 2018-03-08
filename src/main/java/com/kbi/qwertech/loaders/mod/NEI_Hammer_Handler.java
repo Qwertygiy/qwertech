@@ -1,5 +1,16 @@
 package com.kbi.qwertech.loaders.mod;
 
+import codechicken.core.ReflectionManager;
+import codechicken.nei.NEIClientConfig;
+import codechicken.nei.PositionedStack;
+import codechicken.nei.recipe.*;
+import com.kbi.qwertech.QwerTech;
+import com.kbi.qwertech.api.armor.MultiItemArmor;
+import com.kbi.qwertech.api.recipe.HammerablePrefixRecipe;
+import com.kbi.qwertech.api.recipe.HammerableShapedRecipe;
+import com.kbi.qwertech.api.recipe.QTArmor;
+import com.kbi.qwertech.api.recipe.managers.CraftingManagerHammer;
+import cpw.mods.fml.common.event.FMLInterModComms;
 import gregapi.data.MT;
 import gregapi.oredict.OreDictItemData;
 import gregapi.oredict.OreDictMaterial;
@@ -7,36 +18,17 @@ import gregapi.oredict.OreDictPrefix;
 import gregapi.util.OM;
 import gregapi.util.ST;
 import gregapi.util.UT;
-
-import java.awt.Rectangle;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-import codechicken.core.ReflectionManager;
-import codechicken.nei.NEIClientConfig;
-import codechicken.nei.PositionedStack;
-import codechicken.nei.recipe.GuiCraftingRecipe;
-import codechicken.nei.recipe.GuiUsageRecipe;
-import codechicken.nei.recipe.ShapedRecipeHandler;
-import codechicken.nei.recipe.ShapelessRecipeHandler;
-import codechicken.nei.recipe.TemplateRecipeHandler;
 
-import com.kbi.qwertech.QwerTech;
-import com.kbi.qwertech.api.armor.MultiItemArmor;
-import com.kbi.qwertech.api.recipe.HammerablePrefixRecipe;
-import com.kbi.qwertech.api.recipe.HammerableShapedRecipe;
-import com.kbi.qwertech.api.recipe.QTArmor;
-import com.kbi.qwertech.api.recipe.managers.CraftingManagerHammer;
-
-import cpw.mods.fml.common.event.FMLInterModComms;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 public class NEI_Hammer_Handler extends ShapedRecipeHandler {
 
@@ -166,10 +158,7 @@ public class NEI_Hammer_Handler extends ShapedRecipeHandler {
     		{
     			return true;
     		}
-    		if (one.getItem() instanceof MultiItemArmor && ST.equal(one, two, true))
-    		{
-    			return true;
-    		}
+            return one.getItem() instanceof MultiItemArmor && ST.equal(one, two, true);
     	}
 		return false;
 	}
@@ -302,13 +291,12 @@ public class NEI_Hammer_Handler extends ShapedRecipeHandler {
 	
 	public HammerableCachedRecipe shapelessHammerRecipe(HammerablePrefixRecipe recipe, OreDictPrefix prefix, OreDictMaterial mat)
 	{
-		ArrayList<Object> items = new ArrayList();
 		ArrayList<List<ItemStack>> returning = new ArrayList();
 		for (int q = 0; q < 9; q++)
 		{
 			returning.add(null);
 		}
-		items.addAll(Arrays.asList(recipe.recipePieces));    
+		ArrayList<Object> items = new ArrayList(Arrays.asList(recipe.recipePieces));
 		for (Object item : items) {
 			if (((item instanceof List)) && (((List)item).isEmpty()))
 				return null;
@@ -464,7 +452,7 @@ public class NEI_Hammer_Handler extends ShapedRecipeHandler {
             {
             	NBTTagCompound tag = UT.NBT.getNBT(output);
             	NBTTagCompound armor = tag.getCompoundTag("QT.ArmorStats");
-            	if (mat != MT.NULL)
+            	if (mat != MT.NULL && mat != null)
             	{
             		armor.setShort("a", mat.mID);
             		armor.setString("b", mat.toString());
