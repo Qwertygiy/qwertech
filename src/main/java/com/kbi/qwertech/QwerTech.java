@@ -603,7 +603,7 @@ public final class QwerTech extends Abstract_Mod {
 	}
 
 	@Mod.EventHandler
-	public void onModsLoaded(FMLLoadCompleteEvent aEvent)
+	public void onModsLoaded(FMLLoadCompleteEvent event)
 	{
 		CraftingManagerHammer.getInstance().run();
 		CraftingManager3D.getInstance().run();
@@ -611,7 +611,7 @@ public final class QwerTech extends Abstract_Mod {
 
 	@Override
 	public void onModServerStarting2(FMLServerStartingEvent aEvent) {
-		
+
 	}
 
 	@Override

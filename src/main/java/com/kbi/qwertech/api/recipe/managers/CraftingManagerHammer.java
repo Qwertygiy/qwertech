@@ -42,6 +42,8 @@ public class CraftingManagerHammer implements Runnable {
     
     public static HashMap<ItemStack, String> replacems = new HashMap<ItemStack, String>();
 
+    private static boolean hasRun = false;
+
     /**
      * Returns the static instance of this class
      */
@@ -74,14 +76,19 @@ public class CraftingManagerHammer implements Runnable {
 				{
 					items.remove(w);
 					removeIt = true;
+					w = w - 1;
+					break;
 				}
 			} else if (slot instanceof List && ((List)slot).size() > 0)
 			{
-				ItemStack spot = (ItemStack)((List)slot).get(0);
-				if (spot != null && OreDictManager.isItemStackInstanceOf(spot, "craftingToolHardHammer"))
-				{
-					items.remove(w);
-					removeIt = true;
+				for (int q = 0; q < ((List)slot).size(); q++) {
+					ItemStack spot = (ItemStack) ((List) slot).get(q);
+					if (spot != null && OreDictManager.isItemStackInstanceOf(spot, "craftingToolHardHammer")) {
+						items.remove(w);
+						removeIt = true;
+						w = w - 1;
+						break;
+					}
 				}
 			}
 		}
@@ -112,13 +119,16 @@ public class CraftingManagerHammer implements Runnable {
 					items[w] = null;
 					removeIt = true;
 				}
-			} else if (slot instanceof List && ((List)slot).size() > 0)
+			} else if (slot instanceof List)
 			{
-				ItemStack spot = (ItemStack)((List)slot).get(0);
-				if (spot != null && OreDictManager.isItemStackInstanceOf(spot, "craftingToolHardHammer"))
-				{
-					items[w] = null;
-					removeIt = true;
+
+				for (int q = 0; q < ((List)slot).size(); q++) {
+					ItemStack spot = (ItemStack) ((List) slot).get(q);
+					if (OreDictManager.isItemStackInstanceOf(spot, "craftingToolHardHammer")) {
+						items[w] = null;
+						removeIt = true;
+						break;
+					}
 				}
 			}
 		}
@@ -127,7 +137,7 @@ public class CraftingManagerHammer implements Runnable {
     
     public static void searchAndReplace()
     {
-    	if (QTConfigs.allHammers)
+    	if (QTConfigs.allHammers && !hasRun)
     	{
 			List oldRecipes = CraftingManager.getInstance().getRecipeList();
 			System.out.println("Parsing through " + oldRecipes.size() + " recipes to remove hammers...");
@@ -136,15 +146,15 @@ public class CraftingManagerHammer implements Runnable {
 	    	{
 	    		try {
 					boolean removelIt = false;
-					IRecipe recipe = (IRecipe) oldRecipes.get(q);
+					IRecipe recipe = (IRecipe)oldRecipes.get(q);
 					if (recipe instanceof ShapelessOreRecipe) {
 						ArrayList items = ((ShapelessOreRecipe) recipe).getInput();
 						removelIt = replaceItems(recipe, items);
-					} else if (recipe instanceof ShapedRecipes) {
-						ItemStack[] items = ((ShapedRecipes) recipe).recipeItems;
-						removelIt = replaceItems(recipe, items);
 					} else if (recipe instanceof ShapedOreRecipe) {
 						Object[] items = ((ShapedOreRecipe) recipe).getInput();
+						removelIt = replaceItems(recipe, items);
+					} else if (recipe instanceof ShapedRecipes) {
+						ItemStack[] items = ((ShapedRecipes) recipe).recipeItems;
 						removelIt = replaceItems(recipe, items);
 					} else if (recipe instanceof ShapelessRecipes) {
 						//immutable :/
@@ -153,6 +163,7 @@ public class CraftingManagerHammer implements Runnable {
 						instance.addRecipe(recipe);
 						oldRecipes.remove(recipe);
 						count = count + 1;
+						q = q - 1;
 					}
 				} catch (Throwable t) {
 	    			System.out.println("Exception found!");
