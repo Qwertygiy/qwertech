@@ -6,6 +6,7 @@ import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.*;
 import com.kbi.qwertech.QwerTech;
 import com.kbi.qwertech.api.armor.MultiItemArmor;
+import com.kbi.qwertech.api.data.QTMT;
 import com.kbi.qwertech.api.recipe.HammerablePrefixRecipe;
 import com.kbi.qwertech.api.recipe.HammerableShapedRecipe;
 import com.kbi.qwertech.api.recipe.QTArmor;
@@ -18,6 +19,7 @@ import gregapi.oredict.OreDictPrefix;
 import gregapi.util.OM;
 import gregapi.util.ST;
 import gregapi.util.UT;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
@@ -129,17 +131,10 @@ public class NEI_Hammer_Handler extends ShapedRecipeHandler {
             {
                 for (ItemStack check : stack.items)
                 {
-                	if (ST.equal(check, ingredient, matchNBT))
-                	{
-                		return true;
-                	} else {
-                		OreDictItemData data1 = OM.anydata(check);
-                		OreDictItemData data2 = OM.anydata(ingredient);
-                		if (data1 != null && data2 != null && data1.mPrefix == data2.mPrefix && (data1.mMaterial.mMaterial == data2.mMaterial.mMaterial || data1.mMaterial.mMaterial == MT.NULL || data2.mMaterial.mMaterial == MT.NULL))
-                		{
-                			return true;
-                		}
-                	}
+                	if (matches(check, ingredient))
+					{
+						return true;
+					}
                 }
             }
             return false;
@@ -148,17 +143,23 @@ public class NEI_Hammer_Handler extends ShapedRecipeHandler {
 	
 	public boolean matches(ItemStack one, ItemStack two)
 	{
+		if ((one == null && two != null) || (one != null && two == null)) return false;
 		if (ST.equal(one, two, false))
     	{
     		return true;
     	} else if (ST.valid(one) && ST.valid(two)) {
     		OreDictItemData data1 = OM.anydata(one);
     		OreDictItemData data2 = OM.anydata(two);
-    		if (data1 != null && data2 != null && data1.mPrefix == data2.mPrefix && (data1.mMaterial.mMaterial == data2.mMaterial.mMaterial || data1.mMaterial.mMaterial == MT.NULL || data2.mMaterial.mMaterial == MT.NULL || (data1.mMaterial.mMaterial == MT.Steel || data2.mMaterial.mMaterial == MT.Steel)))
-    		{
-    			return true;
-    		}
-            return one.getItem() instanceof MultiItemArmor && ST.equal(one, two, true);
+    		if (data1 != null && data2 != null && data1.mPrefix == data2.mPrefix && data2.hasValidPrefixMaterialData() && data1.hasValidPrefixMaterialData())
+			{
+				OreDictMaterial mat1 = data1.mMaterial.mMaterial;
+				OreDictMaterial mat2 = data2.mMaterial.mMaterial;
+    			if (mat1 == mat2 || mat1 == MT.NULL || mat2 == MT.NULL || mat1.mReRegistrations.contains(mat2) || mat2.mReRegistrations.contains(mat1) || mat1 == QTMT.Undefined || mat2 == QTMT.Undefined)
+				{
+					return true;
+				}
+			}
+            return ST.equal(one, two, true);
     	}
 		return false;
 	}
@@ -385,23 +386,24 @@ public class NEI_Hammer_Handler extends ShapedRecipeHandler {
 					List<ItemStack> adderble = new ArrayList();
 					if (mat != null && mat != MT.NULL && data.mPrefix.isTrue(mat))
 					{
-						if (data.mMaterial.mMaterial == MT.NULL || (data.mMaterial.mMaterial == MT.Steel && mat != MT.Steel))
+						if (data.mMaterial.mMaterial == MT.NULL || (data.mMaterial.mMaterial == QTMT.Undefined && mat != QTMT.Undefined))
 						{
 							adderble.add(data.mPrefix.mat(mat, 1));
 						} else {
 							adderble.add(data.mPrefix.mat(data.mMaterial.mMaterial, 1));
 						}
-					} else if (mat == null || mat == MT.NULL){
-						adderble.add(data.mPrefix.mat(MT.Steel, 1));
+					} else if (mat == null || mat == QTMT.Undefined){
+						adderble.add(data.mPrefix.mat(QTMT.Undefined, 1));
 					} else {
-						adderble.add(data.mPrefix.mat(data.mMaterial.mMaterial, 1));
+						//adderble.add(data.mPrefix.mat(data.mMaterial.mMaterial, 1));
+						adderble.add(ST.make(Items.apple, 1, 20));
 					}
 					items[q] = adderble;
             	}
             }
             ItemStack output = recipe.getRecipeOutput();
 			OreDictItemData outputData = OM.anydata(output);
-			if (outputData != null && mat != null && mat != MT.NULL && mat != MT.Steel && outputData.mPrefix.isTrue(mat))
+			if (outputData != null && mat != null && mat != MT.NULL && mat != QTMT.Undefined && outputData.mPrefix.isTrue(mat))
 			{
 				output = outputData.mPrefix.mat(mat, output.stackSize);
 			}

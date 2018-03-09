@@ -38,7 +38,7 @@ public class Upgrade_Magnifier extends UpgradeBase {
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
 	{
-		return type.equals("overlay") ? "qwertech:textures/armor/blank.png" : "qwertech:textures/armor/upgrade/monocle.png";
+		return (type != null && type.equals("overlay")) ? "qwertech:textures/armor/blank.png" : "qwertech:textures/armor/upgrade/monocle.png";
 	}
 	
 	Object model;

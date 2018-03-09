@@ -1,5 +1,6 @@
 package com.kbi.qwertech.api.recipe;
 
+import com.kbi.qwertech.api.data.QTMT;
 import gregapi.code.ICondition;
 import gregapi.data.MT;
 import gregapi.oredict.OreDictItemData;
@@ -176,7 +177,7 @@ public class HammerableShapedRecipe implements IRecipe, ICraftingRecipeGT {
 	@Override
 	public ItemStack getCraftingResult(InventoryCrafting p_77572_1_) {
 		// TODO Auto-generated method stub
-		return outputPrefix.mat(tempPrimary == null || tempPrimary == MT.NULL ? MT.Steel : tempPrimary, outputAmount);
+		return outputPrefix.mat(tempPrimary == null || tempPrimary == MT.NULL ? QTMT.Undefined : tempPrimary, outputAmount);
 	}
 
     /**
@@ -187,12 +188,12 @@ public class HammerableShapedRecipe implements IRecipe, ICraftingRecipeGT {
 
     @Override
     public ItemStack getRecipeOutput(){
-    	OreDictMaterial outputter = tempPrimary == MT.NULL ? MT.Steel : tempPrimary;
+    	OreDictMaterial outputter = tempPrimary == MT.NULL ? QTMT.Undefined : tempPrimary;
     	if (outputPrefix.isTrue(outputter))
     	{
     		return outputPrefix.mat(outputter, outputAmount); 
     	}
-    	return outputPrefix.mat(MT.Steel, outputAmount);
+    	return outputPrefix.mat(QTMT.Undefined, outputAmount);
     }
 
     /**

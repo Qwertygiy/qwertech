@@ -23,6 +23,8 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.ShapedRecipes;
+import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -40,8 +42,6 @@ public class CraftingManagerHammer implements Runnable {
     
     public static HashMap<ItemStack, String> replacems = new HashMap<ItemStack, String>();
 
-    private static List oldRecipes = CraftingManager.getInstance().getRecipeList();
-
     /**
      * Returns the static instance of this class
      */
@@ -50,92 +50,114 @@ public class CraftingManagerHammer implements Runnable {
         /* The static instance of this class */
         return instance;
     }
+
+    public static boolean replaceItems(IRecipe recipe, ArrayList items)
+	{
+		boolean removeIt = false;
+		for (int w = 0; w < items.size(); w++)
+		{
+			Object slot = items.get(w);
+			if (slot instanceof ItemStack)
+			{
+				ItemStack theSlot = (ItemStack)slot;
+				if (!(recipe instanceof ICraftingRecipeGT))
+				{
+					for (ItemStack key : replacems.keySet())
+					{
+						if (ST.equal(key, theSlot))
+						{
+							items.set(w, OreDictionary.getOres(replacems.get(key)));
+						}
+					}
+				}
+				if (OreDictManager.isItemStackInstanceOf(theSlot, "craftingToolHardHammer"))
+				{
+					items.remove(w);
+					removeIt = true;
+				}
+			} else if (slot instanceof List && ((List)slot).size() > 0)
+			{
+				ItemStack spot = (ItemStack)((List)slot).get(0);
+				if (spot != null && OreDictManager.isItemStackInstanceOf(spot, "craftingToolHardHammer"))
+				{
+					items.remove(w);
+					removeIt = true;
+				}
+			}
+		}
+		return removeIt;
+	}
+
+	public static boolean replaceItems(IRecipe recipe, Object[] items)
+	{
+		boolean removeIt = false;
+		for (int w = 0; w < items.length; w++)
+		{
+			Object slot = items[w];
+			if (slot instanceof ItemStack)
+			{
+				ItemStack theSlot = (ItemStack)slot;
+				if (!(recipe instanceof ICraftingRecipeGT))
+				{
+					for (ItemStack key : replacems.keySet())
+					{
+						if (ST.equal(key, theSlot))
+						{
+							items[w] = OreDictionary.getOres(replacems.get(key));
+						}
+					}
+				}
+				if (OreDictManager.isItemStackInstanceOf(theSlot, "craftingToolHardHammer"))
+				{
+					items[w] = null;
+					removeIt = true;
+				}
+			} else if (slot instanceof List && ((List)slot).size() > 0)
+			{
+				ItemStack spot = (ItemStack)((List)slot).get(0);
+				if (spot != null && OreDictManager.isItemStackInstanceOf(spot, "craftingToolHardHammer"))
+				{
+					items[w] = null;
+					removeIt = true;
+				}
+			}
+		}
+		return removeIt;
+	}
     
     public static void searchAndReplace()
     {
     	if (QTConfigs.allHammers)
     	{
-	    	System.out.println("Parsing through " + oldRecipes.size() + " recipes to remove hammers...");
+			List oldRecipes = CraftingManager.getInstance().getRecipeList();
+			System.out.println("Parsing through " + oldRecipes.size() + " recipes to remove hammers...");
 	    	int count = 0;
 	    	for (int q = 0; q < oldRecipes.size(); q++)
 	    	{
-	    		IRecipe recipe = (IRecipe)oldRecipes.get(q);
-	    		boolean removeIt = false;
-	    		if (recipe instanceof ShapelessOreRecipe)
-	    		{
-	    			List items = ((ShapelessOreRecipe)recipe).getInput();
-	    			for (int w = 0; w < items.size() && !removeIt; w++)
-	        		{
-	        			Object slot = items.get(w);
-	        			if (slot instanceof ItemStack)
-	        			{
-	        				ItemStack theSlot = (ItemStack)slot;
-	        				if (OreDictManager.isItemStackInstanceOf(theSlot, "craftingToolHardHammer"))
-	        				{
-	        					removeIt = true;
-	        					items.remove(w);
-	        				}
-	        				if (!(recipe instanceof ICraftingRecipeGT))
-	        				{
-	        					for (ItemStack key : replacems.keySet())
-	        					{
-	        						if (ST.equal(key, theSlot))
-	        						{
-	        							items.set(w, OreDictionary.getOres(replacems.get(key)));
-	        						}
-	        					}
-	        				}
-	        			} else if (slot instanceof List && ((List)slot).size() > 0)
-	        			{
-	        				ItemStack spot = (ItemStack)((List)slot).get(0);
-	        				if (spot != null && OreDictManager.isItemStackInstanceOf(spot, "craftingToolHardHammer"))
-	        				{
-	        					removeIt = true;
-	        					items.remove(w);
-	        				}
-	        			}
-	        		}
-	    		} else if (recipe instanceof ShapedOreRecipe)
-	    		{
-	    			Object[] items = ((ShapedOreRecipe)recipe).getInput();
-	    			for (int w = 0; w < items.length && !removeIt; w++)
-	        		{
-	        			Object slot = items[w];
-	        			if (slot instanceof ItemStack)
-	        			{
-	        				ItemStack theSlot = (ItemStack)slot;
-	        				if (OreDictManager.isItemStackInstanceOf(theSlot, "craftingToolHardHammer"))
-	        				{
-	        					removeIt = true;
-	        					items[w] = null;
-	        				}
-	        				if (!(recipe instanceof ICraftingRecipeGT))
-	        				{
-	        					for (ItemStack key : replacems.keySet())
-	        					{
-	        						if (ST.equal(key, theSlot))
-	        						{
-	        							items[w] = OreDictionary.getOres(replacems.get(key));
-	        						}
-	        					}
-	        				}
-	        			} else if (slot instanceof List && ((List)slot).size() > 0)
-	        			{
-	        				ItemStack spot = (ItemStack)((List)slot).get(0);
-	        				if (spot != null && OreDictManager.isItemStackInstanceOf(spot, "craftingToolHardHammer"))
-	        				{
-	        					removeIt = true;
-	        					items[w] = null;
-	        				}
-	        			}
-	        		}
-	    		}
-	    		if (removeIt)
-	    		{
-	    			instance.addRecipe(recipe);
-	    			oldRecipes.remove(recipe);
-	    			count = count + 1;
-	    		}
+	    		try {
+					boolean removelIt = false;
+					IRecipe recipe = (IRecipe) oldRecipes.get(q);
+					if (recipe instanceof ShapelessOreRecipe) {
+						ArrayList items = ((ShapelessOreRecipe) recipe).getInput();
+						removelIt = replaceItems(recipe, items);
+					} else if (recipe instanceof ShapedRecipes) {
+						ItemStack[] items = ((ShapedRecipes) recipe).recipeItems;
+						removelIt = replaceItems(recipe, items);
+					} else if (recipe instanceof ShapedOreRecipe) {
+						Object[] items = ((ShapedOreRecipe) recipe).getInput();
+						removelIt = replaceItems(recipe, items);
+					} else if (recipe instanceof ShapelessRecipes) {
+						//immutable :/
+					}
+					if (removelIt) {
+						instance.addRecipe(recipe);
+						oldRecipes.remove(recipe);
+						count = count + 1;
+					}
+				} catch (Throwable t) {
+	    			System.out.println("Exception found!");
+	    			t.printStackTrace();
+				}
 	    	}
 	    	System.out.println("Parsing complete, found " + count + " hammer recipes");
     	} else {

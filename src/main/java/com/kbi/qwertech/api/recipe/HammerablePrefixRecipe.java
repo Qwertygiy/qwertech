@@ -1,5 +1,6 @@
 package com.kbi.qwertech.api.recipe;
 
+import com.kbi.qwertech.api.data.QTMT;
 import gregapi.code.ICondition;
 import gregapi.data.MT;
 import gregapi.item.multiitem.MultiItemTool;
@@ -87,7 +88,7 @@ public class HammerablePrefixRecipe implements ICraftingRecipeGT, IRecipe {
 		  {
 			  returnable[i] = ((OreDictPrefix)primaryPrefix[i]).dat(primaryMat);
 		  }
-		  System.arraycopy(extras, 0, returnable, primaryPrefix.length + 0, extras.length);
+		  System.arraycopy(extras, 0, returnable, primaryPrefix.length, extras.length);
 		  return returnable;
 	  }
 	
@@ -205,7 +206,7 @@ public class HammerablePrefixRecipe implements ICraftingRecipeGT, IRecipe {
 	@Override
 	public ItemStack getCraftingResult(InventoryCrafting p_77572_1_) {
 		// TODO Auto-generated method stub
-		return outputPrefix.mat(tempPrimary == null || tempPrimary == MT.NULL ? MT.Steel : tempPrimary, outputAmount);
+		return outputPrefix.mat(tempPrimary == null || tempPrimary == MT.NULL ? QTMT.Undefined : tempPrimary, outputAmount);
 	}
 
 	@Override
@@ -215,7 +216,7 @@ public class HammerablePrefixRecipe implements ICraftingRecipeGT, IRecipe {
 
 	@Override
 	public ItemStack getRecipeOutput() {
-		return outputPrefix.mat(tempPrimary == null || tempPrimary == MT.NULL ? MT.Steel : tempPrimary, outputAmount);
+		return outputPrefix.mat(tempPrimary == null || tempPrimary == MT.NULL ? QTMT.Undefined : tempPrimary, outputAmount);
 	}
 
 	@Override

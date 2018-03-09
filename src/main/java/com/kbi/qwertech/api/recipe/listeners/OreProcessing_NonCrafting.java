@@ -21,7 +21,7 @@ implements IOreDictListenerEvent
 	private final RecipeMap mHandler;
 	private final Object mInput;
 	private final Object mOutput;
-	
+
 	public OreProcessing_NonCrafting(RecipeMap aHandler, Item input, ItemStack output, ICondition aCondition){this(aHandler, ST.make(input, 1, 0), output, aCondition);}
 	public OreProcessing_NonCrafting(RecipeMap aHandler, Item input, OreDictPrefix output, ICondition aCondition){this(aHandler, ST.make(input, 1, 0), output, aCondition);}
 	public OreProcessing_NonCrafting(RecipeMap aHandler, ItemStack input, Item output, ICondition aCondition){this(aHandler, input, ST.make(output, 1, 0), aCondition);}

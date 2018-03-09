@@ -39,7 +39,8 @@ public class QTMT {
 	,PurpleCY11 =	OreDictMaterial.createMaterial(13018, "PurpleCY11",		"Purple CY-11"		).setTextures(TextureSet.SET_FIERY			).setRGBa(200, 	20, 	200, 	255	).heat(3000, 3500											).aspects(TC.PRAECANTIO,2,TC.LUCRUM,1,TC.ORDO,1		).put(COATED,	GEMS,	STICKS,		PLATES																							).setOriginalMod(MD.QT																			).qual(MT.Amethyst).addEnchantmentForTools(Enchantment.efficiency, 1)
 	,PinkCY11 =		OreDictMaterial.createMaterial(13019, "PinkCY11",			"Pink CY-11"			).setTextures(TextureSet.SET_FIERY			).setRGBa(200, 	100, 	100, 	255	).heat(3000, 3500											).aspects(TC.PRAECANTIO,2,TC.LUCRUM,1,TC.ORDO,1		).put(COATED,	GEMS,	STICKS,		PLATES																							).setOriginalMod(MD.QT																			).qual(MT.Ruby)
 	,WhiteCY11 =	OreDictMaterial.createMaterial(13020, "WhiteCY11",			"White CY-11"			).setTextures(TextureSet.SET_FIERY			).setRGBa(220, 	220, 	220, 	255	).heat(3000, 3500											).aspects(TC.PRAECANTIO,2,TC.LUCRUM,1,TC.ORDO,1		).put(COATED,	GEMS,	STICKS,		PLATES																							).setOriginalMod(MD.QT																			).qual(MT.Diamond).addEnchantmentForArmors(Enchantment.blastProtection, 1)
-			
+
+	,Undefined =	OreDictMaterial.createMaterial(13030, "Any", "Any").setTextures(TextureSet.SET_METALLIC).setRGBa(125, 125, 125, 125).hide(true).qual(MT.Steel).setAllToTheOutputOf(MT.NULL)
 	;
 	
 	static {
