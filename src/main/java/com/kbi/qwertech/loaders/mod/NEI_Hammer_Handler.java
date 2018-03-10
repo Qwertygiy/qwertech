@@ -19,7 +19,6 @@ import gregapi.oredict.OreDictPrefix;
 import gregapi.util.OM;
 import gregapi.util.ST;
 import gregapi.util.UT;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
@@ -82,8 +81,8 @@ public class NEI_Hammer_Handler extends ShapedRecipeHandler {
         }*/
 
         /**
-         * @param width
-         * @param height
+         * @param width width of recipe
+         * @param height height of recipe
          * @param items  an ItemStack[] or ItemStack[][]
          */
         @Override
@@ -312,19 +311,26 @@ public class NEI_Hammer_Handler extends ShapedRecipeHandler {
 					List<ItemStack> adderble = new ArrayList();
 					if (mat != null && mat != MT.NULL && data.mPrefix.isTrue(mat))
 					{
-						if (data.mMaterial.mMaterial == MT.NULL || (data.mMaterial.mMaterial == MT.Steel && mat != MT.Steel))
+						if (data.mMaterial.mMaterial == MT.NULL || (data.mMaterial.mMaterial == QTMT.Undefined && mat != QTMT.Undefined))
 						{
 							adderble.add(data.mPrefix.mat(mat, 1));
-						} else {
+						} else if (data.mPrefix.isTrue(data.mMaterial.mMaterial)) {
 							adderble.add(data.mPrefix.mat(data.mMaterial.mMaterial, 1));
+						} else {
+							return null;
 						}
-					} else {
+					} else if (data.mPrefix.isTrue(data.mMaterial.mMaterial)) {
 						adderble.add(data.mPrefix.mat(data.mMaterial.mMaterial, 1));
+					} else {
+						return null;
 					}
 					items.set(q, adderble);
 				} else if (check instanceof String)
 				{
-					items.set(q, OreDictionary.getOres((String)check));
+					List<ItemStack> ores = OreDictionary.getOres((String)check);
+					if (!ores.isEmpty()) {
+						items.set(q, ores);
+					}
 				} else if (check instanceof ItemStack)
 				{
 					ItemStack stacky = (ItemStack)check;
@@ -335,9 +341,15 @@ public class NEI_Hammer_Handler extends ShapedRecipeHandler {
 			}
 			ItemStack output = recipe.getRecipeOutput();
 			OreDictItemData outputData = OM.anydata(output);
-			if (outputData != null && mat != null && mat != MT.NULL && mat != MT.Steel && outputData.mPrefix.isTrue(mat))
+			if (outputData != null)
 			{
-				output = outputData.mPrefix.mat(mat, output.stackSize);
+				if ( mat != null && mat != MT.NULL && mat != QTMT.Undefined && outputData.mPrefix.isTrue(mat))
+				{
+					output = outputData.mPrefix.mat(mat, output.stackSize);
+				} else if (!outputData.mPrefix.isTrue(outputData.mMaterial.mMaterial))
+				{
+					return null;
+				}
 			}
 			//System.out.println("Removed " + removed + " unsuitable materials from NEI recipe");
 			returning.set(0, (List)items.get(0));
@@ -392,11 +404,10 @@ public class NEI_Hammer_Handler extends ShapedRecipeHandler {
 						} else {
 							adderble.add(data.mPrefix.mat(data.mMaterial.mMaterial, 1));
 						}
-					} else if (mat == null || mat == QTMT.Undefined){
-						adderble.add(data.mPrefix.mat(QTMT.Undefined, 1));
+					} else if (data.mPrefix.isTrue(data.mMaterial.mMaterial)){
+						adderble.add(data.mPrefix.mat(data.mMaterial.mMaterial, 1));
 					} else {
-						//adderble.add(data.mPrefix.mat(data.mMaterial.mMaterial, 1));
-						adderble.add(ST.make(Items.apple, 1, 20));
+						return null;
 					}
 					items[q] = adderble;
             	}
@@ -407,6 +418,7 @@ public class NEI_Hammer_Handler extends ShapedRecipeHandler {
 			{
 				output = outputData.mPrefix.mat(mat, output.stackSize);
 			}
+			if (output == null) return null;
             return new HammerableCachedRecipe(recipe.width, recipe.height, items, output);
         } catch (Exception e) {
             NEIClientConfig.logger.error("Error loading recipe: ", e);
@@ -437,13 +449,17 @@ public class NEI_Hammer_Handler extends ShapedRecipeHandler {
 						if (data.mMaterial.mMaterial == MT.NULL || (data.mMaterial.mMaterial == MT.Steel && mat != MT.Steel))
 						{
 							adderble.add(data.mPrefix.mat(mat, 1));
-						} else {
+						} else if (data.mPrefix.isTrue(data.mMaterial.mMaterial)) {
 							adderble.add(data.mPrefix.mat(data.mMaterial.mMaterial, 1));
+						} else {
+							return null;
 						}
 					} else if (mat == null || mat == MT.NULL){
 						adderble.add(data.mPrefix.mat(MT.Steel, 1));
-					} else {
+					} else if (data.mPrefix.isTrue(data.mMaterial.mMaterial)) {
 						adderble.add(data.mPrefix.mat(data.mMaterial.mMaterial, 1));
+					} else {
+						return null;
 					}
 					items[q] = adderble;
             	}
