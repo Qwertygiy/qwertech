@@ -8,8 +8,10 @@ import gregapi.item.multiitem.behaviors.IBehavior;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ContainerPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
@@ -23,10 +25,20 @@ public class MultiItemTool_QT extends MultiItemTool {
 	public MultiItemTool_QT(String aModID, String aUnlocalized) {
 		super(aModID, aUnlocalized);
 	}
+
+	public boolean isLeft = true;
 	
 	@Override
 	public boolean onEntitySwing(EntityLivingBase entity, ItemStack stack)
 	{
+		if (entity instanceof EntityPlayer && ((EntityPlayer)entity).openContainer != null)
+		{
+			if (((EntityPlayer)entity).openContainer.getClass() != ContainerPlayer.class || !isLeft)
+			{
+				isLeft = true;
+				return false;
+			}
+		}
 		boolean isAOE = false;
 		ArrayList<IBehavior<MultiItem>> behaver = mItemBehaviors.get((short)getDamage(stack));
 		if (behaver != null) for (IBehavior<MultiItem> tBehavior : behaver) try {
@@ -65,6 +77,7 @@ public class MultiItemTool_QT extends MultiItemTool {
 	
 	@Override
 	public boolean onLeftClickEntity(ItemStack aStack, EntityPlayer aPlayer, Entity aEntity) {
+		isLeft = true;
 		ArrayList<IBehavior<MultiItem>> behaver = mItemBehaviors.get((short)getDamage(aStack));
 		if (behaver != null) for (IBehavior<MultiItem> tBehavior : behaver) try {
 			if (tBehavior instanceof Behavior_AOE)
@@ -81,4 +94,9 @@ public class MultiItemTool_QT extends MultiItemTool {
 		return super.onLeftClickEntity(aStack, aPlayer, aEntity);
 	}
 
+	@Override
+	public boolean onItemUseFirst(ItemStack aStack, EntityPlayer aPlayer, World aWorld, int aX, int aY, int aZ, int aSide, float hitX, float hitY, float hitZ) {
+		isLeft = false;
+		return super.onItemUseFirst(aStack, aPlayer, aWorld, aX, aY, aZ, aSide, hitX, hitY, hitZ);
+	}
 }
