@@ -729,7 +729,7 @@ public class CraftingTableT1 extends TileEntityBase09FacingSingle implements IMT
 		
 		MultiItemTool.LAST_TOOL_COORDS_BEFORE_DAMAGE = getCoords();
 		
-		ItemStack aHoldStack = slot(10);
+		ItemStack aHoldStack;
 		
 		try {FMLCommonHandler.instance().firePlayerCraftingEvent(aPlayer, ST.copy(slot(10)), new InventoryCrafting(null, 3, 3));} catch(Throwable e) {e.printStackTrace(ERR);}
 		
@@ -839,17 +839,29 @@ public class CraftingTableT1 extends TileEntityBase09FacingSingle implements IMT
 							if (aMouseclick == 0) {
 								// SHIFT LEFTCLICK
 								for (int i = 0; i < aPlayer.inventory.mainInventory.length; i++) {
-									if (aPlayer.inventory.mainInventory[i] == null || tCraftedStack.stackSize + aPlayer.inventory.mainInventory[i].stackSize <= aPlayer.inventory.mainInventory[i].getMaxStackSize()) {
-										boolean temp = F;
-										for (int j = 0; j < tCraftedStack.getMaxStackSize() / tCraftedStack.stackSize && ((CraftingTableT1)mTileEntity).canDoCraftingOutput(); j++) {
-											if (!ST.equal(tStack = ((CraftingTableT1)mTileEntity).getCraftingOutput(), tCraftedStack) || tStack.stackSize != tCraftedStack.stackSize) {
-												detectAndSendChanges();
-												return aPlayer.inventory.getItemStack();
+									if (aPlayer.inventory.mainInventory[i] == null || ST.equal(aPlayer.inventory.mainInventory[i], tCraftedStack, false)) {
+										if (aPlayer.inventory.mainInventory[i] == null || tCraftedStack.stackSize + aPlayer.inventory.mainInventory[i].stackSize <= aPlayer.inventory.mainInventory[i].getMaxStackSize()) {
+											for (int j = 0; j < tCraftedStack.getMaxStackSize() / tCraftedStack.stackSize && ((CraftingTableT1) mTileEntity).canDoCraftingOutput(); j++) {
+												if (!ST.equal(tStack = ((CraftingTableT1) mTileEntity).getCraftingOutput(), tCraftedStack) || tStack.stackSize != tCraftedStack.stackSize) {
+													detectAndSendChanges();
+													return aPlayer.inventory.getItemStack();
+												}
+												aPlayer.inventory.mainInventory[i] = (((CraftingTableT1) mTileEntity).consumeMaterials(aPlayer, aPlayer.inventory.mainInventory[i], i != 0 || j != 0));
 											}
-											aPlayer.inventory.mainInventory[i] = (((CraftingTableT1)mTileEntity).consumeMaterials(aPlayer, aPlayer.inventory.mainInventory[i], i != 0 || j != 0));
-											temp = T;
 										}
-										if (temp) return aPlayer.inventory.getItemStack();
+										if (aPlayer.inventory.mainInventory[i].stackSize < aPlayer.inventory.mainInventory[i].getMaxStackSize()) {
+											for (int q = i; q < aPlayer.inventory.mainInventory.length; q++) {
+												if (aPlayer.inventory.mainInventory[q] == null || (ST.equal(tCraftedStack, aPlayer.inventory.mainInventory[q]) && tCraftedStack.stackSize + aPlayer.inventory.mainInventory[q].stackSize + aPlayer.inventory.mainInventory[i].stackSize <= aPlayer.inventory.mainInventory[i].getMaxStackSize() * 2)) {
+													if (!ST.equal(tStack = ((CraftingTableT1) mTileEntity).getCraftingOutput(), tCraftedStack) || tStack.stackSize != tCraftedStack.stackSize) {
+														detectAndSendChanges();
+														return aPlayer.inventory.getItemStack();
+													}
+													ItemStack splittable = (((CraftingTableT1) mTileEntity).consumeMaterials(aPlayer, null, i != 0));
+													this.mergeItemStack(splittable, 0, aPlayer.inventory.mainInventory.length, true);
+													break;
+												}
+											}
+										}
 									}
 								}
 								return aPlayer.inventory.getItemStack();
@@ -857,13 +869,17 @@ public class CraftingTableT1 extends TileEntityBase09FacingSingle implements IMT
 							// SHIFT RIGHTCLICK
 							for (int i = 0; i < aPlayer.inventory.mainInventory.length; i++) {
 								if (aPlayer.inventory.mainInventory[i] == null || tCraftedStack.stackSize + aPlayer.inventory.mainInventory[i].stackSize <= aPlayer.inventory.mainInventory[i].getMaxStackSize()) {
+									boolean temp = F;
 									for (int j = 0; j < tCraftedStack.getMaxStackSize() / tCraftedStack.stackSize && ((CraftingTableT1)mTileEntity).canDoCraftingOutput(); j++) {
 										if (!ST.equal(tStack = ((CraftingTableT1)mTileEntity).getCraftingOutput(), tCraftedStack) || tStack.stackSize != tCraftedStack.stackSize) {
 											detectAndSendChanges();
 											return aPlayer.inventory.getItemStack();
 										}
-										aPlayer.inventory.mainInventory[i] = (((CraftingTableT1)mTileEntity).consumeMaterials(aPlayer, aPlayer.inventory.mainInventory[i], i != 0 || j != 0));
+										ItemStack splittable = (((CraftingTableT1)mTileEntity).consumeMaterials(aPlayer, null, i != 0 || j != 0));
+										this.mergeItemStack(splittable, 0, aPlayer.inventory.mainInventory.length, true);
+										temp = T;
 									}
+									if (temp) return aPlayer.inventory.getItemStack();
 								}
 							}
 							return aPlayer.inventory.getItemStack();
