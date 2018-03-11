@@ -181,17 +181,22 @@ public class CraftingTableRenderer extends TileEntitySpecialRenderer {
 			}
 			if (hammerResult != null)
 			{
+				if (hammerResult.getItem() instanceof ItemBlock)
+				{
+					GL11.glTranslatef(0.2F, 1F, 0.1F);
+					GL11.glScalef(1, 0.01F, 1);
+				}
 				GL11.glPushMatrix();
-				GL11.glTranslatef(0.5F, 0.5F, 0.5F);
-				GL11.glRotatef(90, 1, 0, 0);
+				GL11.glTranslatef(0.5F, 0.005F, 0.5F);
+				GL11.glRotatef(45, 1, 1, 0);
 				//GL11.glScalef(1, -1, 1);
-				GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
+				GL11.glTranslatef(-0.5F, -0.005F, -0.5F);
 				GL11.glEnable(GL11.GL_BLEND);
 		        GL11.glAlphaFunc(GL11.GL_GREATER, 0.1F);
 		        GL11.glDepthFunc(GL11.GL_LESS);
 				OpenGlHelper.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
 		        //GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_DST_ALPHA);
-		        renderItem(hammerResult.copy(), 0, 0.5, 0.5, -(timeSine/3600), tileEntity.getWorld(), 4, 0.7F);
+		        renderItem(hammerResult.copy(), 0, 0.5, 0.5, -(timeSine/3600), tileEntity.getWorld(), 3, 0.8F);
 		        GL11.glDepthFunc(GL11.GL_LEQUAL);
 		        GL11.glAlphaFunc(GL11.GL_GREATER, 0.5F);
 		        GL11.glDisable(GL11.GL_BLEND);
