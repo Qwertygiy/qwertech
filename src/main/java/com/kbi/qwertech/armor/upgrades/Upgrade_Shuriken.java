@@ -72,7 +72,7 @@ public class Upgrade_Shuriken extends UpgradeBase {
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
 	{
-		return type.equals("overlay") ? "qwertech:textures/armor/blank.png" : "qwertech:textures/armor/upgrade/spur.png";
+		return type != null ? "qwertech:textures/armor/blank.png" : "qwertech:textures/armor/upgrade/spur.png";
 	}
 	
 	Object model;

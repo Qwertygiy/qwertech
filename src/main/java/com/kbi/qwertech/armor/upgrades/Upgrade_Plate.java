@@ -89,7 +89,7 @@ public class Upgrade_Plate extends UpgradeBase {
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
 	{
-		return type.equals("overlay") ? "qwertech:textures/armor/blank.png" : "qwertech:textures/armor/upgrade/plates.png";
+		return type != null ? "qwertech:textures/armor/blank.png" : "qwertech:textures/armor/upgrade/plates.png";
 	}
 	
 	Object model;

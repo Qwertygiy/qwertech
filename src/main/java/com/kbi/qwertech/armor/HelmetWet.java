@@ -27,7 +27,7 @@ public class HelmetWet extends HelmetBase {
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
 	{
-		if (!type.equals("overlay"))
+		if (type == null)
 		{
 			return "qwertech:textures/armor/plate.png";
 		} else {
