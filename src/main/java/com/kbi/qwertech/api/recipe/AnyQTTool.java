@@ -143,22 +143,25 @@ public class AnyQTTool implements ICraftingRecipeGT, IRecipe
   				if (this.tempSecondary == MT.Butter)
   				{
   					this.tempSecondary = p2.mHandleMaterial;
-  				} else
-					return this.tempSecondary == p2.mHandleMaterial || this.tempSecondary.mToThis.contains(p2.mHandleMaterial) || p2.mHandleMaterial.mToThis.contains(this.tempSecondary) || p2.mHandleMaterial.mReRegistrations.contains(this.tempSecondary) || this.tempSecondary.mReRegistrations.contains(p2.mHandleMaterial);
-  				return true;
-  			} else
+  				} else if(this.usesADefaultHandle){
+					return this.tempSecondary == MT.Empty || this.tempSecondary == p2.mHandleMaterial || this.tempSecondary.mToThis.contains(p2.mHandleMaterial) || p2.mHandleMaterial.mToThis.contains(this.tempSecondary) || p2.mHandleMaterial.mReRegistrations.contains(this.tempSecondary) || this.tempSecondary.mReRegistrations.contains(p2.mHandleMaterial);
+				}
+				return true;
+  			} else {
 				return p2 == this.tempPrimary || p2.mToThis.contains(this.tempPrimary) || this.tempPrimary.mToThis.contains(p2) || p2.mReRegistrations.contains(this.tempPrimary) || this.tempPrimary.mReRegistrations.contains(p2);
-		} else if (p == MT.Empty) //we're looking for any secondary!
+			}
+  		} else if (p == MT.Empty) //we're looking for any secondary!
   		{
   			if (this.tempSecondary == MT.Empty)
   			{
   				this.tempSecondary = p2;
   				return true;
-  			} else
+  			} else {
 				return p2 == this.tempSecondary || p2.mToThis.contains(this.tempSecondary) || this.tempSecondary.mToThis.contains(p2) || p2.mReRegistrations.contains(this.tempSecondary) || this.tempSecondary.mReRegistrations.contains(p2);
-		} else if (p == MT.Butter)
+			}
+  		} else if (p == MT.Butter)
   		{
-  			if (this.tempSecondary == MT.Butter)
+  			if (this.tempSecondary == MT.Butter || this.tempSecondary == MT.Empty)
   			{
   				this.tempSecondary = p2;
   				return true;
@@ -241,7 +244,7 @@ public class AnyQTTool implements ICraftingRecipeGT, IRecipe
 			}
 		}
 		//System.out.println("We found all but " + recipeCheck.size() + " items");
-		return recipeCheck.isEmpty() && this.mCondition.isTrue(this.tempPrimary) && (this.mCondition.isTrue(this.tempSecondary) || this.usesADefaultHandle);
+		return recipeCheck.isEmpty() && this.mCondition.isTrue(this.tempPrimary);
   	}
   
   	@Override
