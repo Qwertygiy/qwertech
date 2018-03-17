@@ -1,43 +1,17 @@
 package com.kbi.qwertech.loaders;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import org.lwjgl.opengl.GL11;
-
 import com.kbi.qwertech.api.armor.IArmorStats;
 import com.kbi.qwertech.api.armor.MultiItemArmor;
 import com.kbi.qwertech.api.armor.upgrades.IArmorUpgrade;
 import com.kbi.qwertech.api.data.QTI;
 import com.kbi.qwertech.api.registry.ArmorUpgradeRegistry;
-import com.kbi.qwertech.armor.ArmorIcon;
-import com.kbi.qwertech.armor.BootBase;
-import com.kbi.qwertech.armor.BootPlate;
-import com.kbi.qwertech.armor.BootWet;
-import com.kbi.qwertech.armor.ChestBase;
-import com.kbi.qwertech.armor.ChestPlate;
-import com.kbi.qwertech.armor.ChestWet;
-import com.kbi.qwertech.armor.HelmetBase;
-import com.kbi.qwertech.armor.HelmetPlate;
-import com.kbi.qwertech.armor.HelmetWet;
-import com.kbi.qwertech.armor.PantBase;
-import com.kbi.qwertech.armor.PantPlate;
-import com.kbi.qwertech.armor.upgrades.Upgrade_Feather;
-import com.kbi.qwertech.armor.upgrades.Upgrade_Lubricant;
-import com.kbi.qwertech.armor.upgrades.Upgrade_Magnifier;
-import com.kbi.qwertech.armor.upgrades.Upgrade_Plate;
-import com.kbi.qwertech.armor.upgrades.Upgrade_Shuriken;
-import com.kbi.qwertech.armor.upgrades.Upgrade_Slime;
-
+import com.kbi.qwertech.armor.*;
+import com.kbi.qwertech.armor.upgrades.*;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import gregapi.data.CS;
-import gregapi.data.IL;
-import gregapi.data.MD;
-import gregapi.data.MT;
-import gregapi.data.OP;
+import gregapi.data.*;
 import gregapi.oredict.OreDictMaterial;
 import gregapi.util.ST;
 import net.minecraft.client.model.ModelBiped;
@@ -46,12 +20,18 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderPlayerEvent.SetArmorModel;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.oredict.OreDictionary;
+import org.lwjgl.opengl.GL11;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class RegisterArmor {
 	
@@ -91,7 +71,8 @@ public class RegisterArmor {
 		MT.Thaumium.addEnchantmentForArmors(Enchantment.aquaAffinity, 2);
 		MT.Manasteel.addEnchantmentForArmors(Enchantment.aquaAffinity, 2);
 		MT.IronWood.addEnchantmentForArmors(Enchantment.respiration, 1);
-		
+
+		addType("tcgoggles");
 		addType("chainmail");
 		addType("plate");
 		addType("springs");
@@ -205,6 +186,14 @@ public class RegisterArmor {
 		upgrade.addUpgradeStack(QTI.turkeyFeather.get(1));
 		((Upgrade_Feather)upgrade).setRGBa(MT.WoodPolished.mRGBaSolid);
 		ArmorUpgradeRegistry.instance.addUpgrade(19, upgrade);
+
+		upgrade = new Upgrade_ThaumicGoggles();
+		Item thaumicGoggles = GameRegistry.findItem(MD.TC.mName, "ItemGoggles");
+		if (thaumicGoggles != null)
+		{
+			upgrade.addUpgradeStack(ST.make(thaumicGoggles, 1, CS.W));
+		}
+		ArmorUpgradeRegistry.instance.addUpgrade(20, upgrade);
 	}
 	
 	private void addType(String type)

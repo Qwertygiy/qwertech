@@ -1,6 +1,7 @@
 package com.kbi.qwertech.api.armor;
 
 import com.kbi.qwertech.api.armor.upgrades.IArmorUpgrade;
+import com.kbi.qwertech.api.armor.upgrades.IThaumcraftUpgrade;
 import com.kbi.qwertech.api.client.models.ModelArmorBasic;
 import com.kbi.qwertech.api.registry.ArmorUpgradeRegistry;
 import cpw.mods.fml.common.Optional;
@@ -69,8 +70,52 @@ import static gregapi.data.CS.*;
 		  @Optional.Interface(iface = "ic2.api.item.ISpecialElectricItem", modid = ModIDs.IC2)
 		, @Optional.Interface(iface = "ic2.api.item.IElectricItemManager", modid = ModIDs.IC2)
 		, @Optional.Interface(iface = "micdoodle8.mods.galacticraft.api.item.IItemElectric", modid = ModIDs.GC)
+		, @Optional.Interface(iface = "thaumcraft.api.IGoggles", modid = ModIDs.TC)
+		, @Optional.Interface(iface = "thaumcraft.api.nodes.IRevealer", modid = ModIDs.TC)
+		, @Optional.Interface(iface = "thaumcraft.api.IVisDiscountGear", modid = ModIDs.TC)
 		})
-public class MultiItemArmor extends ItemArmor implements IItemProjectile, IItemUpdatable, IItemGT, IItemNoGTOverride, IItemEnergy {
+public class MultiItemArmor extends ItemArmor implements IItemProjectile, IItemUpdatable, IItemGT, IItemNoGTOverride, IItemEnergy, thaumcraft.api.IGoggles, thaumcraft.api.nodes.IRevealer, thaumcraft.api.IVisDiscountGear {
+
+	public boolean showIngamePopups(ItemStack itemStack, EntityLivingBase entityLivingBase) {
+		IArmorUpgrade[] upgrades = getUpgrades(itemStack);
+		for (int q = 0; q < upgrades.length; q++)
+		{
+			IArmorUpgrade upgrade = upgrades[q];
+			if (upgrade instanceof IThaumcraftUpgrade)
+			{
+				if (((IThaumcraftUpgrade)upgrade).showIngamePopups(itemStack, entityLivingBase)) return true;
+			}
+		}
+		return false;
+	}
+
+	public int getVisDiscount(ItemStack itemStack, EntityPlayer entityPlayer, thaumcraft.api.aspects.Aspect aspect) {
+		int base = 0;
+		IArmorUpgrade[] upgrades = getUpgrades(itemStack);
+		for (int q = 0; q < upgrades.length; q++)
+		{
+			IArmorUpgrade upgrade = upgrades[q];
+			if (upgrade instanceof IThaumcraftUpgrade)
+			{
+				base = base + ((IThaumcraftUpgrade)upgrade).getVisDiscount(itemStack, entityPlayer, aspect);
+			}
+		}
+		return base;
+	}
+
+	public boolean showNodes(ItemStack itemStack, EntityLivingBase entityLivingBase) {
+		IArmorUpgrade[] upgrades = getUpgrades(itemStack);
+		for (int q = 0; q < upgrades.length; q++)
+		{
+			IArmorUpgrade upgrade = upgrades[q];
+			if (upgrade instanceof IThaumcraftUpgrade)
+			{
+				if (((IThaumcraftUpgrade)upgrade).showNodes(itemStack, entityLivingBase)) return true;
+			}
+		}
+		return false;
+	}
+
 	public static class QT_Item_Dispense extends BehaviorProjectileDispense {
 		@Override
 		public ItemStack dispenseStack(IBlockSource aSource, ItemStack aStack) {

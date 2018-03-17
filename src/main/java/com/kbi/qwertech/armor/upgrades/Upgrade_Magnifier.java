@@ -96,5 +96,4 @@ public class Upgrade_Magnifier extends UpgradeBase {
 		}
 		return false;
 	}
-
 }
