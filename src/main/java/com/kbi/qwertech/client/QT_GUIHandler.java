@@ -34,6 +34,7 @@ public class QT_GUIHandler {
 		if (QTConfigs.enableArmor && event.type == ElementType.TEXT)
 		{
 			//event.setCanceled(true);
+			GL11.glEnable(GL11.GL_ALPHA_TEST);
 			double weight = 0;
 			double protec = 100;
 			for (int i = 0; i < 4; i++)
