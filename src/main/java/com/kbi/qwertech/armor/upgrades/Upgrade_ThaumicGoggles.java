@@ -1,5 +1,7 @@
 package com.kbi.qwertech.armor.upgrades;
 
+import com.kbi.qwertech.api.armor.MultiItemArmor;
+import com.kbi.qwertech.api.armor.upgrades.IArmorUpgrade;
 import com.kbi.qwertech.api.armor.upgrades.IThaumcraftUpgrade;
 import com.kbi.qwertech.api.armor.upgrades.UpgradeBase;
 import com.kbi.qwertech.client.models.ModelArmorGoggles;
@@ -16,6 +18,21 @@ import net.minecraft.util.IIcon;
 import java.util.List;
 
 public class Upgrade_ThaumicGoggles extends UpgradeBase implements IThaumcraftUpgrade {
+
+    @Override
+    public boolean isCompatibleWith(ItemStack aStack) {
+        IArmorUpgrade[] upgrades = MultiItemArmor.getUpgrades(aStack);
+        for (int q = 0; q < upgrades.length; q++)
+        {
+            IArmorUpgrade upgrade = upgrades[q];
+            if (upgrade instanceof Upgrade_ThaumicGoggles || upgrade instanceof Upgrade_Magnifier)
+            {
+                return false;
+            }
+        }
+        return super.isCompatibleWith(aStack);
+    }
+
     @Override
     public int getVisDiscount(ItemStack var1, EntityPlayer var2, Object var3) {
         return 5;

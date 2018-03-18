@@ -1,6 +1,7 @@
 package com.kbi.qwertech.armor.upgrades;
 
 import com.kbi.qwertech.api.armor.MultiItemArmor;
+import com.kbi.qwertech.api.armor.upgrades.IArmorUpgrade;
 import com.kbi.qwertech.api.armor.upgrades.UpgradeBase;
 import com.kbi.qwertech.client.models.ModelArmorMonocle;
 import com.kbi.qwertech.loaders.RegisterArmor;
@@ -27,6 +28,20 @@ import static gregapi.data.CS.F;
 public class Upgrade_Magnifier extends UpgradeBase {
 
 	public Upgrade_Magnifier() {
+	}
+
+	@Override
+	public boolean isCompatibleWith(ItemStack aStack) {
+		IArmorUpgrade[] upgrades = MultiItemArmor.getUpgrades(aStack);
+		for (int q = 0; q < upgrades.length; q++)
+		{
+			IArmorUpgrade upgrade = upgrades[q];
+			if (upgrade instanceof Upgrade_ThaumicGoggles || upgrade instanceof Upgrade_Magnifier)
+			{
+				return false;
+			}
+		}
+		return super.isCompatibleWith(aStack);
 	}
 	
 	@Override
