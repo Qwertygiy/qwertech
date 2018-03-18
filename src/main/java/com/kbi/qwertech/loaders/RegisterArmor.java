@@ -240,6 +240,7 @@ public class RegisterArmor {
 			 */
 			GL11.glColor4f(1F, 1F, 1F, 1F);
 			IArmorUpgrade[] upgrades = MultiItemArmor.getUpgrades(event.stack);
+			GL11.glPushMatrix();
 			for (int q = 0; q < upgrades.length; q++)
 			{
 				IArmorUpgrade upgrade = upgrades[q];
@@ -261,17 +262,16 @@ public class RegisterArmor {
 							GL11.glColor4f(((float)j[0])/255F, ((float)j[1])/255F, ((float)j[2])/255F, ((float)j[3])/255F);
 						}
 						String texture = upgrade.getArmorTexture(event.stack, event.entityLiving, event.slot, null);
-						if (texture != null)
-						{
+						if (texture != null) {
 							RenderManager.instance.renderEngine.bindTexture(new ResourceLocation(texture));
+							drawIt.setLivingAnimations(event.entityLiving, event.entityLiving.limbSwing - event.entityLiving.limbSwingAmount, event.entityLiving.prevLimbSwingAmount + (event.entityLiving.limbSwingAmount - event.entityLiving.prevLimbSwingAmount), event.partialRenderTick);
+							drawIt.render(event.entityLiving, event.entityLiving.limbSwing - event.entityLiving.limbSwingAmount, event.entityLiving.prevLimbSwingAmount + (event.entityLiving.limbSwingAmount - event.entityLiving.prevLimbSwingAmount), event.entityLiving.ticksExisted, event.entityLiving.rotationYawHead - event.entityLiving.renderYawOffset, event.entityLiving.prevRotationPitch + (event.entityLiving.rotationPitch - event.entityLiving.prevRotationPitch), 0.0625F);
 						}
-						drawIt.setLivingAnimations(event.entityLiving, event.entityLiving.limbSwing - event.entityLiving.limbSwingAmount, event.entityLiving.prevLimbSwingAmount + (event.entityLiving.limbSwingAmount - event.entityLiving.prevLimbSwingAmount), 0);
-						drawIt.render(event.entityLiving, event.entityLiving.limbSwing - event.entityLiving.limbSwingAmount, event.entityLiving.prevLimbSwingAmount + (event.entityLiving.limbSwingAmount - event.entityLiving.prevLimbSwingAmount), event.entityLiving.ticksExisted, event.entityLiving.rotationYawHead - event.entityLiving.renderYawOffset, event.entityLiving.prevRotationPitch + (event.entityLiving.rotationPitch - event.entityLiving.prevRotationPitch), 0.0625F);
 						GL11.glColor4f(1F, 1F, 1F, 1F);
-						
 					}
 				}
 			}
+			GL11.glPopMatrix();
 		}
 	}
 	
@@ -290,81 +290,70 @@ public class RegisterArmor {
 	//@SubscribeEvent
 	public void updateEntityArmor(LivingUpdateEvent event)
 	{
-		EntityLivingBase entity = event.entityLiving;
-		for (int q = 1; q < 5; q++)
-		{
-			ItemStack stack = entity.getEquipmentInSlot(q);
-			if (stack != null && stack.getItem() instanceof MultiItemArmor)
-			{
-				((MultiItemArmor)stack.getItem()).onArmorTicked(entity.worldObj, entity, stack);
-			}
-		}
-		if (event.entity.worldObj.getWorldTime() % 100 == 0)
-		{
-			if (entities.containsKey(entity))
-			{
-				entities.clear();
-			}
-			double totalWeight = 0;
-			for (int q = 1; q < 5; q++)
-			{
+		try {
+			EntityLivingBase entity = event.entityLiving;
+			for (int q = 1; q < 5; q++) {
 				ItemStack stack = entity.getEquipmentInSlot(q);
-				if (stack != null && stack.getItem() instanceof MultiItemArmor)
-				{
-					IArmorStats tStats = ((MultiItemArmor)stack.getItem()).getArmorStats(stack);
-					if (tStats != null)
-					{
-						OreDictMaterial mat = MultiItemArmor.getPrimaryMaterial(stack);
-						totalWeight = totalWeight + mat.getWeight(tStats.getMaterialAmount()/500);
+				if (stack != null && stack.getItem() instanceof MultiItemArmor) {
+					((MultiItemArmor) stack.getItem()).onArmorTicked(entity.worldObj, entity, stack);
+				}
+			}
+			if (event.entity.worldObj.getWorldTime() % 100 == 0) {
+				if (entities.containsKey(entity)) {
+					entities.clear();
+				}
+				double totalWeight = 0;
+				for (int q = 1; q < 5; q++) {
+					ItemStack stack = entity.getEquipmentInSlot(q);
+					if (stack != null && stack.getItem() instanceof MultiItemArmor) {
+						IArmorStats tStats = ((MultiItemArmor) stack.getItem()).getArmorStats(stack);
+						if (tStats != null) {
+							OreDictMaterial mat = MultiItemArmor.getPrimaryMaterial(stack);
+							totalWeight = totalWeight + mat.getWeight(tStats.getMaterialAmount() / 500);
+						}
 					}
 				}
-			}
-			if (totalWeight > 0 && !(entity instanceof EntityPlayer && ((EntityPlayer)entity).capabilities.isCreativeMode))
-			{
-				//System.out.println("Adding weight " + totalWeight);
-				entities.put(entity, totalWeight);
-			}
-		} else {
-			if (entities.containsKey(entity))
-			{
-				double weightToApply = entities.get(entity);
-				if (!entity.onGround)
-				{
-					weightToApply = weightToApply * 0.5;
+				if (totalWeight > 0 && !(entity instanceof EntityPlayer && ((EntityPlayer) entity).capabilities.isCreativeMode)) {
+					//System.out.println("Adding weight " + totalWeight);
+					entities.put(entity, totalWeight);
 				}
-				double speedEffect = 1;
-				double jumpEffect = 0;
-				if (weightToApply < 20)
-				{
-					//do nothing, you're good
-				} else if (weightToApply < 30)
-				{
-					speedEffect = 0.9;
-				} else if (weightToApply < 50)
-				{
-					speedEffect = 0.8;
-				} else if (weightToApply < 70)
-				{
-					speedEffect = 0.7;
-					jumpEffect = -0.01;
-				} else if (weightToApply < 90)
-				{
-					speedEffect = 0.5;
-					jumpEffect = -0.02;
-				} else if (weightToApply < 150) {
-					speedEffect = 0.3;
-					jumpEffect = -0.03;
-				} else {
-					speedEffect = 0.1;
-					jumpEffect = -0.05;
+			} else {
+				if (entities.containsKey(entity)) {
+					double weightToApply = entities.get(entity);
+					if (!entity.onGround) {
+						weightToApply = weightToApply * 0.5;
+					}
+					double speedEffect = 1;
+					double jumpEffect = 0;
+					if (weightToApply < 20) {
+						//do nothing, you're good
+					} else if (weightToApply < 30) {
+						speedEffect = 0.9;
+					} else if (weightToApply < 50) {
+						speedEffect = 0.8;
+					} else if (weightToApply < 70) {
+						speedEffect = 0.7;
+						jumpEffect = -0.01;
+					} else if (weightToApply < 90) {
+						speedEffect = 0.5;
+						jumpEffect = -0.02;
+					} else if (weightToApply < 150) {
+						speedEffect = 0.3;
+						jumpEffect = -0.03;
+					} else {
+						speedEffect = 0.1;
+						jumpEffect = -0.05;
+					}
+					if (entity.motionY < 0) {
+						entity.motionY = entity.motionY + jumpEffect;
+					}
+					entity.motionX = entity.motionX * speedEffect;
+					entity.motionZ = entity.motionZ * speedEffect;
 				}
-				if (entity.motionY < 0)
-				{
-					entity.motionY = entity.motionY + jumpEffect;
-				}
-				entity.motionX = entity.motionX * speedEffect;
-				entity.motionZ = entity.motionZ * speedEffect;
 			}
+		} catch (Exception e) {
+			System.out.println("Error while calculating or applying armor weight for entity");
+			e.printStackTrace();
 		}
 	}
 }
