@@ -4,6 +4,7 @@ import com.kbi.qwertech.tileentities.CraftingTableT4;
 import gregapi.data.CS;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -81,11 +82,22 @@ public class CraftingTable3DRenderer extends CraftingTableRenderer {
 			}
 			if (hammerResult != null)
 			{
-				GL11.glPushMatrix();
-				GL11.glTranslatef(0.5F, 0.5F, 0.5F);
-				GL11.glRotatef(90, 1, 0, 0);
-				//GL11.glScalef(1, -1, 1);
-				GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
+				if (hammerResult.getItem() instanceof ItemBlock)
+				{
+					GL11.glTranslatef(0.2F, 1F, 0.1F);
+					GL11.glScalef(1, 0.01F, 1);
+					GL11.glPushMatrix();
+					GL11.glTranslatef(0.5F, 0.005F, 0.5F);
+					GL11.glRotatef(45, 1, 1, 0);
+					//GL11.glScalef(1, -1, 1);
+					GL11.glTranslatef(-0.5F, -0.005F, -0.5F);
+				} else {
+					GL11.glPushMatrix();
+					GL11.glTranslatef(0.5F, 0.5F, 0.5F);
+					GL11.glRotatef(90, 1, 0, 0);
+					//GL11.glScalef(1, -1, 1);
+					GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
+				}
 				GL11.glEnable(GL11.GL_BLEND);
 		        GL11.glAlphaFunc(GL11.GL_GREATER, 0.1F);
 		        GL11.glDepthFunc(GL11.GL_LESS);

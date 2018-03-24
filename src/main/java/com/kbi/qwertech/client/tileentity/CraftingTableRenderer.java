@@ -181,16 +181,23 @@ public class CraftingTableRenderer extends TileEntitySpecialRenderer {
 			}
 			if (hammerResult != null)
 			{
+				GL11.glPushMatrix();
 				if (hammerResult.getItem() instanceof ItemBlock)
 				{
 					GL11.glTranslatef(0.2F, 1F, 0.1F);
 					GL11.glScalef(1, 0.01F, 1);
+					GL11.glPushMatrix();
+					GL11.glTranslatef(0.5F, 0.005F, 0.5F);
+					GL11.glRotatef(45, 1, 1, 0);
+					//GL11.glScalef(1, -1, 1);
+					GL11.glTranslatef(-0.5F, -0.005F, -0.5F);
+				} else {
+					GL11.glPushMatrix();
+					GL11.glTranslatef(0.5F, 0.5F, 0.5F);
+					GL11.glRotatef(90, 1, 0, 0);
+					//GL11.glScalef(1, -1, 1);
+					GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
 				}
-				GL11.glPushMatrix();
-				GL11.glTranslatef(0.5F, 0.005F, 0.5F);
-				GL11.glRotatef(45, 1, 1, 0);
-				//GL11.glScalef(1, -1, 1);
-				GL11.glTranslatef(-0.5F, -0.005F, -0.5F);
 				GL11.glEnable(GL11.GL_BLEND);
 		        GL11.glAlphaFunc(GL11.GL_GREATER, 0.1F);
 		        GL11.glDepthFunc(GL11.GL_LESS);
@@ -200,6 +207,7 @@ public class CraftingTableRenderer extends TileEntitySpecialRenderer {
 		        GL11.glDepthFunc(GL11.GL_LEQUAL);
 		        GL11.glAlphaFunc(GL11.GL_GREATER, 0.5F);
 		        GL11.glDisable(GL11.GL_BLEND);
+		        GL11.glPopMatrix();
 		        GL11.glPopMatrix();
 			}
 		} else if (dist < 32)
