@@ -96,6 +96,17 @@
 		"mob/frog/bullfrogdeath2"
 	]
   },
+  "mob.bullfrog.spring": {
+	"category": "neutral",
+	"sounds": [
+		"mob/frog/HMb",
+		"mob/frog/HMb2",
+		"mob/frog/HMH",
+		"mob/frog/HMH2",
+		"mob/frog/HMRTG",
+		"mob/frog/HMRTG2"
+	]
+  },
   "armor.upgrade.spring": {
 	"category": "player",
 	"sounds": [

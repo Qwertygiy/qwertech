@@ -1,13 +1,13 @@
 package com.kbi.qwertech.client.models;
 
-import java.util.HashMap;
-import java.util.Iterator;
-
+import com.kbi.qwertech.entities.passive.EntityFrog;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
-
 import org.lwjgl.opengl.GL11;
+
+import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * ModelFrog - Qwertygiy
@@ -30,6 +30,9 @@ public class ModelFrog extends ModelBase {
     public ModelRenderer LowerRightFoot_1;
     public ModelRenderer LeftArm;
     public ModelRenderer RightArm;
+    public ModelRenderer Brim;
+    public ModelRenderer Hat;
+    public ModelRenderer Cane;
     
     public HashMap<ModelRenderer, float[]> emptyAngles = new HashMap();
     public HashMap<ModelRenderer, float[]> fullAngles = new HashMap();
@@ -116,6 +119,19 @@ public class ModelFrog extends ModelBase {
         this.UpperLeftRear.addChild(this.MiddleRightRear);
         this.Arms.addChild(this.RightArm);
         this.UpperRightRear.addChild(this.MiddleRightRear_1);
+        this.Brim = new ModelRenderer(this, 22, 7);
+        this.Brim.setRotationPoint(0.0F, 18.25F, -2.5F);
+        this.Brim.addBox(-2.0F, -2.0F, -0.5F, 4, 4, 1, 0.0F);
+        this.setRotateAngle(Brim, -1.8325957145940461F, 0.0F, 0.0F);
+        this.Hat = new ModelRenderer(this, 16, 0);
+        this.Hat.setRotationPoint(0.0F, 0.0F, 0.0F);
+        this.Hat.addBox(-1.5F, -1.5F, -0.5F, 3, 3, 4, 0.0F);
+        this.Cane = new ModelRenderer(this, 10, 20);
+        this.Cane.setRotationPoint(0.6F, 1.0F, 0.0F);
+        this.Cane.addBox(-0.5F, -0.5F, -2.5F, 1, 1, 5, 0.0F);
+        this.setRotateAngle(Cane, -0.5759586531581287F, 0.0F, 0.0F);
+        this.LeftArm.addChild(this.Cane);
+        this.Brim.addChild(this.Hat);
         
         this.setRotateAngleFull(Back, 0.7853981633974483F, 0.0F, 0.0F);
         this.setRotateAngleFull(UpperLeftRear, -0.8726646259971648F, 0.0F, 0.0F);
@@ -133,11 +149,22 @@ public class ModelFrog extends ModelBase {
         this.setRotateAngleFull(Arms, 1.5707963267948966F, 0.0F, 0.0F);
         this.setRotateAngleFull(Body, 1.5707963267948966F, 0.0F, 0.0F);
         this.setRotateAngleFull(UpperRightRear, -0.8726646259971648F, 0.0F, 0.0F);
+        this.setRotateAngleFull(Cane, -0.6F, 0.0F, 0.0F);
+        this.setRotateAngleFull(Brim, -2F, 0.0F, 0.0F);
     }
 
     @Override
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
         this.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+
+        if (entity instanceof EntityFrog && ((EntityFrog)entity).getCustomNameTag().contains("Michigan"))
+        {
+            this.Brim.render(f5);
+            this.Cane.showModel = true;
+        } else {
+            this.Cane.showModel = false;
+        }
+
         GL11.glPushMatrix();
         GL11.glScalef(1, 1, -1);
     	this.UpperRightRear.render(f5);

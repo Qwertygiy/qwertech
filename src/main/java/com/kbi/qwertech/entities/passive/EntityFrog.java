@@ -1,20 +1,15 @@
 package com.kbi.qwertech.entities.passive;
 
+import com.kbi.qwertech.api.data.QTI;
+import com.kbi.qwertech.entities.ai.EntityAIHydrationLimit;
+import com.kbi.qwertech.entities.ai.EntityAITemperatureLimit;
+import com.kbi.qwertech.entities.ai.EntityAITemptAdvanced;
 import gregapi.util.UT;
-
-import java.util.List;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIFollowParent;
-import net.minecraft.entity.ai.EntityAILeapAtTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMate;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -24,12 +19,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
-import com.kbi.qwertech.api.data.QTI;
-import com.kbi.qwertech.entities.ai.EntityAIHydrationLimit;
-import com.kbi.qwertech.entities.ai.EntityAITemperatureLimit;
-import com.kbi.qwertech.entities.ai.EntityAITemptAdvanced;
+import java.util.List;
 
 public class EntityFrog extends EntityAnimal {
+
+	//private boolean isRaggy = ((new Date()).getMonth() == 3 && (new Date()).getDate() <= 3);
+	private boolean isRaggy = true;
 
 	public EntityFrog(World p_i1681_1_) {
 		super(p_i1681_1_);
@@ -48,7 +43,12 @@ public class EntityFrog extends EntityAnimal {
         this.getNavigator().setAvoidsWater(false);
         this.jumpMovementFactor = this.jumpMovementFactor * 3;
 	}
-	
+
+	@Override
+	public float getShadowSize() {
+		return super.getShadowSize() * 0.5F;
+	}
+
 	@Override
 	public boolean isAIEnabled()
     {
@@ -168,13 +168,15 @@ public class EntityFrog extends EntityAnimal {
 	@Override
 	public int getTalkInterval()
     {
-        return 30;
+
+    	return 30;
     }
 	
 	@Override
 	protected String getLivingSound()
     {
-        return "qwertech:mob.bullfrog.say";
+		if (isRaggy) return "qwertech:mob.bullfrog.spring";
+    	return "qwertech:mob.bullfrog.say";
     }
 
     /**
@@ -183,7 +185,8 @@ public class EntityFrog extends EntityAnimal {
 	@Override
     protected String getHurtSound()
     {
-        return "qwertech:mob.bullfrog.hurt";
+		if (isRaggy) return "qwertech:mob.bullfrog.spring";
+    	return "qwertech:mob.bullfrog.hurt";
     }
 
     /**
@@ -192,10 +195,19 @@ public class EntityFrog extends EntityAnimal {
     @Override
     protected String getDeathSound()
     {
-        return "qwertech:mob.bullfrog.death";
+		if (isRaggy) return "qwertech:mob.bullfrog.spring";
+    	return "qwertech:mob.bullfrog.death";
     }
 
-    /**
+	@Override
+	public String getCustomNameTag() {
+    	if (isRaggy) {
+    		return "Michigan J.";
+		}
+		return super.getCustomNameTag();
+	}
+
+	/**
      * Drop 0-2 items of this living's type. @param par1 - Whether this entity has recently been hit by a player. @param
      * par2 - Level of Looting used to kill this mob.
      */
