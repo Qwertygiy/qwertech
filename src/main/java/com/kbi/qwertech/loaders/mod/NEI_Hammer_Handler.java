@@ -319,7 +319,7 @@ public class NEI_Hammer_Handler extends ShapedRecipeHandler {
 						} else {
 							return null;
 						}
-					} else if (data.mPrefix.isTrue(data.mMaterial.mMaterial)) {
+					} else if (data.mPrefix.isTrue(data.mMaterial.mMaterial) || data.mMaterial.mMaterial == QTMT.Undefined) {
 						adderble.add(data.mPrefix.mat(data.mMaterial.mMaterial, 1));
 					} else {
 						return null;

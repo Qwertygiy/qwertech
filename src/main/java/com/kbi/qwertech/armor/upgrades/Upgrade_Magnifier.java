@@ -105,7 +105,7 @@ public class Upgrade_Magnifier extends UpgradeBase {
 			if (tDamage > 0) {
 	    		if (!UT.Entities.hasInfiniteItems(player)) 
 	    		{
-	    			((MultiItemArmor)armorStack.getItem()).doDamage(armorStack, 1, player);
+	    			((MultiItemArmor)armorStack.getItem()).doDamage(armorStack, 100, player);
 	    		}
 	    	}
 		}

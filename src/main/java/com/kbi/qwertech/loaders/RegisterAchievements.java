@@ -592,21 +592,21 @@ public class RegisterAchievements {
     	TileEntity source = event.world.getTileEntity((int)event.explosion.explosionX, (int)event.explosion.explosionY - 1, (int)event.explosion.explosionZ);
     	if (source != null)
     	{
-    		System.out.println("Found a TileEntity at the base of the explosion");
+    		//System.out.println("Found a TileEntity at the base of the explosion");
     		if (source.getClass().getName().contains("MultiTileEntityGenerator"))
     		{
-    			System.out.println("It's on a Generator");
+    			//System.out.println("It's on a Generator");
     			List<Entity> entities = event.getAffectedEntities();
     			for (int q = 0; q < entities.size(); q++) {
-    				System.out.println("It's affecting a " + entities.get(q).getEntityId());
+    				//System.out.println("It's affecting a " + entities.get(q).getEntityId());
     				if (entities.get(q) instanceof EntityPlayer)
     				{
-    					System.out.println("IT'S A PLAYER");
+    					//System.out.println("IT'S A PLAYER");
     					issueAchievement((EntityPlayerMP)entities.get(q), "explodeOverheat");
     				}
     			}
     		} else {
-    			System.out.println("It was just a " + source.getClass().getName());
+    			//System.out.println("It was just a " + source.getClass().getName());
     		}
     	}
     }

@@ -598,6 +598,7 @@ public final class QwerTech extends Abstract_Mod {
 		
 		ModLoadBase.runPostInit();
 		CraftingManagerHammer.replacems.put(ST.make(Items.feather, 1, 0), "itemFeather");
+		CraftingManagerHammer.getInstance().addHammerRecipes();
 		//CS.GT.mAfterPostInit.add(CraftingManagerHammer.getInstance());
 		//CS.GT.mAfterPostInit.add(CraftingManager3D.getInstance());
 	}

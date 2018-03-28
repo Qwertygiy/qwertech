@@ -19,12 +19,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
+import java.util.Date;
 import java.util.List;
 
 public class EntityFrog extends EntityAnimal {
 
-	//private boolean isRaggy = ((new Date()).getMonth() == 3 && (new Date()).getDate() <= 3);
-	private boolean isRaggy = true;
+	private boolean isRaggy = ((new Date()).getMonth() == 3 && (new Date()).getDate() <= 3);
+	//private boolean isRaggy = true;
 
 	public EntityFrog(World p_i1681_1_) {
 		super(p_i1681_1_);
@@ -42,6 +43,7 @@ public class EntityFrog extends EntityAnimal {
         this.getNavigator().setAvoidSun(true);
         this.getNavigator().setAvoidsWater(false);
         this.jumpMovementFactor = this.jumpMovementFactor * 3;
+		isRaggy = ((new Date()).getMonth() == 3 && (new Date()).getDate() <= 3); //updates it if a server crosses the boundary
 	}
 
 	@Override
@@ -175,7 +177,7 @@ public class EntityFrog extends EntityAnimal {
 	@Override
 	protected String getLivingSound()
     {
-		if (isRaggy) return "qwertech:mob.bullfrog.spring";
+		if (getCustomNameTag().contains("Michigan")) return "qwertech:mob.bullfrog.spring";
     	return "qwertech:mob.bullfrog.say";
     }
 
@@ -185,7 +187,7 @@ public class EntityFrog extends EntityAnimal {
 	@Override
     protected String getHurtSound()
     {
-		if (isRaggy) return "qwertech:mob.bullfrog.spring";
+		if (getCustomNameTag().contains("Michigan")) return "qwertech:mob.bullfrog.spring";
     	return "qwertech:mob.bullfrog.hurt";
     }
 
@@ -195,7 +197,7 @@ public class EntityFrog extends EntityAnimal {
     @Override
     protected String getDeathSound()
     {
-		if (isRaggy) return "qwertech:mob.bullfrog.spring";
+		if (getCustomNameTag().contains("Michigan")) return "qwertech:mob.bullfrog.spring";
     	return "qwertech:mob.bullfrog.death";
     }
 

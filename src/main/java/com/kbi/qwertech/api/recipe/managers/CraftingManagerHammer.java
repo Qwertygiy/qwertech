@@ -203,8 +203,10 @@ public class CraftingManagerHammer implements Runnable {
 		}
     }
 
-    private CraftingManagerHammer()
-    {
+    private CraftingManagerHammer() {
+	}
+
+	public void addHammerRecipes() {
     	this.addRecipe(new HammerablePrefixRecipe(OP.ingotDouble,  		new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT, TD.Processing.SMITHABLE), new Object[]{OP.ingot, 			OP.ingot}					).setVertical());
     	this.addRecipe(new HammerablePrefixRecipe(OP.ingotTriple,  		new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT, TD.Processing.SMITHABLE), new Object[]{OP.ingot, 			OP.ingot, 		OP.ingot}	).setVertical());
     	this.addRecipe(new HammerablePrefixRecipe(OP.ingotTriple,  		new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT, TD.Processing.SMITHABLE), new Object[]{OP.ingotDouble, 	OP.ingot}					).setVertical());
@@ -233,8 +235,8 @@ public class CraftingManagerHammer implements Runnable {
     	this.addRecipe(new HammerablePrefixRecipe(OP.plateQuintuple,  	new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT, TD.Processing.SMITHABLE), new Object[]{OP.plateDouble, 	OP.plateDouble, OP.plate}	).setVertical());
     	
     	this.addRecipe(new HammerablePrefixRecipe(OP.plate,		  		new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE), 							new Object[]{OP.plateCurved}));
-    	this.addRecipe(new HammerablePrefixRecipe(OP.plateCurved,  		new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE), 							new Object[]{OP.plate},		 	"craftingToolBendingCylinder").setVertical());
-    	this.addRecipe(new HammerablePrefixRecipe(OP.foil,		  		new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE), 							new Object[]{OP.plate},		 	"craftingToolBendingCylinder").setHorizontal());
+    	//this.addRecipe(new HammerablePrefixRecipe(OP.foil,		  		new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE), 							new Object[]{OP.plate},		 	"craftingToolBendingCylinder").setHorizontal());
+		this.addRecipe(new HammerablePrefixRecipe(OP.plateCurved,  		new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE), 							new Object[]{OP.plate},		 	"craftingToolBendingCylinder").setVertical());
     	this.addRecipe(new HammerablePrefixRecipe(OP.ring,		  		new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE), 							new Object[]{OP.stick}, 		"craftingToolBendingCylinderSmall").setVertical());
     	this.addRecipe(new HammerablePrefixRecipe(OP.spring, 	 		new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE), 							new Object[]{OP.stickLong}, 	"craftingToolBendingCylinder").setHorizontal());
     	this.addRecipe(new HammerablePrefixRecipe(OP.springSmall,  		new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE), 							new Object[]{OP.wireGt01}, 		"craftingToolBendingCylinderSmall").setHorizontal());
@@ -243,6 +245,8 @@ public class CraftingManagerHammer implements Runnable {
     	this.addRecipe(new HammerablePrefixRecipe(OP.plateTiny,  		new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE), 							new Object[]{OP.nugget}));
     	this.addRecipe(new HammerablePrefixRecipe(OP.stickLong, 		new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE), 							new Object[]{OP.stick,			OP.stick}					));
 
+    	this.addRecipe(new HammerableShapedRecipe(OP.foil,				new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE),							new String[]{"Pb"}, 'P', OP.plate, 'b', "craftingToolBendingCylinder"));
+		this.addRecipe(new HammerableShapedRecipe(OP.foil,				new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE),							new String[]{"bP"}, 'P', OP.plate, 'b', "craftingToolBendingCylinder"));
     	this.addRecipe(new HammerableShapedRecipe(OP.rotor,				new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT, TD.Processing.SMITHABLE), new String[]{"Y Y", "TXf", "YdY"}, 'Y', OP.plateCurved, 'X', OP.ring, 'T', OP.screw, 'f', "craftingToolFile", 'd', "craftingToolScrewdriver"));
     	
     	this.addRecipe(new HammerableShapedRecipe(OP.toolHeadBuzzSaw,	new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Compounds.COATED.NOT, TD.Processing.SMITHABLE), new String[]{"wP ", "P P", "fPx"}, 'P', OP.plate, 'x', "craftingToolWireCutter", 'f', "craftingToolFile", 'w', "craftingToolWrench"));
