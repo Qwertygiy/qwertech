@@ -122,7 +122,7 @@ public class ModelFrog extends ModelBase {
         this.Brim = new ModelRenderer(this, 22, 7);
         this.Brim.setRotationPoint(0.0F, 18.25F, -2.5F);
         this.Brim.addBox(-2.0F, -2.0F, -0.5F, 4, 4, 1, 0.0F);
-        this.setRotateAngle(Brim, -1.8325957145940461F, 0.0F, 0.0F);
+        this.setRotateAngle(Brim, 1.8325957145940461F, 0.0F, 0.0F);
         this.Hat = new ModelRenderer(this, 16, 0);
         this.Hat.setRotationPoint(0.0F, 0.0F, 0.0F);
         this.Hat.addBox(-1.5F, -1.5F, -0.5F, 3, 3, 4, 0.0F);
@@ -150,7 +150,7 @@ public class ModelFrog extends ModelBase {
         this.setRotateAngleFull(Body, 1.5707963267948966F, 0.0F, 0.0F);
         this.setRotateAngleFull(UpperRightRear, -0.8726646259971648F, 0.0F, 0.0F);
         this.setRotateAngleFull(Cane, -0.6F, 0.0F, 0.0F);
-        this.setRotateAngleFull(Brim, -2F, 0.0F, 0.0F);
+        this.setRotateAngleFull(Brim, 2F, 0.0F, 0.0F);
     }
 
     @Override
