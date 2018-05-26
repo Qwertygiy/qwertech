@@ -10,6 +10,7 @@ import com.kbi.qwertech.api.recipe.listeners.OreProcessing_NonCrafting;
 import com.kbi.qwertech.api.recipe.listeners.OreProcessing_QTTool;
 import com.kbi.qwertech.api.recipe.listeners.ShapelessCraftFrom;
 import com.kbi.qwertech.api.recipe.managers.CraftingManager3D;
+import com.kbi.qwertech.api.recipe.managers.CraftingManagerCountertop;
 import com.kbi.qwertech.api.recipe.managers.CraftingManagerHammer;
 import com.kbi.qwertech.api.registry.ArmorUpgradeRegistry;
 import com.kbi.qwertech.blocks.BlockCorrugated;
@@ -590,13 +591,22 @@ public final class QwerTech extends Abstract_Mod {
 			OreDictMaterial mat = upgradeDeskMats[q];
 			machines.add(mat.mNameLocal + " Upgrade Desk", "Upgrade Desks", 401 + q, 0, UpgradeDesk.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 1, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "RfR", "RSR", "CCC", 'C', OP.plate.dat(mat), 'R', OP.stick.dat(ANY.Steel), 'S', OP.springSmall.dat(ANY.Steel));
 		}
+
+		for (int q = 1; q < WOOD.woodList.length; q++)
+		{
+			OreDictMaterial woodType = WOOD.woodList[q];
+			if (woodType != null && OreDictionary.getOres("plank" + woodType.mNameInternal).size() > 0)
+			{
+				machines.add(woodType.mNameLocal + " Countertop", "Countertops", 410 + q, 0, CuttingBoardTileEntity.class, 0, 16, wood, UT.NBT.make(null, CS.NBT_MATERIAL, woodType, CS.NBT_INV_SIZE, 16, CS.NBT_TEXTURE, "qwertech:wood", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(woodType.fRGBaSolid)), "S", "P", 'S', "slabWood", 'P', "plank" + woodType.mNameInternal);
+			}
+		}
+
 	}
 
 	@Override
 	public void onModPostInit2(FMLPostInitializationEvent aEvent) {
 		RegisterArmor.instance.addUpgrades();
-		
-		ModLoadBase.runPostInit();
+
 		CraftingManagerHammer.replacems.put(ST.make(Items.feather, 1, 0), "itemFeather");
 		//CS.GT.mAfterPostInit.add(CraftingManagerHammer.getInstance());
 		//CS.GT.mAfterPostInit.add(CraftingManager3D.getInstance());
@@ -607,6 +617,8 @@ public final class QwerTech extends Abstract_Mod {
 	{
 		CraftingManagerHammer.getInstance().run();
 		CraftingManager3D.getInstance().run();
+		CraftingManagerCountertop.getInstance().run();
+		ModLoadBase.runPostInit();
 	}
 
 	@Override

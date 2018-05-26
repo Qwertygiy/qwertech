@@ -11,6 +11,7 @@ import gregapi.item.multiitem.behaviors.IBehavior.AbstractBehaviorDefault;
 import gregapi.item.multiitem.tools.IToolStats;
 import gregapi.oredict.OreDictMaterial;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
@@ -60,6 +61,10 @@ public class Behavior_Scrape extends AbstractBehaviorDefault{
 	@Override 
 	public boolean onLeftClickEntity(MultiItem aItem, ItemStack aStack, EntityPlayer aPlayer, Entity aEntity)
 	{
+		if (aEntity.isEntityInvulnerable())
+		{
+			return false;
+		}
 		//System.out.println("Smacked a " + aEntity.getClass().getName());
 		OreDictMaterial mat = MultiItemTool.getSecondaryMaterial(aStack);
 		if (mat != MT.NULL && mat != MT.Empty && mat != MT.Butter)
@@ -124,7 +129,15 @@ public class Behavior_Scrape extends AbstractBehaviorDefault{
 				return false;
 			} else if (rand.nextFloat() > mChances) {
 				return false;
-			} 
+			}
+
+			if (aEntity instanceof EntityLivingBase)
+			{
+				if (((EntityLivingBase)aEntity).hurtTime > 0)
+				{
+					return false;
+				}
+			}
 			
 			if (MobScrapeRegistry.isRegistered(aEntity.getClass()))
 			{

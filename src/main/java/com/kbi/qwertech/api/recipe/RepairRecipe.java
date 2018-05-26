@@ -30,22 +30,24 @@ public class RepairRecipe implements ICraftingRecipeGT, IRecipe
 	
 	public RepairRecipe(Item toRepair, OreDictMaterialStack amountMade)
 	{
-		if (toRepair instanceof MultiItemArmor || toRepair instanceof MultiItemTool)
+		if (toRepair == null)
 		{
-			input = toRepair;
-			useVanillaDurability = false;
-		} else if (toRepair.isDamageable())
-		{
-			input = toRepair;
-			useVanillaDurability = true;
-			if (amountMade != null && amountMade.mAmount > 0 && amountMade.mMaterial != MT.NULL)
-			{
-				amountNeeded = amountMade;
-			} else {
-				System.out.println("RepairRecipe cannot use provided materialstack for " + toRepair.getUnlocalizedName());
-			}
+			System.out.println("Failed to create repair recipe, Item doesn't exist");
 		} else {
-			System.out.println("RepairRecipe is not compatible with " + toRepair.getUnlocalizedName());
+			if (toRepair instanceof MultiItemArmor || toRepair instanceof MultiItemTool) {
+				input = toRepair;
+				useVanillaDurability = false;
+			} else if (toRepair.isDamageable()) {
+				input = toRepair;
+				useVanillaDurability = true;
+				if (amountMade != null && amountMade.mAmount > 0 && amountMade.mMaterial != MT.NULL) {
+					amountNeeded = amountMade;
+				} else {
+					System.out.println("RepairRecipe cannot use provided materialstack for " + toRepair.getUnlocalizedName());
+				}
+			} else {
+				System.out.println("RepairRecipe is not compatible with " + toRepair.getUnlocalizedName());
+			}
 		}
 	}
 

@@ -634,7 +634,7 @@ public class CraftingTableT1 extends TileEntityBase09FacingSingle implements IMT
 				return false;
 			}
 		}
-		System.out.println(aHitX +", " + aHitY + ", " + aHitZ);
+		//System.out.println(aHitX +", " + aHitY + ", " + aHitZ);
 		return interpretClick(aPlayer, aPlayer.isSneaking(), true);
 	}
 	

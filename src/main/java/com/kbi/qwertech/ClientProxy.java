@@ -1,24 +1,14 @@
 package com.kbi.qwertech;
 
-import java.util.Iterator;
-
 import com.kbi.qwertech.api.data.QTConfigs;
 import com.kbi.qwertech.api.data.QTI;
+import com.kbi.qwertech.api.recipe.CountertopRecipe;
 import com.kbi.qwertech.api.registry.ArmorUpgradeRegistry;
-import com.kbi.qwertech.client.GT_Tool_Renderer;
-import com.kbi.qwertech.client.Material_Item_Renderer;
-import com.kbi.qwertech.client.QT_Armor_Renderer;
-import com.kbi.qwertech.client.QT_Food_Renderer;
-import com.kbi.qwertech.client.QT_Machine_Renderer;
-import com.kbi.qwertech.client.QT_Tool_Renderer;
+import com.kbi.qwertech.client.*;
 import com.kbi.qwertech.client.blocks.RenderCorrugated;
 import com.kbi.qwertech.client.entity.neutral.RenderTurkey;
 import com.kbi.qwertech.client.entity.passive.RenderFrog;
-import com.kbi.qwertech.client.entity.projectile.RenderEntityBall;
-import com.kbi.qwertech.client.entity.projectile.RenderEntityEgg;
-import com.kbi.qwertech.client.entity.projectile.RenderEntityFoil;
-import com.kbi.qwertech.client.entity.projectile.RenderEntityRock;
-import com.kbi.qwertech.client.entity.projectile.RenderEntityShuriken;
+import com.kbi.qwertech.client.entity.projectile.*;
 import com.kbi.qwertech.client.models.ModelFrog;
 import com.kbi.qwertech.client.models.ModelTurkey;
 import com.kbi.qwertech.client.tileentity.CraftingTable3DRenderer;
@@ -26,17 +16,8 @@ import com.kbi.qwertech.client.tileentity.CraftingTableRenderer;
 import com.kbi.qwertech.client.tileentity.UpgradeDeskRenderer;
 import com.kbi.qwertech.entities.neutral.EntityTurkey;
 import com.kbi.qwertech.entities.passive.EntityFrog;
-import com.kbi.qwertech.entities.projectile.EntityBall;
-import com.kbi.qwertech.entities.projectile.EntityEgg;
-import com.kbi.qwertech.entities.projectile.EntityFoil;
-import com.kbi.qwertech.entities.projectile.EntityRock;
-import com.kbi.qwertech.entities.projectile.EntityShuriken;
-import com.kbi.qwertech.tileentities.CraftingTableT1;
-import com.kbi.qwertech.tileentities.CraftingTableT2;
-import com.kbi.qwertech.tileentities.CraftingTableT3;
-import com.kbi.qwertech.tileentities.CraftingTableT4;
-import com.kbi.qwertech.tileentities.UpgradeDesk;
-
+import com.kbi.qwertech.entities.projectile.*;
+import com.kbi.qwertech.tileentities.*;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -48,9 +29,12 @@ import gregapi.code.ItemStackContainer;
 import gregapi.data.CS;
 import gregapi.data.LH;
 import gregapi.data.OP;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+
+import java.util.*;
 
 /**
  * @author Max Mustermann
@@ -141,5 +125,55 @@ public final class ClientProxy extends CommonProxy { // NO_UCD (unused code)
 	    	{
 	    		event.toolTip.add(LH.Chat.GOLD + "Can be used to upgrade armor");
 	    	}
+
+	    	if (event.entityPlayer.openContainer instanceof CuttingBoardTileEntity.GUICommonCuttingBoard)
+			{
+				CuttingBoardTileEntity.GUICommonCuttingBoard CB = (CuttingBoardTileEntity.GUICommonCuttingBoard)event.entityPlayer.openContainer;
+
+				for (int w = 0; w < 8; w++)
+				{
+					ItemStack stack = CB.craftResults.getStackInSlot(w);
+					if (stack == event.itemStack)
+					{
+						CountertopRecipe recipe = CB.currentRecipes.get(CB.craftResults.starting + w);
+						List<Object> input = recipe.getInputList();
+						HashMap<String, Integer> amounts = new HashMap<String, Integer>();
+						for (int q = 0; q < input.size(); q++)
+						{
+							Object ob = input.get(q);
+							if (ob instanceof ItemStack)
+							{
+								if (amounts.containsKey(((ItemStack)ob).getDisplayName())) {
+									amounts.put(((ItemStack) ob).getDisplayName(), amounts.get(((ItemStack) ob).getDisplayName()) + ((ItemStack) ob).stackSize);
+								} else {
+									amounts.put(((ItemStack) ob).getDisplayName(), ((ItemStack) ob).stackSize);
+								}
+							} else if (ob instanceof ArrayList && ((ArrayList)ob).size() > 0)
+							{
+								ItemStack IS = ((ArrayList<ItemStack>)ob).get(0);
+								if (amounts.containsKey(IS.getDisplayName())) {
+									amounts.put(IS.getDisplayName(), amounts.get(IS.getDisplayName()) + IS.stackSize);
+								} else {
+									amounts.put(IS.getDisplayName(), IS.stackSize);
+								}
+							} else if (ob instanceof String)
+							{
+								if (amounts.containsKey((String)ob)) {
+									amounts.put((String) ob, amounts.get((String) ob + 1));
+								} else {
+									amounts.put((String)ob, 1);
+								}
+							}
+						}
+						Iterator iterable = amounts.entrySet().iterator();
+						while (iterable.hasNext())
+						{
+							Map.Entry entry = (Map.Entry)iterable.next();
+							event.toolTip.add(LH.Chat.CYAN + (String)entry.getKey() + ": " + (Integer)entry.getValue());
+						}
+
+					}
+				}
+			}
 	    }
 }

@@ -38,7 +38,12 @@ public class UpgradeDesk extends TileEntityBase09FacingSingle implements IMTE_Ge
 		setBlockBoundsBasedOnState(aBlock);
 		return true;
 	}
-	
+
+	@Override
+	public boolean isSurfaceOpaque2(byte aSide) {
+		return aSide == CS.SIDE_DOWN;
+	}
+
 	@Override
 	public AxisAlignedBB getCollisionBoundingBoxFromPool()
 	{
@@ -101,13 +106,7 @@ public class UpgradeDesk extends TileEntityBase09FacingSingle implements IMTE_Ge
 	public String getTileEntityName() {
 		return "qt.desk.upgrade";
 	}
-	
-	@Override
-	public boolean getOpacity(int aX, int aY, int aZ)
-	{
-		return false;
-	}
-	
+
 	@Override
 	public boolean getSubItems(MultiTileEntityBlockInternal aBlock, Item aItem,
 			CreativeTabs aTab, List aList, short aID) {

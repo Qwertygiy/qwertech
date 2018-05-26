@@ -28,7 +28,6 @@ import gregapi.oredict.OreDictMaterial;
 import gregapi.util.OM;
 import gregapi.util.ST;
 import gregapi.util.UT;
-import micdoodle8.mods.galacticraft.core.energy.EnergyConfigHandler;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.model.ModelBiped;
@@ -65,6 +64,8 @@ import java.util.*;
 import java.util.Map.Entry;
 
 import static gregapi.data.CS.*;
+
+//import micdoodle8.mods.galacticraft.core.energy.EnergyConfigHandler;
 
 @Optional.InterfaceList(value = {
 		  @Optional.Interface(iface = "ic2.api.item.ISpecialElectricItem", modid = ModIDs.IC2)
@@ -309,6 +310,8 @@ public class MultiItemArmor extends ItemArmor implements IItemProjectile, IItemU
 	public final HashMap<Short, ArrayList<IBehavior<MultiItemArmor>>> mItemBehaviors = new HashMap<Short, ArrayList<IBehavior<MultiItemArmor>>>();
 	public final HashMap<Short, Long[]> mFluidContainerStats = new HashMap<Short, Long[]>();
 	public final HashMap<Short, IArmorStats> mArmorStats = new HashMap<Short, IArmorStats>();
+
+	public float energyRatio;
 	
 	
 	public MultiItemArmor(String aModID, String aUnlocalized)
@@ -321,6 +324,12 @@ public class MultiItemArmor extends ItemArmor implements IItemProjectile, IItemU
 		if (GAPI.mStartedInit) throw new IllegalStateException("Items can only be initialised within preInit!");
 		mName = aUnlocalized;
 		mModID = aModID;
+		try {
+			Class energyHandler = Class.forName("micdoodle8.mods.galacticraft.core.energy.EnergyConfigHandler");
+			energyRatio = energyHandler.getField("IC2_RATIO").getFloat(null);
+		} catch (Exception e) {
+			energyRatio = 16.0F / 2.44F;
+		}
 		LH.add(mName + ".name", aEnglish);	
 		if (UT.Code.stringValid(aEnglishTooltip)) LH.add(mTooltip = mName + ".tooltip_main", aEnglishTooltip); else mTooltip = null;
 		GameRegistry.registerItem(this, mName);
@@ -458,8 +467,8 @@ public class MultiItemArmor extends ItemArmor implements IItemProjectile, IItemU
 		if (aEnergy <= 0) return 0;
 		long tMaxOut = getEnergySizeOutputMax(TD.Energy.EU, aStack);
 		if (!canEnergyExtraction(TD.Energy.EU, aStack, tMaxOut)) return 0;
-		long tAmount = UT.Code.bind(1, tMaxOut, (long)(aEnergy / EnergyConfigHandler.IC2_RATIO));
-		return useEnergy(TD.Energy.EU, aStack, tAmount, null, null, null, 0, 0, 0, F) && useEnergy(TD.Energy.EU, aStack, tAmount, null, null, null, 0, 0, 0, T) ? tAmount * EnergyConfigHandler.IC2_RATIO : 0;
+		long tAmount = UT.Code.bind(1, tMaxOut, (long)(aEnergy / energyRatio));
+		return useEnergy(TD.Energy.EU, aStack, tAmount, null, null, null, 0, 0, 0, F) && useEnergy(TD.Energy.EU, aStack, tAmount, null, null, null, 0, 0, 0, T) ? tAmount * energyRatio : 0;
 	}
 	
 	public final boolean doDamage(ItemStack aStack, long aAmount) {
@@ -724,7 +733,7 @@ public class MultiItemArmor extends ItemArmor implements IItemProjectile, IItemU
 		return getColorFromItemStack(aStack, 0);
 	}
 	
-	public float getElectricityStored(ItemStack aStack) {return getEnergyStored(TD.Energy.EU, aStack) * EnergyConfigHandler.IC2_RATIO;}
+	public float getElectricityStored(ItemStack aStack) {return getEnergyStored(TD.Energy.EU, aStack) * energyRatio;}
 	
 	public Item getEmptyItem(ItemStack itemStack) {return this;}
 	
@@ -868,7 +877,7 @@ public class MultiItemArmor extends ItemArmor implements IItemProjectile, IItemU
 	
 	public double getMaxCharge(ItemStack aStack) {return getEnergyCapacity(TD.Energy.EU, aStack);}
 	
-	public float getMaxElectricityStored(ItemStack aStack) {return getEnergyCapacity(TD.Energy.EU, aStack) * 	EnergyConfigHandler.IC2_RATIO;}
+	public float getMaxElectricityStored(ItemStack aStack) {return getEnergyCapacity(TD.Energy.EU, aStack) * energyRatio;}
 	
 	@Override
 	public EntityProjectile getProjectile(TagData aProjectileType, ItemStack aStack, World aWorld, double aX, double aY, double aZ) {
@@ -1517,6 +1526,12 @@ public class MultiItemArmor extends ItemArmor implements IItemProjectile, IItemU
 	public void updateItemStack(ItemStack aStack) {
 		isItemStackUsable(aStack);
 	}
+	@Override
+	public void updateItemStack(ItemStack aStack, World aWorld, int aX, int aY, int aZ)
+	{
+		isItemStackUsable(aStack);
+	}
+
 	public boolean use(ItemStack aStack, double aAmount, EntityLivingBase aPlayer) {return useEnergy(TD.Energy.EU, aStack, (long)aAmount, aPlayer, null, null, 0, 0, 0, T);}
 	@Override
 	public boolean useEnergy(TagData aEnergyType, ItemStack aStack, long aEnergyAmount, EntityLivingBase aPlayer, IInventory aInventory, World aWorld, int aX, int aY, int aZ, boolean aDoUse) {
