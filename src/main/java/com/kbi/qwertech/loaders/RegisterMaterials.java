@@ -1,5 +1,6 @@
 package com.kbi.qwertech.loaders;
 
+import com.kbi.qwertech.api.data.QTConfigs;
 import com.kbi.qwertech.api.data.QTI;
 import com.kbi.qwertech.api.data.QTMT;
 import gregapi.code.ICondition;
@@ -218,9 +219,10 @@ public class RegisterMaterials {
                 OP.crushedTiny.mat(MT.OREMATS.Galena, 1)
         };
 
-        for (int q = 0; q < randoms.length; q++)
-        {
-            RM.Mixer.addRecipe1(true, 16, 16, randoms[q], QTMT.ChemicalX.liquid(CS.U, true), null, randoms[CS.RANDOM.nextInt(randoms.length)]);
+        if (QTConfigs.chemicalXRandom) {
+            for (int q = 0; q < randoms.length; q++) {
+                RM.Mixer.addRecipe1(true, 16, 16, randoms[q], QTMT.ChemicalX.liquid(CS.U, true), null, randoms[CS.RANDOM.nextInt(randoms.length)]);
+            }
         }
     }
 }

@@ -162,6 +162,7 @@ public final class QwerTech extends Abstract_Mod {
 		QTConfigs.removeVanillaCrafting = tMainConfig.get("recipes", "RemoveCrafting", true, "Replace vanilla crafting table with QwerTech crafting tables").setShowInGui(true).getBoolean(true);
 		QTConfigs.allHammers = tMainConfig.get("recipes", "AllHammerRecipes", true, "Disable to keep advanced hammer recipes in crafting grids").setShowInGui(true).getBoolean(true);
 		QTConfigs.anyHammers = tMainConfig.get("recipes", "PutPlateHammeringBackInCraftingTable", false, "Set to true to disable QwerTech from moving plate-hammering, gem-smashing, and related basic recipes to the crafting anvils").setShowInGui(true).getBoolean(false);
+		QTConfigs.chemicalXRandom = tMainConfig.get("recipes", "ElectrolyzeChemicalX", true, "Set to false to eliminate the Utonium Volatility Process").setShowInGui(true).getBoolean(true);
 
 		tMainConfig.save();
 		

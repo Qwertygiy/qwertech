@@ -31,4 +31,6 @@ public class QTConfigs {
 	public static boolean enableTools;
 	
 	public static boolean enableArmor;
+
+	public static boolean chemicalXRandom;
 }
