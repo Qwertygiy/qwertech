@@ -1,5 +1,6 @@
 package com.kbi.qwertech;
 
+import com.kbi.qwertech.api.data.FOOD;
 import com.kbi.qwertech.api.data.QTConfigs;
 import com.kbi.qwertech.api.data.QTI;
 import com.kbi.qwertech.api.recipe.CountertopRecipe;
@@ -11,6 +12,7 @@ import com.kbi.qwertech.client.entity.passive.RenderFrog;
 import com.kbi.qwertech.client.entity.projectile.*;
 import com.kbi.qwertech.client.models.ModelFrog;
 import com.kbi.qwertech.client.models.ModelTurkey;
+import com.kbi.qwertech.client.tileentity.CountertopRenderer;
 import com.kbi.qwertech.client.tileentity.CraftingTable3DRenderer;
 import com.kbi.qwertech.client.tileentity.CraftingTableRenderer;
 import com.kbi.qwertech.client.tileentity.UpgradeDeskRenderer;
@@ -30,6 +32,7 @@ import gregapi.data.CS;
 import gregapi.data.LH;
 import gregapi.data.OP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -106,6 +109,8 @@ public final class ClientProxy extends CommonProxy { // NO_UCD (unused code)
 		ClientRegistry.bindTileEntitySpecialRenderer(CraftingTableT4.class, new CraftingTable3DRenderer());
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(UpgradeDesk.class, new UpgradeDeskRenderer());
+
+		ClientRegistry.bindTileEntitySpecialRenderer(CuttingBoardTileEntity.class, new CountertopRenderer());
 		
 		wallRenderID = RenderingRegistry.getNextAvailableRenderId();
 		RenderingRegistry.registerBlockHandler(wallRenderID, new RenderCorrugated());
@@ -125,6 +130,16 @@ public final class ClientProxy extends CommonProxy { // NO_UCD (unused code)
 	    	{
 	    		event.toolTip.add(LH.Chat.GOLD + "Can be used to upgrade armor");
 	    	}
+
+	    	if (event.itemStack.hasTagCompound())
+			{
+				NBTTagCompound tag = event.itemStack.stackTagCompound;
+				if (tag.hasKey("qt.food"))
+				{
+					event.toolTip.add("Quality: " + FOOD.getQuality(event.itemStack));
+					event.toolTip.add("Quantity: " + FOOD.getQuantity(event.itemStack));
+				}
+			}
 
 	    	if (event.entityPlayer.openContainer instanceof CuttingBoardTileEntity.GUICommonCuttingBoard)
 			{

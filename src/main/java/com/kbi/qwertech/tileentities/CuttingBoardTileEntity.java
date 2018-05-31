@@ -8,10 +8,12 @@ import com.kbi.qwertech.api.tileentities.SlotScroll;
 import com.kbi.qwertech.network.packets.PacketInventorySync;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import gregapi.block.metatype.BlockStones;
 import gregapi.block.multitileentity.IMultiTileEntity;
 import gregapi.block.multitileentity.MultiTileEntityBlockInternal;
 import gregapi.data.CS;
 import gregapi.data.LH;
+import gregapi.data.TD;
 import gregapi.gui.ContainerClient;
 import gregapi.gui.ContainerCommon;
 import gregapi.gui.Slot_Normal;
@@ -21,6 +23,7 @@ import gregapi.render.IIconContainer;
 import gregapi.render.ITexture;
 import gregapi.tileentity.base.TileEntityBase09FacingSingle;
 import gregapi.util.ST;
+import gregapi.util.UT;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.creativetab.CreativeTabs;
@@ -31,6 +34,7 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.*;
 
@@ -54,6 +58,18 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
             {
                 sendDisplays();
             }
+        }
+    }
+
+    public int mTexture = -1;
+    public int mMetafy = 0;
+
+    @Override
+    public void readFromNBT2(NBTTagCompound aNBT) {
+        super.readFromNBT2(aNBT);
+        if (aNBT.hasKey(NBT_TEXTURE)) {
+            mTexture = aNBT.getInteger(NBT_TEXTURE);
+            mMetafy = aNBT.getInteger("qt.metatex");
         }
     }
 
@@ -84,7 +100,95 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
 
     @Override
     public boolean onBlockActivated3(EntityPlayer aPlayer, byte aSide, float aHitX, float aHitY, float aHitZ) {
-        return aSide > 1 && openGUI(aPlayer, 0);
+        if (aSide > 1 && openGUI(aPlayer, 0)) return true;
+        int aSlot = -1;
+        short sided = this.getFacing();
+        System.out.println("Facing " + sided);
+        switch (sided)
+        {
+            case CS.SIDE_Z_NEG:
+            {
+                aHitX = 1 - aHitX;
+                break;
+            }
+            case CS.SIDE_X_POS:
+            {
+                aHitZ = 1 - aHitZ;
+            }
+            case CS.SIDE_X_NEG:
+            {
+                float aTemp = aHitX;
+                aHitX = aHitZ;
+                aHitZ = aTemp;
+                break;
+            }
+            case CS.SIDE_Z_POS:
+            {
+                break; //default
+            }
+        }
+        if (aHitX < 0.33)
+        {
+            if (aHitZ > 0.66)
+            {
+                aSlot = 0;
+            } else if (aHitZ < 0.33)
+            {
+                aSlot = 2;
+            } else {
+                aSlot = 1;
+            }
+        } else if (aHitX > 0.66)
+        {
+            if (aHitZ > 0.66)
+            {
+                aSlot = 5;
+            } else if (aHitZ < 0.33)
+            {
+                aSlot = 7;
+            } else {
+                aSlot = 6;
+            }
+        } else {
+            if (aHitZ > 0.66)
+            {
+                aSlot = 3;
+            } else if (aHitZ < 0.33)
+            {
+                aSlot = 4;
+            }
+        }
+        if (aSlot > -1)
+        {
+            ItemStack item = getStackInSlot(aSlot);
+            ItemStack held = aPlayer.getHeldItem();
+            if (held != null && ST.equal(item, held))
+            {
+                while (item.stackSize < item.getMaxStackSize() && held.stackSize > 0)
+                {
+                    item.stackSize = item.stackSize + 1;
+                    held.stackSize = held.stackSize - 1;
+                }
+                if (held.stackSize < 1) {
+                    aPlayer.setCurrentItemOrArmor(0, null);
+                }
+                QTI.NW_API.sendToAllPlayersInRange(new PacketInventorySync(item, this.xCoord, this.yCoord, this.zCoord, aSlot), this.worldObj, this.xCoord, this.zCoord);
+                return true;
+            } else if (held == null && item != null)
+            {
+                aPlayer.setCurrentItemOrArmor(0, item);
+                setInventorySlotContents(aSlot, null);
+                QTI.NW_API.sendToAllPlayersInRange(new PacketInventorySync(null, this.xCoord, this.yCoord, this.zCoord, aSlot), this.worldObj, this.xCoord, this.zCoord);
+                return true;
+            } else if (held != null && item == null)
+            {
+                aPlayer.setCurrentItemOrArmor(0, null);
+                setInventorySlotContents(aSlot, held);
+                QTI.NW_API.sendToAllPlayersInRange(new PacketInventorySync(held, this.xCoord, this.yCoord, this.zCoord, aSlot), this.worldObj, this.xCoord, this.zCoord);
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -101,8 +205,12 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
 
     @Override
     public ITexture getTexture2(Block aBlock, int aRenderPass, byte aSide, boolean[] aShouldSideBeRendered) {
-        IIconContainer returnable = aRenderPass == 0 ? icons1[aSide < 2 ? 0 : 1] : icons2[aSide < 2 ? 0 : 1];
-        return BlockTextureDefault.get(returnable, mRGBa);
+        if (mMaterial.contains(TD.Properties.STONE)) {
+            return BlockTextureDefault.get(((BlockStones)BlocksGT.stones[mTexture]).mIcons[mMetafy], UT.Code.getRGBInt(255, 255, 255));
+        } else {
+            IIconContainer returnable = aRenderPass == 0 ? icons1[aSide < 2 ? 0 : 1] : icons2[aSide < 2 ? 0 : 1];
+            return BlockTextureDefault.get(returnable, mRGBa);
+        }
     }
 
     // Icons

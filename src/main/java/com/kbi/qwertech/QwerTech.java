@@ -32,6 +32,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import gregapi.api.Abstract_Mod;
 import gregapi.api.Abstract_Proxy;
 import gregapi.block.ItemBlockBase;
+import gregapi.block.metatype.BlockStones;
 import gregapi.block.multitileentity.MultiTileEntityBlock;
 import gregapi.block.multitileentity.MultiTileEntityRegistry;
 import gregapi.code.ICondition.And;
@@ -598,8 +599,15 @@ public final class QwerTech extends Abstract_Mod {
 			OreDictMaterial woodType = WOOD.woodList[q];
 			if (woodType != null && OreDictionary.getOres("plank" + woodType.mNameInternal).size() > 0)
 			{
-				machines.add(woodType.mNameLocal + " Countertop", "Countertops", 410 + q, 0, CuttingBoardTileEntity.class, 0, 16, wood, UT.NBT.make(null, CS.NBT_MATERIAL, woodType, CS.NBT_INV_SIZE, 16, CS.NBT_TEXTURE, "qwertech:wood", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(woodType.fRGBaSolid)), "S", "P", 'S', "slabWood", 'P', "plank" + woodType.mNameInternal);
+				machines.add(woodType.mNameLocal + " Countertop", "Countertops", 410 + q, 0, CuttingBoardTileEntity.class, 0, 16, wood, UT.NBT.make(null, CS.NBT_MATERIAL, woodType, CS.NBT_INV_SIZE, 8, CS.NBT_TEXTURE, "qwertech:wood", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(woodType.fRGBaSolid)), "S", "P", 'S', "slabWood", 'P', "plank" + woodType.mNameInternal);
 			}
+		}
+		for (int q = 0; q < CS.BlocksGT.stones.length; q++)
+		{
+			BlockStones block = (BlockStones)CS.BlocksGT.stones[q];
+			machines.add(block.mMaterial.mNameLocal + " Countertop", "Countertops", 667 + (q * 3), 0, CuttingBoardTileEntity.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, block.mMaterial, CS.NBT_INV_SIZE, 8, CS.NBT_TEXTURE, q, "qt.metatex", 0, CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(block.mMaterial.fRGBaSolid)), "S", "P", 'S', ST.make(block.mSlabs[CS.SIDE_DOWN], 1, 0), 'P', ST.make(block, 1, 0));
+			machines.add("Smooth " + block.mMaterial.mNameLocal + " Countertop", "Countertops", 667 + (q * 3) + 1, 0, CuttingBoardTileEntity.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, block.mMaterial, CS.NBT_INV_SIZE, 8, CS.NBT_TEXTURE, q, "qt.metatex", 7, CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(block.mMaterial.fRGBaSolid)), "S", "P", 'S', ST.make(block.mSlabs[CS.SIDE_DOWN], 1, 7), 'P', ST.make(block, 1, 7));
+			machines.add(block.mMaterial.mNameLocal + " Cobblestone Countertop", "Countertops", 667 + (q * 3) + 2, 0, CuttingBoardTileEntity.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, block.mMaterial, CS.NBT_INV_SIZE, 8, CS.NBT_TEXTURE, q, "qt.metatex", 1, CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(block.mMaterial.fRGBaSolid)), "S", "P", 'S', ST.make(block.mSlabs[CS.SIDE_DOWN], 1, 1), 'P', ST.make(block, 1, 1));
 		}
 
 	}
