@@ -42,6 +42,7 @@ public abstract class ModLoadBase {
 		new ModLoad_MoCr();
 		new ModLoad_NAT();
 		new ModLoad_RC();
+		new ModLoad_RFTOOLS();
 		new ModLoad_TC();
 		new ModLoad_TE_FOUNDATION();
 		new ModLoad_TF();
