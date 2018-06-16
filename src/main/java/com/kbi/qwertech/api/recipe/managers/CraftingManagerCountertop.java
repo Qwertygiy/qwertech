@@ -8,7 +8,6 @@ import gregapi.data.MT;
 import gregapi.data.OP;
 import gregapi.util.ST;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
@@ -35,22 +34,12 @@ public class CraftingManagerCountertop implements Runnable {
         return instance;
     }
 
-    public ArrayList<CountertopRecipe> findMatchingRecipes(InventoryCrafting p_82787_1_, World p_82787_2_)
+    public ArrayList<CountertopRecipe> findMatchingRecipes(List<ItemStack> checking, World p_82787_2_)
     {
         System.out.println("Getting recipes");
-        //checking: includes the basic ingredients we start with
-        ArrayList<ItemStack> checking = new ArrayList<ItemStack>();
         //returnable: only includes the things we have not yet made
         ArrayList<CountertopRecipe> returnable = new ArrayList<CountertopRecipe>();
         ArrayList<CountertopRecipe> potentialRecipes = new ArrayList<CountertopRecipe>();
-        for (int x = 0; x < p_82787_1_.getSizeInventory(); x++)
-        {
-            ItemStack stack = p_82787_1_.getStackInSlot(x);
-            if (ST.valid(stack))
-            {
-                checking.add(stack);
-            }
-        }
         System.out.println("We found " + checking.size() + " items");
         //if we added a new item through the last recursive check
         boolean newItem = true;

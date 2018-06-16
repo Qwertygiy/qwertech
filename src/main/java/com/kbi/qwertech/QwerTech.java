@@ -602,6 +602,10 @@ public final class QwerTech extends Abstract_Mod {
 				machines.add(woodType.mNameLocal + " Countertop", "Countertops", 410 + q, 0, CuttingBoardTileEntity.class, 0, 16, wood, UT.NBT.make(null, CS.NBT_MATERIAL, woodType, CS.NBT_INV_SIZE, 8, CS.NBT_TEXTURE, "qwertech:wood", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(woodType.fRGBaSolid)), "S", "P", 'S', "slabWood", 'P', "plank" + woodType.mNameInternal);
 			}
 		}
+	}
+
+	@Override
+	public void onModPostInit2(FMLPostInitializationEvent aEvent) {
 		for (int q = 0; q < CS.BlocksGT.stones.length; q++)
 		{
 			BlockStones block = (BlockStones)CS.BlocksGT.stones[q];
@@ -610,10 +614,6 @@ public final class QwerTech extends Abstract_Mod {
 			machines.add(block.mMaterial.mNameLocal + " Cobblestone Countertop", "Countertops", 667 + (q * 3) + 2, 0, CuttingBoardTileEntity.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, block.mMaterial, CS.NBT_INV_SIZE, 8, CS.NBT_TEXTURE, q, "qt.metatex", 1, CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(block.mMaterial.fRGBaSolid)), "S", "P", 'S', ST.make(block.mSlabs[CS.SIDE_DOWN], 1, 1), 'P', ST.make(block, 1, 1));
 		}
 
-	}
-
-	@Override
-	public void onModPostInit2(FMLPostInitializationEvent aEvent) {
 		RegisterArmor.instance.addUpgrades();
 
 		CraftingManagerHammer.replacems.put(ST.make(Items.feather, 1, 0), "itemFeather");

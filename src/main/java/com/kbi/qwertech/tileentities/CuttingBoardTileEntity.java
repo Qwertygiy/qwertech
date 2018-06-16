@@ -30,7 +30,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -42,7 +41,7 @@ import static gregapi.data.CS.*;
 
 public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle implements IMultiTileEntity.IMTE_GetSubItems, IMultiTileEntity.IMTE_OnBlockClicked, IMultiTileEntity.IMTE_GetLightOpacity {
 
-    public String mGUITexture = "qwertech:textures/gui/countertop.png";
+    public String mGUITexture = "qwertech:textures/gui/countertopSmall.png";
     public boolean mUpdatedGrid = T;
 
     @Override
@@ -90,6 +89,7 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
     @Override
     public void addToolTips(List aList, ItemStack aStack, boolean aF3_H) {
         aList.add(LH.Chat.GRAY + "Prepares meals");
+        aList.add(LH.Chat.GRAY + "Holds up to " + LH.Chat.BOLD + "8" + LH.Chat.GRAY + " items");
         super.addToolTips(aList, aStack, aF3_H);
     }
 
@@ -289,12 +289,12 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
 
     public class GUICommonCuttingBoard extends ContainerCommon {
 
-        public InventoryCrafting craftMatrix;
         public InventoryScroll craftResults;
         public ArrayList<CountertopRecipe> currentRecipes = new ArrayList<CountertopRecipe>();
 
         public GUICommonCuttingBoard(InventoryPlayer aInventoryPlayer, CuttingBoardTileEntity aTileEntity) {
             super(aInventoryPlayer, aTileEntity);
+            onCraftMatrixChanged(aTileEntity);
         }
 
 
@@ -303,34 +303,14 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
         public void onContainerClosed(EntityPlayer p_75134_1_)
         {
             super.onContainerClosed(p_75134_1_);
-
-            if (!p_75134_1_.worldObj.isRemote)
-            {
-                //System.out.println("Serverside closed!");
-                for (int i = 0; i < 16; ++i)
-                {
-                    //System.out.println("Checking " + i);
-                    ItemStack itemstack = this.craftMatrix.getStackInSlotOnClosing(i);
-
-                    if (itemstack != null)
-                    {
-                        //System.out.println("Found!");
-                        //if it's this easy to change...
-                        p_75134_1_.dropPlayerItemWithRandomChoice(itemstack, false);
-                    }
-                }
-            }
         }
 
         @Override
         public int addSlots(InventoryPlayer aInventoryPlayer) {
-            if (craftMatrix == null) {
-                craftMatrix = new InventoryCrafting(this, 6, 4);
-            }
             if (craftResults == null) {
-                craftResults = new InventoryScroll(this, 8);
+                craftResults = new InventoryScroll(this, 5, 3);
             }
-
+            /*
             addSlotToContainer(new Slot(craftMatrix,  0,  8, 14));
             addSlotToContainer(new Slot(craftMatrix,  1, 26, 14));
             addSlotToContainer(new Slot(craftMatrix, 2, 44, 14));
@@ -347,33 +327,41 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
             addSlotToContainer(new Slot(craftMatrix, 13, 26, 68));
             addSlotToContainer(new Slot(craftMatrix, 14, 44, 68));
             addSlotToContainer(new Slot(craftMatrix, 15, 62, 68));
+            */
+            addSlotToContainer(new Slot_Normal(mTileEntity, 0, 10, 29));
+            addSlotToContainer(new Slot_Normal(mTileEntity, 1, 32, 29));
+            addSlotToContainer(new Slot_Normal(mTileEntity, 2, 54, 29));
+            addSlotToContainer(new Slot_Normal(mTileEntity, 3, 10, 51));
+            addSlotToContainer(new Slot_Normal(mTileEntity, 4, 54, 51));
+            addSlotToContainer(new Slot_Normal(mTileEntity, 5, 10, 73));
+            addSlotToContainer(new Slot_Normal(mTileEntity, 6, 32, 73));
+            addSlotToContainer(new Slot_Normal(mTileEntity, 7, 54, 73));
 
-            addSlotToContainer(new Slot_Normal(mTileEntity, 0, 16, 92));
-            addSlotToContainer(new Slot_Normal(mTileEntity, 1, 34, 92));
-            addSlotToContainer(new Slot_Normal(mTileEntity, 2, 52, 92));
-            addSlotToContainer(new Slot_Normal(mTileEntity, 3, 70, 92));
-            addSlotToContainer(new Slot_Normal(mTileEntity, 4, 88, 92));
-            addSlotToContainer(new Slot_Normal(mTileEntity, 5, 106, 92));
-            addSlotToContainer(new Slot_Normal(mTileEntity, 6, 124, 92));
-            addSlotToContainer(new Slot_Normal(mTileEntity, 7, 142, 92));
-
-            addSlotToContainer(new SlotScroll(craftResults, 0, 134, 14, F, F, 64));
-            addSlotToContainer(new SlotScroll(craftResults, 1, 152, 14, F, F, 64));
-            addSlotToContainer(new SlotScroll(craftResults, 2, 134, 32, F, F, 64));
-            addSlotToContainer(new SlotScroll(craftResults, 3, 152, 32, F, F, 64));
-            addSlotToContainer(new SlotScroll(craftResults, 4, 134, 50, F, F, 64));
-            addSlotToContainer(new SlotScroll(craftResults, 5, 152, 50, F, F, 64));
-            addSlotToContainer(new SlotScroll(craftResults, 6, 134, 68, F, F, 64));
-            addSlotToContainer(new SlotScroll(craftResults, 7, 152, 68, F, F, 64));
+            addSlotToContainer(new SlotScroll(craftResults, 0, 116, 14, F, F, 64));
+            addSlotToContainer(new SlotScroll(craftResults, 1, 134, 14, F, F, 64));
+            addSlotToContainer(new SlotScroll(craftResults, 2, 152, 14, F, F, 64));
+            addSlotToContainer(new SlotScroll(craftResults, 3, 116, 32, F, F, 64));
+            addSlotToContainer(new SlotScroll(craftResults, 4, 134, 32, F, F, 64));
+            addSlotToContainer(new SlotScroll(craftResults, 5, 152, 32, F, F, 64));
+            addSlotToContainer(new SlotScroll(craftResults, 6, 116, 50, F, F, 64));
+            addSlotToContainer(new SlotScroll(craftResults, 7, 134, 50, F, F, 64));
+            addSlotToContainer(new SlotScroll(craftResults, 8, 152, 50, F, F, 64));
+            addSlotToContainer(new SlotScroll(craftResults, 9, 116, 68, F, F, 64));
+            addSlotToContainer(new SlotScroll(craftResults, 10, 134, 68, F, F, 64));
+            addSlotToContainer(new SlotScroll(craftResults, 11, 152, 68, F, F, 64));
+            addSlotToContainer(new SlotScroll(craftResults, 12, 116, 86, F, F, 64));
+            addSlotToContainer(new SlotScroll(craftResults, 13, 134, 86, F, F, 64));
+            addSlotToContainer(new SlotScroll(craftResults, 14, 152, 86, F, F, 64));
             return super.addSlots(aInventoryPlayer);
         }
 
         public ItemStack consume(CountertopRecipe recipe)
         {
-            if (!((CuttingBoardTileEntity)mTileEntity).isServerSide() || !recipe.matchesLists(this.inventoryItemStacks.subList(0, 16), currentRecipes)) {
+            List<ItemStack> subby = this.inventoryItemStacks.subList(0, 8);
+            if (!((CuttingBoardTileEntity)mTileEntity).isServerSide() || !recipe.matchesLists(subby, currentRecipes)) {
                 return null;
             }
-            ItemStack toReturn = recipe.getCraftingResult(craftMatrix);
+            ItemStack toReturn = recipe.getCraftingResultList(subby);
             System.out.println("Returnable is " + toReturn);
             Integer[] slots = recipe.getRecipeSlotsUsed();
             ArrayList<CountertopRecipe> recipes = new ArrayList<CountertopRecipe>();
@@ -389,7 +377,7 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
                 for (int q = 0; q < recipes.size(); q++) {
                     CountertopRecipe intermediate = recipes.get(q);
                     ItemStack product = consume(intermediate);
-                    for (int o = 0; o < 16; o++)
+                    for (int o = 0; o < 8; o++)
                     {
                         Slot slotty = (Slot)this.inventorySlots.get(o);
                         if (slotty.getHasStack())
@@ -409,7 +397,7 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
                     }
                 }
             }
-            if (recipe.matchesLists(this.inventoryItemStacks.subList(0, 16), currentRecipes)) {
+            if (recipe.matchesLists(this.inventoryItemStacks.subList(0, 8), currentRecipes)) {
                 slots = recipe.getInputSlotsUsed();
                 for (int e = 0; e < slots.length; e++) {
                     if (slots[e] > 0) {
@@ -424,26 +412,36 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
         @Override
         public ItemStack slotClick(int aSlotIndex, int aMouseclick, int aShifthold, EntityPlayer aPlayer) {
             //System.out.println("Click made! It's slot " + aSlotIndex);
-            if (aSlotIndex > 31 || aSlotIndex < 0) return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
+            if (aSlotIndex > 22 || aSlotIndex < 0) return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
             //System.out.println("It's one to do stuff with");
             Slot tSlot = ((Slot) inventorySlots.get(aSlotIndex));
             ItemStack tStack = tSlot.getStack();
             if (tStack != null)
             {
-                if (aSlotIndex > 23)
+                if (aSlotIndex > 7)
                 {
-                    CountertopRecipe chosenRecipe = currentRecipes.get(craftResults.starting + aSlotIndex - 24);
+                    CountertopRecipe chosenRecipe = currentRecipes.get(craftResults.starting + aSlotIndex - 8);
                     ItemStack toReturn = consume(chosenRecipe);
                     if (toReturn == null) return null;
                     System.out.println("It's a recipe that made " + toReturn.getDisplayName() + " times " + toReturn.stackSize);
                     for (int q = 0; q < 8; q++)
                     {
-                        Slot aSlot = ((Slot) inventorySlots.get(16 + q));
+                        Slot aSlot = ((Slot) inventorySlots.get(q));
                         if (!aSlot.getHasStack())
                         {
                             aSlot.putStack(toReturn);
                             toReturn = null;
                             break;
+                        } else
+                        {
+                            ItemStack exisStack = aSlot.getStack();
+                            if (ST.equal(exisStack, toReturn) && exisStack.stackSize + toReturn.stackSize <= exisStack.getMaxStackSize())
+                            {
+                                exisStack.stackSize = exisStack.stackSize + toReturn.stackSize;
+                                aSlot.putStack(exisStack);
+                                toReturn = null;
+                                break;
+                            }
                         }
                     }
                     if (toReturn != null && ((CuttingBoardTileEntity)this.mTileEntity).isServerSide()) {
@@ -452,19 +450,22 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
 
                     detectAndSendChanges();
                     return toReturn;
-                } else if (tStack.stackSize <= 0) {
-                    tSlot.putStack(null);
-                    ItemStack toReturn = super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
-                    if (aSlotIndex < 16) {
-                        craftMatrix.setInventorySlotContents(aSlotIndex, toReturn);
+                } else
+                {
+                    if (tStack.stackSize <= 0) {
+                        tSlot.putStack(null);
+                        ItemStack toReturn = super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
+                        //if (aSlotIndex < 8) {
+                        mTileEntity.setInventorySlotContentsGUI(aSlotIndex, toReturn);
+                        //}
+                        detectAndSendChanges();
+                        return toReturn;
                     }
-                    detectAndSendChanges();
-                    return toReturn;
                 }
             }
             ItemStack returner = super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
-            onCraftMatrixChanged(craftMatrix);
-            detectAndSendChanges();
+            onCraftMatrixChanged((CuttingBoardTileEntity)mTileEntity);
+            //detectAndSendChanges();
             return returner;
         }
 
@@ -476,10 +477,19 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
         @Override
         public void onCraftMatrixChanged(IInventory par1IInventory)
         {
-            currentRecipes = CraftingManagerCountertop.getInstance().findMatchingRecipes(craftMatrix, worldObj);
+            List<ItemStack> give = new ArrayList<ItemStack>();
+            for (int q = 0; q < par1IInventory.getSizeInventory(); q++)
+            {
+                ItemStack stack = par1IInventory.getStackInSlot(q);
+                if (ST.valid(stack))
+                {
+                    give.add(stack);
+                }
+            }
+            currentRecipes = CraftingManagerCountertop.getInstance().findMatchingRecipes(give, worldObj);
             ArrayList<ItemStack> results = new ArrayList<ItemStack>();
             for (CountertopRecipe recipe: currentRecipes) {
-                results.add(recipe.getCraftingResult(craftMatrix));
+                results.add(recipe.getCraftingResultList(give));
             }
             craftResults.setList(results);
             super.onCraftMatrixChanged(par1IInventory);
@@ -487,7 +497,7 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
 
         @Override
         public int getSlotCount() {
-            return 32;
+            return 23;
         }
 
         @Override
@@ -497,7 +507,7 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
 
         @Override
         public int getShiftClickStartIndex() {
-            return 16;
+            return 0;
         }
 
         @Override
@@ -521,8 +531,8 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
 
         private int upButtonCounter = 0;
         private int downButtonCounter = 0;
-        private boolean[] isAvailable = new boolean[8];
-        private ArrayList<ItemStack> cached = new ArrayList<ItemStack>(16);
+        private boolean[] isAvailable = new boolean[15];
+        private ItemStack[] cached = new ItemStack[8];
         public GUIClientCuttingBoard(InventoryPlayer aInventoryPlayer, CuttingBoardTileEntity aTileEntity) {
             super(new GUICommonCuttingBoard(aInventoryPlayer, aTileEntity), aTileEntity.mGUITexture);
             this.xSize = 176;
@@ -533,13 +543,13 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
         protected void mouseClicked(int x, int y, int mB) {
             super.mouseClicked(x, y, mB);
             //System.out.println("Mouse clicked at " + x + ", " + y);
-            if (x > getLeft() + 118 && x < getLeft() + 130)
+            if (x > getLeft() + 101 && x < getLeft() + 113)
             {
                 if (y > getTop() + 14 && y < getTop() + 21)
                 {
                     upButtonCounter = 5;
                     ((GUICommonCuttingBoard)mContainer).craftResults.scrollDown(1);
-                } else if (y > getTop() + 77 && y < getTop() + 84)
+                } else if (y > getTop() + 95 && y < getTop() + 102)
                 {
                     downButtonCounter = 5;
                     ((GUICommonCuttingBoard)mContainer).craftResults.scrollUp(1);
@@ -551,14 +561,14 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
         public void updateNotifications()
         {
             //the can-we-do-it icons
-            for (int w = 0; w < 8; w++)
+            for (int w = 0; w < 15; w++)
             {
                 try {
                     GUICommonCuttingBoard GUI = ((GUICommonCuttingBoard) this.inventorySlots);
                     if (GUI.currentRecipes.size() > w) {
                         CountertopRecipe recipe = GUI.currentRecipes.get(w + GUI.craftResults.starting);
                         if (recipe != null) {
-                            if (recipe.matchesLists(GUI.inventoryItemStacks.subList(0, 16), GUI.currentRecipes)) {
+                            if (recipe.matchesLists(GUI.inventoryItemStacks.subList(0, 8), GUI.currentRecipes)) {
                                 isAvailable[w] = true;
                             } else {
                                 isAvailable[w] = false;
@@ -576,10 +586,11 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
         @Override
         protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
             super.drawGuiContainerBackgroundLayer(par1, par2, par3);
-            if (!this.inventorySlots.inventoryItemStacks.equals(cached))
+            GUICommonCuttingBoard GUI = ((GUICommonCuttingBoard) this.inventorySlots);
+            if (!Arrays.equals(((CuttingBoardTileEntity)GUI.mTileEntity).getInventory(), cached))
             {
                 updateNotifications();
-                cached = new ArrayList<ItemStack>(this.inventorySlots.inventoryItemStacks);
+                cached = ((CuttingBoardTileEntity)GUI.mTileEntity).getInventory().clone();
             }
         }
 
@@ -595,7 +606,7 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
         protected void renderToolTip(ItemStack stack, int x, int y) {
             System.out.println(x + "; " + y);
             GUICommonCuttingBoard CB = (GUICommonCuttingBoard)this.mContainer;
-            if (this.isMouseOverSlot(CB.getSlot(24), x, y))
+            if (x > this.getLeft() + 100 && y < this.getTop() + 100)
             {
                 //List list = stack.getTooltip(this.mc.thePlayer, this.mc.gameSettings.advancedItemTooltips);
 
@@ -628,7 +639,7 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
                 }
 
                 FontRenderer font = stack.getItem().getFontRenderer(stack);
-                drawHoveringText(list, x, y, (font == null ? fontRendererObj : font));
+                //drawHoveringText(list, x, y, (font == null ? fontRendererObj : font));
             } else {
                 super.renderToolTip(stack, x, y);
             }
@@ -640,32 +651,32 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
             this.mc.getTextureManager().bindTexture(this.mBackground);
 
             //the scrollbar
-            drawTexturedModalRect(118, 21 + Math.round(41 * ((GUICommonCuttingBoard)mContainer).craftResults.getScroll()), 176, 0,12, 15);
+            drawTexturedModalRect(101, 21 + Math.round(41 * ((GUICommonCuttingBoard)mContainer).craftResults.getScroll()), 176, 0,12, 15);
 
             //the topbutton
             if (upButtonCounter > 0)
             {
                 upButtonCounter--;
-                drawTexturedModalRect(118, 14, 176, 29, 12, 7);
+                drawTexturedModalRect(101, 14, 176, 29, 12, 7);
             } else {
-                drawTexturedModalRect(118, 14, 176, 15, 12, 7);
+                drawTexturedModalRect(101, 14, 176, 15, 12, 7);
             }
 
             //the bottombutton
             if (downButtonCounter > 0)
             {
                 downButtonCounter--;
-                drawTexturedModalRect(118, 77, 176, 36, 12, 7);
+                drawTexturedModalRect(101, 95, 176, 36, 12, 7);
             } else {
-                drawTexturedModalRect(118, 77, 176, 22, 12, 7);
+                drawTexturedModalRect(101, 95, 176, 22, 12, 7);
             }
 
             this.mc.getTextureManager().bindTexture(this.mBackground);
             this.zLevel = 201.0F;
             for (int x = 0; x < 8; x++)
             {
-                Slot slot = (Slot)this.inventorySlots.inventorySlots.get(24 + x);
-                if (this.inventorySlots.inventoryItemStacks.get(24 + x) != null) {
+                Slot slot = (Slot)this.inventorySlots.inventorySlots.get(8 + x);
+                if (this.inventorySlots.inventoryItemStacks.get(8 + x) != null) {
                     if (isAvailable[x]) {
                         drawTexturedModalRect(slot.xDisplayPosition, slot.yDisplayPosition, 188, 0, 16, 16);
                     } else {

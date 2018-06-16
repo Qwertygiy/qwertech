@@ -145,7 +145,7 @@ public final class ClientProxy extends CommonProxy { // NO_UCD (unused code)
 			{
 				CuttingBoardTileEntity.GUICommonCuttingBoard CB = (CuttingBoardTileEntity.GUICommonCuttingBoard)event.entityPlayer.openContainer;
 
-				for (int w = 0; w < 8; w++)
+				for (int w = 0; w < 15; w++)
 				{
 					ItemStack stack = CB.craftResults.getStackInSlot(w);
 					if (stack == event.itemStack)
