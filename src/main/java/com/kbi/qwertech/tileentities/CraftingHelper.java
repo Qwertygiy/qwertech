@@ -1,24 +1,13 @@
 package com.kbi.qwertech.tileentities;
 
-import gregapi.block.multitileentity.IMultiTileEntity.IMTE_AddCollisionBoxesToList;
-import gregapi.block.multitileentity.IMultiTileEntity.IMTE_CanEntityDestroy;
-import gregapi.block.multitileentity.IMultiTileEntity.IMTE_GetBlocksMovement;
-import gregapi.block.multitileentity.IMultiTileEntity.IMTE_GetPlayerRelativeBlockHardness;
-import gregapi.block.multitileentity.IMultiTileEntity.IMTE_OnBlockClicked;
-import gregapi.block.multitileentity.IMultiTileEntity.IMTE_OnEntityCollidedWithBlock;
-import gregapi.block.multitileentity.IMultiTileEntity.IMTE_OnToolClick;
-import gregapi.block.multitileentity.IMultiTileEntity.IMTE_RemovedByPlayer;
-import gregapi.block.multitileentity.IMultiTileEntity.IMTE_SetBlockBoundsBasedOnState;
+import gregapi.block.multitileentity.IMultiTileEntity;
+import gregapi.block.multitileentity.IMultiTileEntity.*;
 import gregapi.code.ArrayListNoNulls;
 import gregapi.data.CS;
 import gregapi.render.ITexture;
 import gregapi.tileentity.base.TileEntityBase04MultiTileEntities;
 import gregapi.tileentity.delegate.DelegatorTileEntity;
 import gregapi.tileentity.render.ITileEntityOnDrawBlockHighlight;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,7 +21,9 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 
-public class CraftingHelper extends TileEntityBase04MultiTileEntities implements IMTE_GetPlayerRelativeBlockHardness, IMTE_SetBlockBoundsBasedOnState, IMTE_OnEntityCollidedWithBlock, IMTE_OnToolClick, IMTE_OnBlockClicked, IMTE_RemovedByPlayer, ITileEntityOnDrawBlockHighlight, IMTE_CanEntityDestroy, IMTE_GetBlocksMovement, IMTE_AddCollisionBoxesToList {
+import java.util.List;
+
+public class CraftingHelper extends TileEntityBase04MultiTileEntities implements IMultiTileEntity.IMTE_GetCollisionBoundingBoxFromPool, IMTE_GetPlayerRelativeBlockHardness, IMTE_SetBlockBoundsBasedOnState, IMTE_OnEntityCollidedWithBlock, IMTE_OnToolClick, IMTE_OnBlockClicked, IMTE_RemovedByPlayer, ITileEntityOnDrawBlockHighlight, IMTE_CanEntityDestroy, IMTE_GetBlocksMovement, IMTE_AddCollisionBoxesToList {
 
 	public CraftingHelper() {
 		super();
@@ -69,7 +60,7 @@ public class CraftingHelper extends TileEntityBase04MultiTileEntities implements
 	@Override
 	public AxisAlignedBB getCollisionBoundingBoxFromPool()
 	{
-		return this.box(new float[]{0, -1, 0, 1, 0.05F, 1});
+		return this.box(new float[]{0, 0, 0, 0, 0, 0});
 	}
 	
 	@Override
@@ -208,7 +199,7 @@ public class CraftingHelper extends TileEntityBase04MultiTileEntities implements
 	@Override
 	public void addCollisionBoxesToList(AxisAlignedBB aAABB, List aList,
 			Entity aEntity) {
-		aList = new ArrayList();
+		//aList.clear();
 	}
 
 	@Override

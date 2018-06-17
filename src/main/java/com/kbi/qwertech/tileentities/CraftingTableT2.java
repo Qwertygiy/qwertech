@@ -4,6 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gregapi.block.multitileentity.IMultiTileEntity;
 import gregapi.code.ArrayListNoNulls;
+import gregapi.data.CS;
 import gregapi.data.LH.Chat;
 import gregapi.data.OP;
 import gregapi.network.INetworkHandler;
@@ -13,6 +14,8 @@ import gregapi.render.BlockTextureDefault;
 import gregapi.render.BlockTextureMulti;
 import gregapi.render.IIconContainer;
 import gregapi.render.ITexture;
+import gregapi.tileentity.delegate.DelegatorTileEntity;
+import gregapi.util.ST;
 import gregapi.util.UT;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -21,6 +24,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 
 import java.util.List;
 
@@ -161,7 +165,41 @@ public class CraftingTableT2 extends CraftingTableT1 implements IMultiTileEntity
 				dropped.motionX = 0;
 				dropped.motionY = 0;
 				dropped.motionZ = 0;*/
-				worldObj.spawnEntityInWorld(new EntityItem(worldObj, xCoord+0.5, yCoord+1.5, zCoord+0.5, droppable));
+				DelegatorTileEntity<TileEntity> table = this.getAdjacentTileEntity(CS.SIDE_RIGHT);
+				if (!table.exists() || !(table.mTileEntity instanceof CuttingBoardTileEntity))
+				{
+					table = this.getAdjacentTileEntity(CS.SIDE_LEFT);
+					if (!table.exists() || !(table.mTileEntity instanceof CuttingBoardTileEntity))
+					{
+						table = this.getAdjacentTileEntity(CS.SIDE_BACK);
+						if (!table.exists() || !(table.mTileEntity instanceof CuttingBoardTileEntity))
+						{
+							table = this.getAdjacentTileEntity(CS.SIDE_FRONT);
+						}
+					}
+				}
+				if (table.exists() && table.mTileEntity instanceof CuttingBoardTileEntity)
+				{
+					for (int q = 0; q < 8; q++)
+					{
+						ItemStack stacky = ((CuttingBoardTileEntity) table.mTileEntity).getStackInSlot(q);
+						if (!ST.valid(stacky))
+						{
+							((CuttingBoardTileEntity) table.mTileEntity).setInventorySlotContents(q, droppable);
+							droppable = null;
+							break;
+						} else if (ST.equal(stacky, droppable) && stacky.stackSize + droppable.stackSize < droppable.getMaxStackSize())
+						{
+							stacky.stackSize = stacky.stackSize + droppable.stackSize;
+							((CuttingBoardTileEntity) table.mTileEntity).setInventorySlotContents(q, stacky);
+							droppable = null;
+							break;
+						}
+					}
+				}
+				if (droppable != null) {
+					worldObj.spawnEntityInWorld(new EntityItem(worldObj, xCoord + 0.5, yCoord + 1.5, zCoord + 0.5, droppable));
+				}
 				getNetworkHandler().sendToAllPlayersInRange(new PacketSyncDataByte(getCoords(), damage), worldObj, getCoords());
 				return 10000;
 			}
