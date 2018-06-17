@@ -15,6 +15,7 @@ import gregapi.block.multitileentity.MultiTileEntityBlockInternal;
 import gregapi.block.multitileentity.MultiTileEntityContainer;
 import gregapi.data.CS;
 import gregapi.data.CS.*;
+import gregapi.data.LH;
 import gregapi.data.LH.Chat;
 import gregapi.data.OP;
 import gregapi.gui.ContainerClient;
@@ -813,11 +814,27 @@ public class CraftingTableT1 extends TileEntityBase09FacingSingle implements IMT
 			
 			addSlotToContainer(new Slot_Holo(mTileEntity, 9, 152, 35, F, F, 1));
 			addSlotToContainer(new Slot_Holo(mTileEntity, 10, 35, 35, F, F, 1));
+			addSlotToContainer(new Slot_Holo(mTileEntity, 11, 134, 35, F, F, 1).setTooltip("Dump to Inventory", LH.Chat.WHITE));
+
 			return super.addSlots(aInventoryPlayer);
 		}
 		
 		@Override
 		public ItemStack slotClick(int aSlotIndex, int aMouseclick, int aShifthold, EntityPlayer aPlayer) {
+			if (aSlotIndex == 11)
+			{
+				for (int q = 0; q < 9; q++)
+				{
+					ItemStack stack = mTileEntity.getStackInSlotGUI(q);
+					if (aPlayer.inventory.addItemStackToInventory(stack) || !ST.valid(stack))
+					{
+						mTileEntity.setInventorySlotContentsGUI(q, null);
+					} else {
+						//break;
+					}
+				}
+				return null;
+			}
 			if (aSlotIndex > 10 || aSlotIndex < 0) return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
 			try {
 				Slot tSlot = ((Slot)inventorySlots.get(aSlotIndex));

@@ -220,7 +220,7 @@ public class CraftingTableT2 extends CraftingTableT1 implements IMultiTileEntity
 		@Override
 		public void displayHammerable(int p1, int p2)
 		{
-			if (this.mContainer.getSlot(10).getHasStack())
+			if (this.inventorySlots.getSlot(10).getHasStack())
 			{
 				this.drawCenteredString(this.fontRendererObj, "HIT TABLE", 41, 55, 3905827);
 				this.drawCenteredString(this.fontRendererObj, "WITH HAMMER", 41, 66, 3905827);

@@ -524,7 +524,7 @@ public final class QwerTech extends Abstract_Mod {
 		
 		OreDictMaterial[] tier2i = new OreDictMaterial[]{MT.Brass, MT.Ag, MT.Al, MT.Constantan, MT.AluminiumBrass, MT.Ni, MT.Ge};
 		OreDictMaterial[] tier2g = new OreDictMaterial[]{MT.Almandine, MT.Topaz, MT.Alexandrite, MT.Spinel, MT.Opal, MT.Maxixe, MT.Pyrope, MT.Goshenite};
-		OreDictMaterial[] tier2r = new OreDictMaterial[]{MT.Stone, MT.Obsidian, MT.Marble, MT.Limestone, MT.Diorite, MT.Andesite, MT.Netherrack, MT.Endstone};
+		OreDictMaterial[] tier2r = new OreDictMaterial[]{MT.Blueschist, MT.Greenschist, MT.Stone, MT.Obsidian, MT.Marble, MT.Limestone, MT.Diorite, MT.Andesite, MT.Netherrack, MT.Endstone, MT.Quartzite};
 		
 		for (int q = 0; q < tier2i.length; q++)
 		{
@@ -539,12 +539,12 @@ public final class QwerTech extends Abstract_Mod {
 		for (int q = 0; q < tier2r.length; q++)
 		{
 			OreDictMaterial mat = tier2r[q];
-			machines.add(mat.mNameLocal + " Crafting Table", "Crafting Tables", 290 + q, 0, CraftingTableT2.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 11, CS.NBT_TEXTURE, "qwertech:rock", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", "CCC", "CCC", 'C', OP.rockGt.dat(mat));
+			machines.add(mat.mNameLocal + " Crafting Table", "Crafting Tables", 288 + q, 0, CraftingTableT2.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 11, CS.NBT_TEXTURE, "qwertech:rock", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", "CCC", "CCC", 'C', OP.rockGt.dat(mat));
 		}
 		
 		OreDictMaterial[] tier3i = new OreDictMaterial[]{MT.Bronze, MT.WroughtIron, MT.Electrum, MT.Alumite, MT.Co, MT.CobaltBrass, MT.Pt, MT.Cr, MT.Os, MT.MeteoricIron};
 		OreDictMaterial[] tier3g = new OreDictMaterial[]{MT.Ruby, MT.OrangeSapphire, MT.Amber, MT.Emerald, MT.Diamond, MT.BlueSapphire, MT.Amethyst};
-		OreDictMaterial[] tier3r = new OreDictMaterial[]{MT.GraniteBlack, MT.GraniteRed, MT.Basalt};
+		OreDictMaterial[] tier3r = new OreDictMaterial[]{MT.GraniteBlack, MT.GraniteRed, MT.Basalt, MT.Kimberlite, MT.Komatiite};
 		
 		for (int q = 0; q < tier3i.length; q++)
 		{

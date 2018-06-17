@@ -6,6 +6,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gregapi.data.CS;
 import gregapi.data.CS.*;
+import gregapi.data.LH;
 import gregapi.data.LH.Chat;
 import gregapi.gui.ContainerClient;
 import gregapi.gui.ContainerCommon;
@@ -361,11 +362,29 @@ public class CraftingTableT4 extends CraftingTableT3 {
 			
 			addSlotToContainer(new Slot_Holo(mTileEntity, 27, 152, 27, F, F, 1));
 			addSlotToContainer(new Slot_Holo(mTileEntity, 28, 152, 65, F, F, 1));
+
+			addSlotToContainer(new Slot_Holo(mTileEntity, 29, 152, 46, F, F, 1).setTooltip("Dump to Inventory", LH.Chat.WHITE));
+
+
 			return super.addSlots(aInventoryPlayer);
 		}
 		
 		@Override
 		public ItemStack slotClick(int aSlotIndex, int aMouseclick, int aShifthold, EntityPlayer aPlayer) {
+			if (aSlotIndex == 29)
+			{
+				for (int q = 0; q < 27; q++)
+				{
+					ItemStack stack = mTileEntity.getStackInSlotGUI(q);
+					if (aPlayer.inventory.addItemStackToInventory(stack) || !ST.valid(stack))
+					{
+						mTileEntity.setInventorySlotContentsGUI(q, null);
+					} else {
+						//break; why should it if there's stuff later down it can move?
+					}
+				}
+				return null;
+			}
 			if (aSlotIndex > 28 || aSlotIndex < 0) return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
 			try {
 				Slot tSlot = ((Slot)inventorySlots.get(aSlotIndex));

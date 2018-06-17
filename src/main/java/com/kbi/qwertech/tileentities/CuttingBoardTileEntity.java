@@ -438,7 +438,7 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
                     {
                         mTileEntity.setInventorySlotContentsGUI(q, null);
                     } else {
-                        break;
+                        //break;
                     }
                 }
                 return null;
