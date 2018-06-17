@@ -16,7 +16,9 @@ import gregapi.data.LH;
 import gregapi.data.TD;
 import gregapi.gui.ContainerClient;
 import gregapi.gui.ContainerCommon;
+import gregapi.gui.Slot_Holo;
 import gregapi.gui.Slot_Normal;
+import gregapi.item.multiitem.MultiItemTool;
 import gregapi.old.Textures;
 import gregapi.render.BlockTextureDefault;
 import gregapi.render.IIconContainer;
@@ -188,6 +190,7 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
                 return true;
             }
         }
+        if (aPlayer.getHeldItem() == null && openGUI(aPlayer, 0)) return true;
         return false;
     }
 
@@ -352,6 +355,9 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
             addSlotToContainer(new SlotScroll(craftResults, 12, 116, 86, F, F, 64));
             addSlotToContainer(new SlotScroll(craftResults, 13, 134, 86, F, F, 64));
             addSlotToContainer(new SlotScroll(craftResults, 14, 152, 86, F, F, 64));
+
+            addSlotToContainer(new Slot_Holo(mTileEntity, 8, 31, 50, F, F, 1).setTooltip("Dump to Inventory", LH.Chat.WHITE));
+
             return super.addSlots(aInventoryPlayer);
         }
 
@@ -401,7 +407,18 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
                 slots = recipe.getInputSlotsUsed();
                 for (int e = 0; e < slots.length; e++) {
                     if (slots[e] > 0) {
-                        ((Slot) inventorySlots.get(e)).decrStackSize(slots[e]);
+                        ItemStack stackery = (ItemStack)this.inventoryItemStacks.get(e);
+                        if (stackery.getItem() instanceof MultiItemTool)
+                        {
+                            ((MultiItemTool)stackery.getItem()).doDamage(stackery, ((MultiItemTool)stackery.getItem()).getToolStats(stackery).getToolDamagePerContainerCraft());
+                            ((Slot) inventorySlots.get(e)).putStack(stackery);
+                        } else if (stackery.getItem().isDamageable())
+                        {
+                            stackery.setItemDamage(stackery.getItemDamage() + 1);
+                            ((Slot) inventorySlots.get(e)).putStack(stackery);
+                        } else {
+                            ((Slot) inventorySlots.get(e)).decrStackSize(slots[e]);
+                        }
                     }
                 }
                 return toReturn;
@@ -412,6 +429,20 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
         @Override
         public ItemStack slotClick(int aSlotIndex, int aMouseclick, int aShifthold, EntityPlayer aPlayer) {
             //System.out.println("Click made! It's slot " + aSlotIndex);
+            if (aSlotIndex == 23)
+            {
+                for (int q = 0; q < 8; q++)
+                {
+                    ItemStack stack = mTileEntity.getStackInSlotGUI(q);
+                    if (aPlayer.inventory.addItemStackToInventory(stack) || !ST.valid(stack))
+                    {
+                        mTileEntity.setInventorySlotContentsGUI(q, null);
+                    } else {
+                        break;
+                    }
+                }
+                return null;
+            }
             if (aSlotIndex > 22 || aSlotIndex < 0) return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
             //System.out.println("It's one to do stuff with");
             Slot tSlot = ((Slot) inventorySlots.get(aSlotIndex));
