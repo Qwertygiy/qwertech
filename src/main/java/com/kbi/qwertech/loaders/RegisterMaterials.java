@@ -184,12 +184,12 @@ public class RegisterMaterials {
                 IL.Bale_Oats.get(1), IL.Bale_Moldy.get(1),
                 IL.Bottle_Beer.get(1), IL.Bottle_Milk.get(1),
                 IL.Comb_Honey.get(1), IL.Comb_Sandy.get(1), IL.Comb_Magic.get(1),
-                IL.Crate.get(1), IL.Duct_Tape.get(1), IL.Dynamite.get(1),
+                IL.Crate.get(1), OP.rockGt.mat(MT.Diorite, 1), OP.rockGt.mat(MT.Andesite, 1),
                 IL.Food_Can_Meat_1.get(1), IL.Food_Can_Rotten_1.get(1),
                 IL.Key_Brass.get(1), IL.Key_Copper.get(1), IL.Key_Lead.get(1),
-                IL.Plank_Acacia.get(1), IL.Plank_Birch.get(1), IL.Plank_Oak.get(1),
-                IL.Plank_DarkOak.get(1), IL.Plank_Jungle.get(1), IL.Plank_Spruce.get(1),
-                IL.Remains_Plant.get(1), IL.Resin.get(1), IL.Spray_Bug.get(1),
+                ST.make(Blocks.planks, 1, 0), ST.make(Blocks.planks, 1, 1), ST.make(Blocks.planks, 1, 2),
+                ST.make(Blocks.planks, 1, 3), ST.make(Blocks.planks, 1, 4), ST.make(Blocks.planks, 1, 5),
+                IL.Remains_Plant.get(1), IL.Resin.get(1), OP.rockGt.mat(MT.Granite, 1),
                 IL.Wooden_Bucket_Copper.get(1), ST.make(Blocks.glass, 1, 0),
                 ST.make(Blocks.brown_mushroom, 1, 0), ST.make(Blocks.red_mushroom, 1, 0),
                 ST.make(Blocks.wool, 1, 0), ST.make(Blocks.web, 1, 0),
@@ -221,6 +221,10 @@ public class RegisterMaterials {
 
         if (QTConfigs.chemicalXRandom) {
             for (int q = 0; q < randoms.length; q++) {
+                if (randoms[q] == null)
+                {
+                    System.out.println("We could not find object #" + q);
+                }
                 RM.Mixer.addRecipe1(true, 16, 16, randoms[q], QTMT.ChemicalX.liquid(CS.U, true), null, randoms[CS.RANDOM.nextInt(randoms.length)]);
             }
         }
