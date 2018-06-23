@@ -30,6 +30,7 @@ import gregapi.render.BlockTextureMulti;
 import gregapi.render.IIconContainer;
 import gregapi.render.ITexture;
 import gregapi.tileentity.base.TileEntityBase09FacingSingle;
+import gregapi.tileentity.machines.ITileEntityAnvil;
 import gregapi.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -58,7 +59,7 @@ import java.util.List;
 
 import static gregapi.data.CS.*;
 
-public class CraftingTableT1 extends TileEntityBase09FacingSingle implements IMTE_GetSubItems, IMTE_OnBlockClicked, IMTE_GetLightOpacity	 {
+public class CraftingTableT1 extends TileEntityBase09FacingSingle implements ITileEntityAnvil, IMTE_GetSubItems, IMTE_OnBlockClicked, IMTE_GetLightOpacity	 {
 
 	public String mGUITexture = "qwertech:textures/gui/CraftingTableT1.png";
 	public boolean mUpdatedGrid = T;
@@ -794,7 +795,12 @@ public class CraftingTableT1 extends TileEntityBase09FacingSingle implements IMT
 		
 		return aHoldStack;
 	}
-	
+
+	@Override
+	public boolean isAnvil(byte aSide) {
+		return true;
+	}
+
 	public class GUICommonAdvancedCraftingTable extends ContainerCommon {
 		public GUICommonAdvancedCraftingTable(InventoryPlayer aInventoryPlayer, CraftingTableT1 aTileEntity) {
 			super(aInventoryPlayer, aTileEntity);
