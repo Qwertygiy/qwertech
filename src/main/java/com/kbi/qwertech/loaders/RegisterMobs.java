@@ -649,7 +649,7 @@ public class RegisterMobs {
 				addAI((EntityLiving)event.entity, new EntityAISwing((EntityCreature)event.entity), 5, false, false);
 			} else if (event.entity instanceof EntityCow && QTConfigs.cowsOverheat)
 			{
-				addAI((EntityLiving)event.entity, new EntityAITemperatureLimit((EntityLivingBase)event.entity, 1, 1), 10, false, true);
+				addAI((EntityLiving)event.entity, new EntityAITemperatureLimit((EntityLivingBase)event.entity, 1.3F, 1), 10, false, true);
 			} else if (event.entity instanceof EntityBlaze || event.entity instanceof EntityMagmaCube)
 			{
 				addAI((EntityLiving)event.entity, new EntityAITemperatureLimit((EntityLivingBase)event.entity, 0.2F, -1).setDamage(2), 10, false, true);
