@@ -453,7 +453,7 @@ public class RegisterAchievements {
     	{
 	    	if (hurt instanceof EntitySkeleton)			
 	    	{
-	    		System.out.println("We stabbed a skelly!");
+	    		//System.out.println("We stabbed a skelly!");
 	    		if (MultiItemTool.getPrimaryMaterial(tool) == MT.Stone)
 	    		{
 	    			issueAchievement(event.entityPlayer, "stoneWeapon");
