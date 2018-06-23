@@ -296,14 +296,14 @@ public final class QwerTech extends Abstract_Mod {
 		link.setLocalItemName("Link of ", "");
 		link.setCondition(OP.ring);
 		link.add(UNIFICATABLE, BURNABLE, RECYCLABLE, SCANNABLE).setStacksize(64, 16).aspects(TC.VINCULUM, 1, TC.TUTAMEN, 1);
-		link.setMaterialStats(OP.ring.mAmount);
+		link.setMaterialStats(OP.ring.mAmount/2);
 		
 		final OreDictPrefix chain = OreDictPrefix.createPrefix("chain");
 		chain.setCategoryName("Chains");
 		chain.setLocalItemName("Chains of ", "");
-		chain.setCondition(OP.ring);
+		chain.setCondition(link);
 		chain.add(UNIFICATABLE, BURNABLE, RECYCLABLE, SCANNABLE).setStacksize(32, 8).aspects(TC.VINCULUM, 2, TC.MACHINA, 1);
-		chain.setMaterialStats(OP.ring.mAmount * 4);
+		chain.setMaterialStats(link.mAmount * 4);
 		
 		/*final OreDictPrefix stake = OreDictPrefix.createPrefix("stake");
 		stake.setCategoryName("Stakes");
@@ -417,7 +417,7 @@ public final class QwerTech extends Abstract_Mod {
 			//maceHeadRaw.addListener(new Loader_OreProcessing.OreProcessing_Sharpening(maceHead, 1L, true, TD.Atomic.ANTIMATTER.NOT));
 			RM.Sharpening.add(new RecipeMapHandlerPrefix(mattockHeadRaw, 1, CS.NF, 16, 0, 64, CS.NF, mattockHead, 1, CS.NI, CS.NI, CS.T, CS.T, CS.F, TD.Atomic.ANTIMATTER.NOT));
 			RM.Sharpening.add(new RecipeMapHandlerPrefix(maceHeadRaw, 1, CS.NF, 16, 0, 64, CS.NF, maceHead, 1, CS.NI, CS.NI, CS.T, CS.T, CS.F, TD.Atomic.ANTIMATTER.NOT));
-			RM.RollingMill.add(new RecipeMapHandlerPrefix(OP.ring, 1, CS.NF, 16, 0, 64, CS.NF, link, 1, CS.NI, CS.NI, CS.T, CS.T, CS.F, TD.Atomic.ANTIMATTER.NOT));
+			RM.RollingMill.add(new RecipeMapHandlerPrefix(OP.ring, 1, CS.NF, 16, 0, 64, CS.NF, link, 2, CS.NI, CS.NI, CS.T, CS.T, CS.F, TD.Atomic.ANTIMATTER.NOT));
 			RM.RollBender.add(new RecipeMapHandlerPrefix(OP.stick, 4, CS.NF, 16, 0, 64, CS.NF, chain, 1, CS.NI, CS.NI, CS.T, CS.T, CS.F, TD.Atomic.ANTIMATTER.NOT));
 			
 			mattockHead.addListener(new ShapelessCraftFrom( 1, null, new String[][] {{"X ", " f"}}, mattockHeadRaw, null, null, null, null, TD.Atomic.ANTIMATTER.NOT));

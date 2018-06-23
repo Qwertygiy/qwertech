@@ -93,13 +93,13 @@ public class RegisterArmor {
 		
 		armor = new MultiItemArmor(MD.QT.mID, "qt.armor");
 		QTI.qwerArmor.set(armor);
-		armor.addArmor(0, "Chain Helmet", "Rattles worse than bones", new HelmetBase().setMaterialAmount(CS.U * 8), "armorHelmet");
-		armor.addArmor(1, "Chainmail Shirt", "Thy mother was a hamster!", new ChestBase().setMaterialAmount(CS.U * 11), "armorChest");
-		armor.addArmor(2, "Chainmail Leggings", "Thy father smelt of elderberries!", new PantBase().setMaterialAmount(CS.U * 10), "armorLegs");
-		armor.addArmor(3, "Chain Boots", "Linked to the Past", new BootBase().setMaterialAmount(CS.U * 5), "armorBoots");
-		armor.addArmor(4, "Plated Helmet", "Always wear your helmet", new HelmetPlate().setMaterialAmount(CS.U * 12), "armorHelmet");
-		armor.addArmor(5, "Chestplate", "The classic look", new ChestPlate().setMaterialAmount(CS.U * 15), "armorChest");
-		armor.addArmor(6, "Plated Pants", "Not to be confused with pleated pants", new PantPlate().setMaterialAmount(CS.U * 15), "armorLegs");
+		armor.addArmor(0, "Chain Helmet", "Rattles worse than bones", new HelmetBase().setMaterialAmount(CS.U * 6), "armorHelmet");
+		armor.addArmor(1, "Chainmail Shirt", "Thy mother was a hamster!", new ChestBase().setMaterialAmount(CS.U * 9), "armorChest");
+		armor.addArmor(2, "Chainmail Leggings", "Thy father smelt of elderberries!", new PantBase().setMaterialAmount(CS.U * 8), "armorLegs");
+		armor.addArmor(3, "Chain Boots", "Linked to the Past", new BootBase().setMaterialAmount(CS.U * 4), "armorBoots");
+		armor.addArmor(4, "Plated Helmet", "Always wear your helmet", new HelmetPlate().setMaterialAmount(CS.U * 10), "armorHelmet");
+		armor.addArmor(5, "Chestplate", "The classic look", new ChestPlate().setMaterialAmount(CS.U * 14), "armorChest");
+		armor.addArmor(6, "Plated Pants", "Not to be confused with pleated pants", new PantPlate().setMaterialAmount(CS.U * 14), "armorLegs");
 		armor.addArmor(7, "Plated Boots", "Clanky and clunky", new BootPlate().setMaterialAmount(CS.U * 6), "armorBoots");		
 		
 		armor.addArmor(8, "Galoshes", "", new BootWet().setMaterialAmount(CS.U * 4), "armorBoots");
