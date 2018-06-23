@@ -12,6 +12,8 @@ public class EntityAITemperatureLimit extends EntityAIBase {
 	private float maxTemp;
 	private int mode;
 	private int damage;
+	private boolean tooHot = false;
+	private boolean tooCold = false;
 	
 	public EntityAITemperatureLimit(EntityLivingBase entity, float limit, int mode)
 	{
@@ -89,6 +91,8 @@ public class EntityAITemperatureLimit extends EntityAIBase {
 	public boolean shouldExecute() {
 		if (theEntity.worldObj.rand.nextInt(100) == 0)
 		{
+			tooCold = false;
+			tooHot = false;
 			BiomeGenBase biome = theEntity.worldObj.getBiomeGenForCoords((int)theEntity.posX,(int)theEntity.posZ);
 			float temp = biome.getFloatTemperature((int)theEntity.posX, (int)theEntity.posY, (int)theEntity.posZ);
 			if (temp < this.minTemp && this.mode < 1)
@@ -96,11 +100,13 @@ public class EntityAITemperatureLimit extends EntityAIBase {
 				this.theEntity.moveForward = 0;
 				this.theEntity.moveStrafing = 0;
 				this.theEntity.attackEntityFrom(new DamageSource("cold").setDamageBypassesArmor().setFireDamage(), this.damage);
+				tooCold = true;
 			} else if (temp > this.maxTemp && this.mode > -1)
 			{
 				this.theEntity.moveForward = 0;
 				this.theEntity.moveStrafing = 0;
 				this.theEntity.attackEntityFrom(new DamageSource("heat").setDamageBypassesArmor().setFireDamage(), this.damage);
+				tooHot = true;
 			}
 		}
 		return false;

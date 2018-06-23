@@ -365,17 +365,23 @@ public class CraftingTableT1 extends TileEntityBase09FacingSingle implements ITi
 		List<IRecipe> list = CraftingManagerHammer.getInstance().getRecipeList();
 		InventoryCrafting aCrafting = new InventoryCrafting(new Container() {@Override public boolean canInteractWith(EntityPlayer var1) {return F;}}, 3, 3);
 		for (int i = 0; i < 9 && i < aRecipe.length; i++) aCrafting.setInventorySlotContents(i, aRecipe[i]);
-		
+
+		ItemStack repairReturn = null;
+
 		for (int i = 0; i < list.size(); i++)
 		{
 			IRecipe check = list.get(i);
 			if (check.matches(aCrafting, worldObj))
 			{
 				isRepair = check instanceof RepairRecipe;
-				return check.getCraftingResult(aCrafting);
+				if (isRepair) {
+                    repairReturn = check.getCraftingResult(aCrafting);
+                } else {
+				    return check.getCraftingResult(aCrafting);
+                }
 			}
 		}
-		return null;
+		return repairReturn;
 	}
 	
 	public ItemStack getCraftingOutput()

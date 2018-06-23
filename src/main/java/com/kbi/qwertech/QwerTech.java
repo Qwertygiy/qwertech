@@ -5,6 +5,7 @@ import com.kbi.qwertech.api.data.QTI;
 import com.kbi.qwertech.api.data.QTMT;
 import com.kbi.qwertech.api.data.WOOD;
 import com.kbi.qwertech.api.recipe.AnyQTTool;
+import com.kbi.qwertech.api.recipe.RepairRecipe;
 import com.kbi.qwertech.api.recipe.WoodSpecificCrafting;
 import com.kbi.qwertech.api.recipe.listeners.OreProcessing_NonCrafting;
 import com.kbi.qwertech.api.recipe.listeners.OreProcessing_QTTool;
@@ -211,6 +212,7 @@ public final class QwerTech extends Abstract_Mod {
 		OreDictionary.registerOre("ingotCeramic", Items.brick);
 		
 		RecipeSorter.register("qwertech:tool", AnyQTTool.class, RecipeSorter.Category.SHAPELESS, "after:gregtech:tool");
+		RecipeSorter.register("qwertech:repair", RepairRecipe.class, RecipeSorter.Category.SHAPELESS, "after:qwertech:tool");
 		RecipeSorter.register("qwertech:wooded", WoodSpecificCrafting.class, RecipeSorter.Category.SHAPED, "after:minecraft:shaped");
 		
 		new ArmorUpgradeRegistry();
