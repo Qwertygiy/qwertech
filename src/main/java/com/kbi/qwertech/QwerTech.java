@@ -70,6 +70,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -476,8 +477,18 @@ public final class QwerTech extends Abstract_Mod {
         RegisterLoot.init();
         
         ModLoadBase.runInit();
-        
-        CR.shaped(qwerTool.getToolWithStats(2, MT.Wood, MT.Wood), CR.DEF, "AAA", "BfB", " B ", 'A', ST.make(Items.string, 1, 0), 'B', OP.stick.mat(ANY.Wood, 1));
+
+        CR.shaped(ST.make(soilBlock, 2, 8), CR.DEF, "AA", "AA", 'A', "treeLeaves");
+        CR.shaped(ST.make(soilBlock, 1, 5), CR.DEF, "AA", 'A', ST.make(Blocks.leaves, 1, 1));
+		CR.shaped(ST.make(soilBlock, 1, 1), CR.DEF, "AAA", "A A", "AAA", 'A', OP.scrapGt.mat(MT.Wood, 1));
+
+		RM.Mixer.addRecipe2(true, 16L, 16L, ST.make(Blocks.sand, 1, 0), ST.make(soilBlock, 2, 4), (FluidStack)null, (FluidStack)null, ST.make(soilBlock, 2, 0));
+		RM.Mixer.addRecipe2(true, 16L, 16L, ST.make(CS.BlocksGT.Sands, 1, 0), ST.make(CS.BlocksGT.Diggables, 2, 0), (FluidStack)null, (FluidStack)null, ST.make(soilBlock, 2, 0));
+
+		RM.Crusher.addRecipe1(true, 16L, 16L, ST.make(Items.stick, 8, 0), (FluidStack)null, (FluidStack)null, ST.make(soilBlock, 1, 1));
+		RM.Crusher.addRecipe1(true, 16L, 16L, IL.Bark_Dry.get(8), (FluidStack)null, (FluidStack)null, ST.make(soilBlock, 1, 2));
+
+		CR.shaped(qwerTool.getToolWithStats(2, MT.Wood, MT.Wood), CR.DEF, "AAA", "BfB", " B ", 'A', ST.make(Items.string, 1, 0), 'B', OP.stick.mat(ANY.Wood, 1));
         CR.shaped(qwerTool.getToolWithStats(2, MT.Bone, MT.Bone), CR.DEF, "AAA", "BfB", " B ", 'A', ST.make(Items.string, 1, 0), 'B', ST.make(Items.bone, 1, 0));
         CR.shaped(qwerTool.getToolWithStats(2, MT.Rubber, MT.Rubber), CR.DEF, "AAA", "BfB", " B ", 'A', ST.make(Items.string, 1, 0), 'B', OP.stick.mat(MT.Rubber, 1));
         CR.shaped(qwerTool.getToolWithStats(2, MT.Blaze, MT.Blaze), CR.DEF, "AAA", "BfB", " B ", 'A', ST.make(Items.string, 1, 0), 'B', ST.make(Items.blaze_rod, 1, 0));
