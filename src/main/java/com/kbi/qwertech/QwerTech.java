@@ -15,6 +15,7 @@ import com.kbi.qwertech.api.recipe.managers.CraftingManagerCountertop;
 import com.kbi.qwertech.api.recipe.managers.CraftingManagerHammer;
 import com.kbi.qwertech.api.registry.ArmorUpgradeRegistry;
 import com.kbi.qwertech.blocks.BlockCorrugated;
+import com.kbi.qwertech.blocks.BlockSoil;
 import com.kbi.qwertech.client.QT_GUIHandler;
 import com.kbi.qwertech.entities.projectile.EntityShuriken;
 import com.kbi.qwertech.items.MultiItemTool_QT;
@@ -112,6 +113,7 @@ public final class QwerTech extends Abstract_Mod {
 	private static MultiItemTool qwerTool;
 	private static MultiItemRandom qwerFood;
 	public static BlockCorrugated corrugatedBlock;
+	public static BlockSoil soilBlock;
 	//public static ChiselableBlock chiselableBlock;
 	public static int knucklesTexID;
 	public static int slingshotTexID;
@@ -241,7 +243,21 @@ public final class QwerTech extends Abstract_Mod {
 		LH.add("qt.block.corrugated.13.name", "Corrugated Tin Alloy Wall");
 		LH.add("qt.block.corrugated.14.name", "Corrugated Galvanized Steel Wall");
 		LH.add("qt.block.corrugated.15.name", "Corrugated Electrum Wall");
-		
+
+		soilBlock = new BlockSoil(ItemBlockBase.class, "qt.block.soil", Material.ground, Block.soundTypeGravel, 11, new IIconContainer[]{new Textures.BlockIcons.CustomIcon("qwertech:wall")});
+		LH.add("qt.block.soil.0.name", "Potting Soil");
+		LH.add("qt.block.soil.1.name", "Woodchip Mulch");
+		LH.add("qt.block.soil.2.name", "Bark Mulch");
+		LH.add("qt.block.soil.3.name", "Raw Compost");
+		LH.add("qt.block.soil.4.name", "Compost");
+		LH.add("qt.block.soil.5.name", "Pinestraw");
+		LH.add("qt.block.soil.6.name", "Dry Pinestraw");
+		LH.add("qt.block.soil.7.name", "Rotten Pinestraw");
+		LH.add("qt.block.soil.8.name", "Fresh Leaves");
+		LH.add("qt.block.soil.9.name", "Dry Leaves");
+		LH.add("qt.block.soil.10.name", "Rotten Leaves");
+		soilBlock.setTickRandomly(true);
+
 		/*final OreDictPrefix chiselBlock = OreDictPrefix.createPrefix("blockCarved");
 		chiselBlock.setCategoryName("Chiseled Blocks");
 		chiselBlock.setLocalItemName("Chiseled Block of ", "");
