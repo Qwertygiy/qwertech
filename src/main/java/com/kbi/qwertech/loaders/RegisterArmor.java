@@ -238,9 +238,9 @@ public class RegisterArmor {
 			/*
 			 * Draw our own upgrades, with blackjack and cookers 
 			 */
-			GL11.glColor4f(1F, 1F, 1F, 1F);
 			IArmorUpgrade[] upgrades = MultiItemArmor.getUpgrades(event.stack);
 			GL11.glPushMatrix();
+			GL11.glColor4f(1F, 1F, 1F, 1F);
 			for (int q = 0; q < upgrades.length; q++)
 			{
 				IArmorUpgrade upgrade = upgrades[q];

@@ -4,7 +4,6 @@ import com.kbi.qwertech.api.armor.MultiItemArmor;
 import com.kbi.qwertech.api.armor.upgrades.IArmorUpgrade;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.texture.TextureUtil;
@@ -14,8 +13,6 @@ import net.minecraft.util.IIcon;
 import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
-
-import static org.lwjgl.opengl.GL11.*;
 
 public class QT_Armor_Renderer implements IItemRenderer {
 	
@@ -56,13 +53,13 @@ public class QT_Armor_Renderer implements IItemRenderer {
         {
 	        ItemRenderer.renderItemIn2D(tessellator, f1, f2, f, f3, iicon.getIconWidth(), iicon.getIconHeight(), 0.0625F);
         } else {
-        	glAlphaFunc(GL_GREATER, 0.1F);
-    		glEnable(GL_ALPHA_TEST);
-			glEnable(GL_BLEND);
-			OpenGlHelper.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, 1, 0);
+        	//glAlphaFunc(GL_GREATER, 0.1F);
+    		//glEnable(GL_ALPHA_TEST);
+			//glEnable(GL_BLEND);
+			//OpenGlHelper.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, 1, 0);
 	        RI.renderIcon(0, 0, iicon, 16, 16);
-			glDisable(GL_BLEND);
-			glDisable(GL_ALPHA_TEST);
+			//glDisable(GL_BLEND);
+			//glDisable(GL_ALPHA_TEST);
         }
         Minecraft.getMinecraft().renderEngine.bindTexture(Minecraft.getMinecraft().renderEngine.getResourceLocation(p_78443_2_.getItemSpriteNumber()));
         TextureUtil.func_147945_b();
@@ -73,6 +70,7 @@ public class QT_Armor_Renderer implements IItemRenderer {
 
 	@Override
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
+		GL11.glPushMatrix();
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		
 		for (int i = 0; i < item.getItem().getRenderPasses(item.getItemDamage()); i++)
@@ -117,7 +115,7 @@ public class QT_Armor_Renderer implements IItemRenderer {
 				}
 			}
 		}
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glPopMatrix();
 	}
 
 }
