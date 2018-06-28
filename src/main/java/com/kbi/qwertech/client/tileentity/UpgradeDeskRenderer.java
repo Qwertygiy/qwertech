@@ -112,7 +112,7 @@ public class UpgradeDeskRenderer extends TileEntitySpecialRenderer {
 		    	ItemRenderer.renderItemIn2D(tessellator, f1, f2, f, f3, iicon.getIconWidth(), iicon.getIconHeight(), 0.1F);
 		    }
 		    GL11.glPopMatrix();
-		    GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+		    //GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 		    Minecraft.getMinecraft().renderEngine.bindTexture(Minecraft.getMinecraft().renderEngine.getResourceLocation(item.getItemSpriteNumber()));
 		    TextureUtil.func_147945_b();
         }
@@ -199,7 +199,7 @@ public class UpgradeDeskRenderer extends TileEntitySpecialRenderer {
 			}
 		}
 		
-		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+		//GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 		GL11.glPopMatrix();
 	}
 	@Override
