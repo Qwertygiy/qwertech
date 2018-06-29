@@ -1,9 +1,6 @@
 package com.kbi.qwertech.api.data;
 
-import gregapi.data.CS;
-import gregapi.data.MD;
-import gregapi.data.MT;
-import gregapi.data.TC;
+import gregapi.data.*;
 import gregapi.enchants.Enchantment_Radioactivity;
 import gregapi.oredict.OreDictMaterial;
 import gregapi.render.TextureSet;
@@ -40,7 +37,9 @@ public class QTMT {
 	,PinkCY11 =		OreDictMaterial.createMaterial(13019, "PinkCY11",			"Pink CY-11"			).setTextures(TextureSet.SET_FIERY			).setRGBa(200, 	100, 	100, 	255	).heat(3000, 3500											).aspects(TC.PRAECANTIO,2,TC.LUCRUM,1,TC.ORDO,1		).put(COATED,	GEMS,	STICKS,		PLATES																							).setOriginalMod(MD.QT																			).qual(MT.Ruby)
 	,WhiteCY11 =	OreDictMaterial.createMaterial(13020, "WhiteCY11",			"White CY-11"			).setTextures(TextureSet.SET_FIERY			).setRGBa(220, 	220, 	220, 	255	).heat(3000, 3500											).aspects(TC.PRAECANTIO,2,TC.LUCRUM,1,TC.ORDO,1		).put(COATED,	GEMS,	STICKS,		PLATES																							).setOriginalMod(MD.QT																			).qual(MT.Diamond).addEnchantmentForArmors(Enchantment.blastProtection, 1)
 
-	,Undefined =	OreDictMaterial.createMaterial(13030, "Any", "Any").setTextures(TextureSet.SET_METALLIC).setRGBa(125, 125, 125, 125).hide(true).qual(MT.Steel).setAllToTheOutputOf(MT.NULL)
+	,Undefined =	OreDictMaterial.createMaterial(13030, "Any", 				"Any"					).setTextures(TextureSet.SET_METALLIC		).setRGBa(125, 	125, 	125, 	125).hide(true).qual(MT.Steel).setAllToTheOutputOf(MT.NULL)
+	,CompostRaw =	OreDictMaterial.createMaterial(13031, "CompostRaw", 		"Raw Compost"			).setTextures(TextureSet.SET_LIGNITE		).setRGBa(200, 	150, 	50, 	255)																					.aspects(TC.HERBA, 1, TC.MORTUUS, 1, TC.VICTUS, 1	).put(TD.ItemGenerator.G_DUST																				).setOriginalMod(MD.QT)
+	,Compost =		OreDictMaterial.createMaterial(13032, "Compost", 			"Compost"				).setTextures(TextureSet.SET_LIGNITE		).setRGBa(75, 	60, 	55, 	255)																					.aspects(TC.HERBA, 1, TC.MORTUUS, 1, TC.VICTUS, 1	).put(TD.ItemGenerator.G_DUST																				).setOriginalMod(MD.QT)
 	;
 	
 	static {
@@ -64,6 +63,10 @@ public class QTMT {
 				, "While it is possible to separate the carbon from the compound, the process results in the evaporation of the chemical energy it was bonded with."
 				};
 
+		Compost.mDescription = new String[] {
+				   "Compost is a rich soil, good for growing many varieties of plants, formed in the somewhat cannibalistic manner of piling up a bunch of dead plants until they rot."
+		};
+
 		ChemicalY1.mToolSpeed = ChemicalY1.mToolSpeed * 1.5F;
 		ChemicalY2.mToolSpeed = ChemicalY2.mToolSpeed * 1.5F;
 		ChemicalY3.mToolSpeed = ChemicalY3.mToolSpeed * 1.5F;
@@ -74,5 +77,7 @@ public class QTMT {
 		ChemicalY8.mToolSpeed = ChemicalY8.mToolSpeed * 1.5F;
 		ChemicalY9.mToolSpeed = ChemicalY9.mToolSpeed * 1.5F;
 		ChemicalY10.mToolSpeed = ChemicalY10.mToolSpeed * 1.5F;
+
+		OP.blockDust.disableItemGeneration(Compost, CompostRaw);
 	}
 }

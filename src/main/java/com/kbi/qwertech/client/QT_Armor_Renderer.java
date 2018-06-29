@@ -41,7 +41,7 @@ public class QT_Armor_Renderer implements IItemRenderer {
 
 		if (iicon == null) return;
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-        
+
 		Minecraft.getMinecraft().renderEngine.bindTexture(Minecraft.getMinecraft().renderEngine.getResourceLocation(p_78443_2_.getItemSpriteNumber()));
         TextureUtil.func_152777_a(false, false, 1.0F);
         Tessellator tessellator = Tessellator.instance;

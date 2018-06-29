@@ -258,6 +258,8 @@ public final class QwerTech extends Abstract_Mod {
 		LH.add("qt.block.soil.9.name", "Dry Leaves");
 		LH.add("qt.block.soil.10.name", "Rotten Leaves");
 		soilBlock.setTickRandomly(true);
+		OreDictManager.INSTANCE.setTarget(OP.blockDust, QTMT.CompostRaw, ST.make(QwerTech.soilBlock, 1, 3));
+		OreDictManager.INSTANCE.setTarget(OP.blockDust, QTMT.Compost, ST.make(QwerTech.soilBlock, 1, 4));
 
 		/*final OreDictPrefix chiselBlock = OreDictPrefix.createPrefix("blockCarved");
 		chiselBlock.setCategoryName("Chiseled Blocks");
@@ -312,14 +314,14 @@ public final class QwerTech extends Abstract_Mod {
 		
 		final OreDictPrefix link = OreDictPrefix.createPrefix("link");
 		link.setCategoryName("Links");
-		link.setLocalItemName("Link of ", "");
+		link.setLocalItemName("", " Link");
 		link.setCondition(OP.ring);
 		link.add(UNIFICATABLE, BURNABLE, RECYCLABLE, SCANNABLE).setStacksize(64, 16).aspects(TC.VINCULUM, 1, TC.TUTAMEN, 1);
 		link.setMaterialStats(OP.ring.mAmount/2);
 		
 		final OreDictPrefix chain = OreDictPrefix.createPrefix("chain");
 		chain.setCategoryName("Chains");
-		chain.setLocalItemName("Chains of ", "");
+		chain.setLocalItemName("", " Chains");
 		chain.setCondition(link);
 		chain.add(UNIFICATABLE, BURNABLE, RECYCLABLE, SCANNABLE).setStacksize(32, 8).aspects(TC.VINCULUM, 2, TC.MACHINA, 1);
 		chain.setMaterialStats(link.mAmount * 4);
@@ -605,7 +607,7 @@ public final class QwerTech extends Abstract_Mod {
 		for (int q = 0; q < tier4i.length; q++)
 		{
 			OreDictMaterial mat = tier4i[q];
-			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 330 + q, 0, toUse, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 29, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", 'C', OP.chunkGt.dat(mat));
+			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 330 + q, 0, toUse, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 30, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", 'C', OP.chunkGt.dat(mat));
 			CR.shapeless(ST.make(Blocks.crafting_table, 1, 0), CR.DEF, new Object[]{machines.getItem(330 + q)});
 		}
 		
@@ -613,7 +615,7 @@ public final class QwerTech extends Abstract_Mod {
 		for (int q = 0; q < tier5i.length; q++)
 		{
 			OreDictMaterial mat = tier5i[q];
-			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 340 + q, 0, toUse, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 29, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", 'C', OP.chunkGt.dat(mat));
+			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 340 + q, 0, toUse, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 30, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", 'C', OP.chunkGt.dat(mat));
 		}
 		
 		machines.add("Crafting Helper", "", 400, 0, CraftingHelper.class, 15, 0, air, UT.NBT.make());
