@@ -375,7 +375,7 @@ public final class QwerTech extends Abstract_Mod {
 				if (mat == MT.Ag && aPlayer.getDisplayName().toLowerCase().startsWith("bear989"))
 				{
 					aList.add(LH.Chat.BLINKING_RED + "Be careful with this, Mr. Bear!" + LH.Chat.GRAY);
-				} else if (mat == MT.Pb && aPlayer.getDisplayName().equalsIgnoreCase("crazyj1984"))
+				} else if ((mat == MT.Pb || mat == MT.Craponite) && aPlayer.getDisplayName().equalsIgnoreCase("crazyj1984"))
 				{
 					aList.add(LH.Chat.BLINKING_RED + "Careful not to cut yourself on this one, lass!"+ LH.Chat.GRAY);
 				} else if ((mat == MT.Diamond || mat == MT.Diamantine) && aPlayer.getDisplayName().equalsIgnoreCase("shadowkn1ght18") || aPlayer.getDisplayName().equalsIgnoreCase("netmc"))
@@ -635,6 +635,16 @@ public final class QwerTech extends Abstract_Mod {
 				machines.add(woodType.mNameLocal + " Countertop", "Countertops", 410 + q, 0, CuttingBoardTileEntity.class, 0, 16, wood, UT.NBT.make(null, CS.NBT_MATERIAL, woodType, CS.NBT_INV_SIZE, 9, CS.NBT_TEXTURE, "qwertech:wood", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(woodType.fRGBaSolid)), "S", "P", 'S', "slabWood", 'P', "plank" + woodType.mNameInternal);
 			}
 		}
+
+		for (int q = 1; q < WOOD.woodList.length; q++)
+		{
+			OreDictMaterial woodType = WOOD.woodList[q];
+			if (woodType != null && OreDictionary.getOres("plank" + woodType.mNameInternal).size() > 0)
+			{
+				machines.add(woodType.mNameLocal + " Compost Bin", "Compost Bins", 666 + q, 0, CompostBinTileEntity.class, 0, 64, wood, UT.NBT.make(null, CS.NBT_MATERIAL, woodType, CS.NBT_INV_SIZE, 12, CS.NBT_TEXTURE, "qwertech:wood", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(woodType.fRGBaSolid)), "SSS", " P ", 'S', "stickWood", 'P', "plank" + woodType.mNameInternal);
+			}
+		}
+
 	}
 
 	@Override

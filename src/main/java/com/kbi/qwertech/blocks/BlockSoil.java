@@ -5,12 +5,15 @@ import gregapi.old.Textures;
 import gregapi.render.IIconContainer;
 import gregapi.util.WD;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import java.util.List;
 import java.util.Random;
 
 public class BlockSoil extends BlockBaseMeta {
@@ -58,6 +61,22 @@ public class BlockSoil extends BlockBaseMeta {
     }
 
     @Override
+    public void addInformation(ItemStack aStack, int aMeta, EntityPlayer aPlayer, List aList, boolean aF3_H) {
+        super.addInformation(aStack, aMeta, aPlayer, aList, aF3_H);
+        switch(aMeta)
+        {
+            case 3:
+                aList.add("Will decay into compost when surrounded by raw compost");
+                break;
+            case 5:
+            case 8:
+                aList.add("Will dry out if no adjacent blocks are shady!");
+                aList.add("Will rot if next to water!");
+                break;
+        }
+    }
+
+    @Override
     public boolean isFlammable(IBlockAccess aWorld, int aX, int aY, int aZ, ForgeDirection aSide) {
         switch (aWorld.getBlockMetadata(aX, aY, aZ))
         {
@@ -99,6 +118,16 @@ public class BlockSoil extends BlockBaseMeta {
                     //System.out.println("We're dry!");
                     WD.set(aWorld, aX, aY, aZ, this, aWorld.getBlockMetadata(aX, aY, aZ) + 1, 2, false);
                 }
+                break;
+            case 3:
+                boolean isSurrounded = aWorld.getBlock(aX + 1, aY, aZ) == this && aWorld.getBlock(aX - 1, aY, aZ) == this && aWorld.getBlock(aX, aY, aZ + 1) == this && aWorld.getBlock(aX, aY, aZ - 1) == this && aWorld.getBlock(aX, aY + 1, aZ) == this;
+                isSurrounded = isSurrounded && (aWorld.getBlockMetadata(aX + 1, aY, aZ) == 3 || aWorld.getBlockMetadata(aX + 1, aY, aZ) == 4) && (aWorld.getBlockMetadata(aX - 1, aY, aZ) == 3 || aWorld.getBlockMetadata(aX - 1, aY, aZ) == 4) && (aWorld.getBlockMetadata(aX, aY, aZ + 1) == 3 || aWorld.getBlockMetadata(aX , aY, aZ + 1) == 4) && (aWorld.getBlockMetadata(aX, aY, aZ - 1) == 3 || aWorld.getBlockMetadata(aX, aY, aZ - 1) == 4) && (aWorld.getBlockMetadata(aX, aY + 1, aZ) == 3 || aWorld.getBlockMetadata(aX, aY + 1, aZ) == 4);
+                if (isSurrounded)
+                {
+                    //System.out.println("We're dry!");
+                    WD.set(aWorld, aX, aY, aZ, this, 4, 2, false);
+                }
+                break;
         }
     }
 }
