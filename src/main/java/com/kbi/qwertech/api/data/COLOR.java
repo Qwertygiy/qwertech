@@ -1,5 +1,7 @@
 package com.kbi.qwertech.api.data;
 
+import gregapi.data.CS;
+
 import java.util.HashMap;
 
 public class COLOR {
@@ -71,6 +73,23 @@ public class COLOR {
         } else {
             returnable = returnable + (int)g3 & 255;
         }
+        return returnable;
+    }
+
+    public static int getRandom(int low, int high)
+    {
+        int returnable = 0;
+        short f1 = (short)((low >> 16 & 255) / 255);
+        short f2 = (short)((low >> 8 & 255) / 255);
+        short f3 = (short)((low & 255) / 255);
+
+        short g1 = (short)((high >> 16 & 255) / 255);
+        short g2 = (short)((high >> 8 & 255) / 255);
+        short g3 = (short)((high & 255) / 255);
+
+        returnable = (CS.RNGSUS.nextInt(g1 - f1) + f1) << 16 & 255;
+        returnable = returnable + (CS.RNGSUS.nextInt(g2 - f2) + f2) << 8 & 255;
+        returnable = returnable + (CS.RNGSUS.nextInt(g3 - f3) + f3) & 255;
         return returnable;
     }
 

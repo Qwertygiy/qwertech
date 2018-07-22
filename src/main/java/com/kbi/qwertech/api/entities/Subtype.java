@@ -1,6 +1,12 @@
 package com.kbi.qwertech.api.entities;
 
 import com.kbi.qwertech.api.data.COLOR;
+import com.kbi.qwertech.api.registry.MobSpeciesRegistry;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.common.BiomeDictionary;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Subtype {
     public short[] minLimits = new short[8];
@@ -14,6 +20,83 @@ public class Subtype {
     private String primaryTexture;
     private String secondaryTexture;
     private String commonName;
+    private boolean isNatural;
+    private final Species assignedSpecies;
+    private ArrayList<BiomeGenBase> biomes = new ArrayList<BiomeGenBase>();
+
+    public Subtype(Species species)
+    {
+        assignedSpecies = species;
+    }
+
+    public Subtype addBiome(BiomeGenBase biome)
+    {
+        if (!biomes.contains(biome))
+        {
+            biomes.add(biome);
+            List<Subtype> thisBiome = assignedSpecies.spawnMap.get(biome);
+            if (thisBiome == null || thisBiome.size() < 1)
+            {
+                thisBiome = new ArrayList<Subtype>();
+            }
+            thisBiome.add(this);
+            assignedSpecies.spawnMap.put(biome, thisBiome);
+            MobSpeciesRegistry.addBiomeForSpecies(assignedSpecies.getMobType().getClass(), assignedSpecies, biome);
+        }
+        return this;
+    }
+
+    public Subtype addBiome(BiomeDictionary.Type biomeType)
+    {
+        BiomeGenBase[] results = BiomeDictionary.getBiomesForType(biomeType);
+        for (int q = 0; q < results.length; q++)
+        {
+            if (!biomes.contains(results[q]))
+            {
+                biomes.add(results[q]);
+                List<Subtype> thisBiome = assignedSpecies.spawnMap.get(results[q]);
+                if (thisBiome == null || thisBiome.size() < 1)
+                {
+                    thisBiome = new ArrayList<Subtype>();
+                }
+                thisBiome.add(this);
+                assignedSpecies.spawnMap.put(results[q], thisBiome);
+                MobSpeciesRegistry.addBiomeForSpecies(assignedSpecies.getMobType().getClass(), assignedSpecies, results[q]);
+            }
+        }
+        return this;
+    }
+
+    public Subtype removeBiome(BiomeGenBase biome)
+    {
+        if (biomes.contains(biome))
+        {
+            biomes.remove(biome);
+            List<Subtype> thisBiome = assignedSpecies.spawnMap.get(biome);
+            if (thisBiome.contains(this))
+            {
+                thisBiome.remove(this);
+            }
+            assignedSpecies.spawnMap.put(biome, thisBiome);
+        }
+        return this;
+    }
+
+    public boolean getCanSpawn(BiomeGenBase biome)
+    {
+        return getNatural() && biomes.contains(biome);
+    }
+
+    public Subtype setNatural(boolean isNatural)
+    {
+        this.isNatural = isNatural;
+        return this;
+    }
+
+    public boolean getNatural()
+    {
+        return isNatural;
+    }
 
     @Override
     public String toString() {

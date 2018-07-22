@@ -4,9 +4,14 @@ import com.kbi.qwertech.api.data.COLOR;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.biome.BiomeGenBase;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class Species {
     public Subtype[] subtypes = new Subtype[Short.MAX_VALUE];
+    public HashMap<BiomeGenBase, List<Subtype>> spawnMap = new HashMap<BiomeGenBase, List<Subtype>>();
 
     public short[] minLimits = new short[8];
     public short[] maxLimits = new short[8];
@@ -19,6 +24,22 @@ public class Species {
     public int primaryColorMax;
     public int secondaryColorMin;
     public int secondaryColorMax;
+    private IGeneticMob mobType;
+
+    public Species(IGeneticMob mob)
+    {
+        mobType = mob;
+    }
+
+    public IGeneticMob getMobType()
+    {
+        return mobType;
+    }
+
+    public List<Subtype> getSubtypesForBiome(BiomeGenBase biome)
+    {
+        return spawnMap.get(biome);
+    }
 
     @Override
     public String toString()
