@@ -105,7 +105,7 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
         if (aSide > 1 && openGUI(aPlayer, 0)) return true;
         int aSlot = -1;
         short sided = this.getFacing();
-        System.out.println("Facing " + sided);
+        //System.out.println("Facing " + sided);
         switch (sided)
         {
             case CS.SIDE_Z_NEG:
@@ -368,7 +368,7 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
                 return null;
             }
             ItemStack toReturn = recipe.getCraftingResultList(subby);
-            System.out.println("Returnable is " + toReturn);
+            //System.out.println("Returnable is " + toReturn);
             Integer[] slots = recipe.getRecipeSlotsUsed();
             ArrayList<CountertopRecipe> recipes = new ArrayList<CountertopRecipe>();
             if (slots != null && slots.length > 0) {
@@ -454,7 +454,7 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
                     CountertopRecipe chosenRecipe = currentRecipes.get(craftResults.starting + aSlotIndex - 8);
                     ItemStack toReturn = consume(chosenRecipe);
                     if (toReturn == null) return null;
-                    System.out.println("It's a recipe that made " + toReturn.getDisplayName() + " times " + toReturn.stackSize);
+                    //System.out.println("It's a recipe that made " + toReturn.getDisplayName() + " times " + toReturn.stackSize);
                     for (int q = 0; q < 8; q++)
                     {
                         Slot aSlot = ((Slot) inventorySlots.get(q));
@@ -635,7 +635,7 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
 
         @Override
         protected void renderToolTip(ItemStack stack, int x, int y) {
-            System.out.println(x + "; " + y);
+            //System.out.println(x + "; " + y);
             GUICommonCuttingBoard CB = (GUICommonCuttingBoard)this.mContainer;
             if (x > this.getLeft() + 100 && y < this.getTop() + 100)
             {

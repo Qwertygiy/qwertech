@@ -36,11 +36,11 @@ public class CraftingManagerCountertop implements Runnable {
 
     public ArrayList<CountertopRecipe> findMatchingRecipes(List<ItemStack> checking, World p_82787_2_)
     {
-        System.out.println("Getting recipes");
+        //System.out.println("Getting recipes");
         //returnable: only includes the things we have not yet made
         ArrayList<CountertopRecipe> returnable = new ArrayList<CountertopRecipe>();
         ArrayList<CountertopRecipe> potentialRecipes = new ArrayList<CountertopRecipe>();
-        System.out.println("We found " + checking.size() + " items");
+        //System.out.println("We found " + checking.size() + " items");
         //if we added a new item through the last recursive check
         boolean newItem = true;
         //how many recursive tries we have had
@@ -48,7 +48,7 @@ public class CraftingManagerCountertop implements Runnable {
 
         //as long as we have added a new item to the list and we haven't yet gone five times, check it again
         while (newItem && lastRun++ < 5) {
-            System.out.println("doing recursive check #" + lastRun);
+            //System.out.println("doing recursive check #" + lastRun);
             newItem = false;
             for (int j = 0; j < checking.size() + returnable.size() + potentialRecipes.size(); j++) {
                 ArrayList<CountertopRecipe> contains;
@@ -99,7 +99,7 @@ public class CraftingManagerCountertop implements Runnable {
                                 }
                             }
                             if (recipe.matchesLists(checking, returnable)) {
-                                System.out.println("Adding new recipe we have everything for: " + recipe.getRecipeOutput().getDisplayName());
+                                //System.out.println("Adding new recipe we have everything for: " + recipe.getRecipeOutput().getDisplayName());
                                 newItem = true;
                                 returnable.add(recipe);
                             } else {

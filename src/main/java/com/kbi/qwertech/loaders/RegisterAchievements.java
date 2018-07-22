@@ -357,7 +357,7 @@ public class RegisterAchievements {
 	    				TileEntityBase07Paintable moldTE = (MultiTileEntityMold)event.world.getTileEntity(event.x, event.y, event.z);
 	    				if (moldTE.slot(0) != null && moldTE.canExtractItem2(0, moldTE.slot(0), (byte)0) && event.entityPlayer.getHeldItem() == null)
 	    				{
-	    					System.out.println("Picking up item from mold: " + moldTE.slot(0));
+	    					//System.out.println("Picking up item from mold: " + moldTE.slot(0));
 	    					if (OP.plate.contains(moldTE.slot(0))) {
 	    						issueAchievement(event.entityPlayer, "moldPlate");
 	    					} else if (OP.ingot.contains(moldTE.slot(0))) {
@@ -499,7 +499,7 @@ public class RegisterAchievements {
     		} else if (aRegistry.getNewTileEntity(result) != null) {
     			TileEntity mte = aRegistry.getNewTileEntity(result);
     			String MachineType = mte.getClass().getName();
-    			System.out.println("Crafted a" + MachineType);
+    			//System.out.println("Crafted a" + MachineType);
     			if (MachineType.equals("gregtech.tileentity.tools.MultiTileEntityMold")) {
     				issueAchievement(event.player, "craftMold");
     			} else if(MachineType.equals("gregtech.tileentity.energy.MultiTileEntityBoilerTank")) {

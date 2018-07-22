@@ -78,7 +78,7 @@ public class FOOD {
         if (!defaultValues.containsKey(item.getUnlocalizedName())) {
             defaultValues.put(item.getUnlocalizedName(), quantity);
         } else {
-            System.out.println("Default quantity already assigned for " + item.getDisplayName());
+            //System.out.println("Default quantity already assigned for " + item.getDisplayName());
         }
     }
 
@@ -87,7 +87,7 @@ public class FOOD {
         if (!defaultValues.containsKey(name)) {
             defaultValues.put(name, quantity);
         } else {
-            System.out.println("Default quantity already assigned for " + name);
+            //System.out.println("Default quantity already assigned for " + name);
         }
     }
 

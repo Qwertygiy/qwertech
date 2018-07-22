@@ -612,7 +612,7 @@ public class RegisterMobs {
 				{
 					if (((EntityLiving)event.entity).getHeldItem().getItem().equals(Items.iron_shovel) || ((EntityLiving)event.entity).getHeldItem().getItem().equals(Items.iron_sword))
 					{
-						System.out.println("Replacing vanilla zombie item");
+						//System.out.println("Replacing vanilla zombie item");
 						onMobSpawn(new LivingSpawnEvent((EntityLiving)event.entity, event.world, (float)event.entity.posX, (float)event.entity.posY, (float)event.entity.posZ));
 					}
 				}

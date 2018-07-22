@@ -107,7 +107,7 @@ public class QT_GUIHandler {
 			{
 				if (minecraft.thePlayer.ticksExisted > splats[q] + 60)
 				{
-					System.out.println("Old splat resetting");
+					//System.out.println("Old splat resetting");
 					splats[q] = 0;
 				} else {
 					new GuiSplat(Minecraft.getMinecraft(), splats[q], minecraft.thePlayer.ticksExisted, colors[q]);
@@ -118,7 +118,7 @@ public class QT_GUIHandler {
 	
 	public static void addNewSplat(short[] color)
 	{
-		System.out.println("Splat adding");
+		//System.out.println("Splat adding");
 		int minimum = splats[0];
 		int pos = 0;
 		for (int q = 0; q < 8; q++)

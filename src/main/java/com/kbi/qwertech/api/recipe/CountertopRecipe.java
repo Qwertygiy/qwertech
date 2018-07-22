@@ -202,7 +202,7 @@ public class CountertopRecipe extends ShapelessOreRecipe implements IListRecipe 
 
         //don't check our secondary if we don't have to
         if (required.isEmpty()) return true;
-        if (required.size() < input.size()) System.out.println("Still checking " + required.size() + " items for " + getRecipeOutput().getDisplayName());
+        if (required.size() < input.size()) //System.out.println("Still checking " + required.size() + " items for " + getRecipeOutput().getDisplayName());
         for (int x = 0; x < secondary.size(); x++)
         {
             CountertopRecipe intermediate = secondary.get(x);
@@ -237,7 +237,7 @@ public class CountertopRecipe extends ShapelessOreRecipe implements IListRecipe 
 
                     if (match)
                     {
-                        System.out.println("Found matching possible recipe! Now comparing inputs");
+                        //System.out.println("Found matching possible recipe! Now comparing inputs");
                         ArrayList<ItemStack> backup = new ArrayList<ItemStack>(tempInput);
                         ArrayList<Object> results = new ArrayList<Object>(intermediate.getInputList());
                         if (intermediate.matchesListsInternal(tempInput, secondary))

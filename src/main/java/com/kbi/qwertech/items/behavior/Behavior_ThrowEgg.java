@@ -21,7 +21,7 @@ public class Behavior_ThrowEgg extends gregapi.item.multiitem.behaviors.IBehavio
 			EntityPlayer aPlayer) {
 		if (!aWorld.isRemote)
 		{
-			System.out.println("TRYING TO THROW A TURKEY");
+			//System.out.println("TRYING TO THROW A TURKEY");
 			EntityEgg eggSpawn = new EntityEgg(aWorld, aPlayer);
 			eggSpawn.setAnimalType(new EntityTurkey(aWorld));
 			if (!UT.Entities.hasInfiniteItems(aPlayer)) --aStack.stackSize;
