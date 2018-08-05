@@ -1,9 +1,6 @@
 package com.kbi.qwertech;
 
-import com.kbi.qwertech.api.data.QTConfigs;
-import com.kbi.qwertech.api.data.QTI;
-import com.kbi.qwertech.api.data.QTMT;
-import com.kbi.qwertech.api.data.WOOD;
+import com.kbi.qwertech.api.data.*;
 import com.kbi.qwertech.api.recipe.AnyQTTool;
 import com.kbi.qwertech.api.recipe.RepairRecipe;
 import com.kbi.qwertech.api.recipe.WoodSpecificCrafting;
@@ -207,6 +204,7 @@ public final class QwerTech extends Abstract_Mod {
 		instance = this;
 		
 		QTMT.ChemicalX.toString();
+		COLOR.put("Black", 0);
 		
 		this.doConfigurations();
 		

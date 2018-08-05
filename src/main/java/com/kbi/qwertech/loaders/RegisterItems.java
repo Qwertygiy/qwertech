@@ -6,6 +6,7 @@ import com.kbi.qwertech.api.data.QTI;
 import com.kbi.qwertech.api.data.QTMT;
 import com.kbi.qwertech.api.registry.ArmorUpgradeRegistry;
 import com.kbi.qwertech.armor.upgrades.Upgrade_SpringBoots;
+import com.kbi.qwertech.entities.genetic.EntityPhasianidae;
 import com.kbi.qwertech.entities.neutral.EntityTurkey;
 import com.kbi.qwertech.entities.passive.EntityFrog;
 import com.kbi.qwertech.items.behavior.Behavior_Spawn;
@@ -276,7 +277,8 @@ public class RegisterItems {
 		new MultiItemRandom(QwerTech.MODID, "qwertech.animals") {@Override public void addItems() {
 			addItem(0, "Spawn Turkey", "", new Behavior_Spawn(EntityTurkey.class));
 			addItem(1, "Spawn Frog", "", new Behavior_Spawn(EntityFrog.class));
-			
+			addItem(2, "Spawn Chicken", "", new Behavior_Spawn(EntityPhasianidae.class));
+
 			addItem(1000, "Frog-in-a-Jar", "Greenie in a Bottle", new Behavior_Spawn(EntityFrog.class));
 			addItem(1001, "Chicken-in-a-Jar", "Bottle O'Birb", new Behavior_Spawn(EntityChicken.class));
 			addItem(1002, "Slime-in-a-Jar", "Greenie in a Bottle", new Behavior_Spawn(EntitySlime.class));

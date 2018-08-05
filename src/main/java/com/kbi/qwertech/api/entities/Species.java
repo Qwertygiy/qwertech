@@ -24,14 +24,14 @@ public class Species {
     public int primaryColorMax;
     public int secondaryColorMin;
     public int secondaryColorMax;
-    private IGeneticMob mobType;
+    private Class<? extends IGeneticMob> mobType;
 
-    public Species(IGeneticMob mob)
+    public Species(Class<? extends IGeneticMob> mob)
     {
         mobType = mob;
     }
 
-    public IGeneticMob getMobType()
+    public Class<? extends IGeneticMob> getMobType()
     {
         return mobType;
     }
@@ -69,7 +69,7 @@ public class Species {
         return this;
     }
 
-    public Species setSubtype(short ID, Subtype type)
+    public Species setSubtype(int ID, Subtype type)
     {
         if (subtypes[ID] == null) {
             subtypes[ID] = type;
@@ -142,22 +142,24 @@ public class Species {
         if (COLOR.colorDictionary.containsKey(color))
         {
             int colorValue = COLOR.colorDictionary.get(color);
-            int min = Math.max((colorValue >> 16 & 255) - 20, 0) << 16;
-            min = min + Math.max((colorValue >> 8 & 255) - 20, 0) << 8;
+            int min = Math.max((colorValue >> 16 & 255) - 20, 0) * (int)Math.pow(2, 16);
+            min = min + Math.max((colorValue >> 8 & 255) - 20, 0) * (int)Math.pow(2, 8);
             min = min + Math.max((colorValue & 255) - 20, 0);
 
-            int max = Math.min((colorValue >> 16 & 255) + 20, 255) << 16;
-            max = max + Math.min((colorValue >> 8 & 255) + 20, 255) << 8;
+            int max = Math.min((colorValue >> 16 & 255) + 20, 255) * (int)Math.pow(2, 16);
+            max = max + Math.min((colorValue >> 8 & 255) + 20, 255) * (int)Math.pow(2, 8);
             max = max + Math.min((colorValue & 255) + 20, 255);
             setPrimaryColors(min, max);
+        } else {
+            System.out.println("Could not find color " + color);
         }
         return this;
     }
 
     public Species setPrimaryColors(int color1, int color2)
     {
-        primaryColorMin = COLOR.getMin(color1, color2);
-        primaryColorMax = COLOR.getMax(color1, color2);
+        primaryColorMin = color1;
+        primaryColorMax = color2;
         return this;
     }
 
@@ -166,6 +168,8 @@ public class Species {
         if (COLOR.colorDictionary.containsKey(color1) && COLOR.colorDictionary.containsKey(color2))
         {
             setPrimaryColors(COLOR.colorDictionary.get(color1), COLOR.colorDictionary.get(color2));
+        } else {
+            System.out.println("Could not find both colors " + color1 + " and " + color2);
         }
         return this;
     }
@@ -175,22 +179,24 @@ public class Species {
         if (COLOR.colorDictionary.containsKey(color))
         {
             int colorValue = COLOR.colorDictionary.get(color);
-            int min = Math.max((colorValue >> 16 & 255) - 20, 0) << 16;
-            min = min + Math.max((colorValue >> 8 & 255) - 20, 0) << 8;
+            int min = Math.max((colorValue >> 16 & 255) - 20, 0) * (int)Math.pow(2, 16);
+            min = min + Math.max((colorValue >> 8 & 255) - 20, 0) * (int)Math.pow(2, 8);
             min = min + Math.max((colorValue & 255) - 20, 0);
 
-            int max = Math.min((colorValue >> 16 & 255) + 20, 255) << 16;
-            max = max + Math.min((colorValue >> 8 & 255) + 20, 255) << 8;
+            int max = Math.min((colorValue >> 16 & 255) + 20, 255) * (int)Math.pow(2, 16);
+            max = max + Math.min((colorValue >> 8 & 255) + 20, 255) * (int)Math.pow(2, 8);
             max = max + Math.min((colorValue & 255) + 20, 255);
             setSecondaryColors(min, max);
+        } else {
+            System.out.println("Could not find color " + color);
         }
         return this;
     }
 
     public Species setSecondaryColors(int color1, int color2)
     {
-        secondaryColorMin = COLOR.getMin(color1, color2);
-        secondaryColorMax = COLOR.getMax(color1, color2);
+        secondaryColorMin = color1;
+        secondaryColorMax = color2;
         return this;
     }
 
@@ -199,6 +205,8 @@ public class Species {
         if (COLOR.colorDictionary.containsKey(color1) && COLOR.colorDictionary.containsKey(color2))
         {
             setSecondaryColors(COLOR.colorDictionary.get(color1), COLOR.colorDictionary.get(color2));
+        } else {
+            System.out.println("Could not find both " + color1 + " and " + color2 + " in the color database");
         }
         return this;
     }
@@ -243,51 +251,51 @@ public class Species {
         return minLimits[7];
     }
     
-    public Species setMinSize(short size)
+    public Species setMinSize(int size)
     {
-        minLimits[0] = size;
+        minLimits[0] = (short)size;
         return this;
     }
 
-    public Species setMinStrength(short strength)
+    public Species setMinStrength(int strength)
     {
-        minLimits[1] = strength;
+        minLimits[1] = (short)strength;
         return this;
     }
 
-    public Species setMinStamina(short stamina)
+    public Species setMinStamina(int stamina)
     {
-        minLimits[2] = stamina;
+        minLimits[2] = (short)stamina;
         return this;
     }
 
-    public Species setMinSmart(short smart)
+    public Species setMinSmart(int smart)
     {
-        minLimits[3] = smart;
+        minLimits[3] = (short)smart;
         return this;
     }
 
-    public Species setMinSnarl(short snarl)
+    public Species setMinSnarl(int snarl)
     {
-        minLimits[4] = snarl;
+        minLimits[4] = (short)snarl;
         return this;
     }
 
-    public Species setMinMutable(short mutable)
+    public Species setMinMutable(int mutable)
     {
-        minLimits[5] = mutable;
+        minLimits[5] = (short)mutable;
         return this;
     }
 
-    public Species setMinFertility(short fertility)
+    public Species setMinFertility(int fertility)
     {
-        minLimits[6] = fertility;
+        minLimits[6] = (short)fertility;
         return this;
     }
 
-    public Species setMinMaturity(short maturity)
+    public Species setMinMaturity(int maturity)
     {
-        minLimits[7] = maturity;
+        minLimits[7] = (short)maturity;
         return this;
     }
 
@@ -331,51 +339,71 @@ public class Species {
         return maxLimits[7];
     }
 
-    public Species setMaxSize(short size)
+    public Species setMaxSize(int size)
     {
-        maxLimits[0] = size;
+        maxLimits[0] = (short)size;
         return this;
     }
 
-    public Species setMaxStrength(short strength)
+    public Species setMaxStrength(int strength)
     {
-        maxLimits[1] = strength;
+        maxLimits[1] = (short)strength;
         return this;
     }
 
-    public Species setMaxStamina(short stamina)
+    public Species setMaxStamina(int stamina)
     {
-        maxLimits[2] = stamina;
+        maxLimits[2] = (short)stamina;
         return this;
     }
 
-    public Species setMaxSmart(short smart)
+    public Species setMaxSmart(int smart)
     {
-        maxLimits[3] = smart;
+        maxLimits[3] = (short)smart;
         return this;
     }
 
-    public Species setMaxSnarl(short snarl)
+    public Species setMaxSnarl(int snarl)
     {
-        maxLimits[4] = snarl;
+        maxLimits[4] = (short)snarl;
         return this;
     }
 
-    public Species setMaxMutable(short mutable)
+    public Species setMaxMutable(int mutable)
     {
-        maxLimits[5] = mutable;
+        maxLimits[5] = (short)mutable;
         return this;
     }
 
-    public Species setMaxFertility(short fertility)
+    public Species setMaxFertility(int fertility)
     {
-        maxLimits[6] = fertility;
+        maxLimits[6] = (short)fertility;
         return this;
     }
 
-    public Species setMaxMaturity(short maturity)
+    public Species setMaxMaturity(int maturity)
     {
-        maxLimits[7] = maturity;
+        maxLimits[7] = (short)maturity;
         return this;
+    }
+
+    public int getPrimaryColorMin()
+    {
+        return primaryColorMin;
+    }
+
+    public int getPrimaryColorMax()
+    {
+        return primaryColorMax;
+    }
+
+    public int getSecondaryColorMin()
+    {
+        return secondaryColorMin;
+    }
+
+    public int getSecondaryColorMax()
+    {
+        return secondaryColorMax;
     }
 }

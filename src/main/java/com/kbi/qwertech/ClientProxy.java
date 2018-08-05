@@ -7,15 +7,18 @@ import com.kbi.qwertech.api.recipe.CountertopRecipe;
 import com.kbi.qwertech.api.registry.ArmorUpgradeRegistry;
 import com.kbi.qwertech.client.*;
 import com.kbi.qwertech.client.blocks.RenderCorrugated;
+import com.kbi.qwertech.client.entity.genetic.RenderGeneticEntity;
 import com.kbi.qwertech.client.entity.neutral.RenderTurkey;
 import com.kbi.qwertech.client.entity.passive.RenderFrog;
 import com.kbi.qwertech.client.entity.projectile.*;
-import com.kbi.qwertech.client.models.ModelFrog;
-import com.kbi.qwertech.client.models.ModelTurkey;
+import com.kbi.qwertech.client.models.entity.GeneticModelHandler;
+import com.kbi.qwertech.client.models.entity.ModelFrog;
+import com.kbi.qwertech.client.models.entity.ModelTurkey;
 import com.kbi.qwertech.client.tileentity.CountertopRenderer;
 import com.kbi.qwertech.client.tileentity.CraftingTable3DRenderer;
 import com.kbi.qwertech.client.tileentity.CraftingTableRenderer;
 import com.kbi.qwertech.client.tileentity.UpgradeDeskRenderer;
+import com.kbi.qwertech.entities.genetic.EntityPhasianidae;
 import com.kbi.qwertech.entities.neutral.EntityTurkey;
 import com.kbi.qwertech.entities.passive.EntityFrog;
 import com.kbi.qwertech.entities.projectile.*;
@@ -101,6 +104,7 @@ public final class ClientProxy extends CommonProxy { // NO_UCD (unused code)
 		RenderingRegistry.registerEntityRenderingHandler(EntityTurkey.class, new RenderTurkey(new ModelTurkey(), 1));
 		//RenderingRegistry.registerEntityRenderingHandler(EntityZombie.class,
 				//new RenderZombieFix());
+		RenderingRegistry.registerEntityRenderingHandler(EntityPhasianidae.class, new RenderGeneticEntity(new GeneticModelHandler(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityFrog.class, new RenderFrog(new ModelFrog(), 1));
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(CraftingTableT1.class, new CraftingTableRenderer());

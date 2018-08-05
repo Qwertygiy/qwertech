@@ -274,7 +274,7 @@ public class CraftingTableT4 extends CraftingTableT3 {
 			{
 				decrStackSize(i, 1);
 			}
-			
+
 			if (tNeeds) for (int j = 0; j < 9; j++) if (j == i) {
 				if (ST.equalTools(slot(i), slot(j), F) && slot(j).stackSize > 0) {
 					tNeeds = F;

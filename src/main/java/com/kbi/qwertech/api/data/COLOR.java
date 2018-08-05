@@ -12,84 +12,119 @@ public class COLOR {
         colorDictionary.put(name, color);
     }
 
+    public static int get(String name)
+    {
+        if (colorDictionary.containsKey(name))
+        {
+            return colorDictionary.get(name);
+        } else {
+            System.out.println("Could not find color for " + name);
+            return 0;
+        }
+    }
+
     public static int getMin(int num1, int num2)
     {
+        System.out.println("Getting minimum for " + num1 + " and " + num2);
         int returnable = 0;
-        float f1 = (num1 >> 16 & 255) / 255.0F;
-        float f2 = (num1 >> 8 & 255) / 255.0F;
-        float f3 = (num1 & 255) / 255.0F;
+        float f1 = (num1 >> 16 & 255);
+        float f2 = (num1 >> 8 & 255);
+        float f3 = (num1 & 255);
 
-        float g1 = (num2 >> 16 & 255) / 255.0F;
-        float g2 = (num2 >> 8 & 255) / 255.0F;
-        float g3 = (num2 & 255) / 255.0F;
+        float g1 = (num2 >> 16 & 255);
+        float g2 = (num2 >> 8 & 255);
+        float g3 = (num2 & 255);
 
         if (f1 < g1)
         {
-            returnable = (int)f1 << 16 & 255;
+            returnable = (int)(f1 * Math.pow(2, 16));
         } else {
-            returnable = (int)g1 << 16 & 255;
+            returnable = (int)(g1 * Math.pow(2, 16));
         }
         if (f2 < g2)
         {
-            returnable = returnable + (int)f2 << 8 & 255;
+            returnable = returnable + (int)(f2 * Math.pow(2, 8));
         } else {
-            returnable = returnable + (int)g2 << 8 & 255;
+            returnable = returnable + (int)(g2 * Math.pow(2, 8));
         }
         if (f3 < g3)
         {
-            returnable = returnable + (int)f3 & 255;
+            returnable = returnable + (int)(f3);
         } else {
-            returnable = returnable + (int)g3 & 255;
+            returnable = returnable + (int)(g3);
         }
+        System.out.println("It's " + returnable);
         return returnable;
     }
 
     public static int getMax(int num1, int num2)
     {
+        System.out.println("Getting maximum for " + num1 + " and " + num2);
         int returnable = 0;
-        float f1 = (num1 >> 16 & 255) / 255.0F;
-        float f2 = (num1 >> 8 & 255) / 255.0F;
-        float f3 = (num1 & 255) / 255.0F;
+        float f1 = (num1 >> 16 & 255);
+        float f2 = (num1 >> 8 & 255);
+        float f3 = (num1 & 255);
 
-        float g1 = (num2 >> 16 & 255) / 255.0F;
-        float g2 = (num2 >> 8 & 255) / 255.0F;
-        float g3 = (num2 & 255) / 255.0F;
+        float g1 = (num2 >> 16 & 255);
+        float g2 = (num2 >> 8 & 255);
+        float g3 = (num2 & 255);
 
         if (f1 > g1)
         {
-            returnable = (int)f1 << 16 & 255;
+            returnable = (int)(f1 * Math.pow(2, 16));
         } else {
-            returnable = (int)g1 << 16 & 255;
+            returnable = (int)(g1 * Math.pow(2, 16));
         }
         if (f2 > g2)
         {
-            returnable = returnable + (int)f2 << 8 & 255;
+            returnable = returnable + (int)(f2 * Math.pow(2, 8));
         } else {
-            returnable = returnable + (int)g2 << 8 & 255;
+            returnable = returnable + (int)(g2 * Math.pow(2, 8));
         }
         if (f3 > g3)
         {
-            returnable = returnable + (int)f3 & 255;
+            returnable = returnable + (int)(f3);
         } else {
-            returnable = returnable + (int)g3 & 255;
+            returnable = returnable + (int)(g3);
         }
+        System.out.println("It's " + returnable);
+        return returnable;
+    }
+
+    public static int getPercentageShift(int low, int high, float percentage)
+    {
+        if (percentage > 1.0F) percentage = percentage * 0.01F;
+        int returnable = 0;
+        short f1 = (short)(low >> 16 & 255);
+        short f2 = (short)((low >> 8 & 255));
+        short f3 = (short)((low & 255));
+
+        short g1 = (short)((high >> 16 & 255));
+        short g2 = (short)((high >> 8 & 255));
+        short g3 = (short)((high & 255));
+
+        int h1 = g1 - f1;
+        int h2 = g2 - f2;
+        int h3 = g3 - f3;
+        returnable = (f1 + (int)(h1 * percentage)) * (int)Math.pow(2, 16);
+        returnable = returnable + (f2 + (int)(h2 * percentage)) * (int)Math.pow(2, 8);
+        returnable = returnable + (f3 + (int)(h3 * percentage));
         return returnable;
     }
 
     public static int getRandom(int low, int high)
     {
-        int returnable = 0;
-        short f1 = (short)((low >> 16 & 255) / 255);
-        short f2 = (short)((low >> 8 & 255) / 255);
-        short f3 = (short)((low & 255) / 255);
+        System.out.println("Randomly choosing between " + low + " and " + high);
+        int returnable = getPercentageShift(low, high, CS.RNGSUS.nextFloat());
+        System.out.println("It's " + returnable);
+        return returnable;
+    }
 
-        short g1 = (short)((high >> 16 & 255) / 255);
-        short g2 = (short)((high >> 8 & 255) / 255);
-        short g3 = (short)((high & 255) / 255);
-
-        returnable = (CS.RNGSUS.nextInt(g1 - f1) + f1) << 16 & 255;
-        returnable = returnable + (CS.RNGSUS.nextInt(g2 - f2) + f2) << 8 & 255;
-        returnable = returnable + (CS.RNGSUS.nextInt(g3 - f3) + f3) & 255;
+    public static int make(int red, int green, int blue)
+    {
+        int returnable = red * (int)Math.pow(2, 16);
+        returnable = returnable + (green * (int)Math.pow(2, 8));
+        returnable = returnable + blue;
         return returnable;
     }
 

@@ -273,7 +273,7 @@ public class MobGearRegistry {
 		{
 			if (removerble.contains(item))
 			{
-				List<ItemStack> collection = new ArrayList();
+				List<ItemStack> collection = new ArrayList<ItemStack>();
 				collection.add(item);
 				removerble.removeAll(collection);
 				return true;
@@ -318,7 +318,7 @@ public class MobGearRegistry {
 		{
 			return returnable;
 		} else {
-			return new ArrayList();
+			return new ArrayList<ItemStack>();
 		}
 	}
 	
@@ -334,7 +334,7 @@ public class MobGearRegistry {
 		{
 			if (returner.size() > 0)
 			{
-				return returner.get(CS.RANDOM.nextInt(returner.size()));
+				return returner.get(CS.RANDOM.nextInt(returner.size())).copy();
 			}
 		}
 		return null;

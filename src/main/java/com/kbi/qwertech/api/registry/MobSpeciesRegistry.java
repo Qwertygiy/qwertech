@@ -67,7 +67,7 @@ public class MobSpeciesRegistry {
         }
     }
 
-    public static boolean addSpecies(Class<? extends IGeneticMob> mobType, short ID, Species species)
+    public static boolean addSpecies(Class<? extends IGeneticMob> mobType, int ID, Species species)
     {
         Species[] toAdd = getSpeciesList(mobType);
         if (toAdd[ID] == null)

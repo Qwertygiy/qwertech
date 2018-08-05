@@ -8,6 +8,7 @@ import com.kbi.qwertech.api.registry.MobBreedRegistry;
 import com.kbi.qwertech.api.registry.MobGearRegistry;
 import com.kbi.qwertech.api.registry.MobScrapeRegistry;
 import com.kbi.qwertech.entities.ai.*;
+import com.kbi.qwertech.entities.genetic.EntityPhasianidae;
 import com.kbi.qwertech.entities.neutral.EntityTurkey;
 import com.kbi.qwertech.entities.passive.EntityFrog;
 import com.kbi.qwertech.entities.projectile.*;
@@ -109,6 +110,10 @@ public class RegisterMobs {
 			EntityRegistry.addSpawn(EntityFrog.class, 10, 2, 4, EnumCreatureType.creature, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.WET));
 			EntityRegistry.addSpawn(EntityFrog.class, 10, 2, 4, EnumCreatureType.creature, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.LUSH));
 		}
+
+		/*begin genetic mobs*/
+		EntityRegistry.registerModEntity(EntityPhasianidae.class, "phasianidae", 10, QwerTech.instance, 80, 3, true);
+		RegisterSpecies.begin();
 	}
 	
 	private static void registerLures()

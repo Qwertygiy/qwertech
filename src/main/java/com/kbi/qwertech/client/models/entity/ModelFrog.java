@@ -1,4 +1,4 @@
-package com.kbi.qwertech.client.models;
+package com.kbi.qwertech.client.models.entity;
 
 import com.kbi.qwertech.entities.passive.EntityFrog;
 import net.minecraft.client.model.ModelBase;

@@ -2,6 +2,8 @@ package com.kbi.qwertech.api.entities;
 
 import com.kbi.qwertech.api.data.COLOR;
 import com.kbi.qwertech.api.registry.MobSpeciesRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 
@@ -19,6 +21,7 @@ public class Subtype {
 
     private String primaryTexture;
     private String secondaryTexture;
+    private String overlayTexture;
     private String commonName;
     private boolean isNatural;
     private final Species assignedSpecies;
@@ -27,6 +30,24 @@ public class Subtype {
     public Subtype(Species species)
     {
         assignedSpecies = species;
+    }
+
+    private Object model;
+
+    @SideOnly(Side.CLIENT)
+    public net.minecraft.client.model.ModelBase getModel()
+    {
+        if (model != null) {
+            return (net.minecraft.client.model.ModelBase) model;
+        }
+        return assignedSpecies.getModel();
+    }
+
+    @SideOnly(Side.CLIENT)
+    public Subtype setModel(net.minecraft.client.model.ModelBase modelType)
+    {
+        model = modelType;
+        return this;
     }
 
     public Subtype addBiome(BiomeGenBase biome)
@@ -41,7 +62,7 @@ public class Subtype {
             }
             thisBiome.add(this);
             assignedSpecies.spawnMap.put(biome, thisBiome);
-            MobSpeciesRegistry.addBiomeForSpecies(assignedSpecies.getMobType().getClass(), assignedSpecies, biome);
+            MobSpeciesRegistry.addBiomeForSpecies(assignedSpecies.getMobType(), assignedSpecies, biome);
         }
         return this;
     }
@@ -61,7 +82,7 @@ public class Subtype {
                 }
                 thisBiome.add(this);
                 assignedSpecies.spawnMap.put(results[q], thisBiome);
-                MobSpeciesRegistry.addBiomeForSpecies(assignedSpecies.getMobType().getClass(), assignedSpecies, results[q]);
+                MobSpeciesRegistry.addBiomeForSpecies(assignedSpecies.getMobType(), assignedSpecies, results[q]);
             }
         }
         return this;
@@ -174,22 +195,24 @@ public class Subtype {
         if (COLOR.colorDictionary.containsKey(color))
         {
             int colorValue = COLOR.colorDictionary.get(color);
-            int min = Math.max((colorValue >> 16 & 255) - 20, 0) << 16;
-            min = min + Math.max((colorValue >> 8 & 255) - 20, 0) << 8;
+            int min = Math.max((colorValue >> 16 & 255) - 20, 0) * (int)Math.pow(2, 16);
+            min = min + Math.max((colorValue >> 8 & 255) - 20, 0) * (int)Math.pow(2, 8);
             min = min + Math.max((colorValue & 255) - 20, 0);
 
-            int max = Math.min((colorValue >> 16 & 255) + 20, 255) << 16;
-            max = max + Math.min((colorValue >> 8 & 255) + 20, 255) << 8;
+            int max = Math.min((colorValue >> 16 & 255) + 20, 255) * (int)Math.pow(2, 16);
+            max = max + Math.min((colorValue >> 8 & 255) + 20, 255) * (int)Math.pow(2, 8);
             max = max + Math.min((colorValue & 255) + 20, 255);
             setPrimaryColors(min, max);
+        } else {
+            System.out.println("Could not find color " + color);
         }
         return this;
     }
 
     public Subtype setPrimaryColors(int color1, int color2)
     {
-        primaryColorMin = COLOR.getMin(color1, color2);
-        primaryColorMax = COLOR.getMax(color1, color2);
+        primaryColorMin = color1;
+        primaryColorMax = color2;
         return this;
     }
 
@@ -198,6 +221,8 @@ public class Subtype {
         if (COLOR.colorDictionary.containsKey(color1) && COLOR.colorDictionary.containsKey(color2))
         {
             setPrimaryColors(COLOR.colorDictionary.get(color1), COLOR.colorDictionary.get(color2));
+        } else {
+            System.out.println("Could not find both " + color1 + " and " + color2);
         }
         return this;
     }
@@ -207,22 +232,24 @@ public class Subtype {
         if (COLOR.colorDictionary.containsKey(color))
         {
             int colorValue = COLOR.colorDictionary.get(color);
-            int min = Math.max((colorValue >> 16 & 255) - 20, 0) << 16;
-            min = min + Math.max((colorValue >> 8 & 255) - 20, 0) << 8;
+            int min = Math.max((colorValue >> 16 & 255) - 20, 0) * (int)Math.pow(2, 16);
+            min = min + Math.max((colorValue >> 8 & 255) - 20, 0) * (int)Math.pow(2, 8);
             min = min + Math.max((colorValue & 255) - 20, 0);
 
-            int max = Math.min((colorValue >> 16 & 255) + 20, 255) << 16;
-            max = max + Math.min((colorValue >> 8 & 255) + 20, 255) << 8;
+            int max = Math.min((colorValue >> 16 & 255) + 20, 255) * (int)Math.pow(2, 16);
+            max = max + Math.min((colorValue >> 8 & 255) + 20, 255) * (int)Math.pow(2, 8);
             max = max + Math.min((colorValue & 255) + 20, 255);
             setSecondaryColors(min, max);
+        } else {
+            System.out.println("Could not find color " + color);
         }
         return this;
     }
 
     public Subtype setSecondaryColors(int color1, int color2)
     {
-        secondaryColorMin = COLOR.getMin(color1, color2);
-        secondaryColorMax = COLOR.getMax(color1, color2);
+        secondaryColorMin = color1;
+        secondaryColorMax = color2;
         return this;
     }
 
@@ -231,6 +258,8 @@ public class Subtype {
         if (COLOR.colorDictionary.containsKey(color1) && COLOR.colorDictionary.containsKey(color2))
         {
             setSecondaryColors(COLOR.colorDictionary.get(color1), COLOR.colorDictionary.get(color2));
+        } else {
+            System.out.println("Could not find both " + color1 + " and " + color2 + " in the color database");
         }
         return this;
     }
@@ -254,6 +283,22 @@ public class Subtype {
     public Subtype setSecondaryTexture(String sT)
     {
         secondaryTexture = sT;
+        return this;
+    }
+
+    public String getOverlayTexture() { return overlayTexture;}
+
+    public Subtype setOverlayTexture(String oT)
+    {
+        overlayTexture = oT;
+        return this;
+    }
+
+    public Subtype setTexturePath(String tP)
+    {
+        primaryTexture = tP + "_primary.png";
+        secondaryTexture = tP + "_secondary.png";
+        overlayTexture = tP + "_overlay.png";
         return this;
     }
 
@@ -297,61 +342,61 @@ public class Subtype {
         return minLimits[7];
     }
 
-    public short getMinPrimaryColor()
+    public int getMinPrimaryColor()
     {
-        return minLimits[8];
+        return primaryColorMin;
     }
 
-    public short getMinSecondaryColor()
+    public int getMinSecondaryColor()
     {
-        return minLimits[9];
+        return secondaryColorMin;
     }
 
-    public Subtype setMinSize(short size)
+    public Subtype setMinSize(int size)
     {
-        minLimits[0] = size;
+        minLimits[0] = (short)size;
         return this;
     }
 
-    public Subtype setMinStrength(short strength)
+    public Subtype setMinStrength(int strength)
     {
-        minLimits[1] = strength;
+        minLimits[1] = (short)strength;
         return this;
     }
 
-    public Subtype setMinStamina(short stamina)
+    public Subtype setMinStamina(int stamina)
     {
-        minLimits[2] = stamina;
+        minLimits[2] = (short)stamina;
         return this;
     }
 
-    public Subtype setMinSmart(short smart)
+    public Subtype setMinSmart(int smart)
     {
-        minLimits[3] = smart;
+        minLimits[3] = (short)smart;
         return this;
     }
 
-    public Subtype setMinSnarl(short snarl)
+    public Subtype setMinSnarl(int snarl)
     {
-        minLimits[4] = snarl;
+        minLimits[4] = (short)snarl;
         return this;
     }
 
-    public Subtype setMinMutable(short mutable)
+    public Subtype setMinMutable(int mutable)
     {
-        minLimits[5] = mutable;
+        minLimits[5] = (short)mutable;
         return this;
     }
 
-    public Subtype setMinFertility(short fertility)
+    public Subtype setMinFertility(int fertility)
     {
-        minLimits[6] = fertility;
+        minLimits[6] = (short)fertility;
         return this;
     }
 
-    public Subtype setMinMaturity(short maturity)
+    public Subtype setMinMaturity(int maturity)
     {
-        minLimits[7] = maturity;
+        minLimits[7] = (short)maturity;
         return this;
     }
 
@@ -396,61 +441,61 @@ public class Subtype {
         return maxLimits[7];
     }
 
-    public short getMaxPrimaryColor()
+    public int getMaxPrimaryColor()
     {
-        return maxLimits[8];
+        return primaryColorMax;
     }
 
-    public short getMaxSecondaryColor()
+    public int getMaxSecondaryColor()
     {
-        return maxLimits[9];
+        return secondaryColorMax;
     }
 
-    public Subtype setMaxSize(short size)
+    public Subtype setMaxSize(int size)
     {
-        maxLimits[0] = size;
+        maxLimits[0] = (short)size;
         return this;
     }
 
-    public Subtype setMaxStrength(short strength)
+    public Subtype setMaxStrength(int strength)
     {
-        maxLimits[1] = strength;
+        maxLimits[1] = (short)strength;
         return this;
     }
 
-    public Subtype setMaxStamina(short stamina)
+    public Subtype setMaxStamina(int stamina)
     {
-        maxLimits[2] = stamina;
+        maxLimits[2] = (short)stamina;
         return this;
     }
 
-    public Subtype setMaxSmart(short smart)
+    public Subtype setMaxSmart(int smart)
     {
-        maxLimits[3] = smart;
+        maxLimits[3] = (short)smart;
         return this;
     }
 
-    public Subtype setMaxSnarl(short snarl)
+    public Subtype setMaxSnarl(int snarl)
     {
-        maxLimits[4] = snarl;
+        maxLimits[4] = (short)snarl;
         return this;
     }
 
-    public Subtype setMaxMutable(short mutable)
+    public Subtype setMaxMutable(int mutable)
     {
-        maxLimits[5] = mutable;
+        maxLimits[5] = (short)mutable;
         return this;
     }
 
-    public Subtype setMaxFertility(short fertility)
+    public Subtype setMaxFertility(int fertility)
     {
-        maxLimits[6] = fertility;
+        maxLimits[6] = (short)fertility;
         return this;
     }
 
-    public Subtype setMaxMaturity(short maturity)
+    public Subtype setMaxMaturity(int maturity)
     {
-        maxLimits[7] = maturity;
+        maxLimits[7] = (short)maturity;
         return this;
     }
 }

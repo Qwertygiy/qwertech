@@ -1,13 +1,11 @@
-package com.kbi.qwertech.client.models;
+package com.kbi.qwertech.client.models.entity;
 
+import com.kbi.qwertech.entities.neutral.EntityTurkey;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
-
 import org.lwjgl.opengl.GL11;
-
-import com.kbi.qwertech.entities.neutral.EntityTurkey;
 
 /**
  * ModelTurkey - Qwertygiy
