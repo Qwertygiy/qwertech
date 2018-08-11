@@ -237,6 +237,10 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
         return 2;
     }
 
+    @Override
+    public boolean wrenchCanSetFacing(EntityPlayer aPlayer, int aSide) {
+        return aSide != CS.SIDE_TOP && super.wrenchCanSetFacing(aPlayer, aSide);
+    }
 
     @Override
     public boolean canDrop(int i) {
