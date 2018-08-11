@@ -268,7 +268,7 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob {
         short returnable = this.dataWatcher.getWatchableObjectShort(20);
         if (returnable != data[0]) {
             data[0] = returnable;
-            this.setSize((float) Math.sqrt(returnable * 0.0001), (float) Math.sqrt(returnable * 0.0002));
+            this.setSize((float)(returnable * 0.0001), (float)(returnable * 0.0002));
         }
         return returnable;
     }
@@ -334,7 +334,7 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob {
     public void setSize(short size) {
         data[0] = size;
         this.dataWatcher.updateObject(20, size);
-        this.setSize((float) Math.sqrt(size * 0.0001), (float) Math.sqrt(size * 0.0002));
+        this.setSize((float)(size * 0.0001), (float)(size * 0.0002));
     }
 
     @Override

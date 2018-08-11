@@ -42,11 +42,6 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 
 import java.util.*;
 
-/**
- * @author Max Mustermann
- * 
- * An example implementation for a Clientside Proxy using my System.
- */
 public final class ClientProxy extends CommonProxy { // NO_UCD (unused code)
 	// Insert your Clientside-only implementation of Stuff here
 	
@@ -101,11 +96,11 @@ public final class ClientProxy extends CommonProxy { // NO_UCD (unused code)
 		RenderingRegistry.registerEntityRenderingHandler(EntityShuriken.class,
 				new RenderEntityShuriken());
 		RenderingRegistry.registerEntityRenderingHandler(EntityEgg.class, new RenderEntityEgg());
-		RenderingRegistry.registerEntityRenderingHandler(EntityTurkey.class, new RenderTurkey(new ModelTurkey(), 1));
+		RenderingRegistry.registerEntityRenderingHandler(EntityTurkey.class, new RenderTurkey(new ModelTurkey(), 0.8F));
 		//RenderingRegistry.registerEntityRenderingHandler(EntityZombie.class,
 				//new RenderZombieFix());
 		RenderingRegistry.registerEntityRenderingHandler(EntityPhasianidae.class, new RenderGeneticEntity(new GeneticModelHandler(), 1));
-		RenderingRegistry.registerEntityRenderingHandler(EntityFrog.class, new RenderFrog(new ModelFrog(), 1));
+		RenderingRegistry.registerEntityRenderingHandler(EntityFrog.class, new RenderFrog(new ModelFrog(), 0.5F));
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(CraftingTableT1.class, new CraftingTableRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(CraftingTableT2.class, new CraftingTableRenderer());
