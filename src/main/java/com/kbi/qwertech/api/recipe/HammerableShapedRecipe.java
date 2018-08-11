@@ -176,7 +176,6 @@ public class HammerableShapedRecipe implements IRecipe, ICraftingRecipeGT {
      */
 	@Override
 	public ItemStack getCraftingResult(InventoryCrafting p_77572_1_) {
-		// TODO Auto-generated method stub
 		return outputPrefix.mat(tempPrimary == null || tempPrimary == MT.NULL ? QTMT.Undefined : tempPrimary, outputAmount);
 	}
 
@@ -280,13 +279,16 @@ public class HammerableShapedRecipe implements IRecipe, ICraftingRecipeGT {
 	                {
 	                	OreDictItemData tData = OM.data(slot);
 	                	OreDictItemData oData = (OreDictItemData)target;
-	                	if (tData != null && oData.mPrefix == tData.mPrefix)
-						{
-							if (!compareMats(oData.mMaterial.mMaterial, tData.mMaterial.mMaterial))
-							{
-								return false;
-							}
-						}
+
+	                	if (tData == null || oData.mPrefix != tData.mPrefix) {
+                            return false;
+	                	}
+
+	                	if (!compareMats(oData.mMaterial.mMaterial, tData.mMaterial.mMaterial))
+	                	{
+	                	    return false;
+	                	}
+
 	                }
 	            }
 	        }

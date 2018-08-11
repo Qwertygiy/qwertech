@@ -55,6 +55,12 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob {
         }
     }
 
+    @Override
+    public float getShadowSize()
+    {
+        return this.height * 0.5F;
+    }
+
     public EntityPhasianidae(World world, short aSpecies, short aSubtype)
     {
         super(world);
@@ -194,7 +200,7 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob {
             super.fall(p_70069_1_);
         } else {
             p_70069_1_ = ForgeHooks.onLivingFall(this, p_70069_1_);
-            if (p_70069_1_ <= 0) return;
+            if (p_70069_1_ <= 1) return;
             //super.fall(p_70069_1_);
             PotionEffect potioneffect = this.getActivePotionEffect(Potion.jump);
             float f1 = potioneffect != null ? (float)(potioneffect.getAmplifier() + 1) : 0.0F;
@@ -239,12 +245,6 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob {
     @Override
     protected boolean canDespawn() {
         return false;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public float getShadowSize() {
-        return (float)Math.sqrt(getSize() * 0.0001F);
     }
 
     @Override

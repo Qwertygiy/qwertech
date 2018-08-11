@@ -28,15 +28,15 @@ public class GeneticModelHandler extends ModelBase {
         Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(t.getPrimaryTexture()));
         int pc = igm.getPrimaryColor();
         GL11.glColor3f((pc >> 16 & 255) / 255.0F, (pc >> 8 & 255) / 255.0F,(pc & 255) / 255.0F);
-        s.getModel().render(p_78088_1_, p_78088_2_, p_78088_3_, p_78088_4_, p_78088_5_, p_78088_6_, p_78088_7_);
+        t.getModel().render(p_78088_1_, p_78088_2_, p_78088_3_, p_78088_4_, p_78088_5_, p_78088_6_, p_78088_7_);
         GL11.glColor3f(1F, 1F, 1F);
         Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(t.getSecondaryTexture()));
         pc = igm.getSecondaryColor();
         GL11.glColor3f((pc >> 16 & 255) / 255.0F, (pc >> 8 & 255) / 255.0F,(pc & 255) / 255.0F);
-        s.getModel().render(p_78088_1_, p_78088_2_, p_78088_3_, p_78088_4_, p_78088_5_, p_78088_6_, p_78088_7_);
+        t.getModel().render(p_78088_1_, p_78088_2_, p_78088_3_, p_78088_4_, p_78088_5_, p_78088_6_, p_78088_7_);
         GL11.glColor3f(1F, 1F, 1F);
         Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(t.getOverlayTexture()));
-        s.getModel().render(p_78088_1_, p_78088_2_, p_78088_3_, p_78088_4_, p_78088_5_, p_78088_6_, p_78088_7_);
+        t.getModel().render(p_78088_1_, p_78088_2_, p_78088_3_, p_78088_4_, p_78088_5_, p_78088_6_, p_78088_7_);
 
     }
 
@@ -49,7 +49,8 @@ public class GeneticModelHandler extends ModelBase {
     public void setRotationAngles(float p_78087_1_, float p_78087_2_, float p_78087_3_, float p_78087_4_, float p_78087_5_, float p_78087_6_, Entity p_78087_7_) {
         IGeneticMob igm = (IGeneticMob)p_78087_7_;
         Species s = MobSpeciesRegistry.getSpecies(igm.getClass(), igm.getSpeciesID());
-        s.getModel().setRotationAngles(p_78087_1_, p_78087_2_, p_78087_3_, p_78087_4_, p_78087_5_, p_78087_6_, p_78087_7_);
+        Subtype t = s.getSubtype(igm.getSubtypeID());
+        t.getModel().setRotationAngles(p_78087_1_, p_78087_2_, p_78087_3_, p_78087_4_, p_78087_5_, p_78087_6_, p_78087_7_);
     }
 
     /**
@@ -60,7 +61,8 @@ public class GeneticModelHandler extends ModelBase {
     public void setLivingAnimations(EntityLivingBase p_78086_1_, float p_78086_2_, float p_78086_3_, float p_78086_4_) {
         IGeneticMob igm = (IGeneticMob)p_78086_1_;
         Species s = MobSpeciesRegistry.getSpecies(igm.getClass(), igm.getSpeciesID());
-        s.getModel().setLivingAnimations(p_78086_1_, p_78086_2_, p_78086_3_, p_78086_4_);
+        Subtype t = s.getSubtype(igm.getSubtypeID());
+        t.getModel().setLivingAnimations(p_78086_1_, p_78086_2_, p_78086_3_, p_78086_4_);
     }
 
 }
