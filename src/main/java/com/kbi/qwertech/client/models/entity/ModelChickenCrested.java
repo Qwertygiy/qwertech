@@ -3,6 +3,8 @@ package com.kbi.qwertech.client.models.entity;
 import net.minecraft.client.model.ModelChicken;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.MathHelper;
+import org.lwjgl.opengl.GL11;
 
 /**
  * ModelRhodeIslandRed - Qwertygiy
@@ -23,14 +25,14 @@ public class ModelChickenCrested extends ModelChicken {
         this.tail.addBox(-3.01F, 0.0F, -0.5F, 6, 3, 1, 0.0F);
         this.setRotateAngle(tail, 2.0943951023931953F, 0.0F, 0.0F);
         this.rightWing = new ModelRenderer(this, 24, 13);
-        this.rightWing.setRotationPoint(-4.0F, 13.0F, 0.0F);
+        this.rightWing.setRotationPoint(-3.5F, 13.0F, 0.0F);
         this.rightWing.addBox(0.0F, 0.0F, -3.0F, 1, 4, 6, 0.0F);
         this.body = new ModelRenderer(this, 0, 9);
         this.body.setRotationPoint(0.0F, 16.0F, 0.0F);
         this.body.addBox(-3.0F, -4.0F, -3.0F, 6, 8, 6, 0.0F);
         this.setRotateAngle(body, 1.5707963705062866F, 0.0F, 0.0F);
         this.leftWing = new ModelRenderer(this, 24, 13);
-        this.leftWing.setRotationPoint(4.0F, 13.0F, 0.0F);
+        this.leftWing.setRotationPoint(3.5F, 13.0F, 0.0F);
         this.leftWing.addBox(-1.0F, 0.0F, -3.0F, 1, 4, 6, 0.0F);
         this.head = new ModelRenderer(this, 0, 0);
         this.head.setRotationPoint(0.0F, 15.0F, -4.0F);
@@ -53,16 +55,60 @@ public class ModelChickenCrested extends ModelChicken {
 
     @Override
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
-        this.bill.render(f5);
-        this.tail.render(f5);
-        this.rightWing.render(f5);
-        this.body.render(f5);
-        this.leftWing.render(f5);
-        this.head.render(f5);
-        this.leftLeg.render(f5);
-        this.crest.render(f5);
-        this.rightLeg.render(f5);
-        this.chin.render(f5);
+        this.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+
+        if (this.isChild)
+        {
+            float f6 = 2.0F;
+            GL11.glPushMatrix();
+            GL11.glTranslatef(0.0F, 5.0F * f5, 2.0F * f5);
+            this.head.render(f5);
+            this.bill.render(f5);
+            this.chin.render(f5);
+            GL11.glPopMatrix();
+            GL11.glPushMatrix();
+            GL11.glScalef(1.0F / f6, 1.0F / f6, 1.0F / f6);
+            GL11.glTranslatef(0.0F, 24.0F * f5, 0.0F);
+            this.body.render(f5);
+            this.rightLeg.render(f5);
+            this.leftLeg.render(f5);
+            this.rightWing.render(f5);
+            this.leftWing.render(f5);
+            this.tail.render(f5);
+            GL11.glPopMatrix();
+        }
+        else {
+            this.bill.render(f5);
+            this.tail.render(f5);
+            this.rightWing.render(f5);
+            this.body.render(f5);
+            this.leftWing.render(f5);
+            this.head.render(f5);
+            this.leftLeg.render(f5);
+            this.crest.render(f5);
+            this.rightLeg.render(f5);
+            this.chin.render(f5);
+        }
+    }
+
+    @Override
+    public void setRotationAngles(float p_78087_1_, float p_78087_2_, float p_78087_3_, float p_78087_4_, float p_78087_5_, float p_78087_6_, Entity p_78087_7_)
+    {
+        this.head.rotateAngleX = p_78087_5_ / (180F / (float)Math.PI);
+        this.head.rotateAngleY = p_78087_4_ / (180F / (float)Math.PI);
+        this.bill.rotateAngleX = this.head.rotateAngleX;
+        this.bill.rotateAngleY = this.head.rotateAngleY;
+        this.chin.rotateAngleX = this.head.rotateAngleX;
+        this.chin.rotateAngleY = this.head.rotateAngleY;
+        this.crest.rotateAngleX = this.head.rotateAngleX;
+        this.crest.rotateAngleY = this.head.rotateAngleY;
+        this.body.rotateAngleX = ((float)Math.PI / 2F);
+        this.rightLeg.rotateAngleX = MathHelper.cos(p_78087_1_ * 0.6662F) * 1.4F * p_78087_2_;
+        this.leftLeg.rotateAngleX = MathHelper.cos(p_78087_1_ * 0.6662F + (float)Math.PI) * 1.4F * p_78087_2_;
+        this.rightWing.rotateAngleZ = MathHelper.cos(p_78087_1_ * 0.666F) * 1.4F * p_78087_2_;
+        if (this.rightWing.rotateAngleZ < 0) this.rightWing.rotateAngleZ *= -1F;
+        this.leftWing.rotateAngleZ = MathHelper.cos(p_78087_1_ * 0.666F + (float)Math.PI) * 1.4F * p_78087_2_;
+        if (this.leftWing.rotateAngleZ > 0) this.leftWing.rotateAngleZ *= -1F;
     }
 
     /**

@@ -8,11 +8,16 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Subtype {
+
+    private HashMap<String, Object> extraTags = new HashMap<String, Object>();
+
     public short[] minLimits = new short[8];
     public short[] maxLimits = new short[8];
+    public short[] preferred = new short[8];
     public String[] sounds = new String[5];
     public int primaryColorMin;
     public int primaryColorMax;
@@ -302,6 +307,70 @@ public class Subtype {
         return this;
     }
 
+    public Subtype setSize(int min, int pref, int max)
+    {
+        minLimits[0] = (short)min;
+        preferred[0] = (short)pref;
+        maxLimits[0] = (short)max;
+        return this;
+    }
+
+    public Subtype setStrength(int min, int pref, int max)
+    {
+        minLimits[1] = (short)min;
+        preferred[1] = (short)pref;
+        maxLimits[1] = (short)max;
+        return this;
+    }
+
+    public Subtype setStamina(int min, int pref, int max)
+    {
+        minLimits[2] = (short)min;
+        preferred[2] = (short)pref;
+        maxLimits[2] = (short)max;
+        return this;
+    }
+
+    public Subtype setSmart(int min, int pref, int max)
+    {
+        minLimits[3] = (short)min;
+        preferred[3] = (short)pref;
+        maxLimits[3] = (short)max;
+        return this;
+    }
+
+    public Subtype setSnarl(int min, int pref, int max)
+    {
+        minLimits[4] = (short)min;
+        preferred[4] = (short)pref;
+        maxLimits[4] = (short)max;
+        return this;
+    }
+
+    public Subtype setMutable(int min, int pref, int max)
+    {
+        minLimits[5] = (short)min;
+        preferred[5] = (short)pref;
+        maxLimits[5] = (short)max;
+        return this;
+    }
+
+    public Subtype setFertility(int min, int pref, int max)
+    {
+        minLimits[6] = (short)min;
+        preferred[6] = (short)pref;
+        maxLimits[6] = (short)max;
+        return this;
+    }
+
+    public Subtype setMaturity(int min, int pref, int max)
+    {
+        minLimits[7] = (short)min;
+        preferred[7] = (short)pref;
+        maxLimits[7] = (short)max;
+        return this;
+    }
+
     public short getMinSize()
     {
         return minLimits[0];
@@ -352,54 +421,14 @@ public class Subtype {
         return secondaryColorMin;
     }
 
-    public Subtype setMinSize(int size)
-    {
-        minLimits[0] = (short)size;
-        return this;
-    }
-
-    public Subtype setMinStrength(int strength)
-    {
-        minLimits[1] = (short)strength;
-        return this;
-    }
-
-    public Subtype setMinStamina(int stamina)
-    {
-        minLimits[2] = (short)stamina;
-        return this;
-    }
-
-    public Subtype setMinSmart(int smart)
-    {
-        minLimits[3] = (short)smart;
-        return this;
-    }
-
-    public Subtype setMinSnarl(int snarl)
-    {
-        minLimits[4] = (short)snarl;
-        return this;
-    }
-
-    public Subtype setMinMutable(int mutable)
-    {
-        minLimits[5] = (short)mutable;
-        return this;
-    }
-
-    public Subtype setMinFertility(int fertility)
-    {
-        minLimits[6] = (short)fertility;
-        return this;
-    }
-
-    public Subtype setMinMaturity(int maturity)
-    {
-        minLimits[7] = (short)maturity;
-        return this;
-    }
-
+    public short getPrefSize() { return preferred[0]; }
+    public short getPrefStrength() { return preferred[1]; }
+    public short getPrefStamina() { return preferred[2]; }
+    public short getPrefSmart() { return preferred[3]; }
+    public short getPrefSnarl() { return preferred[4]; }
+    public short getPrefMutable() { return preferred[5]; }
+    public short getPrefFertility() { return preferred[6]; }
+    public short getPrefMaturity() { return preferred[7]; }
 
     public short getMaxSize()
     {
@@ -451,51 +480,24 @@ public class Subtype {
         return secondaryColorMax;
     }
 
-    public Subtype setMaxSize(int size)
+    public boolean hasTag(String tag)
     {
-        maxLimits[0] = (short)size;
+        return extraTags.containsKey(tag);
+    }
+
+    public Subtype addTag(String tag, Object obby)
+    {
+        extraTags.put(tag, obby);
         return this;
     }
 
-    public Subtype setMaxStrength(int strength)
+    public Object getTag(String tag)
     {
-        maxLimits[1] = (short)strength;
-        return this;
+        if (extraTags.containsKey(tag))
+        {
+            return extraTags.get(tag);
+        }
+        return null;
     }
 
-    public Subtype setMaxStamina(int stamina)
-    {
-        maxLimits[2] = (short)stamina;
-        return this;
-    }
-
-    public Subtype setMaxSmart(int smart)
-    {
-        maxLimits[3] = (short)smart;
-        return this;
-    }
-
-    public Subtype setMaxSnarl(int snarl)
-    {
-        maxLimits[4] = (short)snarl;
-        return this;
-    }
-
-    public Subtype setMaxMutable(int mutable)
-    {
-        maxLimits[5] = (short)mutable;
-        return this;
-    }
-
-    public Subtype setMaxFertility(int fertility)
-    {
-        maxLimits[6] = (short)fertility;
-        return this;
-    }
-
-    public Subtype setMaxMaturity(int maturity)
-    {
-        maxLimits[7] = (short)maturity;
-        return this;
-    }
 }

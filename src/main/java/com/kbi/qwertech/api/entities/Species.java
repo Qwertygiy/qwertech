@@ -13,6 +13,8 @@ public class Species {
     public Subtype[] subtypes = new Subtype[Short.MAX_VALUE];
     public HashMap<BiomeGenBase, List<Subtype>> spawnMap = new HashMap<BiomeGenBase, List<Subtype>>();
 
+    private HashMap<String, Object> extraTags = new HashMap<String, Object>();
+
     public short[] minLimits = new short[8];
     public short[] maxLimits = new short[8];
     private ItemStack meat;
@@ -405,5 +407,25 @@ public class Species {
     public int getSecondaryColorMax()
     {
         return secondaryColorMax;
+    }
+
+    public boolean hasTag(String tag)
+    {
+        return extraTags.containsKey(tag);
+    }
+
+    public Species addTag(String tag, Object obby)
+    {
+        extraTags.put(tag, obby);
+        return this;
+    }
+
+    public Object getTag(String tag)
+    {
+        if (extraTags.containsKey(tag))
+        {
+            return extraTags.get(tag);
+        }
+        return null;
     }
 }

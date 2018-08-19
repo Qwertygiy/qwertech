@@ -3,17 +3,17 @@ package com.kbi.qwertech;
 import com.kbi.qwertech.api.data.FOOD;
 import com.kbi.qwertech.api.data.QTConfigs;
 import com.kbi.qwertech.api.data.QTI;
+import com.kbi.qwertech.api.entities.Species;
 import com.kbi.qwertech.api.recipe.CountertopRecipe;
 import com.kbi.qwertech.api.registry.ArmorUpgradeRegistry;
+import com.kbi.qwertech.api.registry.MobSpeciesRegistry;
 import com.kbi.qwertech.client.*;
 import com.kbi.qwertech.client.blocks.RenderCorrugated;
 import com.kbi.qwertech.client.entity.genetic.RenderGeneticEntity;
 import com.kbi.qwertech.client.entity.neutral.RenderTurkey;
 import com.kbi.qwertech.client.entity.passive.RenderFrog;
 import com.kbi.qwertech.client.entity.projectile.*;
-import com.kbi.qwertech.client.models.entity.GeneticModelHandler;
-import com.kbi.qwertech.client.models.entity.ModelFrog;
-import com.kbi.qwertech.client.models.entity.ModelTurkey;
+import com.kbi.qwertech.client.models.entity.*;
 import com.kbi.qwertech.client.tileentity.CountertopRenderer;
 import com.kbi.qwertech.client.tileentity.CraftingTable3DRenderer;
 import com.kbi.qwertech.client.tileentity.CraftingTableRenderer;
@@ -113,7 +113,20 @@ public final class ClientProxy extends CommonProxy { // NO_UCD (unused code)
 		
 		wallRenderID = RenderingRegistry.getNextAvailableRenderId();
 		RenderingRegistry.registerBlockHandler(wallRenderID, new RenderCorrugated());
+		registerModels();
 		System.out.println("REGISTEREDRENDERER");
+	}
+
+	public void registerModels()
+	{
+		Species[] chickenSpecies = MobSpeciesRegistry.getSpeciesList(EntityPhasianidae.class);
+		chickenSpecies[0].setModel(new ModelChicken());
+		chickenSpecies[0].getSubtype((short)1).setModel(new ModelChickenCrested());
+		chickenSpecies[0].getSubtype((short)2).setModel(new ModelChickenCrested());
+		chickenSpecies[0].getSubtype((short)3).setModel(new ModelChickenCrested());
+		for (int q = 4; q < 12; q++) {
+			chickenSpecies[0].getSubtype((short) q).setModel(new ModelChickenTailed());
+		}
 	}
 	
 	@Override

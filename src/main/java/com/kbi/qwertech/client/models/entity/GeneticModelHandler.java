@@ -7,6 +7,7 @@ import com.kbi.qwertech.api.registry.MobSpeciesRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
@@ -20,23 +21,26 @@ public class GeneticModelHandler extends ModelBase {
         Species s = MobSpeciesRegistry.getSpecies(igm.getClass(), igm.getSpeciesID());
         Subtype t = s.getSubtype(igm.getSubtypeID());
 
-        float scale = igm.getSize() * 0.0005F;
+        float scale = igm.getSize() * 0.001F;
 
         GL11.glTranslatef(0F, (-p_78088_7_ * 24F) * (scale - 1), 0F);
         GL11.glScalef(scale, scale, scale);
 
+        ModelBase mb = t.getModel();
+        mb.isChild = ((EntityLiving)p_78088_1_).isChild();
+
         Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(t.getPrimaryTexture()));
         int pc = igm.getPrimaryColor();
         GL11.glColor3f((pc >> 16 & 255) / 255.0F, (pc >> 8 & 255) / 255.0F,(pc & 255) / 255.0F);
-        t.getModel().render(p_78088_1_, p_78088_2_, p_78088_3_, p_78088_4_, p_78088_5_, p_78088_6_, p_78088_7_);
+        mb.render(p_78088_1_, p_78088_2_, p_78088_3_, p_78088_4_, p_78088_5_, p_78088_6_, p_78088_7_);
         GL11.glColor3f(1F, 1F, 1F);
         Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(t.getSecondaryTexture()));
         pc = igm.getSecondaryColor();
         GL11.glColor3f((pc >> 16 & 255) / 255.0F, (pc >> 8 & 255) / 255.0F,(pc & 255) / 255.0F);
-        t.getModel().render(p_78088_1_, p_78088_2_, p_78088_3_, p_78088_4_, p_78088_5_, p_78088_6_, p_78088_7_);
+        mb.render(p_78088_1_, p_78088_2_, p_78088_3_, p_78088_4_, p_78088_5_, p_78088_6_, p_78088_7_);
         GL11.glColor3f(1F, 1F, 1F);
         Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(t.getOverlayTexture()));
-        t.getModel().render(p_78088_1_, p_78088_2_, p_78088_3_, p_78088_4_, p_78088_5_, p_78088_6_, p_78088_7_);
+        mb.render(p_78088_1_, p_78088_2_, p_78088_3_, p_78088_4_, p_78088_5_, p_78088_6_, p_78088_7_);
 
     }
 

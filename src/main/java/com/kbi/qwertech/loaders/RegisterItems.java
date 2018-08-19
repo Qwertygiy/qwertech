@@ -4,7 +4,10 @@ import com.kbi.qwertech.QwerTech;
 import com.kbi.qwertech.api.armor.upgrades.IArmorUpgrade;
 import com.kbi.qwertech.api.data.QTI;
 import com.kbi.qwertech.api.data.QTMT;
+import com.kbi.qwertech.api.entities.Species;
+import com.kbi.qwertech.api.entities.Subtype;
 import com.kbi.qwertech.api.registry.ArmorUpgradeRegistry;
+import com.kbi.qwertech.api.registry.MobSpeciesRegistry;
 import com.kbi.qwertech.armor.upgrades.Upgrade_SpringBoots;
 import com.kbi.qwertech.entities.genetic.EntityPhasianidae;
 import com.kbi.qwertech.entities.neutral.EntityTurkey;
@@ -36,8 +39,11 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.IIcon;
+
+import java.util.List;
 
 @InterfaceList(value = {
 		@Interface(iface = "squeek.applecore.api.food.IEdible", modid = ModIDs.APC)
@@ -117,6 +123,8 @@ public class RegisterItems {
 			addItem(29, "Raw Frog Leg"				, "Le slimey",							"listAllmeatraw", "listAllfrograw", new FoodStat(2, 0.5F, 0.0F, 310.0F, 0.1F, 0, 0, 3, 0, 4, EnumAction.eat, null, false, true, false, true, Potion.hunger.id, 1000, 1, 20, Potion.confusion.id, 500, 1, 50));
 			addItem(30, "Cooked Frog Leg"			, "Lucky ribbit foot",					"listAllmeatcooked", "listAllfrogcooked", new FoodStat(5, 0.6F, 0.0F, 311.0F, 0.5F, 0, 0, 3, 0, 4, EnumAction.eat, null, false, true, false, true, Potion.confusion.id, 100, 1, 10, Potion.jump.id, 1000, 1, 10));
 			addItem(31, "Frog Eggs"					, "Just add water",						"foodCaviar");
+			addItem(32, "Chicken Egg"				, "",  									"listAllegg");
+
 			addItem(1000, "Tomato Sauce"			, "", 									UT.Fluids.make("tomatosauce", 250L), FoodStatFluid.INSTANCE );
 			addItem(1001, "Salsa"					, "Mild", 								UT.Fluids.make("mildsalsa", 250L), FoodStatFluid.INSTANCE );
 			addItem(1002, "Salsa"					, "Medium", 							UT.Fluids.make("salsa", 250L), FoodStatFluid.INSTANCE );
@@ -214,30 +222,87 @@ public class RegisterItems {
 			//temporary ketchup -> tomato sauce recipe
 			CR.shapeless(QTI.tomatoSauce.get(1), CR.DEF, new Object[] {"foodKetchup", "cropTomato"});
 			
-		} 
-		
-		@Override
+		}
+
+			@Override
+			public void addAdditionalToolTips(List aList, ItemStack aStack, boolean aF3_H) {
+				super.addAdditionalToolTips(aList, aStack, aF3_H);
+				NBTTagCompound tag = UT.NBT.getOrCreate(aStack);
+				if (tag.hasKey("QTgenes"))
+				{
+					if (tag.hasKey("Timer"))
+					{
+						if (net.minecraft.client.Minecraft.getMinecraft().theWorld.getTotalWorldTime() > tag.getLong("Timer"))
+						{
+							aList.add("Ready to hatch!");
+						} else {
+							aList.add("Will hatch in " + (tag.getLong("Timer") - net.minecraft.client.Minecraft.getMinecraft().theWorld.getTotalWorldTime()));
+						}
+					} else {
+						aList.add("Fertilized");
+					}
+				}
+			}
+
+			@Override
+			public int getColorFromItemStack(ItemStack item, int rp) {
+				NBTTagCompound tag = UT.NBT.getOrCreate(item);
+				if (tag.hasKey("itemColor"))
+				{
+					return tag.getInteger("itemColor");
+				} else
+				{
+					return super.getColorFromItemStack(item, rp);
+				}
+			}
+
+			@Override
 		public boolean onEntityItemUpdate(EntityItem entityItem)
 	    {
 			if (entityItem.worldObj.isRemote) return false;
-			if (entityItem.getEntityItem().getItemDamage() == 31)
+			switch(entityItem.getEntityItem().getItemDamage())
 			{
-				if (entityItem.isInsideOfMaterial(Material.water))
-				{
-					if (entityItem.worldObj.rand.nextInt(4000) == 1)
+				case 31:
+					if (entityItem.isInsideOfMaterial(Material.water))
 					{
-						for (int q = 0; q < entityItem.getEntityItem().stackSize; q++)
+						if (entityItem.worldObj.rand.nextInt(4000) == 1)
 						{
-							EntityFrog frog = new EntityFrog(entityItem.worldObj);
-							frog.setPosition(entityItem.posX, entityItem.posY, entityItem.posZ);
-							frog.setGrowingAge(-8000);
-							entityItem.worldObj.spawnEntityInWorld(frog);
-							if (q > 3) break;
+							for (int q = 0; q < entityItem.getEntityItem().stackSize; q++)
+							{
+								EntityFrog frog = new EntityFrog(entityItem.worldObj);
+								frog.setPosition(entityItem.posX, entityItem.posY, entityItem.posZ);
+								frog.setGrowingAge(-8000);
+								entityItem.worldObj.spawnEntityInWorld(frog);
+								if (q > 3) break;
+							}
+							entityItem.setDead();
+							return true;
 						}
-						entityItem.setDead();
-						return true;
 					}
-				}
+					break;
+				case 32:
+					ItemStack IT = entityItem.getEntityItem();
+					NBTTagCompound nbt = UT.NBT.getOrCreate(IT);
+					if (nbt.hasKey("Timer"))
+					{
+						if (entityItem.worldObj.getTotalWorldTime() > nbt.getLong("Timer"))
+						{
+							if (nbt.hasKey("QTgenes"))
+							{
+								EntityPhasianidae ep = new EntityPhasianidae(entityItem.worldObj);
+								ep.setPosition(entityItem.posX, entityItem.posY, entityItem.posZ);
+								int maturity = nbt.getCompoundTag("QTgenes").getShort("maturity") * -1;
+								ep.readEntityFromNBT(nbt);
+								ep.setGrowingAge(maturity);
+								entityItem.worldObj.spawnEntityInWorld(ep);
+								entityItem.setDead();
+								return true;
+							}
+						}
+					}
+					break;
+				default:
+					break;
 			}
 	        return false;
 	    }
@@ -343,6 +408,55 @@ public class RegisterItems {
 			}
 			return null;
 		}
+
+			@Override
+			public void addAdditionalToolTips(List aList, ItemStack aStack, boolean aF3_H) {
+				super.addAdditionalToolTips(aList, aStack, aF3_H);
+				try {
+					if (aStack.hasTagCompound()) {
+						NBTTagCompound nbt = aStack.getTagCompound();
+						if (nbt.hasKey("QTgenes")) {
+							NBTTagCompound genes = nbt.getCompoundTag("QTgenes");
+							if (genes.hasKey("species")) {
+								Species species = MobSpeciesRegistry.getSpecies(EntityPhasianidae.class, genes.getShort("species"));
+								aList.add("Species: " + species.getCommonName());
+								if (genes.hasKey("subtype")) {
+									Subtype subtype = species.getSubtype(genes.getShort("subtype"));
+									aList.add("Subtype: " + subtype.getCommonName());
+								}
+							}
+						}
+					}
+				} catch (Exception e)
+				{
+					//nope
+				}
+			}
+
+			@Override
+			public void getSubItems(Item aItem, CreativeTabs aCreativeTab, List aList) {
+				super.getSubItems(aItem, aCreativeTab, aList);
+				Species[] species = MobSpeciesRegistry.getSpeciesList(EntityPhasianidae.class);
+				for (short q = 0; q < species.length; q++)
+				{
+					if (species[q] != null) {
+						Subtype[] subtypes = species[q].subtypes;
+						for (short w = 0; w < subtypes.length; w++) {
+							if (subtypes[w] != null) {
+								ItemStack stacker = ST.make(this, 1, 2);
+								NBTTagCompound nbt = stacker.getTagCompound();
+								if (nbt == null) nbt = new NBTTagCompound();
+								NBTTagCompound genetics = new NBTTagCompound();
+								genetics.setShort("species", q);
+								genetics.setShort("subtype", w);
+								nbt.setTag("QTgenes", genetics);
+								stacker.setTagCompound(nbt);
+								aList.add(stacker);
+							}
+						}
+					}
+				}
+			}
 		};
 		
 		
