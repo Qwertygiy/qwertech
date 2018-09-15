@@ -107,6 +107,12 @@
 		"mob/frog/HMRTG2"
 	]
   },
+  "mob.chicken.super": {
+    "category": "neutral",
+    "sounds": [
+        "mob/chicken/super"
+    ]
+  },
   "armor.upgrade.spring": {
 	"category": "player",
 	"sounds": [

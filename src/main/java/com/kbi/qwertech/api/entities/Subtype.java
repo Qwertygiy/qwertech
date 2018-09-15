@@ -18,23 +18,24 @@ public class Subtype {
     public short[] minLimits = new short[8];
     public short[] maxLimits = new short[8];
     public short[] preferred = new short[8];
-    public String[] sounds = new String[5];
+    public String[] sounds;
     public int primaryColorMin;
     public int primaryColorMax;
     public int secondaryColorMin;
     public int secondaryColorMax;
 
-    private String primaryTexture;
-    private String secondaryTexture;
-    private String overlayTexture;
-    private String commonName;
-    private boolean isNatural;
+    private String primaryTexture = "";
+    private String secondaryTexture = "";
+    private String overlayTexture = "";
+    private String commonName = "";
+    private boolean isNatural = false;
     private final Species assignedSpecies;
     private ArrayList<BiomeGenBase> biomes = new ArrayList<BiomeGenBase>();
 
     public Subtype(Species species)
     {
         assignedSpecies = species;
+        sounds = new String[]{"", "", "", "", ""};
     }
 
     private Object model;

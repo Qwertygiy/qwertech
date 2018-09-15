@@ -15,8 +15,13 @@ import gregapi.util.ST;
 import gregapi.util.UT;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.*;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.init.Items;
@@ -25,6 +30,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
@@ -34,7 +40,7 @@ import net.minecraftforge.common.ForgeHooks;
 import java.util.List;
 import java.util.Random;
 
-public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMIs.IEggLayer, GMIs.IHitAggro {
+public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMIs.IEggLayer, GMIs.IHitAggro, GMIs.IAutoAggro, GMIs.IEatStuffOnTheGround {
 
     private short[] data = new short[8];
     private short species = -1;
@@ -43,9 +49,21 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
     private int secondaryColor = 0;
     private boolean isFertilized = false;
     private NBTTagCompound lastMate = null;
+    private Species theSpecies = MobSpeciesRegistry.getSpecies(this.getClass(), (short)0);
+    private Subtype theSubtype = theSpecies.getSubtype((short)0);
+    public int angryTime = 0;
 
     public EntityPhasianidae(World p_i1682_1_) {
         super(p_i1682_1_);
+        for (Object aiBase : this.tasks.taskEntries)
+        {
+            if (aiBase instanceof EntityAIPanic || aiBase instanceof EntityAIRunAroundLikeCrazy)
+            {
+                this.tasks.removeTask((EntityAIBase)aiBase);
+            }
+        }
+        this.tasks.addTask(1, new EntityAILeapAtTarget(this, 0.4F));
+        this.tasks.addTask(2, new EntityAIAttackOnCollide(this, 1.0D, true));
         if ((species == -1 || subtype == -1) && !p_i1682_1_.isRemote) {
             species = 0;
             subtype = 0;
@@ -59,15 +77,76 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
                     subtype = (short)this.rand.nextInt(subtypes.size());
                 }
             }
-            Species endResult = MobSpeciesRegistry.getSpecies(this.getClass(), species);
-            assignRandomStats(p_i1682_1_.rand, endResult, endResult.getSubtype(subtype));
+            theSpecies = MobSpeciesRegistry.getSpecies(this.getClass(), species);
+            theSubtype = theSpecies.getSubtype(subtype);
+            assignRandomStats(p_i1682_1_.rand, theSpecies, theSubtype);
             this.timeUntilNextEgg = (int)Math.floor(this.rand.nextInt(Short.MAX_VALUE - this.getFertility() + 1) * 0.1) + 1000;
+        }
+    }
+
+    public void findTarget()
+    {
+        AxisAlignedBB aabb = this.getBoundingBox();
+        if (aabb == null)
+        {
+            aabb = AxisAlignedBB.getBoundingBox(this.posX - 1, this.posY - 1, this.posZ - 1, this.posX + 1, this.posY + 1, this.posZ + 1);
+        }
+        AxisAlignedBB aabbcc = aabb.expand(10, 2, 10);
+        List entities = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, aabbcc);
+        float topFood = 0F;
+        EntityItem theFood = null;
+        for (Object entity : entities)
+        {
+            if (entity instanceof EntityItem)
+            {
+                float foodValue = this.shouldEatOffTheGround(this, (EntityItem)entity);
+                if (foodValue > topFood)
+                {
+                    topFood = foodValue;
+                    theFood = (EntityItem)entity;
+                }
+            } else if (entity instanceof EntityLiving){
+                if (shouldAutoAggro(this, (EntityLiving)entity))
+                {
+                    System.out.println("We should attack it");
+                    this.setAttackTarget((EntityLiving)entity);
+                    this.angryTime = 10000;
+                    return;
+                }
+            }
+        }
+        if (theFood != null)
+        {
+            this.setTarget(theFood);
+            if (this.getDistanceToEntity(theFood) < 0.1F)
+            {
+                if (this.getGrowingAge() == 0)
+                {
+                    this.func_146082_f(null);
+                } else {
+                    this.setGrowingAge(1000);
+                }
+                theFood.setDead();
+            }
         }
     }
 
     @Override
     public void onLivingUpdate() {
         super.onLivingUpdate();
+        if (this.angryTime > 0)
+        {
+            --angryTime;
+            if (this.angryTime < 1 || this.getAttackTarget() == null || this.getAttackTarget().isDead)
+            {
+                angryTime = 0;
+                this.setAttackTarget(null);
+            }
+        }
+        if (this.getAttackTarget() == null && this.worldObj.getTotalWorldTime() % 40 == 0)
+        {
+            findTarget();
+        }
         if (!this.worldObj.isRemote && !this.isChild() && this.canLayEgg(this) && --this.timeUntilNextEgg <= 0)
         {
             this.playSound("mob.chicken.plop", 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
@@ -107,8 +186,8 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
         super(world);
         species = aSpecies;
         subtype = aSubtype;
-        Species theSpecies = MobSpeciesRegistry.getSpecies(this.getClass(), species);
-        Subtype theSubtype = theSpecies.getSubtype(aSubtype);
+        theSpecies = MobSpeciesRegistry.getSpecies(this.getClass(), species);
+        theSubtype = theSpecies.getSubtype(aSubtype);
         assignRandomStats(world.rand, theSpecies, theSubtype);
     }
 
@@ -197,8 +276,9 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
                 setPrimaryColor(genetics.getInteger("color1"));
                 setSecondaryColor(genetics.getInteger("color2"));
             } else {
-                Species spec = MobSpeciesRegistry.getSpecies(this.getClass(), getSpeciesID());
-                assignRandomStats(this.rand, spec, spec.getSubtype(getSubtypeID()));
+                theSpecies = MobSpeciesRegistry.getSpecies(this.getClass(), getSpeciesID());
+                theSubtype = theSpecies.getSubtype(getSubtypeID());
+                assignRandomStats(this.rand, theSpecies, theSubtype);
             }
         }
         if (tag.hasKey("fertilized"))
@@ -209,45 +289,44 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
 
     @Override
     protected String getLivingSound() {
-        return MobSpeciesRegistry.getSpecies(this.getClass(), getSpeciesID()).getSubtype(getSubtypeID()).getLivingSound();
+        return theSubtype.getLivingSound();
     }
 
     @Override
     protected String getHurtSound() {
-        return MobSpeciesRegistry.getSpecies(this.getClass(), getSpeciesID()).getSubtype(getSubtypeID()).getHurtSound();
+        return theSubtype.getHurtSound();
     }
 
     @Override
     protected String getDeathSound() {
-        return MobSpeciesRegistry.getSpecies(this.getClass(), getSpeciesID()).getSubtype(getSubtypeID()).getDeathSound();
+        return theSubtype.getDeathSound();
     }
 
     @Override
     protected Item getDropItem() {
-        return MobSpeciesRegistry.getSpecies(this.getClass(), getSpeciesID()).getMeat().getItem();
+        return theSpecies.getMeat().getItem();
     }
 
     @Override
     protected void dropFewItems(boolean isPlayer, int looting) {
-        Species spec = MobSpeciesRegistry.getSpecies(this.getClass(), getSpeciesID());
-        if (ST.valid(spec.getRare())) {
-            ItemStack rare = spec.getRare().copy();
+        if (ST.valid(theSpecies.getRare())) {
+            ItemStack rare = theSpecies.getRare().copy();
             if (isPlayer && this.rand.nextInt(100) < 3 + looting) {
                 ST.drop(this, rare);
             }
         }
 
-        short minSize = spec.getSubtype(getSubtypeID()).getMinSize();
-        short maxSize = spec.getSubtype(getSubtypeID()).getMaxSize();
+        short minSize = theSubtype.getMinSize();
+        short maxSize = theSubtype.getMaxSize();
         short range = (short)(maxSize - minSize);
-        if (ST.valid(spec.getSecondary())) {
-            ItemStack drop = spec.getSecondary().copy();
+        if (ST.valid(theSpecies.getSecondary())) {
+            ItemStack drop = theSpecies.getSecondary().copy();
             drop.stackSize = getSize() < minSize + (range * 0.2) ? 1 : getSize() > maxSize - (range * 0.2) ? 3 : 2;
             drop.stackSize = drop.stackSize * (1 + this.rand.nextInt(looting + 1));
             ST.drop(this, drop);
         }
-        if (ST.valid(spec.getMeat())) {
-            ItemStack meat = spec.getMeat().copy();
+        if (ST.valid(theSpecies.getMeat())) {
+            ItemStack meat = theSpecies.getMeat().copy();
             meat.stackSize = 1;
             ST.drop(this, meat);
         }
@@ -352,18 +431,21 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
         if (returnable != data[0]) {
             data[0] = returnable;
             this.setSize((float)(returnable * 0.0004), (float)(returnable * 0.0006));
+            updateHealthAndSpeed();
         }
         return returnable;
     }
 
     @Override
     public short getStrength() {
-        return this.dataWatcher.getWatchableObjectShort(21);
+        short returnable = this.dataWatcher.getWatchableObjectShort(21);
+        return returnable;
     }
 
     @Override
     public short getStamina() {
-        return this.dataWatcher.getWatchableObjectShort(22);
+        short returnable = this.dataWatcher.getWatchableObjectShort(22);
+        return returnable;
     }
 
     @Override
@@ -403,33 +485,38 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
 
     @Override
     public void setSpeciesID(short species) {
-        this.species = species;
         this.dataWatcher.updateObject(18, species);
+        this.species = species;
+        this.theSpecies = MobSpeciesRegistry.getSpecies(this.getClass(), species);
     }
 
     @Override
     public void setSubtypeID(short subtype) {
-        this.subtype = subtype;
         this.dataWatcher.updateObject(19, subtype);
+        this.subtype = subtype;
+        this.theSubtype = theSpecies.getSubtype(subtype);
     }
 
     @Override
     public void setSize(short size) {
-        data[0] = size;
         this.dataWatcher.updateObject(20, size);
+        data[0] = size;
         this.setSize((float)(size * 0.0004), (float)(size * 0.0006));
+        updateHealthAndSpeed();
     }
 
     @Override
     public void setStrength(short strength) {
-        data[1] = strength;
         this.dataWatcher.updateObject(21, strength);
+        data[1] = strength;
+        updateHealthAndSpeed();
     }
 
     @Override
     public void setStamina(short stamina) {
-        data[2] = stamina;
         this.dataWatcher.updateObject(22, stamina);
+        data[2] = stamina;
+        updateHealthAndSpeed();
     }
 
     @Override
@@ -481,23 +568,21 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
 
     @Override
     public ItemStack getEggItem(IGeneticMob geneticMob) {
-        Species species = MobSpeciesRegistry.getSpecies(this.getClass(), geneticMob.getSpeciesID());
-        Subtype subtype = species.getSubtype(geneticMob.getSubtypeID());
         ItemStack toReturn = QTI.qwerFood.getWithDamage(1, 32);
-        if (subtype.hasTag(RegisterSpecies.EGG_ITEM))
+        if (theSubtype.hasTag(RegisterSpecies.EGG_ITEM))
         {
-            toReturn = ((ItemStack)subtype.getTag(RegisterSpecies.EGG_ITEM)).copy();
-        } else if (species.hasTag(RegisterSpecies.EGG_ITEM))
+            toReturn = ((ItemStack)theSubtype.getTag(RegisterSpecies.EGG_ITEM)).copy();
+        } else if (theSpecies.hasTag(RegisterSpecies.EGG_ITEM))
         {
-            toReturn = ((ItemStack)species.getTag(RegisterSpecies.EGG_ITEM)).copy();
+            toReturn = ((ItemStack)theSpecies.getTag(RegisterSpecies.EGG_ITEM)).copy();
         }
         NBTTagCompound tag = UT.NBT.getOrCreate(toReturn);
-        if (subtype.hasTag(RegisterSpecies.EGG_COLOR))
+        if (theSubtype.hasTag(RegisterSpecies.EGG_COLOR))
         {
-            tag.setInteger("itemColor", (Integer)subtype.getTag(RegisterSpecies.EGG_COLOR));
-        } else if (species.hasTag(RegisterSpecies.EGG_COLOR))
+            tag.setInteger("itemColor", (Integer)theSubtype.getTag(RegisterSpecies.EGG_COLOR));
+        } else if (theSpecies.hasTag(RegisterSpecies.EGG_COLOR))
         {
-            tag.setInteger("itemColor", (Integer)species.getTag(RegisterSpecies.EGG_COLOR));
+            tag.setInteger("itemColor", (Integer)theSpecies.getTag(RegisterSpecies.EGG_COLOR));
         }
         toReturn.setTagCompound(tag);
         return toReturn;
@@ -510,11 +595,131 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
 
     @Override
     public float shouldAggroOnHit(IGeneticMob geneticMob, EntityLiving attacker) {
-        return getSnarl() / 20000F;
+        if (getSnarl() < 1000)
+        {
+            return 0.0F;
+        } else if (getSnarl() > 25000)
+        {
+            return 1.0F;
+        }
+        Object specTag = theSpecies.getTag(RegisterSpecies.HOSTILEON_HIT);
+        Object subTag = theSubtype.getTag(RegisterSpecies.HOSTILEON_HIT);
+        if (subTag != null)
+        {
+            Class[] subs = (Class[])subTag;
+            for (Class classy : subs)
+            {
+                if (classy.isInstance(attacker))
+                {
+                    return 1.0F;
+                }
+            }
+        }
+        if (specTag != null)
+        {
+            Class[] specs = (Class[])specTag;
+            for (Class classy : specs)
+            {
+                if (classy.isInstance(attacker))
+                {
+                    return 1.0F;
+                }
+            }
+        }
+        return (getSnarl() / 32000F) - 0.5F;
     }
 
     @Override
     public int aggroHitTimer(IGeneticMob geneticMob, EntityLiving attacker) {
-        return (int)Math.floor(getSnarl() * 0.01);
+        return (int)Math.floor(getSnarl() * 0.2);
+    }
+
+    @Override
+    public boolean shouldAutoAggro(IGeneticMob geneticMob, EntityLiving otherEntity) {
+        if (getSnarl() < 1000)
+        {
+            return false;
+        } else if (getSnarl() > 30000)
+        {
+            return true;
+        }
+        Object specTag = theSpecies.getTag(RegisterSpecies.HOSTILEON_SIGHT);
+        Object subTag = theSubtype.getTag(RegisterSpecies.HOSTILEON_SIGHT);
+        if (subTag != null)
+        {
+            Class[] subs = (Class[])subTag;
+            for (Class classy : subs)
+            {
+                if (classy.isInstance(otherEntity))
+                {
+                    return true;
+                }
+            }
+        }
+        if (specTag != null)
+        {
+            Class[] specs = (Class[])specTag;
+            for (Class classy : specs)
+            {
+                if (classy.isInstance(otherEntity))
+                {
+                    return true;
+                }
+            }
+        }
+        return this.rand.nextInt(getSnarl()) > 16000;
+    }
+
+    @Override
+    public float shouldEatOffTheGround(IGeneticMob geneticMob, EntityItem itemEntity) {
+        ItemStack IS = itemEntity.getEntityItem();
+        if (isBreedingItem(IS))
+        {
+            if (this.getGrowingAge() == 0)
+            {
+                return 10F - this.getDistanceToEntity(itemEntity);
+            } else {
+                return 1F - this.getDistanceToEntity(itemEntity);
+            }
+        }
+        return 0;
+    }
+
+    @Override
+    public boolean attackEntityFrom(DamageSource ds, float damage) {
+        if (ds.getSourceOfDamage() instanceof EntityLiving)
+        {
+            EntityLiving source = (EntityLiving)ds.getSourceOfDamage();
+            if (this.shouldAggroOnHit(this, source) >= this.rand.nextFloat())
+            {
+                this.setAttackTarget(source);
+                this.angryTime = this.aggroHitTimer(this, source);
+            }
+        }
+        return super.attackEntityFrom(ds, damage);
+    }
+
+    @Override
+    public boolean attackEntityAsMob(Entity p_70652_1_)
+    {
+        int i = Math.round(getStrength() * 0.001F);
+        return p_70652_1_.attackEntityFrom(DamageSource.causeMobDamage(this), i);
+    }
+
+    public void updateHealthAndSpeed()
+    {
+        //System.out.println("Our data is: " + data[0] + ", " + data[1] + ", " + data[2]);
+        double health = (getSize() + (getStrength() * 0.5)) * 0.005;
+        double speed = (getStrength() - (getSize() * 0.5) + (getStamina() * 0.5)) * 0.0001;
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(health);
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(Math.max(0.1D, Math.min(speed, 0.5D)));
+        System.out.println("With a size of " + getSize() + ", strength of " + getStrength() + ", and stamina of " + getStamina() + ", Health is now " + health + " and we adjusted speed from " + speed + " to " + this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getBaseValue());
+    }
+
+    @Override
+    protected void applyEntityAttributes()
+    {
+        super.applyEntityAttributes();
+        //this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(1.0D);
     }
 }

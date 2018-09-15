@@ -3,6 +3,7 @@ package com.kbi.qwertech;
 import com.kbi.qwertech.api.data.FOOD;
 import com.kbi.qwertech.api.data.QTConfigs;
 import com.kbi.qwertech.api.data.QTI;
+import com.kbi.qwertech.api.entities.IGeneticMob;
 import com.kbi.qwertech.api.entities.Species;
 import com.kbi.qwertech.api.recipe.CountertopRecipe;
 import com.kbi.qwertech.api.registry.ArmorUpgradeRegistry;
@@ -34,6 +35,8 @@ import gregapi.code.ItemStackContainer;
 import gregapi.data.CS;
 import gregapi.data.LH;
 import gregapi.data.OP;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -117,6 +120,17 @@ public final class ClientProxy extends CommonProxy { // NO_UCD (unused code)
 		System.out.println("REGISTEREDRENDERER");
 	}
 
+	public void registerModel(Class<? extends IGeneticMob> classy, int species, int subtype, ModelBase model)
+	{
+		Species[] speciesList = MobSpeciesRegistry.getSpeciesList(classy);
+		if (subtype > -1)
+		{
+			speciesList[species].getSubtype((short)subtype).setModel(model);
+		} else {
+			speciesList[species].setModel(model);
+		}
+	}
+
 	public void registerModels()
 	{
 		Species[] chickenSpecies = MobSpeciesRegistry.getSpeciesList(EntityPhasianidae.class);
@@ -127,6 +141,10 @@ public final class ClientProxy extends CommonProxy { // NO_UCD (unused code)
 		for (int q = 4; q < 12; q++) {
 			chickenSpecies[0].getSubtype((short) q).setModel(new ModelChickenTailed());
 		}
+		chickenSpecies[0].getSubtype((short)12).setModel(new ModelSuperChicken());
+
+		//red junglefowl
+		registerModel(EntityPhasianidae.class, 1, -1, new ModelWildChicken());
 	}
 	
 	@Override

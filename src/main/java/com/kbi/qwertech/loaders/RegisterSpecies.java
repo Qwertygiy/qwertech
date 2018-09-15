@@ -9,6 +9,8 @@ import com.kbi.qwertech.entities.genetic.EntityPhasianidae;
 import cpw.mods.fml.relauncher.FMLLaunchHandler;
 import cpw.mods.fml.relauncher.Side;
 import gregapi.util.ST;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.init.Items;
 import net.minecraftforge.common.BiomeDictionary;
 
@@ -16,6 +18,11 @@ public class RegisterSpecies {
 
     public static String EGG_ITEM = "EggItem";
     public static String EGG_COLOR = "EggColor";
+    public static String HOSTILEON_SIGHT = "OnSight";
+    public static String HOSTILEON_HIT = "WhenHit";
+    public static String HOSTILEON_SPECIESHIT = "WhenBuddyHit";
+    public static String HOSTILEON_PLAYERHIT = "WhenPlayerHit";
+    public static String HOSTILEON_SPECIESORPLAYERHIT = "WhenPlayerOrBuddyHit";
 
     public static void begin()
     {
@@ -50,7 +57,7 @@ public class RegisterSpecies {
         blacklh       .setPrimaryColors(COLOR.make(10, 10, 10), COLOR.make(10, 30, 40)).setSecondaryColors(COLOR.make(10, 10, 10), COLOR.make(10, 30, 40))       .setCommonName("Black Leghorn")                            .setFertility(10000, 15000, 30000)              .setMaturity(16000, 17000, 32000)       .setMutable(10, 100, 1000)      .setSize(700, 1000, 1600)   .setSmart(100, 3000, 8000).setSnarl(200, 5000, 20000)    .setStamina(500, 10000, 16000) .setStrength(150, 1200, 7500)                                                                                                                   .setTexturePath("qwertech:textures/entity/genetic/phasianidae/chicken_tailed/lh2").setLivingSound("mob.chicken.say") .setHurtSound("mob.chicken.hurt")    .setDeathSound("mob.chicken.hurt");
         chicken.setSubtype(7, blacklh);
         Subtype bufflh = new Subtype(chicken);
-        bufflh       .setPrimaryColors("Gold",       "Goldenrod").setSecondaryColors("Red",        "Dark Red")       .setCommonName("Buff Leghorn")                            .setFertility(10000, 15000, 30000)              .setMaturity(16000, 17000, 32000)       .setMutable(10, 100, 1000)      .setSize(700, 1000, 1600)   .setSmart(100, 3000, 8000).setSnarl(200, 5000, 20000)    .setStamina(500, 10000, 16000) .setStrength(150, 1200, 7500)                                                                                                                   .setTexturePath("qwertech:textures/entity/genetic/phasianidae/chicken_tailed/lh").setLivingSound("mob.chicken.say") .setHurtSound("mob.chicken.hurt")    .setDeathSound("mob.chicken.hurt");
+        bufflh       .setPrimaryColors(COLOR.make(225, 188, 113),       COLOR.make(219, 93, 5)).setSecondaryColors("Red",        "Dark Red")       .setCommonName("Buff Leghorn")                            .setFertility(10000, 15000, 30000)              .setMaturity(16000, 17000, 32000)       .setMutable(10, 100, 1000)      .setSize(700, 1000, 1600)   .setSmart(100, 3000, 8000).setSnarl(200, 5000, 20000)    .setStamina(500, 10000, 16000) .setStrength(150, 1200, 7500)                                                                                                                   .setTexturePath("qwertech:textures/entity/genetic/phasianidae/chicken_tailed/lh").setLivingSound("mob.chicken.say") .setHurtSound("mob.chicken.hurt")    .setDeathSound("mob.chicken.hurt");
         chicken.setSubtype(8, bufflh);
         Subtype silverlh = new Subtype(chicken);
         silverlh       .setPrimaryColors(COLOR.get("White"),       COLOR.make(240, 240, 240)).setSecondaryColors(COLOR.make(10, 10, 10), COLOR.make(10, 30, 40))       .setCommonName("Silver Leghorn")                            .setFertility(10000, 15000, 30000)              .setMaturity(16000, 17000, 32000)       .setMutable(10, 100, 1000)      .setSize(700, 1000, 1600)   .setSmart(100, 3000, 8000).setSnarl(200, 5000, 20000)    .setStamina(500, 10000, 16000) .setStrength(150, 1200, 7500)                                                                                                                   .setTexturePath("qwertech:textures/entity/genetic/phasianidae/chicken_tailed/lh2").setLivingSound("mob.chicken.say") .setHurtSound("mob.chicken.hurt")    .setDeathSound("mob.chicken.hurt");
@@ -61,5 +68,22 @@ public class RegisterSpecies {
         Subtype redlh = new Subtype(chicken);
         redlh       .setPrimaryColors(COLOR.make(80, 0, 0),       COLOR.make(120, 40, 0)).setSecondaryColors("Red",        "Dark Red")       .setCommonName("Red Leghorn")                            .setFertility(10000, 15000, 30000)              .setMaturity(16000, 17000, 32000)       .setMutable(10, 100, 1000)      .setSize(700, 1000, 1600)   .setSmart(100, 3000, 8000).setSnarl(200, 5000, 20000)    .setStamina(500, 10000, 16000) .setStrength(150, 1200, 7500)                                                                                                                   .setTexturePath("qwertech:textures/entity/genetic/phasianidae/chicken_tailed/lh").setLivingSound("mob.chicken.say") .setHurtSound("mob.chicken.hurt")    .setDeathSound("mob.chicken.hurt");
         chicken.setSubtype(11, redlh);
+        Subtype superChick = new Subtype(chicken);
+        superChick  .setSecondaryColors(COLOR.make(255, 0, 0),    COLOR.make(200, 0, 0)).setPrimaryColors(COLOR.make(0, 0, 255), COLOR.make(0, 0, 150)).setCommonName("Super Chicken").setFertility(31000, 32000, Short.MAX_VALUE).setMaturity(31000, 32000, Short.MAX_VALUE).setMutable(10, 100, 1000).setSize(2800, 2900, 3000).setSmart(9000, 9500, 10000).setSnarl(19000, 19500, 20000).setStamina(15000, 15500, 16000).setStrength(7000, 7500, 8000)                                                                                                                    .setTexturePath("qwertech:textures/entity/genetic/phasianidae/chicken_caped/super").setLivingSound("qwertech:mob.chicken.super") .setHurtSound("mob.chicken.hurt")    .setDeathSound("mob.chicken.hurt");
+        superChick.addTag(HOSTILEON_SIGHT, new Class[]{EntityMob.class}).addTag(HOSTILEON_SPECIESORPLAYERHIT, new Class[]{Entity.class});
+        chicken.setSubtype(12, superChick);
+
+        Species redJunglefowl = new Species(EntityPhasianidae.class);
+        redJunglefowl.setPrimaryColors("Black",       "White")     .setSecondaryColors("Black",         "White")     .setCommonName("Red Junglefowl")           .setLatinName("Gallus gallus")   .setMinFertility(2000)     .setMaxFertility(20000)   .setMinMaturity(8000)      .setMaxMaturity(20000)    .setMinMutable(10)      .setMaxMutable(1000)    .setMinSize(500)   .setMaxSize(2000)   .setMinSmart(100) .setMaxSmart(10000) .setMinSnarl(0) .setMaxSnarl(20000) .setMinStamina(1000) .setMaxStamina(16000)   .setMinStrength(1000)    .setMaxStrength(6000)   .setMeat(QTI.chickenWholeRaw.get(1))  .setSecondary(ST.make(Items.feather, 1, 0))   ;
+        MobSpeciesRegistry.addSpecies(EntityPhasianidae.class, 1, redJunglefowl);
+        Subtype murghi = new Subtype(redJunglefowl);
+        murghi      .setPrimaryColors("Dark Cyan",                  "Sea Green")                            .setSecondaryColors("Peru",         "Orange")          .setCommonName("Indian Red Junglefowl")                        .setFertility(2000, 8000, 20000)        .setMaturity(8000, 12000, 20000)    .setMutable(10, 100, 1000)    .setSize(500, 1000, 2000)   .setSmart(100, 1000, 10000) .setSnarl(0, 1000, 20000)      .setStamina(1000, 8000, 16000)   .setStrength(1000, 2000, 6000)                                                                                                                   .setTexturePath("qwertech:textures/entity/genetic/phasianidae/chicken_wild1/murghi")  .setLivingSound("mob.chicken.say")  .setHurtSound("mob.chicken.hurt")   .setDeathSound("mob.chicken.hurt")   .addBiome(BiomeDictionary.Type.JUNGLE);
+        redJunglefowl.setSubtype(0, murghi);
+        Subtype gallus3 = new Subtype(redJunglefowl);
+        gallus3     .setPrimaryColors("Cyan",                  "Dark Slate Gray")                            .setSecondaryColors("Orange",         "Goldenrod")          .setCommonName("Indochinese Red Junglefowl")                        .setFertility(2000, 8000, 20000)        .setMaturity(8000, 12000, 20000)    .setMutable(10, 100, 1000)    .setSize(500, 1000, 2000)   .setSmart(100, 1000, 10000) .setSnarl(0, 1000, 20000)      .setStamina(1000, 8000, 16000)   .setStrength(1000, 2000, 6000)                                                                                                                   .setTexturePath("qwertech:textures/entity/genetic/phasianidae/chicken_wild1/murghi")  .setLivingSound("mob.chicken.say")  .setHurtSound("mob.chicken.hurt")   .setDeathSound("mob.chicken.hurt")   .addBiome(BiomeDictionary.Type.JUNGLE);
+        redJunglefowl.setSubtype(1, gallus3);
+        Subtype spadic = new Subtype(redJunglefowl);
+        spadic      .setPrimaryColors("Dark Cyan",             "Dark Slate Gray")                            .setSecondaryColors("Peru",         "Orange")          .setCommonName("Burmese Red Junglefowl")                        .setFertility(2000, 8000, 20000)        .setMaturity(8000, 12000, 20000)    .setMutable(10, 100, 1000)    .setSize(500, 1000, 2000)   .setSmart(100, 1000, 10000) .setSnarl(0, 1000, 20000)      .setStamina(1000, 8000, 16000)   .setStrength(1000, 2000, 6000)                                                                                                                   .setTexturePath("qwertech:textures/entity/genetic/phasianidae/chicken_wild1/spadiceus")  .setLivingSound("mob.chicken.say")  .setHurtSound("mob.chicken.hurt")   .setDeathSound("mob.chicken.hurt")   .addBiome(BiomeDictionary.Type.JUNGLE);
+        redJunglefowl.setSubtype(2, spadic);
     }
 }

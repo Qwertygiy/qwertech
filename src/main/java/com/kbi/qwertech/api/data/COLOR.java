@@ -114,9 +114,9 @@ public class COLOR {
 
     public static int getRandom(int low, int high)
     {
-        System.out.println("Randomly choosing between " + low + " and " + high);
+        //System.out.println("Randomly choosing between " + low + " and " + high);
         int returnable = getPercentageShift(low, high, CS.RNGSUS.nextFloat());
-        System.out.println("It's " + returnable);
+        //System.out.println("It's " + returnable);
         return returnable;
     }
 

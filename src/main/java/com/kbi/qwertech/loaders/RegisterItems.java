@@ -124,6 +124,18 @@ public class RegisterItems {
 			addItem(30, "Cooked Frog Leg"			, "Lucky ribbit foot",					"listAllmeatcooked", "listAllfrogcooked", new FoodStat(5, 0.6F, 0.0F, 311.0F, 0.5F, 0, 0, 3, 0, 4, EnumAction.eat, null, false, true, false, true, Potion.confusion.id, 100, 1, 10, Potion.jump.id, 1000, 1, 10));
 			addItem(31, "Frog Eggs"					, "Just add water",						"foodCaviar");
 			addItem(32, "Chicken Egg"				, "",  									"listAllegg");
+			addItem(33, "Whole Raw Junglefowl"		, "",									"carcassChicken");
+			addItem(34, "Whole Cooked Junglefowl"	, "", 									"carcassChicken");
+			addItem(35, "Raw Junglefowl Breast"		, "",									"listAllmeatraw", "listAllchickenraw", new FoodStat(2, 0.6F, 0.0F, 310.0F, 0.1F, 0, 0, 0, 0, 14, EnumAction.eat, null, false, true, false, true, Potion.hunger.id, 1000, 1, 20));
+			addItem(36, "Cooked Junglefowl Breast"	, "",									"listAllmeatcooked", "listAllchickencooked", new FoodStat(4, 0.6F, 0.0F, 311.0F, 0.5F, 0, 0, 0, 0, 10, EnumAction.eat, null, false, true, false, true));
+			addItem(37, "Raw Junglefowl Wing"		, "",									"listAllmeatraw", "listAllchickenraw", new FoodStat(2, 0.6F, 0.0F, 310.0F, 0.1F, 0, 0, 0, 0, 4, EnumAction.eat, null, false, true, false, true, Potion.hunger.id, 1000, 1, 20));
+			addItem(38, "Cooked Junglefowl Wing"	, "",									"listAllmeatcooked", "listAllchickencooked", new FoodStat(4, 0.6F, 0.0F, 311.0F, 0.5F, 0, 0, 0, 0, 4, EnumAction.eat, null, false, true, false, true));
+			addItem(39, "Raw Junglefowl Leg"		, "",									"listAllmeatraw", "listAllchickenraw", new FoodStat(2, 0.6F, 0.0F, 310.0F, 0.1F, 0, 0, 0, 0, 5, EnumAction.eat, null, false, true, false, true, Potion.hunger.id, 1000, 1, 20));
+			addItem(40, "Cooked Junglefowl Leg"		, "",									"listAllmeatcooked", "listAllchickencooked", new FoodStat(5, 0.6F, 0.0F, 311.0F, 0.5F, 0, 0, 0, 0, 10, EnumAction.eat, null, false, true, false, true));
+			addItem(41, "Fried Junglefowl Leg"		, "",									"listAllmeatcooked", "listAllchickencooked", new FoodStat(5, 0.6F, 0.0F, 311.0F, 0.5F, 0, 0, 0, 0, 26, EnumAction.eat, null, false, true, false, true));
+			addItem(42, "Fried Junglefowl Wing"		, "",									"listAllmeatcooked", "listAllchickencooked", new FoodStat(5, 0.6F, 0.0F, 311.0F, 0.5F, 0, 0, 0, 0, 26, EnumAction.eat, null, false, true, false, true));
+			addItem(43, "Junglefowl Egg"			, "",  									"listAllegg");
+
 
 			addItem(1000, "Tomato Sauce"			, "", 									UT.Fluids.make("tomatosauce", 250L), FoodStatFluid.INSTANCE );
 			addItem(1001, "Salsa"					, "Mild", 								UT.Fluids.make("mildsalsa", 250L), FoodStatFluid.INSTANCE );
@@ -162,7 +174,19 @@ public class RegisterItems {
 			QTI.frogLegRaw.set(ST.make(this, 1, 29));
 			QTI.frogLegCooked.set(ST.make(this, 1, 30));
 			QTI.frogEggs.set(ST.make(this, 1, 31));
-			
+			QTI.chickenEgg.set(ST.make(this, 1, 32));
+			QTI.junglefowlWholeRaw.set(ST.make(this, 1, 33));
+			QTI.junglefowlWholeCooked.set(ST.make(this, 1, 34));
+			QTI.junglefowlBreastRaw.set(ST.make(this, 1, 35));
+			QTI.junglefowlBreastCooked.set(ST.make(this, 1, 36));
+			QTI.junglefowlWingRaw.set(ST.make(this, 1, 37));
+			QTI.junglefowlWingCooked.set(ST.make(this, 1, 38));
+			QTI.junglefowlLegRaw.set(ST.make(this, 1, 39));
+			QTI.junglefowlLegCooked.set(ST.make(this, 1, 40));
+			QTI.junglefowlLegFried.set(ST.make(this, 1, 41));
+			QTI.junglefowlWingFried.set(ST.make(this, 1, 42));
+			QTI.junglefowlEgg.set(ST.make(this, 1, 43));
+
 			QTI.tomatoSauce.set(ST.make(this, 1, 1000));
 			QTI.salsaMild.set(ST.make(this, 1, 1001));
 			QTI.salsaMedium.set(ST.make(this, 1, 1002));
@@ -177,6 +201,10 @@ public class RegisterItems {
 			RM.add_smelting(QTI.chickenBreastRaw.get(1), QTI.chickenBreastCooked.get(1));
 			RM.add_smelting(QTI.chickenWholeRaw.get(1), QTI.chickenWholeCooked.get(1));
 			RM.add_smelting(QTI.frogLegRaw.get(1), QTI.frogLegCooked.get(1));
+			RM.add_smelting(QTI.junglefowlBreastRaw.get(1), QTI.junglefowlBreastCooked.get(1));
+			RM.add_smelting(QTI.junglefowlLegRaw.get(1), QTI.junglefowlLegCooked.get(1));
+			RM.add_smelting(QTI.junglefowlWholeRaw.get(1), QTI.junglefowlWholeCooked.get(1));
+			RM.add_smelting(QTI.junglefowlWingRaw.get(1), QTI.junglefowlWingCooked.get(1));
 			
 			//mix cheese chunks to make mozzarella
 			RM.Mixer.addRecipe2(true, 16L, 16L, OP.chunkGt.mat(MT.Cheese, 2), OP.chunkGt.mat(MT.Cheese, 2), QTI.mozzarella.get(1));
@@ -209,13 +237,17 @@ public class RegisterItems {
 			CR.shapeless(QTI.chickenLegCooked.get(2), CR.DEF, new Object[]{QTI.chickenWholeCooked, "craftingToolKnife"});
 			CR.shapeless(QTI.turkeyLegRaw.get(2), CR.DEF, new Object[]{QTI.turkeyWholeRaw, "craftingToolKnife"});
 			CR.shapeless(QTI.turkeyLegCooked.get(2), CR.DEF, new Object[]{QTI.turkeyWholeCooked, "craftingToolKnife"});
-			
+			CR.shapeless(QTI.junglefowlLegRaw.get(2), CR.DEF, new Object[]{QTI.junglefowlWholeRaw, "craftingToolKnife"});
+			CR.shapeless(QTI.junglefowlLegCooked.get(2), CR.DEF, new Object[]{QTI.junglefowlWholeCooked, "craftingToolKnife"});
+
 			//fry chicken
 			RM.Bath.addRecipe1(true, 0L, 16L, QTI.chickenLegRaw.get(1), UT.Fluids.make("hotfryingoil", 10), null, QTI.chickenLegFried.get(1));
 			RM.Bath.addRecipe1(true, 0L, 16L, QTI.chickenWingRaw.get(1), UT.Fluids.make("hotfryingoil", 10), null, QTI.chickenWingFried.get(1));
 			RM.Bath.addRecipe1(true, 0L, 16L, QTI.turkeyLegRaw.get(1), UT.Fluids.make("hotfryingoil", 10), null, QTI.turkeyLegFried.get(1));
 			RM.Bath.addRecipe1(true, 0L, 16L, QTI.turkeyWingRaw.get(1), UT.Fluids.make("hotfryingoil", 10), null, QTI.turkeyWingFried.get(1));
-			
+			RM.Bath.addRecipe1(true, 0L, 16L, QTI.junglefowlLegRaw.get(1), UT.Fluids.make("hotfryingoil", 10), null, QTI.junglefowlLegFried.get(1));
+			RM.Bath.addRecipe1(true, 0L, 16L, QTI.junglefowlWingRaw.get(1), UT.Fluids.make("hotfryingoil", 10), null, QTI.junglefowlLegFried.get(1));
+
 			//make sure turkey feathers can be quills too
 			CR.shapeless(ST.make(Items.writable_book, 1, 0), CR.DEF, new Object[]{ST.make(Items.book, 1, 0), "feather", "dyeBlack"});
 			
@@ -281,6 +313,7 @@ public class RegisterItems {
 					}
 					break;
 				case 32:
+				case 43:
 					ItemStack IT = entityItem.getEntityItem();
 					NBTTagCompound nbt = UT.NBT.getOrCreate(IT);
 					if (nbt.hasKey("Timer"))
@@ -328,6 +361,14 @@ public class RegisterItems {
 				case 28:
 				{
 					return ST.make(this, 2, 26);
+				}
+				case 33:
+				{
+					return ST.make(this, 2, 35);
+				}
+				case 34:
+				{
+					return ST.make(this, 2, 36);
 				}
 				default:
 				{
