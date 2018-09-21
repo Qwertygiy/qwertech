@@ -25,6 +25,7 @@ public class QTConfigs {
 	
 	public static boolean enableFrogs;
 	public static boolean enableTurkeys;
+	public static boolean enableChickens;
 
 	public static boolean enable3DCrafting;
 	

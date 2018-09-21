@@ -9,9 +9,12 @@ import com.kbi.qwertech.entities.genetic.EntityPhasianidae;
 import cpw.mods.fml.relauncher.FMLLaunchHandler;
 import cpw.mods.fml.relauncher.Side;
 import gregapi.util.ST;
+import gregapi.util.UT;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.BiomeDictionary;
 
 public class RegisterSpecies {
@@ -26,8 +29,12 @@ public class RegisterSpecies {
 
     public static void begin()
     {
+        ItemStack feather = QTI.turkeyFeather.get(1);
+        NBTTagCompound tag = UT.NBT.getOrCreate(feather);
+        tag.setInteger("itemColor", 0);
+        UT.NBT.set(feather, tag);
         Species chicken = new Species(EntityPhasianidae.class);
-        chicken     .setPrimaryColors("Black",       "White")     .setSecondaryColors("Black",         "White")     .setCommonName("Chicken")           .setLatinName("Gallus gallus domesticus")   .setMinFertility(8000)     .setMaxFertility(Short.MAX_VALUE)   .setMinMaturity(16000)      .setMaxMaturity(Short.MAX_VALUE)    .setMinMutable(10)      .setMaxMutable(1000)    .setMinSize(400)   .setMaxSize(3000)   .setMinSmart(1) .setMaxSmart(10000) .setMinSnarl(0) .setMaxSnarl(20000) .setMinStamina(100) .setMaxStamina(16000)   .setMinStrength(100)    .setMaxStrength(8000)   .setMeat(QTI.chickenWholeRaw.get(1))  .setSecondary(ST.make(Items.feather, 1, 0))   ;
+        chicken     .setPrimaryColors("Black",       "White")     .setSecondaryColors("Black",         "White")     .setCommonName("Chicken")           .setLatinName("Gallus gallus domesticus")   .setMinFertility(8000)     .setMaxFertility(Short.MAX_VALUE)   .setMinMaturity(16000)      .setMaxMaturity(Short.MAX_VALUE)    .setMinMutable(10)      .setMaxMutable(1000)    .setMinSize(400)   .setMaxSize(3000)   .setMinSmart(1) .setMaxSmart(10000) .setMinSnarl(0) .setMaxSnarl(20000) .setMinStamina(100) .setMaxStamina(16000)   .setMinStrength(100)    .setMaxStrength(8000)   .setMeat(QTI.chickenWholeRaw.get(1))  .setSecondary(feather)   ;
         chicken.addTag(EGG_ITEM, QTI.qwerFood.getWithDamage(1, 32)).addTag(EGG_COLOR, COLOR.make(222, 205, 200));
         MobSpeciesRegistry.addSpecies(EntityPhasianidae.class, 0, chicken);
         Subtype mojang = new Subtype(chicken);
@@ -74,7 +81,7 @@ public class RegisterSpecies {
         chicken.setSubtype(12, superChick);
 
         Species redJunglefowl = new Species(EntityPhasianidae.class);
-        redJunglefowl.setPrimaryColors("Black",       "White")     .setSecondaryColors("Black",         "White")     .setCommonName("Red Junglefowl")           .setLatinName("Gallus gallus")   .setMinFertility(2000)     .setMaxFertility(20000)   .setMinMaturity(8000)      .setMaxMaturity(20000)    .setMinMutable(10)      .setMaxMutable(1000)    .setMinSize(500)   .setMaxSize(2000)   .setMinSmart(100) .setMaxSmart(10000) .setMinSnarl(0) .setMaxSnarl(20000) .setMinStamina(1000) .setMaxStamina(16000)   .setMinStrength(1000)    .setMaxStrength(6000)   .setMeat(QTI.chickenWholeRaw.get(1))  .setSecondary(ST.make(Items.feather, 1, 0))   ;
+        redJunglefowl.setPrimaryColors("Black",       "White")     .setSecondaryColors("Black",         "White")     .setCommonName("Red Junglefowl")           .setLatinName("Gallus gallus")   .setMinFertility(2000)     .setMaxFertility(20000)   .setMinMaturity(8000)      .setMaxMaturity(20000)    .setMinMutable(10)      .setMaxMutable(1000)    .setMinSize(500)   .setMaxSize(2000)   .setMinSmart(100) .setMaxSmart(10000) .setMinSnarl(0) .setMaxSnarl(20000) .setMinStamina(1000) .setMaxStamina(16000)   .setMinStrength(1000)    .setMaxStrength(6000)   .setMeat(QTI.junglefowlWholeRaw.get(1))  .setSecondary(feather)   ;
         MobSpeciesRegistry.addSpecies(EntityPhasianidae.class, 1, redJunglefowl);
         Subtype murghi = new Subtype(redJunglefowl);
         murghi      .setPrimaryColors("Dark Cyan",                  "Sea Green")                            .setSecondaryColors("Peru",         "Orange")          .setCommonName("Indian Red Junglefowl")                        .setFertility(2000, 8000, 20000)        .setMaturity(8000, 12000, 20000)    .setMutable(10, 100, 1000)    .setSize(500, 1000, 2000)   .setSmart(100, 1000, 10000) .setSnarl(0, 1000, 20000)      .setStamina(1000, 8000, 16000)   .setStrength(1000, 2000, 6000)                                                                                                                   .setTexturePath("qwertech:textures/entity/genetic/phasianidae/chicken_wild1/murghi")  .setLivingSound("mob.chicken.say")  .setHurtSound("mob.chicken.hurt")   .setDeathSound("mob.chicken.hurt")   .addBiome(BiomeDictionary.Type.JUNGLE);
@@ -85,5 +92,15 @@ public class RegisterSpecies {
         Subtype spadic = new Subtype(redJunglefowl);
         spadic      .setPrimaryColors("Dark Cyan",             "Dark Slate Gray")                            .setSecondaryColors("Peru",         "Orange")          .setCommonName("Burmese Red Junglefowl")                        .setFertility(2000, 8000, 20000)        .setMaturity(8000, 12000, 20000)    .setMutable(10, 100, 1000)    .setSize(500, 1000, 2000)   .setSmart(100, 1000, 10000) .setSnarl(0, 1000, 20000)      .setStamina(1000, 8000, 16000)   .setStrength(1000, 2000, 6000)                                                                                                                   .setTexturePath("qwertech:textures/entity/genetic/phasianidae/chicken_wild1/spadiceus")  .setLivingSound("mob.chicken.say")  .setHurtSound("mob.chicken.hurt")   .setDeathSound("mob.chicken.hurt")   .addBiome(BiomeDictionary.Type.JUNGLE);
         redJunglefowl.setSubtype(2, spadic);
+        Subtype yeahboi = new Subtype(redJunglefowl);
+        yeahboi      .setPrimaryColors("Dark Cyan",                  "Sea Green")                            .setSecondaryColors("Peru",         "Orange")          .setCommonName("Tarkin Red Junglefowl")                        .setFertility(2000, 8000, 20000)        .setMaturity(8000, 12000, 20000)    .setMutable(10, 100, 1000)    .setSize(500, 1200, 2000)   .setSmart(100, 1000, 10000) .setSnarl(0, 1000, 20000)      .setStamina(1000, 7000, 16000)   .setStrength(1000, 1500, 6000)                                                                                                                   .setTexturePath("qwertech:textures/entity/genetic/phasianidae/chicken_wild2/jabouille")  .setLivingSound("mob.chicken.say")  .setHurtSound("mob.chicken.hurt")   .setDeathSound("mob.chicken.hurt")   .addBiome(BiomeDictionary.Type.JUNGLE);
+        redJunglefowl.setSubtype(3, yeahboi);
+
+        Species greyJunglefowl = new Species(EntityPhasianidae.class);
+        redJunglefowl.setPrimaryColors("Black",       "White")     .setSecondaryColors("Black",         "White")     .setCommonName("Grey Junglefowl")           .setLatinName("Gallus sonneratii")   .setMinFertility(2000)     .setMaxFertility(20000)   .setMinMaturity(8000)      .setMaxMaturity(20000)    .setMinMutable(10)      .setMaxMutable(1000)    .setMinSize(500)   .setMaxSize(2000)   .setMinSmart(100) .setMaxSmart(10000) .setMinSnarl(0) .setMaxSnarl(20000) .setMinStamina(1000) .setMaxStamina(16000)   .setMinStrength(1000)    .setMaxStrength(6000)   .setMeat(QTI.junglefowlWholeRaw.get(1))  .setSecondary(feather)   ;
+        MobSpeciesRegistry.addSpecies(EntityPhasianidae.class, 2, greyJunglefowl);
+        Subtype sunnyrat = new Subtype(greyJunglefowl);
+        sunnyrat      .setSecondaryColors(COLOR.make(255, 255, 255),                  COLOR.make(255, 240, 240))                            .setPrimaryColors("Dark Cyan",             "Dark Slate Gray")          .setCommonName("Grey Junglefowl")                        .setFertility(2000, 8000, 20000)        .setMaturity(8000, 12000, 20000)    .setMutable(10, 100, 1000)    .setSize(500, 1200, 2000)   .setSmart(100, 1000, 10000) .setSnarl(0, 1000, 20000)      .setStamina(1000, 7000, 16000)   .setStrength(1000, 1500, 6000)                                           .setTexturePath("qwertech:textures/entity/genetic/phasianidae/chicken_wild2/sonneratii")  .setLivingSound("mob.chicken.say")  .setHurtSound("mob.chicken.hurt")   .setDeathSound("mob.chicken.hurt")   .addBiome(BiomeDictionary.Type.JUNGLE);
+        greyJunglefowl.setSubtype(0, sunnyrat);
     }
 }

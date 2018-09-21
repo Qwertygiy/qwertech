@@ -113,6 +113,7 @@ public class RegisterMobs {
 
 		/*begin genetic mobs*/
 		EntityRegistry.registerModEntity(EntityPhasianidae.class, "phasianidae", 10, QwerTech.instance, 80, 3, true);
+		EntityRegistry.addSpawn(EntityPhasianidae.class, 12, 2, 6, EnumCreatureType.creature, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.JUNGLE));
 		RegisterSpecies.begin();
 	}
 	
@@ -609,6 +610,17 @@ public class RegisterMobs {
 	//@SubscribeEvent
 	public void onAdded(EntityJoinWorldEvent event)
 	{
+		if (event.entity.getClass() == EntityChicken.class && QTConfigs.enableChickens)
+		{
+			if (((EntityChicken)event.entity).isChild())
+			{
+				EntityPhasianidae EP = new EntityPhasianidae(event.world, (short)0, (short)0);
+				EP.copyLocationAndAnglesFrom(event.entity);
+				EP.setGrowingAge(((EntityChicken)event.entity).getGrowingAge());
+				event.entity.setDead();
+				event.world.spawnEntityInWorld(EP);
+			}
+		}
 		if (event.entity instanceof EntityLiving && QTConfigs.doMobsUseGear)
 		{
 			if (((EntityLiving)event.entity).getHeldItem() != null)

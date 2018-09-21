@@ -118,7 +118,7 @@ public class RecipeMap_NonCrafting implements IRecipeMapHandler {
 	
 	public boolean addRecipeItemsOnly(RecipeMap aMap)
 	{
-		if (ST.invalid(mInput) || (ST.invalid(mOutput)) || this.isInputPrefix || this.isOutputPrefix)
+		if (ST.invalid((ItemStack)mInput) || (ST.invalid((ItemStack)mOutput)) || this.isInputPrefix || this.isOutputPrefix)
 		{
 			return F;
 		}

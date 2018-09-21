@@ -8,22 +8,24 @@ import com.kbi.qwertech.api.entities.Species;
 import com.kbi.qwertech.api.entities.Subtype;
 import com.kbi.qwertech.api.registry.MobSpeciesRegistry;
 import com.kbi.qwertech.entities.EntityHelperFunctions;
+import com.kbi.qwertech.entities.ai.EntityAIMoveTowardsSimpleTarget;
 import com.kbi.qwertech.loaders.RegisterSpecies;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import gregapi.item.multiitem.MultiItem;
+import gregapi.item.multiitem.behaviors.Behavior_Tool;
+import gregapi.item.multiitem.behaviors.IBehavior;
 import gregapi.util.ST;
 import gregapi.util.UT;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityChicken;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -37,6 +39,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.ForgeHooks;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -53,6 +56,161 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
     private Subtype theSubtype = theSpecies.getSubtype((short)0);
     public int angryTime = 0;
 
+    @Override
+    public boolean interact(EntityPlayer playa) {
+        ItemStack stacky = playa.getHeldItem();
+        if (ST.invalid(stacky)) return super.interact(playa);
+        if (stacky.getItem() instanceof MultiItem)
+        {
+            ArrayList<IBehavior<MultiItem>> meep = ((MultiItem)stacky.getItem()).mItemBehaviors.get((short)stacky.getItemDamage());
+            for (IBehavior beep : meep)
+            {
+                if (beep instanceof Behavior_Tool)
+                {
+                    if (((Behavior_Tool)beep).mToolName.equals("magnifyingglass"))
+                    {
+                        List<String> chats = new ArrayList<String>();
+                        chats.add(this.theSubtype.getCommonName() + "(" + this.theSpecies.getLatinName() + ")");
+                        int randomStat = this.rand.nextInt(6);
+                        switch (randomStat)
+                        {
+                            case 0:
+                                if (this.getSize() < 700) {
+                                    chats.add("It appears to be extremely small.");
+                                } else if (this.getSize() < 900) {
+                                    chats.add("It appears to be quite small.");
+                                } else if (this.getSize() < 1100) {
+                                    chats.add("It appears averagely-sized.");
+                                } else if (this.getSize() < 1300) {
+                                    chats.add("It appears to be on the plump side.");
+                                } else if (this.getSize() < 1500) {
+                                    chats.add("It appears to be rather large.");
+                                } else if (this.getSize() < 1700) {
+                                    chats.add("It appears to be a goodly large size.");
+                                } else if (this.getSize() < 2000)
+                                {
+                                    chats.add("It appears to be a very big bird.");
+                                } else {
+                                    chats.add("It is absolutely humungous.");
+                                }
+                                break;
+                            case 1:
+                                if (this.getSnarl() < 1000)
+                                {
+                                    chats.add("It seems extremely docile.");
+                                } else if (this.getSnarl() < 2000)
+                                {
+                                    chats.add("It seems docile.");
+                                } else if (this.getSnarl() < 4000)
+                                {
+                                    chats.add("It seems to be quite tolerant of you getting in its face.");
+                                } else if (this.getSnarl() < 8000)
+                                {
+                                    chats.add("It seems tolerant, but might not take kindly to being poked.");
+                                } else if (this.getSnarl() < 12000)
+                                {
+                                    chats.add("It doesn't seem comfortable with being touched.");
+                                } else if (this.getSnarl() < 16000)
+                                {
+                                    chats.add("It seems rather defensive.");
+                                } else if (this.getSnarl() < 20000)
+                                {
+                                    chats.add("It seems to be on the aggressive side.");
+                                } else if (this.getSnarl() < 25000)
+                                {
+                                    chats.add("It seems to be quite aggressive.");
+                                } else if (this.getSnarl() < 30000)
+                                {
+                                    chats.add("It seems to be rather hostile.");
+                                } else {
+                                    chats.add("It seems extremely hostile.");
+                                }
+                                if (shouldAutoAggro(this, playa))
+                                {
+                                    chats.add("It doesn't seem to like you.");
+                                } else {
+                                    float chances = shouldAggroOnHit(this, playa);
+                                    if (chances > 0.8)
+                                    {
+                                        chats.add("You probably shouldn't poke it.");
+                                    } else if (chances > 0.5)
+                                    {
+                                        chats.add("It'll probably get mad if you poke it.");
+                                    } else if (chances > 0.1)
+                                    {
+                                        chats.add("It might get upset if you poke it.");
+                                    }
+                                }
+                                break;
+                            case 2:
+                                if (this.getMaturity() < 1000)
+                                {
+                                    chats.add("It's gone a very long time without doing much growing up.");
+                                } else if (this.getMaturity() < 2500)
+                                {
+                                    chats.add("It seems to take quite a while to grow up. Much like you.");
+                                } else if (this.getMaturity() < 5000)
+                                {
+                                    chats.add("It takes a while to grow, just like ideas in your head.");
+                                } else if (this.getMaturity() < 10000)
+                                {
+                                    chats.add("It grows up at an average rate.");
+                                } else if (this.getMaturity() < 15000)
+                                {
+                                    chats.add("It seems to grow rather quickly.");
+                                } else if (this.getMaturity() < 20000)
+                                {
+                                    chats.add("It grows pretty quickly, just like your lawn.");
+                                } else if (this.getMaturity() < 25000)
+                                {
+                                    chats.add("It grows up very fast. Just yesterday it still seemed like a little egg!");
+                                } else {
+                                    chats.add("What maturity! It seems to grow up faster than an orphan on the streets...");
+                                }
+                                break;
+                            case 3:
+                                if (this.getFertility() < 1000)
+                                {
+                                    chats.add("It seems to go forever without laying. Like you.");
+                                } else if (this.getFertility() < 2000)
+                                {
+                                    chats.add("It seems to take an extremely long time for it to lay eggs.");
+                                } else if (this.getFertility() < 5000)
+                                {
+                                    chats.add("It takes quite a while for it to lay an egg.");
+                                } else if (this.getFertility() < 8000)
+                                {
+                                    chats.add("It seems to take quite a bit of time to get comfy between eggs.");
+                                } else if (this.getFertility() < 12000)
+                                {
+                                    chats.add("It's a bit on the slow side for laying eggs.");
+                                } else if (this.getFertility() < 16000)
+                                {
+                                    chats.add("Not the fastest of egg-layers, it would seem.");
+                                } else if (this.getFertility() < 20000)
+                                {
+                                    chats.add("Looks like it lays eggs fairly often.");
+                                } else if (this.getFertility() < 25000)
+                                {
+                                    chats.add("Seems like it tries to have kids even more often than your mom.");
+                                } else if (this.getFertility() < 30000)
+                                {
+                                    chats.add("You're not quite sure how it manages to lay eggs so quickly.");
+                                } else {
+                                    chats.add("Bird or egg-making robot in disguise? Who can really be sure?");
+                                }
+                                break;
+                            default:
+                                chats.add("It is some kind of chickenish bird.");
+                        }
+                        UT.Entities.sendchat(playa, chats, false);
+                    }
+                }
+            }
+        }
+        return super.interact(playa);
+    }
+
     public EntityPhasianidae(World p_i1682_1_) {
         super(p_i1682_1_);
         for (Object aiBase : this.tasks.taskEntries)
@@ -64,6 +222,7 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
         }
         this.tasks.addTask(1, new EntityAILeapAtTarget(this, 0.4F));
         this.tasks.addTask(2, new EntityAIAttackOnCollide(this, 1.0D, true));
+        this.tasks.addTask(3, new EntityAIMoveTowardsSimpleTarget(this, 1.0D, 16F));
         if ((species == -1 || subtype == -1) && !p_i1682_1_.isRemote) {
             species = 0;
             subtype = 0;
@@ -79,6 +238,8 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
             }
             theSpecies = MobSpeciesRegistry.getSpecies(this.getClass(), species);
             theSubtype = theSpecies.getSubtype(subtype);
+            setSpeciesID(species);
+            setSubtypeID(subtype);
             assignRandomStats(p_i1682_1_.rand, theSpecies, theSubtype);
             this.timeUntilNextEgg = (int)Math.floor(this.rand.nextInt(Short.MAX_VALUE - this.getFertility() + 1) * 0.1) + 1000;
         }
@@ -105,28 +266,37 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
                     topFood = foodValue;
                     theFood = (EntityItem)entity;
                 }
-            } else if (entity instanceof EntityLiving){
-                if (shouldAutoAggro(this, (EntityLiving)entity))
+            } else if (entity instanceof EntityLivingBase){
+                if (shouldAutoAggro(this, (EntityLivingBase)entity))
                 {
-                    System.out.println("We should attack it");
-                    this.setAttackTarget((EntityLiving)entity);
+                    System.out.println("We should attack " + entity + " because we're " + getSnarl());
+                    this.setAttackTarget((EntityLivingBase)entity);
                     this.angryTime = 10000;
                     return;
                 }
             }
         }
-        if (theFood != null)
+        if (theFood != null && this.getGrowingAge() < 1000 && !this.isInLove())
         {
+            System.out.println("Going after food");
             this.setTarget(theFood);
-            if (this.getDistanceToEntity(theFood) < 0.1F)
+            if (this.getDistanceToEntity(theFood) < 1F)
             {
                 if (this.getGrowingAge() == 0)
                 {
                     this.func_146082_f(null);
                 } else {
-                    this.setGrowingAge(1000);
+                    this.setGrowingAge(this.getGrowingAge() + 1000);
                 }
-                theFood.setDead();
+                if (theFood.getEntityItem().stackSize > 1)
+                {
+                    ItemStack stacky = theFood.getEntityItem();
+                    stacky.stackSize = stacky.stackSize - 1;
+                    theFood.setEntityItemStack(stacky);
+                } else {
+                    theFood.setDead();
+                }
+                this.setTarget(null);
             }
         }
     }
@@ -312,6 +482,13 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
         if (ST.valid(theSpecies.getRare())) {
             ItemStack rare = theSpecies.getRare().copy();
             if (isPlayer && this.rand.nextInt(100) < 3 + looting) {
+                NBTTagCompound nbt = UT.NBT.getOrCreate(rare);
+                if (nbt.hasKey("itemColor"))
+                {
+                    nbt.setInteger("itemColor", primaryColor);
+                    UT.NBT.set(rare, nbt);
+                }
+
                 ST.drop(this, rare);
             }
         }
@@ -323,6 +500,14 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
             ItemStack drop = theSpecies.getSecondary().copy();
             drop.stackSize = getSize() < minSize + (range * 0.2) ? 1 : getSize() > maxSize - (range * 0.2) ? 3 : 2;
             drop.stackSize = drop.stackSize * (1 + this.rand.nextInt(looting + 1));
+
+            NBTTagCompound nbt = UT.NBT.getOrCreate(drop);
+            if (nbt.hasKey("itemColor"))
+            {
+                nbt.setInteger("itemColor", primaryColor);
+                UT.NBT.set(drop, nbt);
+            }
+
             ST.drop(this, drop);
         }
         if (ST.valid(theSpecies.getMeat())) {
@@ -594,7 +779,7 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
     }
 
     @Override
-    public float shouldAggroOnHit(IGeneticMob geneticMob, EntityLiving attacker) {
+    public float shouldAggroOnHit(IGeneticMob geneticMob, EntityLivingBase attacker) {
         if (getSnarl() < 1000)
         {
             return 0.0F;
@@ -630,12 +815,12 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
     }
 
     @Override
-    public int aggroHitTimer(IGeneticMob geneticMob, EntityLiving attacker) {
+    public int aggroHitTimer(IGeneticMob geneticMob, EntityLivingBase attacker) {
         return (int)Math.floor(getSnarl() * 0.2);
     }
 
     @Override
-    public boolean shouldAutoAggro(IGeneticMob geneticMob, EntityLiving otherEntity) {
+    public boolean shouldAutoAggro(IGeneticMob geneticMob, EntityLivingBase otherEntity) {
         if (getSnarl() < 1000)
         {
             return false;
@@ -652,7 +837,7 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
             {
                 if (classy.isInstance(otherEntity))
                 {
-                    return true;
+                    return this.rand.nextInt(getSnarl()) > 16000;
                 }
             }
         }
@@ -663,11 +848,11 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
             {
                 if (classy.isInstance(otherEntity))
                 {
-                    return true;
+                    return this.rand.nextInt(getSnarl()) > 16000;
                 }
             }
         }
-        return this.rand.nextInt(getSnarl()) > 16000;
+        return false;
     }
 
     @Override
@@ -687,9 +872,9 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
 
     @Override
     public boolean attackEntityFrom(DamageSource ds, float damage) {
-        if (ds.getSourceOfDamage() instanceof EntityLiving)
+        if (ds.getSourceOfDamage() instanceof EntityLivingBase)
         {
-            EntityLiving source = (EntityLiving)ds.getSourceOfDamage();
+            EntityLivingBase source = (EntityLivingBase)ds.getSourceOfDamage();
             if (this.shouldAggroOnHit(this, source) >= this.rand.nextFloat())
             {
                 this.setAttackTarget(source);
@@ -713,7 +898,7 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
         double speed = (getStrength() - (getSize() * 0.5) + (getStamina() * 0.5)) * 0.0001;
         this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(health);
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(Math.max(0.1D, Math.min(speed, 0.5D)));
-        System.out.println("With a size of " + getSize() + ", strength of " + getStrength() + ", and stamina of " + getStamina() + ", Health is now " + health + " and we adjusted speed from " + speed + " to " + this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getBaseValue());
+        //System.out.println("With a size of " + getSize() + ", strength of " + getStrength() + ", and stamina of " + getStamina() + ", Health is now " + health + " and we adjusted speed from " + speed + " to " + this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getBaseValue());
     }
 
     @Override

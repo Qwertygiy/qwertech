@@ -2,6 +2,7 @@ package com.kbi.qwertech.api.entities;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -61,7 +62,7 @@ public class GMIs {
          * @param attacker the entity that could attack
          * @return the chance of aggro (1.0F = 100%, 0.0F = 0%)
          */
-        float shouldAggroOnHit(IGeneticMob geneticMob, EntityLiving attacker);
+        float shouldAggroOnHit(IGeneticMob geneticMob, EntityLivingBase attacker);
 
         /**
          * aggroHitTimer
@@ -70,7 +71,7 @@ public class GMIs {
          * @param attacker the entity that could attack
          * @return the length, in ticks, of the timer
          */
-        int aggroHitTimer(IGeneticMob geneticMob, EntityLiving attacker);
+        int aggroHitTimer(IGeneticMob geneticMob, EntityLivingBase attacker);
     }
 
     public interface IAutoAggro {
@@ -81,7 +82,7 @@ public class GMIs {
          * @param otherEntity the entity that could be chased
          * @return whether the mob would go chase
          */
-        boolean shouldAutoAggro(IGeneticMob geneticMob, EntityLiving otherEntity);
+        boolean shouldAutoAggro(IGeneticMob geneticMob, EntityLivingBase otherEntity);
     }
 
     public interface IEatStuffOnTheGround {

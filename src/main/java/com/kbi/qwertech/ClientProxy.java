@@ -133,18 +133,20 @@ public final class ClientProxy extends CommonProxy { // NO_UCD (unused code)
 
 	public void registerModels()
 	{
-		Species[] chickenSpecies = MobSpeciesRegistry.getSpeciesList(EntityPhasianidae.class);
-		chickenSpecies[0].setModel(new ModelChicken());
-		chickenSpecies[0].getSubtype((short)1).setModel(new ModelChickenCrested());
-		chickenSpecies[0].getSubtype((short)2).setModel(new ModelChickenCrested());
-		chickenSpecies[0].getSubtype((short)3).setModel(new ModelChickenCrested());
+		registerModel(EntityPhasianidae.class, 0, -1, new ModelChicken());
+		registerModel(EntityPhasianidae.class, 0, 1, new ModelChickenCrested());
+		registerModel(EntityPhasianidae.class, 0, 2, new ModelChickenCrested());
+		registerModel(EntityPhasianidae.class, 0, 3, new ModelChickenCrested());
 		for (int q = 4; q < 12; q++) {
-			chickenSpecies[0].getSubtype((short) q).setModel(new ModelChickenTailed());
+			registerModel(EntityPhasianidae.class, 0, q, new ModelChickenTailed());
 		}
-		chickenSpecies[0].getSubtype((short)12).setModel(new ModelSuperChicken());
+		registerModel(EntityPhasianidae.class, 0, 12, new ModelSuperChicken());
 
 		//red junglefowl
 		registerModel(EntityPhasianidae.class, 1, -1, new ModelWildChicken());
+		registerModel(EntityPhasianidae.class, 1, 3, new ModelGallusGallusJabouille());
+		//grey junglefowl
+		registerModel(EntityPhasianidae.class, 2, -1, new ModelGallusGallusJabouille());
 	}
 	
 	@Override

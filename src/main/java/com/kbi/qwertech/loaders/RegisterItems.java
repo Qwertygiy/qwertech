@@ -113,7 +113,7 @@ public class RegisterItems {
 			addItem(19, "Fried Turkey Leg"			, "",									"listAllmeatcooked", "listAllturkeycooked", new FoodStat(8, 0.6F, 0.0F, 311.0F, 0.5F, 0, 0, 0, 0, 30, EnumAction.eat, null, false, true, false, true));
 			addItem(20, "Fried Chicken Wing"		, "",									"listAllmeatcooked", "listAllchickencooked", new FoodStat(6, 0.6F, 0.0F, 311.0F, 0.5F, 0, 0, 0, 0, 30, EnumAction.eat, null, false, true, false, true));
 			addItem(21, "Fried Turkey Wing"			, "",									"listAllmeatcooked", "listAllturkeycooked", new FoodStat(6, 0.6F, 0.0F, 311.0F, 0.5F, 0, 0, 0, 0, 30, EnumAction.eat, null, false, true, false, true));
-			addItem(22, "Turkey Feather"			, "It's not called macaroni!",			"itemFeather", "feather", "craftingFeather");
+			addItem(22, "Phasian Feather"			, "Probably a Chicken's",				"itemFeather", "feather", "craftingFeather");
 			addItem(23, "Whole Raw Turkey"			, "Too big to eat",						"carcassTurkey");
 			addItem(24, "Whole Cooked Turkey"		, "Too big to eat",						"carcassTurkey");
 			addItem(25, "Raw Chicken Breast"		, "",									"listAllmeatraw", "listAllchickenraw", new FoodStat(3, 0.6F, 0.0F, 310.0F, 0.1F, 0, 0, 0, 0, 16, EnumAction.eat, null, false, true, false, true, Potion.hunger.id, 1000, 1, 20));

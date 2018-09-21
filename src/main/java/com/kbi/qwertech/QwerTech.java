@@ -189,7 +189,8 @@ public final class QwerTech extends Abstract_Mod {
 		
 		QTConfigs.enableFrogs = tSections.get("entities", "enableFrogs", true, "Allow Frogs to exist").setShowInGui(true).getBoolean(true);
 		QTConfigs.enableTurkeys = tSections.get("entities", "enableTurkeys", true, "Allow Turkeys to exist").setShowInGui(true).getBoolean(true);
-		
+		QTConfigs.enableChickens = tSections.get("entities", "enableChickens", true, "Turns baby Chickens into QwerTech chickens").setShowInGui(true).getBoolean(true);
+
 		QTConfigs.enable3DCrafting = tSections.get("crafting", "enable3D", true, "Allow use of the 3x3x3 crafting grid of T4 crafting anvils").setShowInGui(true).getBoolean(true);
 		
 		QTConfigs.enableTools = tSections.get("tools", "enableTools", true, "Allow the creation of QwerTech tools like maces and mattocks").setShowInGui(true).getBoolean(true);
