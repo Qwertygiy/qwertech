@@ -14,6 +14,7 @@ import gregapi.util.OM;
 import gregapi.util.ST;
 import gregapi.util.UT;
 import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
@@ -113,7 +114,7 @@ public class AnyQTTool implements ICraftingRecipeGT, IRecipe
 			  OreDictMaterial lemat = ((OreDictItemData)ODs[i]).mMaterial.mMaterial;
 			  if (lemat == MT.NULL || lemat == MT.Empty || lemat == MT.Butter)
 			  {
-				  ItemStack lestack = new ItemStack(((OreDictItemData)ODs[i]).mPrefix.mRegisteredPrefixItems.get(0));
+				  ItemStack lestack = new ItemStack((Item)((OreDictItemData)ODs[i]).mPrefix.mRegisteredPrefixItems.get(0));
 				  lestack.setItemDamage(OreDictionary.WILDCARD_VALUE);
 				  returnable[i] = lestack;
 			  } else {
