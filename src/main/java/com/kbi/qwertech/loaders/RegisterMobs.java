@@ -112,8 +112,9 @@ public class RegisterMobs {
 		}
 
 		/*begin genetic mobs*/
-		EntityRegistry.registerModEntity(EntityPhasianidae.class, "phasianidae", 10, QwerTech.instance, 80, 3, true);
+		EntityRegistry.registerModEntity(EntityPhasianidae.class, "phasianidae", 10, QwerTech.instance, 120, 3, true);
 		EntityRegistry.addSpawn(EntityPhasianidae.class, 12, 2, 6, EnumCreatureType.creature, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.JUNGLE));
+		EntityRegistry.addSpawn(EntityPhasianidae.class, 12, 2, 6, EnumCreatureType.creature, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.FOREST));
 		RegisterSpecies.begin();
 	}
 	

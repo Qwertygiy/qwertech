@@ -12,9 +12,11 @@ import com.kbi.qwertech.entities.ai.EntityAIMoveTowardsSimpleTarget;
 import com.kbi.qwertech.loaders.RegisterSpecies;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import gregapi.data.OP;
 import gregapi.item.multiitem.MultiItem;
 import gregapi.item.multiitem.behaviors.Behavior_Tool;
 import gregapi.item.multiitem.behaviors.IBehavior;
+import gregapi.util.OM;
 import gregapi.util.ST;
 import gregapi.util.UT;
 import net.minecraft.block.Block;
@@ -854,6 +856,64 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
         }
         return false;
     }
+
+    @Override
+    public boolean isBreedingItem(ItemStack stack) {
+        if (theSpecies.hasTag("BreedingItems"))
+        {
+            Object[] breedingItems = (Object[])theSpecies.getTag("BreedingItems");
+            for (Object obbie : breedingItems)
+            {
+                if (obbie instanceof ItemStack)
+                {
+                    if (ST.equal(stack, (ItemStack)obbie))
+                    {
+                        return true;
+                    }
+                } else if(obbie instanceof Item)
+                {
+                    if (stack.getItem().equals(obbie))
+                    {
+                        return true;
+                    }
+                } else if (obbie instanceof String)
+                {
+                    if (OM.is(obbie, stack))
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        if (theSubtype.hasTag("BreedingItems"))
+        {
+            Object[] breedingItems = (Object[])theSubtype.getTag("BreedingItems");
+            for (Object obbie : breedingItems)
+            {
+                if (obbie instanceof ItemStack)
+                {
+                    if (ST.equal(stack, (ItemStack)obbie))
+                    {
+                        return true;
+                    }
+                } else if(obbie instanceof Item)
+                {
+                    if (stack.getItem().equals(obbie))
+                    {
+                        return true;
+                    }
+                } else if (obbie instanceof String)
+                {
+                    if (OM.is(obbie, stack))
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return !theSpecies.hasTag("BreedingItems") && !theSubtype.hasTag("BreedingItems") && (OM.is("listAllseed", stack) || OP.seed.contains(stack));
+    }
+
 
     @Override
     public float shouldEatOffTheGround(IGeneticMob geneticMob, EntityItem itemEntity) {

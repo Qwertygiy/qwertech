@@ -147,6 +147,9 @@ public final class ClientProxy extends CommonProxy { // NO_UCD (unused code)
 		registerModel(EntityPhasianidae.class, 1, 3, new ModelGallusGallusJabouille());
 		//grey junglefowl
 		registerModel(EntityPhasianidae.class, 2, -1, new ModelGallusGallusJabouille());
+
+		//turkey
+		registerModel(EntityPhasianidae.class, 3, -1, new ModelTurkeyFat());
 	}
 	
 	@Override
