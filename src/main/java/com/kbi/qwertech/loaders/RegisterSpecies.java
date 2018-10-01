@@ -106,7 +106,8 @@ public class RegisterSpecies {
         greyJunglefowl.setSubtype(0, sunnyrat);
 
         Species turkey = new Species(EntityPhasianidae.class);
-        turkey.setPrimaryColors("Black",       "White")     .setSecondaryColors("Black",         "White")     .setCommonName("Turkey")           .setLatinName("Meleagris gallopavo")   .setMinFertility(2000)     .setMaxFertility(20000)   .setMinMaturity(8000)      .setMaxMaturity(20000)    .setMinMutable(10)      .setMaxMutable(1000)    .setMinSize(1000)   .setMaxSize(3000)   .setMinSmart(100) .setMaxSmart(10000) .setMinSnarl(0) .setMaxSnarl(20000) .setMinStamina(1000) .setMaxStamina(12000)   .setMinStrength(1000)    .setMaxStrength(8000)   .setMeat(QTI.turkeyWholeRaw.get(1))  .setSecondary(feather)   ;
+        turkey.setPrimaryColors("Black",       "White")     .setSecondaryColors("Black",         "White")     .setCommonName("Turkey")           .setLatinName("Meleagris gallopavo")   .setMinFertility(2000)     .setMaxFertility(20000)   .setMinMaturity(8000)      .setMaxMaturity(20000)    .setMinMutable(10)      .setMaxMutable(1000)
+                .setMinSize(1000)   .setMaxSize(3000)   .setMinSmart(100) .setMaxSmart(10000) .setMinSnarl(0) .setMaxSnarl(20000) .setMinStamina(1000) .setMaxStamina(12000)   .setMinStrength(1000)    .setMaxStrength(8000)   .setMeat(QTI.turkeyWholeRaw.get(1))  .setSecondary(feather)   ;
         turkey.addTag(EGG_ITEM, QTI.turkeyEgg.get(1)).addTag(EGG_COLOR, COLOR.make(205, 160, 140)).addTag(HOSTILEON_HIT, new Class[]{Entity.class}).addTag(HOSTILEON_SPECIESHIT, new Class[]{Entity.class}).addTag("BreedingItems", new Object[]{"cropCorn", "seedCorn", "listAllseed", Items.wheat_seeds});
         MobSpeciesRegistry.addSpecies(EntityPhasianidae.class, 3, turkey);
         Subtype bbb = new Subtype(turkey);

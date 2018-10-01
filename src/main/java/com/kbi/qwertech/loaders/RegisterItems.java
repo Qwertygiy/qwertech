@@ -2,6 +2,7 @@ package com.kbi.qwertech.loaders;
 
 import com.kbi.qwertech.QwerTech;
 import com.kbi.qwertech.api.armor.upgrades.IArmorUpgrade;
+import com.kbi.qwertech.api.data.COLOR;
 import com.kbi.qwertech.api.data.QTI;
 import com.kbi.qwertech.api.data.QTMT;
 import com.kbi.qwertech.api.entities.Species;
@@ -42,8 +43,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.List;
+
+import static gregapi.data.CS.T;
 
 @InterfaceList(value = {
 		@Interface(iface = "squeek.applecore.api.food.IEdible", modid = ModIDs.APC)
@@ -89,6 +95,206 @@ public class RegisterItems {
 			QTI.batEmblem.set(addItem(30, "Achievement Bat"				, "", null, TD.Creative.HIDDEN));
 			addItem(10000, "", "", null, TD.Creative.HIDDEN);
 		}};
+
+		Item DNA = new MultiItemRandom(QwerTech.MODID, "qwertech.dna") {
+			@Override
+			public void addItems() {
+				addItem(0, "Empty Syringe", "This won't hurt a bit...");
+				addItem(1, "Contaminated Syringe", "Trust me, you don't want to use this");
+				addItem(2, "Salty Syringe", "A bit... crusty, inside");
+				addItem(3, "Sugary Syringe", "A bit... crusty, inside");
+				addItem(4, "Syringe of Water", "Drippity dropper", UT.Fluids.make("water", 100L));
+                addItem(5, "Syringe of Distilled Water", "Purified droppity dripper", UT.Fluids.make("ic2distilledwater", 100L));
+
+				addItem(10, "Syringe of Saltwater", "Non-potable", UT.Fluids.make("saltwater", 100L), new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("saltwater", 100L), make(10), make(0), T));
+				addItem(11, "Syringe of Salty Water", "Non-potable", UT.Fluids.make("seawater", 100L), new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("seawater", 100L), make(11), make(0), T), new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("water", 100L), make(11), make(2), T), new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("ic2distilledwater", 100L), make(11), make(2), T));
+
+				addItem(20, "Syringe of Apple Juice", "WARNING: Keep away from medical professionals", UT.Fluids.make("binnie.juiceapple", 100L));
+				addItem(21, "Syringe of Beet Juice", "Not THAT kind of healthy for you", UT.Fluids.make("beetjuice", 100L));
+				addItem(22, "Syringe of Kiwi Juice", "The fruit, not the bird... ew", UT.Fluids.make("kiwijuice", 100L));
+				addItem(23, "Syringe of Melon Juice", "Not to be used for melon enhancement", UT.Fluids.make("melonjuice", 100L));
+				addItem(24, "Syringe of Plum Juice", "Prune juice isn't a thing", UT.Fluids.make("binnie.juiceplum", 100L));
+				addItem(25, "Syringe of Blackberry Juice", "They prefer to be called African-Americanberries", UT.Fluids.make("blackberryjuice", 100L));
+				addItem(26, "Syringe of Apricot Juice", "APRICODABRA! ...Nothing happened.", UT.Fluids.make("binnie.juiceapricot", 100L));
+				addItem(27, "Syringe of Carrot Juice", "Bunny transfusion", UT.Fluids.make("binnie.juicecarrot", 100L));
+				addItem(28, "Syringe of Red Grape Juice", "Baby's First Wine", UT.Fluids.make("binnie.juiceredgrape", 100L));
+				addItem(29, "Syringe of Blood*", "(actually Tomato Juice)", UT.Fluids.make("binnie.juicetomato", 100L));
+				addItem(30, "Syringe of Blood*", "(actually Cherry Juice)", UT.Fluids.make("binnie.juicecherry", 100L));
+				addItem(31, "Syringe of Fig Juice", "Figgin' useless", UT.Fluids.make("figjuice", 100L));
+				addItem(32, "Syringe of Pear Juice", "Will not give you a pear shape", UT.Fluids.make("binnie.juicepear", 100L));
+				addItem(33, "Syringe of Peach Juice", "The 'ch' is important", UT.Fluids.make("binnie.juicepeach", 100L));
+				addItem(34, "Syringe of Blood*", "(actually Strawberry Juice)", UT.Fluids.make("strawberryjuice", 100L));
+				addItem(35, "Syringe of Pomegranate Juice", "More useful than granite pom-poms", UT.Fluids.make("pomegranatejuice", 100L));
+				addItem(36, "Syringe of Juice", "No, I don't know, it's just... juice", UT.Fluids.make("juice", 100L));
+				addItem(37, "Syringe of Lemon Juice", "Concentrated sour", UT.Fluids.make("binnie.juicelemon", 100L));
+				addItem(38, "Syringe of Lime Juice", "It's like lemon juice, but green, because green is cooler", UT.Fluids.make("binnie.juicelime", 100L));
+				addItem(39, "Syringe of Papaya Juice", "No, I didn't say pie juice", UT.Fluids.make("papayajuice", 100L));
+				addItem(40, "Syringe of Currant Juice", "The most up-to-date juice there is", UT.Fluids.make("currantjuice", 100L));
+				addItem(41, "Syringe of Blueberry Juice", "Be more careful with this than Willy", UT.Fluids.make("blueberryjuice", 100L));
+				addItem(42, "Syringe of Potato Juice", "Yes. Potato juice. Pure potato.", UT.Fluids.make("potatojuice", 100L));
+				addItem(43, "Syringe of Olive Juice", "Yes, it's a thing", UT.Fluids.make("binnie.juiceolive", 100L));
+				addItem(44, "Syringe of Blood*", "(actually Cranberry Juice)", UT.Fluids.make("binnie.juicecranberry", 100L));
+				addItem(45, "Syringe of White Grape Juice", "The good kind", UT.Fluids.make("binnie.juicewhitegrape", 100L));
+				addItem(46, "Syringe of Mango Juice", "Go Juiceman", UT.Fluids.make("mangojuice", 100L));
+				addItem(47, "Syringe of Banana Juice", "I ain't no hollaback girl", UT.Fluids.make("binnie.juicebanana", 100L));
+				addItem(48, "Syringe of Grapefruit Juice", "NOT to be confused with Grape fruit-juice", UT.Fluids.make("binnie.juicegrapefruit", 100L));
+				addItem(49, "Syringe of Orange Juice", "Actually more of a Yellow Juice", UT.Fluids.make("binnie.juiceorange", 100L));
+				addItem(50, "Syringe of Persimmon Juice", "1 persimmon per simmon", UT.Fluids.make("persimmonjuice", 100L));
+				addItem(51, "Syringe of Elderberry Juice", "Will not help with age wrinkles", UT.Fluids.make("binnie.juiceelderberry", 100L));
+				addItem(52, "Syringe of Blood*", "(actually Raspberry Juice)", UT.Fluids.make("raspberryjuice", 100L));
+				addItem(53, "Syringe of Pumpkin Juice", "Juice'o'Lantern", UT.Fluids.make("pumpkinjuice", 100L));
+				addItem(54, "Syringe of Gooseberry Juice", "Has nothing to do with birds", UT.Fluids.make("gooseberryjuice", 100L));
+				addItem(55, "Syringe of Starfruit Juice", "No, no... star juice is just Hydrogen", UT.Fluids.make("starfruitjuice", 100L));
+				addItem(56, "Syringe of Pineapple Juice", "Or Ananas Juice, if you are so inclined", UT.Fluids.make("binnie.juicepineapple", 100L));
+				addItem(57, "Syringe of Grape Juice", "It's grrrrrrrape", UT.Fluids.make("grapejuice", 100L));
+                addItem(58, "Syringe of Sugarwater", "100cc of sugar helps the medicine flow down", UT.Fluids.make("sugarwater", 100L), new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("water", 100L), make(58), make(3), T), new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("sugarwater", 100L), make(58), make(0), T), new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("ic2distilledwater", 100L), make(58), make(3), T));
+
+				addItem(100, "Syringe of Dirty Water", "Needs to be flushed a few times", new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("waterdirty", 100L), make(100), make(1), T), new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("water", 100L), make(100), make(1), T), new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("waterdirty", 100L), make(100), make(0), T), new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("ic2distilledwater", 100L), make(100), make(1), T));
+				addItem(101, "Syringe of Milk", "Not for infant injection", UT.Fluids.make("milk", 100L), new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("milk", 100L), make(101), make(0), T));
+				addItem(102, "Syringe of Blood", "", UT.Fluids.make("blood", 100L), new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("blood", 100L), make(102), make(0), T));
+				addItem(103, "Syringe of DNA", "", UT.Fluids.make("dna", 100L), new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("dna", 100L), make(103), make(0), T));
+				addItem(104, "Syringe of Soymilk", "Not actually milk", UT.Fluids.make("soymilk", 100L), new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("soymilk", 100L), make(104), make(0), T));
+			}
+
+            @Override
+            public int getCapacity(ItemStack aStack) {
+                return 100;
+            }
+
+            @Override
+			public int fill(ItemStack aStack, FluidStack aFluid, boolean doFill) {
+				int dam = aStack.getItemDamage();
+				switch(dam)
+				{
+					/*case 1:
+					case 3:
+						if (aFluid.isFluidEqual(UT.Fluids.make("water", 1))) {
+							if (doFill) aStack.setItemDamage(0);
+							return fill(doFill ? aStack : make(0), UT.Fluids.make("waterdirty", aFluid.amount), doFill);
+						}
+						break;
+					case 2:
+						if (aFluid.isFluidEqual(UT.Fluids.make("water", 1))) {
+							if (doFill) aStack.setItemDamage(0);
+							return fill(doFill ? aStack : make(0), UT.Fluids.make("saltwater", aFluid.amount), doFill);
+						}
+						break;*/
+                    case 1:
+                    case 2:
+                    case 3:
+                        if (aFluid.isFluidEqual(UT.Fluids.make("dna", 1)) || aFluid.isFluidEqual(UT.Fluids.make("blood", 1)))
+                        {
+                            NBTTagCompound taggy = UT.NBT.getOrCreate(aStack);
+                            taggy.setBoolean("contaminated", true);
+                            aStack.setTagCompound(taggy);
+                        }
+                        break;
+				}
+				return super.fill(aStack, aFluid, doFill);
+			}
+
+			@Override public ItemStack getContainerItem(ItemStack aStack) {
+				int dam = aStack.getItemDamage();
+				if (dam > 100 && dam < 1000) {
+					return this.make(1);
+				} else if(dam >= 10 && dam < 20) {
+					return this.make(2);
+				} else if(dam >= 20 && dam < 100) {
+					return this.make(3);
+				}
+				switch(dam)
+				{
+					case 100:
+						return this.make(1);
+					case 4:
+						return this.make(0);
+				}
+				return null;
+			}
+
+			@Override
+			public int getColorFromItemStack(ItemStack stack, int renderpass)
+			{
+				if (renderpass > 0 && this.getFluid(stack) != null) {
+					int color = this.getFluid(stack).getFluid().getColor();
+					if (color == 16777215)
+					{
+						switch(stack.getItemDamage())
+						{
+							case 4:
+							case 5:
+								return COLOR.make(MT.Water.mRGBaLiquid[0], MT.Water.mRGBaLiquid[1], MT.Water.mRGBaLiquid[2]);
+							default:
+								break;
+						}
+					}
+					return color;
+				}
+				return super.getColorFromItemStack(stack, renderpass);
+			}
+
+			Object emptySyringe = null;
+			Object fullSyringe = null;
+			Object syringeContents = null;
+			@Override
+			public void registerIcons(IIconRegister aIconRegister) {
+				emptySyringe = aIconRegister.registerIcon("qwertech:qwertech.dna/syringeEmpty");
+				fullSyringe = aIconRegister.registerIcon("qwertech:qwertech.dna/syringeFull");
+				syringeContents = aIconRegister.registerIcon("qwertech:qwertech.dna/syringeContents");
+			}
+
+			@Override
+			public boolean requiresMultipleRenderPasses()
+			{
+				return true;
+			}
+
+			@Override
+			public int getRenderPasses(int metadata)
+			{
+				if (metadata > 3) {
+					return 2;
+				}
+				return 1;
+			}
+
+			@Override
+			public IIcon getIconIndex(ItemStack stack)
+			{
+				return getIcon(stack, 0);
+			}
+
+			@Override
+			public IIcon getIcon(ItemStack stack, int renderpass)
+			{
+				if (renderpass <= 0) {
+					if (this.getFluid(stack) != null)
+					{
+						return (IIcon)fullSyringe;
+					} else {
+						return (IIcon)emptySyringe;
+					}
+				} else {
+					return ((IIcon)syringeContents);
+				}
+			}
+
+			@Override
+			public IIcon getIconFromDamage(int aMetaData) {
+				return getIconFromDamageForRenderPass(aMetaData, 0);
+			}
+
+			@Override
+			public IIcon getIcon(ItemStack aStack, int aRenderPass, EntityPlayer aPlayer, ItemStack aUsedStack, int aUseRemaining) {
+				return this.getIcon(aStack, aRenderPass);
+			}
+
+			@Override
+			public IIcon getIconFromDamageForRenderPass(int damage, int renderpass)
+			{
+				return this.getIcon(ST.make(this, 1, damage), renderpass);
+			}
+		};
 		
 		QTI.qwerFood.set(new MultiItemRandom(QwerTech.MODID, "qwertech.food") {@Override public void addItems() {
 			addItem(0, "Mozzarella"					, "Itsa good cheese", 					new FoodStat(3, 0.5F, 0F, 310F, 0.1F, EnumAction.eat, null, false, false, false, false));
@@ -312,6 +518,7 @@ public class RegisterItems {
 						}
 					}
 					break;
+				case 13:
 				case 32:
 				case 43:
 					ItemStack IT = entityItem.getEntityItem();

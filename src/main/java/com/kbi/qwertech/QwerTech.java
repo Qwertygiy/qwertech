@@ -225,7 +225,10 @@ public final class QwerTech extends Abstract_Mod {
 		new FoodStatDrink(UT.Fluids.create("mildsalsa", "Mild Salsa", null, 1, 1000L, 300L, CS.FluidsGT.SIMPLE, CS.FluidsGT.FOOD ), "AKA Chunky Ketchup", 3, 0.4F, 20.0F, 310.0F, 0.3F, 0, 0, 0, 5, 0, EnumAction.drink, false, false, false, Potion.hunger.id, 100, 1, 20 );
 		new FoodStatDrink(UT.Fluids.create("salsa", "Medium Salsa", null, 1, 1000L, 300L, CS.FluidsGT.SIMPLE, CS.FluidsGT.FOOD ), "With a little kick", 3, 0.4F, 20.0F, 310.0F, 0.5F, 0, 0, 0, 5, 0, EnumAction.drink, false, false, false, Potion.hunger.id, 100, 1, 20 );
 		new FoodStatDrink(UT.Fluids.create("hotsalsa", "Hot Salsa", null, 1, 1000L, 300L, CS.FluidsGT.SIMPLE, CS.FluidsGT.FOOD ), "Vegan fire", 3, 0.4F, 20.0F, 310.0F, 0.7F, 0, 0, 0, 5, 0, EnumAction.drink, false, false, false, Potion.hunger.id, 100, 1, 20 );
-		
+		new FoodStatDrink(UT.Fluids.create("sugarwater", "Sugarwater", null, 1, 1000L, 300L,  CS.FluidsGT.SIMPLE, CS.FluidsGT.FOOD), "Sweet, yet unsatisfying", 1, 0.1F, 20.0F, 350.0F, 0.5F, 0, 0, 0, 20, 0, EnumAction.drink, false, false, false, Potion.moveSpeed.id, 100, 1, 20 );
+
+		UT.Fluids.create("dna", "DNA", null, 1, 1000L, 300L,  CS.FluidsGT.SIMPLE, CS.FluidsGT.LIQUID);
+
 		corrugatedBlock = new BlockCorrugated(ItemBlockBase.class, "qt.block.corrugated", Material.iron, Block.soundTypeMetal, 16, new IIconContainer[]{new Textures.BlockIcons.CustomIcon("qwertech:wall")});
 		LH.add("qt.block.corrugated.0.name", "Corrugated Iron Wall");
 		LH.add("qt.block.corrugated.1.name", "Corrugated Aluminium Wall");
