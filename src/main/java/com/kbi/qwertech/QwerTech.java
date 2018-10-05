@@ -527,7 +527,7 @@ public final class QwerTech extends Abstract_Mod {
 		
 		GameRegistry.addRecipe(new AnyQTTool(18L, new And(TD.Atomic.ANTIMATTER.NOT), true, new Object[]{OP.toolHeadPickaxe, OP.plate}, new Object[]{OP.stickLong}));
 		
-		OreDictMaterial[] wallmats = new OreDictMaterial[]{MT.Fe, MT.Al, MT.Au, MT.Steel, ANY._Bronze, MT.Brass, MT.Ag, MT.StainlessSteel, MT.WroughtIron, MT.Plastic, MT.Ti, MT.TungstenSteel, MT.Invar, MT.TinAlloy, MT.SteelGalvanized, MT.Electrum};
+		OreDictMaterial[] wallmats = new OreDictMaterial[]{MT.Fe, MT.Al, MT.Au, MT.Steel, MT.Bronze, MT.Brass, MT.Ag, MT.StainlessSteel, MT.WroughtIron, MT.Plastic, MT.Ti, MT.TungstenSteel, MT.Invar, MT.TinAlloy, MT.SteelGalvanized, MT.Electrum};
 		for (int q = 0; q < 16; q++)
 		{
 			//CR.shaped(ST.make(corrugatedBlock, 1, q), CR.DEF, "hPz", Character.valueOf('P'), OP.plateDouble.mat(wallmats[q], 1));
