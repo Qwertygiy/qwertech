@@ -243,7 +243,7 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
             setSpeciesID(species);
             setSubtypeID(subtype);
             assignRandomStats(p_i1682_1_.rand, theSpecies, theSubtype);
-            this.timeUntilNextEgg = (int)Math.floor(this.rand.nextInt(Short.MAX_VALUE - this.getFertility() + 1) * 0.1) + 1000;
+            this.timeUntilNextEgg = (int)Math.floor(this.rand.nextInt(Short.MAX_VALUE - this.getFertility() + 1) * 0.25) + 2000;
         }
     }
 
@@ -337,7 +337,7 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
                 fakeParent.setDead();
             }
             ST.drop(this, egg);
-            this.timeUntilNextEgg = (int)Math.floor(this.rand.nextInt(Short.MAX_VALUE - this.getFertility() + 1) * 0.1) + 1000;
+            this.timeUntilNextEgg = (int)Math.floor(this.rand.nextInt(Short.MAX_VALUE - this.getFertility() + 1) * 0.25) + 2000;
         }
     }
 
