@@ -116,7 +116,8 @@ public enum QTI implements IItemContainer {
 	jarTFSquirrel,
 	jarTFRaven,
 	jarTFTinyBird, 
-	jarTFMazeSlime
+	jarTFMazeSlime,
+	syringe
 	;
 
 	public static NetworkHandler NW_API;

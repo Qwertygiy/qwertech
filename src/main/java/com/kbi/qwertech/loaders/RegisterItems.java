@@ -96,7 +96,7 @@ public class RegisterItems {
 			addItem(10000, "", "", null, TD.Creative.HIDDEN);
 		}};
 
-		Item DNA = new MultiItemRandom(QwerTech.MODID, "qwertech.dna") {
+		QTI.syringe.set(new MultiItemRandom(QwerTech.MODID, "qwertech.dna") {
 			@Override
 			public void addItems() {
 				addItem(0, "Empty Syringe", "This won't hurt a bit...");
@@ -212,27 +212,6 @@ public class RegisterItems {
 				return null;
 			}
 
-			@Override
-			public int getColorFromItemStack(ItemStack stack, int renderpass)
-			{
-				if (renderpass > 0 && this.getFluid(stack) != null) {
-					int color = this.getFluid(stack).getFluid().getColor();
-					if (color == 16777215)
-					{
-						switch(stack.getItemDamage())
-						{
-							case 4:
-							case 5:
-								return COLOR.make(MT.Water.mRGBaLiquid[0], MT.Water.mRGBaLiquid[1], MT.Water.mRGBaLiquid[2]);
-							default:
-								break;
-						}
-					}
-					return color;
-				}
-				return super.getColorFromItemStack(stack, renderpass);
-			}
-
 			Object emptySyringe = null;
 			Object fullSyringe = null;
 			Object syringeContents = null;
@@ -294,7 +273,7 @@ public class RegisterItems {
 			{
 				return this.getIcon(ST.make(this, 1, damage), renderpass);
 			}
-		};
+		});
 		
 		QTI.qwerFood.set(new MultiItemRandom(QwerTech.MODID, "qwertech.food") {@Override public void addItems() {
 			addItem(0, "Mozzarella"					, "Itsa good cheese", 					new FoodStat(3, 0.5F, 0F, 310F, 0.1F, EnumAction.eat, null, false, false, false, false));
