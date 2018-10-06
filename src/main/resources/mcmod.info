@@ -2,13 +2,13 @@
 {
   "modid": "qwertech",
   "name": "QwerTech",
-  "description": "An addon to GregTech 6, featuring achievements, tools, and more",
+  "description": "An addon to GregTech 6, featuring achievements, tools, and more. Credits: GregoriusT for GregTech APIs; Team COFH for fluid container rendering; Bear989 for testing; OvermindDL1 for tips; Speiger for tricks; SuperCoder79 for comraderie in inadequacy",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "https://minecraft.curseforge.com/projects/qwertech",
   "updateUrl": "",
   "authorList": ["Qwertygiy"],
-  "credits": "GregoriusT for GregTech APIs; Bear989 for testing; OvermindDL1 for tips; Speiger for tricks; SuperCoder79 for comraderie in inadequacy",
+  "credits": "",
   "logoFile": "assets/qwertech/logo.png",
   "screenshots": [],
   "dependencies": ["gregtech@[6.06.10,)"]
