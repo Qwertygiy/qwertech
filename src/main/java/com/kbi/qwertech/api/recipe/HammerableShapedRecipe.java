@@ -159,9 +159,9 @@ public class HammerableShapedRecipe implements IRecipe, ICraftingRecipeGT {
 		if (p == p2 || p.mToThis.contains(p2) || p2.mToThis.contains(p) || p.mReRegistrations.contains(p2) || p2.mReRegistrations.contains(p))
 		{
 			return true; //we have a match!
-		} else if (p == MT.NULL) //we're looking for primary!
+		} else if (p == MT.NULL || p == QTMT.Undefined) //we're looking for primary!
 		{
-			if (this.tempPrimary == MT.NULL)
+			if (this.tempPrimary == MT.NULL || this.tempPrimary == QTMT.Undefined)
 			{
 				this.tempPrimary = p2;
 				return true;

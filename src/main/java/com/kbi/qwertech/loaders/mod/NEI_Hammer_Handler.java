@@ -126,6 +126,10 @@ public class NEI_Hammer_Handler extends ShapedRecipeHandler {
         
 		public boolean contains(Collection<PositionedStack> ingredients, ItemStack ingredient, boolean matchNBT)
 		{
+			if (OM.is("craftingToolHardHammer", ingredient))
+			{
+				return true;
+			}
 			for (PositionedStack stack : ingredients)
             {
                 for (ItemStack check : stack.items)
@@ -147,9 +151,9 @@ public class NEI_Hammer_Handler extends ShapedRecipeHandler {
     	{
     		return true;
     	} else if (ST.valid(one) && ST.valid(two)) {
-    		OreDictItemData data1 = OM.anydata(one);
-    		OreDictItemData data2 = OM.anydata(two);
-    		if (data1 != null && data2 != null && data1.mPrefix == data2.mPrefix && data2.hasValidPrefixMaterialData() && data1.hasValidPrefixMaterialData())
+    		OreDictItemData data1 = OM.data(one);
+    		OreDictItemData data2 = OM.data(two);
+    		if (data1 != null && data2 != null && data1.mPrefix == data2.mPrefix)
 			{
 				OreDictMaterial mat1 = data1.mMaterial.mMaterial;
 				OreDictMaterial mat2 = data2.mMaterial.mMaterial;
@@ -197,9 +201,12 @@ public class NEI_Hammer_Handler extends ShapedRecipeHandler {
 	@Override
 	public void loadCraftingRecipes(ItemStack result)
 	{
+		boolean doOutput = OM.is("foilCopper", result);
+		if (doOutput) System.out.println("Lookingforit");
 		List<IRecipe> allrecipes = CraftingManagerHammer.getInstance().getRecipeList();
 		for (IRecipe irecipe : allrecipes) {
 			if (matches(irecipe.getRecipeOutput(), result)) {
+				if (doOutput) System.out.println("Foundit");
 				CachedRecipe recipe = null;
 				if ((irecipe instanceof HammerablePrefixRecipe)) {
 					OreDictItemData mData = OM.anydata(result);
@@ -233,6 +240,27 @@ public class NEI_Hammer_Handler extends ShapedRecipeHandler {
 				if (recipe != null)
 				{ 
 					arecipes.add(recipe);
+				}
+			} else if (irecipe.getRecipeOutput() == null)
+			{
+				if (irecipe instanceof HammerablePrefixRecipe) {
+					HammerablePrefixRecipe HPR = (HammerablePrefixRecipe)irecipe;
+					if (doOutput) System.out.println("Output broken for " + HPR.outputPrefix + " and " + HPR.primaryMaterial);
+					if (matches(HPR.outputPrefix.mat(HPR.primaryMaterial, 1), result)) {
+						CachedRecipe recipe = this.shapelessHammerRecipe(HPR, HPR.outputPrefix, HPR.primaryMaterial);
+						if (recipe != null) {
+							arecipes.add(recipe);
+						}
+					}
+				} else if (irecipe instanceof HammerableShapedRecipe) {
+					HammerableShapedRecipe HPR = (HammerableShapedRecipe)irecipe;
+					if (doOutput) System.out.println("Output broken for " + HPR.outputPrefix + " and " + HPR.primaryMaterial);
+					if (matches(HPR.outputPrefix.mat(HPR.primaryMaterial, 1), result)) {
+						CachedRecipe recipe = this.hammerShapedRecipe(HPR, HPR.outputPrefix, HPR.primaryMaterial);
+						if (recipe != null) {
+							arecipes.add(recipe);
+						}
+					}
 				}
 			}
 		}
@@ -280,7 +308,11 @@ public class NEI_Hammer_Handler extends ShapedRecipeHandler {
 				if (recipe.contains(recipe.getIngredients(), ingredient)) {
 					recipe.setIngredientPermutation(recipe.getIngredients(), ingredient);
 					arecipes.add(recipe);
-				} }
+				} else if(OM.is("craftingToolHardHammer", ingredient))
+				{
+					arecipes.add(recipe);
+				}
+			}
 		}
 	}
 	
@@ -396,7 +428,7 @@ public class NEI_Hammer_Handler extends ShapedRecipeHandler {
             	{
             		OreDictItemData data = (OreDictItemData)item;
 					List<ItemStack> adderble = new ArrayList();
-					if (mat != null && mat != MT.NULL && data.mPrefix.isTrue(mat))
+					if (data.mPrefix.isTrue(mat))
 					{
 						if (data.mMaterial.mMaterial == MT.NULL || (data.mMaterial.mMaterial == QTMT.Undefined && mat != QTMT.Undefined))
 						{
@@ -404,9 +436,13 @@ public class NEI_Hammer_Handler extends ShapedRecipeHandler {
 						} else {
 							adderble.add(data.mPrefix.mat(data.mMaterial.mMaterial, 1));
 						}
-					} else if (data.mPrefix.isTrue(data.mMaterial.mMaterial)){
+					} else if (data.mPrefix.isTrue(data.mMaterial.mMaterial)) {
 						adderble.add(data.mPrefix.mat(data.mMaterial.mMaterial, 1));
+					} else if (mat == null || mat == MT.NULL || mat == QTMT.Undefined) {
+						adderble.add(data.mPrefix.mat(QTMT.Undefined, 1));
 					} else {
+						System.out.println("Could not find results for " + data.mMaterial.mMaterial + " and " + data.mPrefix + " while looking at " + mat);
+						System.out.println("Failing recipe was to make " + recipe.outputPrefix);
 						return null;
 					}
 					items[q] = adderble;
