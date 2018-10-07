@@ -53,6 +53,7 @@ public final class ClientProxy extends CommonProxy { // NO_UCD (unused code)
 	{
 		Material_Item_Renderer itemRenderer = new Material_Item_Renderer();
 		MinecraftForgeClient.registerItemRenderer(QTI.syringe.getItem(), new FluidContainerRenderer());
+		MinecraftForgeClient.registerItemRenderer(QTI.buckets.getItem(), new FluidContainerRenderer());
 		if (QTConfigs.add3DQwerTools)
 		{
 			MinecraftForgeClient.registerItemRenderer(QTI.qwerTool.getItem(), new QT_Tool_Renderer());

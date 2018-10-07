@@ -49,6 +49,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 import java.util.List;
 
+import static gregapi.data.CS.F;
 import static gregapi.data.CS.T;
 
 @InterfaceList(value = {
@@ -154,6 +155,8 @@ public class RegisterItems {
 				addItem(102, "Syringe of Blood", "", UT.Fluids.make("blood", 100L), new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("blood", 100L), make(102), make(0), T));
 				addItem(103, "Syringe of DNA", "", UT.Fluids.make("dna", 100L), new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("dna", 100L), make(103), make(0), T));
 				addItem(104, "Syringe of Soymilk", "Not actually milk", UT.Fluids.make("soymilk", 100L), new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("soymilk", 100L), make(104), make(0), T));
+
+                CR.shaped(make(2, 0), new Object[]{"ABA", " C ", " D ", 'A', OP.round.dat(MT.Plastic).toString(), 'B', OP.stick.dat(MT.Plastic).toString(), 'C', OP.pipeTiny.dat(MT.Plastic).toString(), 'D', OP.bolt.dat(ANY.Steel).toString()});
 			}
 
             @Override
@@ -193,8 +196,18 @@ public class RegisterItems {
 				return super.fill(aStack, aFluid, doFill);
 			}
 
-			@Override public ItemStack getContainerItem(ItemStack aStack) {
+            @Override
+            public FluidStack drain(ItemStack aStack, int aMaxDrain, boolean aDoDrain) {
+			    System.out.println("DRAIN");
+                return super.drain(aStack, aMaxDrain, aDoDrain);
+            }
+
+            @Override public ItemStack getContainerItem(ItemStack aStack) {
 				int dam = aStack.getItemDamage();
+                if (CS.RNGSUS.nextInt(10) == 1)
+                {
+                    return this.make(0);
+                }
 				if (dam > 100 && dam < 1000) {
 					return this.make(1);
 				} else if(dam >= 10 && dam < 20) {
@@ -207,6 +220,7 @@ public class RegisterItems {
 					case 100:
 						return this.make(1);
 					case 4:
+                    case 5:
 						return this.make(0);
 				}
 				return null;
@@ -298,7 +312,7 @@ public class RegisterItems {
 			addItem(19, "Fried Turkey Leg"			, "",									"listAllmeatcooked", "listAllturkeycooked", new FoodStat(8, 0.6F, 0.0F, 311.0F, 0.5F, 0, 0, 0, 0, 30, EnumAction.eat, null, false, true, false, true));
 			addItem(20, "Fried Chicken Wing"		, "",									"listAllmeatcooked", "listAllchickencooked", new FoodStat(6, 0.6F, 0.0F, 311.0F, 0.5F, 0, 0, 0, 0, 30, EnumAction.eat, null, false, true, false, true));
 			addItem(21, "Fried Turkey Wing"			, "",									"listAllmeatcooked", "listAllturkeycooked", new FoodStat(6, 0.6F, 0.0F, 311.0F, 0.5F, 0, 0, 0, 0, 30, EnumAction.eat, null, false, true, false, true));
-			addItem(22, "Phasian Feather"			, "Probably a Chicken's",				"itemFeather", "feather", "craftingFeather");
+			addItem(22, "Feather"			        , "",	                    			"itemFeather", "feather", "craftingFeather");
 			addItem(23, "Whole Raw Turkey"			, "Too big to eat",						"carcassTurkey");
 			addItem(24, "Whole Cooked Turkey"		, "Too big to eat",						"carcassTurkey");
 			addItem(25, "Raw Chicken Breast"		, "",									"listAllmeatraw", "listAllchickenraw", new FoodStat(3, 0.6F, 0.0F, 310.0F, 0.1F, 0, 0, 0, 0, 16, EnumAction.eat, null, false, true, false, true, Potion.hunger.id, 1000, 1, 20));
@@ -734,28 +748,38 @@ public class RegisterItems {
 		//10000	-10999: tin bucket
 		//11000	-11999: zinc bucket
 		//12000	-15999: bottle
-		new MultiItemRandom(QwerTech.MODID, "qwertech.fluidcontainers") {@Override public void addItems() {
+		QTI.buckets.set(new MultiItemRandom(QwerTech.MODID, "qwertech.fluidcontainers") {@Override public void addItems() {
 			addItem(0, "Bucket of Chemical X", LH.Chat.RED + "Unstable", QTMT.ChemicalX.liquid(CS.U, true));
 			addItem(1, "Bucket of Chemical Y", "", QTMT.ChemicalY.liquid(CS.U, true));
-			
+			addItem(2, "Bucket of Sugarwater", "", UT.Fluids.make("sugarwater", 1000));
+
 			addItem(4001, "Bucket of Chemical Y", "", QTMT.ChemicalY.liquid(CS.U, true));
-			
+            addItem(4002, "Bucket of Sugarwater", "", UT.Fluids.make("sugarwater", 1000));
+
 			addItem(5001, "Bucket of Chemical Y", "", QTMT.ChemicalY.liquid(CS.U, true));
-			
+            addItem(5002, "Bucket of Sugarwater", "", UT.Fluids.make("sugarwater", 1000));
+
 			addItem(6001, "Bucket of Chemical Y", "", QTMT.ChemicalY.liquid(CS.U, true));
-			
+            addItem(6002, "Bucket of Sugarwater", "", UT.Fluids.make("sugarwater", 1000));
+
 			addItem(7001, "Bucket of Chemical Y", "", QTMT.ChemicalY.liquid(CS.U, true));
-			
+            addItem(7002, "Bucket of Sugarwater", "", UT.Fluids.make("sugarwater", 1000));
+
 			addItem(8001, "Bucket of Chemical Y", "", QTMT.ChemicalY.liquid(CS.U, true));
-			
-			addItem(9001, "Bucket of Chemical Y", "", QTMT.ChemicalY.liquid(CS.U, true));
-			
+            addItem(8002, "Bucket of Sugarwater", "", UT.Fluids.make("sugarwater", 1000));
+
+            addItem(9001, "Bucket of Chemical Y", "", QTMT.ChemicalY.liquid(CS.U, true));
+            addItem(9002, "Bucket of Sugarwater", "", UT.Fluids.make("sugarwater", 1000));
+
 			addItem(10001, "Bucket of Chemical Y", "", QTMT.ChemicalY.liquid(CS.U, true));
-			
-			addItem(11001, "Bucket of Chemical Y", "", QTMT.ChemicalY.liquid(CS.U, true));
-			
+            addItem(10002, "Bucket of Sugarwater", "", UT.Fluids.make("sugarwater", 1000));
+
+            addItem(11001, "Bucket of Chemical Y", "", QTMT.ChemicalY.liquid(CS.U, true));
+            addItem(11002, "Bucket of Sugarwater", "", UT.Fluids.make("sugarwater", 1000));
+
 			addItem(12000, "Bottle of Chemical X", LH.Chat.CYAN + "Volatile", QTMT.ChemicalX.liquid(CS.U, true));
 			addItem(12001, "Bottle of Chemical Y", "", QTMT.ChemicalY.liquid(CS.U, true));
+            addItem(12002, "Bottle of Sugarwater", "", UT.Fluids.make("sugarwater", 1000));
 		}
 		
 		@Override public ItemStack getContainerItem(ItemStack aStack) {
@@ -864,6 +888,6 @@ public class RegisterItems {
 			return this.getIcon(ST.make(this, 1, damage), renderpass);
 		}
 
-		};
+		});
 	}
 }

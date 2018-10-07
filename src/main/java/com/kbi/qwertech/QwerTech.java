@@ -67,6 +67,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
@@ -228,6 +229,7 @@ public final class QwerTech extends Abstract_Mod {
 		new FoodStatDrink(UT.Fluids.create("sugarwater", "Sugarwater", null, 1, 1000L, 300L,  CS.FluidsGT.SIMPLE, CS.FluidsGT.FOOD), "Sweet, yet unsatisfying", 1, 0.1F, 20.0F, 350.0F, 0.5F, 0, 0, 0, 20, 0, EnumAction.drink, false, false, false, Potion.moveSpeed.id, 100, 1, 20 );
 
 		UT.Fluids.create("dna", "DNA", null, 1, 1000L, 300L,  CS.FluidsGT.SIMPLE, CS.FluidsGT.LIQUID);
+		UT.Fluids.create("blood", "Blood", null, 1, 1000L, 300L,  CS.FluidsGT.NONSTANDARD, CS.FluidsGT.LIQUID);
 
 		corrugatedBlock = new BlockCorrugated(ItemBlockBase.class, "qt.block.corrugated", Material.iron, Block.soundTypeMetal, 16, new IIconContainer[]{new Textures.BlockIcons.CustomIcon("qwertech:wall")});
 		LH.add("qt.block.corrugated.0.name", "Corrugated Iron Wall");
@@ -504,7 +506,16 @@ public final class QwerTech extends Abstract_Mod {
 	        RM.Mixer.addRecipe2(true, 16L, 16L, OreDictionary.getOres("cropBellpepper").get(0), OreDictionary.getOres("cropSpiceleaf").get(0), UT.Fluids.make("mildsalsa", 500), UT.Fluids.make("salsa", 500), (ItemStack[])null);
 	        RM.Mixer.addRecipe2(true, 16L, 16L, OreDictionary.getOres("cropChilipepper").get(0), OreDictionary.getOres("cropChilipepper").get(0), UT.Fluids.make("salsa", 500), UT.Fluids.make("hotsalsa", 500), (ItemStack[])null);
         }
-        
+
+        RM.Mixer.addRecipe1(true, 16L, 16L, ST.make(Items.sugar, 1, 0), UT.Fluids.make("water", 1000), UT.Fluids.make("sugarwater", 1000), (ItemStack[])null);
+        RM.Mixer.addRecipe1(true, 16L, 16L, OP.dust.mat(MT.Wheat, 1), UT.Fluids.make("sugarwater", 250), null, IL.Food_Dough_Sugar.get(2));
+		RM.Mixer.addRecipe1(true, 16L, 16L, OP.dust.mat(MT.Barley, 1), UT.Fluids.make("sugarwater", 250), null, IL.Food_Dough_Sugar.get(2));
+		RM.Mixer.addRecipe1(true, 16L, 16L, OP.dust.mat(MT.Rye, 1), UT.Fluids.make("sugarwater", 250), null, IL.Food_Dough_Sugar.get(2));
+		RM.Mixer.addRecipe1(true, 16L, 16L, OP.dust.mat(MT.Oat, 1), UT.Fluids.make("sugarwater", 250), null, IL.Food_Dough_Sugar.get(2));
+		RM.Mixer.addRecipe1(true, 16L, 16L, OP.dust.mat(MT.Potato, 1), UT.Fluids.make("sugarwater", 250), null, IL.Food_Dough_Sugar.get(2));
+
+
+
         GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, null, new Object[]{OP.toolHeadScrewdriver, OP.toolHeadScrewdriver}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
 		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, null, new Object[]{OP.toolHeadScrewdriver, OP.toolHeadFile}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
 		GameRegistry.addRecipe(new AnyQTTool(12L, new And(OP.stickLong, TD.Atomic.ANTIMATTER.NOT), false, null, new Object[]{OP.toolHeadFile, 		OP.toolHeadFile}, qwerTool.getToolWithStats(12, MT.NULL, MT.Empty)));
