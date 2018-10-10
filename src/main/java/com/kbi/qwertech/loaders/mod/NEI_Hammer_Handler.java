@@ -153,7 +153,7 @@ public class NEI_Hammer_Handler extends ShapedRecipeHandler {
     	} else if (ST.valid(one) && ST.valid(two)) {
     		OreDictItemData data1 = OM.data(one);
     		OreDictItemData data2 = OM.data(two);
-    		if (data1 != null && data2 != null && data1.mPrefix == data2.mPrefix)
+    		if (data1 != null && data2 != null && data1.mPrefix == data2.mPrefix && data1.mMaterial != null && data2.mMaterial != null)
 			{
 				OreDictMaterial mat1 = data1.mMaterial.mMaterial;
 				OreDictMaterial mat2 = data2.mMaterial.mMaterial;
