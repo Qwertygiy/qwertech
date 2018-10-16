@@ -11,6 +11,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
@@ -19,6 +20,35 @@ import net.minecraft.world.World;
 import java.util.Random;
 
 public class EntityHelperFunctions {
+
+	public static NBTTagCompound sanitizeEntity(NBTTagCompound comp)
+	{
+		comp.removeTag("Invulnerable");
+		comp.removeTag("PortalCooldown");
+		comp.removeTag("AbsorptionAmount");
+		comp.removeTag("FallDistance");
+		comp.removeTag("DeathTime");
+		comp.removeTag("PersistenceRequired");
+		comp.removeTag("HealF");
+		comp.removeTag("Motion");
+		comp.removeTag("Leashed");
+		comp.removeTag("UUIDLeast");
+		comp.removeTag("Health");
+		comp.removeTag("Air");
+		comp.removeTag("OnGround");
+		comp.removeTag("Dimension");
+		comp.removeTag("Rotation");
+		comp.removeTag("UUIDMost");
+		comp.removeTag("Equipment");
+		comp.removeTag("CustomName");
+		comp.removeTag("Pos");
+		comp.removeTag("Fire");
+		comp.removeTag("CanPickUpLoot");
+		comp.removeTag("HurtTime");
+		comp.removeTag("AttackTime");
+		comp.removeTag("CustomNameVisible");
+		return comp;
+	}
 	
 	public static MovingObjectPosition getEntityLookTrace(World world, Entity entity, boolean par3, double range)
 	{

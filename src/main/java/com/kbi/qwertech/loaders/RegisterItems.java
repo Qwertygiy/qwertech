@@ -5,11 +5,13 @@ import com.kbi.qwertech.api.armor.upgrades.IArmorUpgrade;
 import com.kbi.qwertech.api.data.COLOR;
 import com.kbi.qwertech.api.data.QTI;
 import com.kbi.qwertech.api.data.QTMT;
+import com.kbi.qwertech.api.entities.IGeneticMob;
 import com.kbi.qwertech.api.entities.Species;
 import com.kbi.qwertech.api.entities.Subtype;
 import com.kbi.qwertech.api.registry.ArmorUpgradeRegistry;
 import com.kbi.qwertech.api.registry.MobSpeciesRegistry;
 import com.kbi.qwertech.armor.upgrades.Upgrade_SpringBoots;
+import com.kbi.qwertech.entities.EntityHelperFunctions;
 import com.kbi.qwertech.entities.genetic.EntityPhasianidae;
 import com.kbi.qwertech.entities.neutral.EntityTurkey;
 import com.kbi.qwertech.entities.passive.EntityFrog;
@@ -17,6 +19,7 @@ import com.kbi.qwertech.items.behavior.Behavior_Spawn;
 import com.kbi.qwertech.items.behavior.Behavior_ThrowEgg;
 import cpw.mods.fml.common.Optional.Interface;
 import cpw.mods.fml.common.Optional.InterfaceList;
+import cpw.mods.fml.common.registry.EntityRegistry;
 import gregapi.data.*;
 import gregapi.data.CS.ModIDs;
 import gregapi.item.multiitem.MultiItemRandom;
@@ -28,6 +31,8 @@ import gregapi.util.UT;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityCaveSpider;
 import net.minecraft.entity.monster.EntityMagmaCube;
@@ -42,6 +47,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -151,11 +160,11 @@ public class RegisterItems {
 				addItem(57, "Syringe of Grape Juice", "It's grrrrrrrape", new FluidContainerData(UT.Fluids.make("grapejuice", 100L), make(57), make(0), T), new FluidContainerData(UT.Fluids.make("grapejuice", 100L), make(57), make(3), T));
                 addItem(58, "Syringe of Sugarwater", "100cc of sugar helps the medicine flow down", UT.Fluids.make("sugarwater", 100L), new FluidContainerData(UT.Fluids.make("water", 100L), make(58), make(3), T), new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("sugarwater", 100L), make(58), make(0), T), new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("ic2distilledwater", 100L), make(58), make(3), T));
 
-				addItem(100, "Syringe of Dirty Water", "Needs to be flushed a few times", new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("waterdirty", 100L), make(100), make(1), T), new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("water", 100L), make(100), make(1), T), new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("waterdirty", 100L), make(100), make(0), T), new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("ic2distilledwater", 100L), make(100), make(1), T));
-				addItem(101, "Syringe of Milk", "Not for infant injection", UT.Fluids.make("milk", 100L), new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("milk", 100L), make(101), make(0), T));
-				addItem(102, "Syringe of Blood", "", UT.Fluids.make("blood", 100L), new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("blood", 100L), make(102), make(0), T));
-				addItem(103, "Syringe of DNA", "", UT.Fluids.make("dna", 100L), new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("dna", 100L), make(103), make(0), T));
-				addItem(104, "Syringe of Soymilk", "Not actually milk", UT.Fluids.make("soymilk", 100L), new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("soymilk", 100L), make(104), make(0), T));
+				addItem(100, "Syringe of Dirty Water", "Needs to be flushed a few times", new FluidContainerData(UT.Fluids.make("waterdirty", 100L), make(100), make(1), T), new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("water", 100L), make(100), make(1), T), new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("waterdirty", 100L), make(100), make(0), T), new FluidContainerRegistry.FluidContainerData(UT.Fluids.make("ic2distilledwater", 100L), make(100), make(1), T));
+				addItem(101, "Syringe of Milk", "Not for infant injection", UT.Fluids.make("milk", 100L), new FluidContainerData(UT.Fluids.make("milk", 100L), make(101), make(0), T));
+				addItem(102, "Syringe of Blood", "", UT.Fluids.make("blood", 100L), new FluidContainerData(UT.Fluids.make("blood", 100L), make(102), make(0), T));
+				addItem(103, "Syringe of DNA", "", UT.Fluids.make("dna", 100L), new FluidContainerData(UT.Fluids.make("dna", 100L), make(103), make(0), T));
+				addItem(104, "Syringe of Soymilk", "Not actually milk", UT.Fluids.make("soymilk", 100L), new FluidContainerData(UT.Fluids.make("soymilk", 100L), make(104), make(0), T));
 
                 CR.shaped(make(2, 0), new Object[]{"ABA", " C ", " D ", 'A', OP.round.dat(MT.Plastic).toString(), 'B', OP.stick.dat(MT.Plastic).toString(), 'C', OP.pipeTiny.dat(MT.Plastic).toString(), 'D', OP.bolt.dat(ANY.Steel).toString()});
 			}
@@ -288,7 +297,76 @@ public class RegisterItems {
 			{
 				return this.getIcon(ST.make(this, 1, damage), renderpass);
 			}
-		});
+
+			@Override
+			public boolean itemInteractionForEntity(ItemStack aStack, EntityPlayer aPlayer, EntityLivingBase aEntity) {
+                //if (aPlayer.worldObj.isRemote) return super.itemInteractionForEntity(aStack, aPlayer, aEntity);
+                System.out.println("StAbBy");
+			    ItemStack aUse = aPlayer.getCurrentEquippedItem();
+                aUse.stackSize = aUse.stackSize - 1;
+                aPlayer.setCurrentItemOrArmor(0, aUse.stackSize > 0 ? aUse : null);
+			    int md = aStack.getItemDamage();
+			    aStack.stackSize = 1;
+				if (md == 0)
+				{
+					aStack.setItemDamage(102);
+					NBTTagCompound nbt = UT.NBT.getOrCreate(aStack);
+					aEntity.writeToNBT(nbt);
+					System.out.println(nbt.toString());
+					nbt.setString("Class", aEntity.getClass().getName());
+					nbt.setString("ClassName", (String)EntityList.classToStringMapping.get(aEntity.getClass()));
+					aStack.setTagCompound(EntityHelperFunctions.sanitizeEntity(nbt));
+					aEntity.attackEntityFrom(new EntityDamageSource("syringe", aPlayer), 1);
+					aPlayer.inventory.addItemStackToInventory(aStack.copy());
+					return true;
+				} else if (md < 4)
+				{
+					aStack.setItemDamage(102);
+					NBTTagCompound nbt = UT.NBT.getOrCreate(aStack);
+					aEntity.writeToNBT(nbt);
+					nbt.setString("Class", aEntity.getClass().getName());
+                    nbt.setString("ClassName", (String)EntityList.classToStringMapping.get(aEntity.getClass()));
+                    nbt.setBoolean("contaminated", true);
+                    aStack.setTagCompound(EntityHelperFunctions.sanitizeEntity(nbt));
+					aEntity.attackEntityFrom(new EntityDamageSource("syringe", aPlayer), 1);
+                    aPlayer.inventory.addItemStackToInventory(aStack.copy());
+					return true;
+				} else if (md == 102)
+				{
+					aStack.setItemDamage(1);
+					NBTTagCompound nbt = UT.NBT.getOrCreate(aStack);
+					if (!nbt.getString("Class").equals(aEntity.getClass().getName()))
+					{
+						aEntity.addPotionEffect(new PotionEffect(Potion.poison.id, 100, 1, true));
+					}
+					if (nbt.getBoolean("contaminated"))
+                    {
+                        aEntity.addPotionEffect(new PotionEffect(Potion.wither.id, 100, 1, true));
+                    }
+					aStack.setTagCompound(new NBTTagCompound());
+					aEntity.heal(1); //make sure we don't kill the poor feller by stabbing it with too low health
+					aEntity.attackEntityFrom(new EntityDamageSource("syringe", aPlayer), 1); //ow sharp
+					aEntity.heal(1); //health from injection
+                    aPlayer.inventory.addItemStackToInventory(aStack.copy());
+					return true;
+				}
+				return super.itemInteractionForEntity(aStack, aPlayer, aEntity);
+			}
+
+            @Override
+            public void addAdditionalToolTips(List<String> aList, ItemStack aStack, boolean aF3_H) {
+			    NBTTagCompound nbt = UT.NBT.getOrCreate(aStack);
+			    if (nbt.getBoolean("contaminated"))
+                {
+                    aList.add(LH.Chat.BLINKING_RED + "Contaminated" + LH.Chat.GRAY);
+                }
+                if (nbt.getString("ClassName") != null && !nbt.getString("ClassName").equals(""))
+                {
+                    aList.add(LH.get(nbt.getString("ClassName")));
+                }
+                super.addAdditionalToolTips(aList, aStack, aF3_H);
+            }
+        });
 		
 		QTI.qwerFood.set(new MultiItemRandom(QwerTech.MODID, "qwertech.food") {@Override public void addItems() {
 			addItem(0, "Mozzarella"					, "Itsa good cheese", 					new FoodStat(3, 0.5F, 0F, 310F, 0.1F, EnumAction.eat, null, false, false, false, false));

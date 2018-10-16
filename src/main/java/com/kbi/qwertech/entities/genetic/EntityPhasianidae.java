@@ -65,6 +65,7 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
         if (stacky.getItem() instanceof MultiItem)
         {
             ArrayList<IBehavior<MultiItem>> meep = ((MultiItem)stacky.getItem()).mItemBehaviors.get((short)stacky.getItemDamage());
+            if (meep == null || meep.size() < 1) return super.interact(playa);
             for (IBehavior beep : meep)
             {
                 if (beep instanceof Behavior_Tool)
