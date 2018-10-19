@@ -4,6 +4,7 @@ import com.kbi.qwertech.QwerTech;
 import com.kbi.qwertech.api.armor.MultiItemArmor;
 import com.kbi.qwertech.api.data.QTConfigs;
 import com.kbi.qwertech.api.data.QTI;
+import com.kbi.qwertech.api.registry.MobBloodRegistry;
 import com.kbi.qwertech.api.registry.MobBreedRegistry;
 import com.kbi.qwertech.api.registry.MobGearRegistry;
 import com.kbi.qwertech.api.registry.MobScrapeRegistry;
@@ -73,6 +74,7 @@ public class RegisterMobs {
 		new MobGearRegistry(3);
 		
 		new MobScrapeRegistry();
+		new MobBloodRegistry();
 		
 		addMobScrapes();
 		

@@ -9,6 +9,7 @@ import com.kbi.qwertech.api.entities.IGeneticMob;
 import com.kbi.qwertech.api.entities.Species;
 import com.kbi.qwertech.api.entities.Subtype;
 import com.kbi.qwertech.api.registry.ArmorUpgradeRegistry;
+import com.kbi.qwertech.api.registry.MobBloodRegistry;
 import com.kbi.qwertech.api.registry.MobSpeciesRegistry;
 import com.kbi.qwertech.armor.upgrades.Upgrade_SpringBoots;
 import com.kbi.qwertech.entities.EntityHelperFunctions;
@@ -53,6 +54,7 @@ import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
@@ -165,6 +167,10 @@ public class RegisterItems {
 				addItem(102, "Syringe of Blood", "", UT.Fluids.make("blood", 100L), new FluidContainerData(UT.Fluids.make("blood", 100L), make(102), make(0), T));
 				addItem(103, "Syringe of DNA", "", UT.Fluids.make("dna", 100L), new FluidContainerData(UT.Fluids.make("dna", 100L), make(103), make(0), T));
 				addItem(104, "Syringe of Soymilk", "Not actually milk", UT.Fluids.make("soymilk", 100L), new FluidContainerData(UT.Fluids.make("soymilk", 100L), make(104), make(0), T));
+				addItem(105, "Syringe of Blaze", "IT BURNS!", UT.Fluids.make("blaze", 100L), new FluidContainerData(UT.Fluids.make("blaze", 100L), make(105), make(0), T));
+                addItem(106, "Syringe of Mushroom Soup", "Delicious", UT.Fluids.make("mushroomsoup", 100L), new FluidContainerData(UT.Fluids.make("mushroomsoup", 100L), make(106), make(0), T));
+                addItem(107, "Syringe of Ice Water", "You said " + LH.Chat.ITALIC + "hypothermic" + LH.Chat.RESET + " needle, right?", UT.Fluids.make("ice", 100L), new FluidContainerData(UT.Fluids.make("ice", 100L), make(107), make(0), T));
+                addItem(108, "Syringe of Slime", "It's squirming around in there...", UT.Fluids.make("slime", 100L), new FluidContainerData(UT.Fluids.make("slime", 100L), make(108), make(0), T));
 
                 CR.shaped(make(2, 0), new Object[]{"ABA", " C ", " D ", 'A', OP.round.dat(MT.Plastic).toString(), 'B', OP.stick.dat(MT.Plastic).toString(), 'C', OP.pipeTiny.dat(MT.Plastic).toString(), 'D', OP.bolt.dat(ANY.Steel).toString()});
 			}
@@ -301,7 +307,7 @@ public class RegisterItems {
 			@Override
 			public boolean itemInteractionForEntity(ItemStack aStack, EntityPlayer aPlayer, EntityLivingBase aEntity) {
                 //if (aPlayer.worldObj.isRemote) return super.itemInteractionForEntity(aStack, aPlayer, aEntity);
-                System.out.println("StAbBy");
+                //System.out.println("StAbBy");
 			    ItemStack aUse = aPlayer.getCurrentEquippedItem();
                 aUse.stackSize = aUse.stackSize - 1;
                 aPlayer.setCurrentItemOrArmor(0, aUse.stackSize > 0 ? aUse : null);
@@ -309,7 +315,14 @@ public class RegisterItems {
 			    aStack.stackSize = 1;
 				if (md == 0)
 				{
-					aStack.setItemDamage(102);
+				    Fluid bloody = MobBloodRegistry.getFluid(aEntity.getClass());
+				    if (bloody == null)
+                    {
+                        aUse.stackSize = aUse.stackSize + 1;
+                        aPlayer.setCurrentItemOrArmor(0, aUse);
+                        return false;
+                    }
+					aStack = UT.Fluids.fillFluidContainer(UT.Fluids.make(bloody, 100), aStack, true, true);
 					NBTTagCompound nbt = UT.NBT.getOrCreate(aStack);
 					aEntity.writeToNBT(nbt);
 					System.out.println(nbt.toString());
@@ -321,8 +334,15 @@ public class RegisterItems {
 					return true;
 				} else if (md < 4)
 				{
-					aStack.setItemDamage(102);
-					NBTTagCompound nbt = UT.NBT.getOrCreate(aStack);
+                    Fluid bloody = MobBloodRegistry.getFluid(aEntity.getClass());
+                    if (bloody == null)
+                    {
+                        aUse.stackSize = aUse.stackSize + 1;
+                        aPlayer.setCurrentItemOrArmor(0, aUse);
+                        return false;
+                    }
+                    aStack = UT.Fluids.fillFluidContainer(UT.Fluids.make(bloody, 100), aStack, true, true);
+                    NBTTagCompound nbt = UT.NBT.getOrCreate(aStack);
 					aEntity.writeToNBT(nbt);
 					nbt.setString("Class", aEntity.getClass().getName());
                     nbt.setString("ClassName", (String)EntityList.classToStringMapping.get(aEntity.getClass()));
@@ -350,6 +370,8 @@ public class RegisterItems {
                     aPlayer.inventory.addItemStackToInventory(aStack.copy());
 					return true;
 				}
+                aUse.stackSize = aUse.stackSize + 1;
+                aPlayer.setCurrentItemOrArmor(0, aUse);
 				return super.itemInteractionForEntity(aStack, aPlayer, aEntity);
 			}
 
