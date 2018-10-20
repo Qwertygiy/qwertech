@@ -18,7 +18,7 @@ public class MobBloodRegistry {
 	private static HashMap<String, Fluid> listGear = new HashMap();
 
 	public MobBloodRegistry()
-	{ 
+	{
 		registerMobKey(EntityBat.class, "bat");
 		registerMobKey(EntityChicken.class, "chicken");
 		registerMobKey(EntityCow.class, "cow");
