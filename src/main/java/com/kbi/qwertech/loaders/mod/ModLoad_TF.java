@@ -2,6 +2,7 @@ package com.kbi.qwertech.loaders.mod;
 
 import com.kbi.qwertech.api.recipe.RepairRecipe;
 import com.kbi.qwertech.api.recipe.managers.CraftingManagerHammer;
+import com.kbi.qwertech.api.registry.MobBloodRegistry;
 import com.kbi.qwertech.api.registry.MobScrapeRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import gregapi.code.ModData;
@@ -83,12 +84,16 @@ public class ModLoad_TF extends ModLoadBase {
 		try {
 			adderble = Class.forName("twilightforest.entity.EntityTFTowerGhast");
 			MobScrapeRegistry.registerMobKey(adderble, "TowerGhast");
+			MobBloodRegistry.registerMobKey(adderble, "TowerGhast");
+			MobBloodRegistry.removeBlood("TowerGhast");
 		} catch (Exception e) {
 			System.out.println("Twilight Forest was found but Tower Ghasts weren't!");
 		}
 		try {
 			adderble = Class.forName("twilightforest.entity.EntityTFMiniGhast");
 			MobScrapeRegistry.registerMobKey(adderble, "MiniGhast");
+			MobBloodRegistry.registerMobKey(adderble, "MiniGhast");
+			MobBloodRegistry.removeBlood("MiniGhast");
 		} catch (Exception e) {
 			System.out.println("Twilight Forest was found but Mini Ghasts weren't!");
 		}
@@ -113,6 +118,8 @@ public class ModLoad_TF extends ModLoadBase {
 		try {
 			adderble = Class.forName("twilightforest.entity.EntityTFSkeletonDruid");
 			MobScrapeRegistry.registerMobKey(adderble, "SkeletonDruid");
+			MobBloodRegistry.registerMobKey(adderble, "SkeletonDruid");
+			MobBloodRegistry.removeBlood("SkeletonDruid");
 			try {
 				Class TFItems = Class.forName("twilightforest.item.TFItems");
 				Object torchberries = new Object();
@@ -179,6 +186,8 @@ public class ModLoad_TF extends ModLoadBase {
 		try {
 			adderble = Class.forName("twilightforest.entity.EntityTFWraith");
 			MobScrapeRegistry.registerMobKey(adderble, "Wraith");
+			MobBloodRegistry.registerMobKey(adderble, "Wraith");
+			MobBloodRegistry.removeBlood("Wraith");
 		} catch (Exception e) {
 			System.out.println("Twilight Forest was found but Wraiths weren't!");
 		}

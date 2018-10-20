@@ -2,6 +2,7 @@ package com.kbi.qwertech.loaders.mod;
 
 import com.kbi.qwertech.api.recipe.RepairRecipe;
 import com.kbi.qwertech.api.recipe.managers.CraftingManagerHammer;
+import com.kbi.qwertech.api.registry.MobBloodRegistry;
 import com.kbi.qwertech.api.registry.MobScrapeRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import gregapi.code.ModData;
@@ -10,6 +11,7 @@ import gregapi.data.MD;
 import gregapi.data.MT;
 import gregapi.data.OP;
 import gregapi.oredict.OreDictMaterialStack;
+import gregapi.util.UT;
 
 public class ModLoad_TE_FOUNDATION extends ModLoadBase {
 	
@@ -37,6 +39,8 @@ public class ModLoad_TE_FOUNDATION extends ModLoadBase {
 		try {
 			Class Blizz = Class.forName("cofh.thermalfoundation.entity.monster.EntityBlizz");
 			MobScrapeRegistry.registerMobKey(Blizz, "Blizz");
+			MobBloodRegistry.registerMobKey(Blizz, "Blizz");
+			MobBloodRegistry.registerBlood("Blizz", UT.Fluids.fluid("ice"));
 		} catch (Exception e) {
 			System.out.println("Thermal Foundation was found but Blizzes weren't!");
 		}
