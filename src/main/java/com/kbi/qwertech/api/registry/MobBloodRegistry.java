@@ -19,6 +19,7 @@ public class MobBloodRegistry {
 
 	public MobBloodRegistry()
 	{
+		
 		registerMobKey(EntityBat.class, "bat");
 		registerMobKey(EntityChicken.class, "chicken");
 		registerMobKey(EntityCow.class, "cow");
