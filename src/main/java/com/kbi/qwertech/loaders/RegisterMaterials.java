@@ -168,7 +168,7 @@ public class RegisterMaterials {
         RM.Mixer.add(new RecipeMapHandlerMaterial(MT.Aquamarine, QTMT.ChemicalY.liquid(CS.U, true), 16, 16, null, QTMT.WhiteCY11, null, true, ICondition.TRUE));
         RM.Mixer.add(new RecipeMapHandlerMaterial(MT.Alexandrite, QTMT.ChemicalY.liquid(CS.U, true), 16, 16, null, QTMT.WhiteCY11, null, true, ICondition.TRUE));
 
-        RM.Mixer.addRecipeX(true, 16, 16, new ItemStack[]{ST.make(Items.sugar, 1, 0), IL.Food_Cinnamon.get(1), OP.dust.mat(MT.Au, 1)}, QTMT.ChemicalX.liquid(CS.U, true), UT.Fluids.make(FL.Soda, 100L), ST.make(Blocks.red_flower, 1, 0), IL.Food_Butter.get(1));
+        //RM.Mixer.addRecipeX(true, 16, 16, new ItemStack[]{ST.make(Items.sugar, 1, 0), IL.Food_Cinnamon.get(1), OP.dust.mat(MT.Au, 1)}, QTMT.ChemicalX.liquid(CS.U, true), UT.Fluids.make(FL.Soda, 100L), ST.make(Blocks.red_flower, 1, 0), IL.Food_Butter.get(1));
 
 
 
