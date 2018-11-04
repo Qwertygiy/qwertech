@@ -761,7 +761,7 @@ public class RegisterItems {
 							NBTTagCompound genes = nbt.getCompoundTag("QTgenes");
 							if (genes.hasKey("species")) {
 								Species species = MobSpeciesRegistry.getSpecies(EntityPhasianidae.class, genes.getShort("species"));
-								aList.add("Species: " + species.getCommonName());
+								aList.add("Species: " + species.getTag(RegisterSpecies.NAME_ENGLISH));
 								if (genes.hasKey("subtype")) {
 									Subtype subtype = species.getSubtype(genes.getShort("subtype"));
 									aList.add("Subtype: " + subtype.getCommonName());

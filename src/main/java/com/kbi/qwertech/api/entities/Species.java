@@ -1,15 +1,17 @@
 package com.kbi.qwertech.api.entities;
 
 import com.kbi.qwertech.api.data.COLOR;
+import com.kbi.qwertech.loaders.RegisterSpecies;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.biome.BiomeGenBase;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Species {
+public class Species implements Taggable {
     public Subtype[] subtypes = new Subtype[Short.MAX_VALUE];
     public HashMap<BiomeGenBase, List<Subtype>> spawnMap = new HashMap<BiomeGenBase, List<Subtype>>();
 
@@ -17,15 +19,6 @@ public class Species {
 
     public short[] minLimits = new short[8];
     public short[] maxLimits = new short[8];
-    private ItemStack meat;
-    private ItemStack secondary;
-    private ItemStack rare;
-    private String latinName;
-    private String commonName;
-    public int primaryColorMin;
-    public int primaryColorMax;
-    public int secondaryColorMin;
-    public int secondaryColorMax;
     private Class<? extends IGeneticMob> mobType;
 
     public Species(Class<? extends IGeneticMob> mob)
@@ -44,31 +37,8 @@ public class Species {
     }
 
     @Override
-    public String toString()
-    {
-        return getCommonName() + " (" + getLatinName() + ")";
-    }
-
-    public String getLatinName()
-    {
-        return latinName;
-    }
-
-    public Species setLatinName(String name)
-    {
-        latinName = name;
-        return this;
-    }
-
-    public String getCommonName()
-    {
-        return commonName;
-    }
-
-    public Species setCommonName(String name)
-    {
-        commonName = name;
-        return this;
+    public String toString() {
+        return (String)this.getTag(RegisterSpecies.NAME_TRANSLATE);
     }
 
     public Species setSubtype(int ID, Subtype type)
@@ -89,128 +59,6 @@ public class Species {
         } else {
             return subtypes[0];
         }
-    }
-
-    public ItemStack getMeat()
-    {
-        return meat;
-    }
-
-    public Species setMeat(ItemStack meatType)
-    {
-        meat = meatType;
-        return this;
-    }
-
-    public ItemStack getSecondary()
-    {
-        return secondary;
-    }
-
-    public Species setSecondary(ItemStack secondaryType)
-    {
-        secondary = secondaryType;
-        return this;
-    }
-
-    public ItemStack getRare()
-    {
-        return rare;
-    }
-
-    public Species setRare(ItemStack rareType)
-    {
-        rare = rareType;
-        return this;
-    }
-
-    private Object model;
-
-    @SideOnly(Side.CLIENT)
-    public net.minecraft.client.model.ModelBase getModel()
-    {
-        return (net.minecraft.client.model.ModelBase)model;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public Species setModel(net.minecraft.client.model.ModelBase modelType)
-    {
-        model = modelType;
-        return this;
-    }
-
-    public Species setPrimaryColor(String color)
-    {
-        if (COLOR.colorDictionary.containsKey(color))
-        {
-            int colorValue = COLOR.colorDictionary.get(color);
-            int min = Math.max((colorValue >> 16 & 255) - 20, 0) * (int)Math.pow(2, 16);
-            min = min + Math.max((colorValue >> 8 & 255) - 20, 0) * (int)Math.pow(2, 8);
-            min = min + Math.max((colorValue & 255) - 20, 0);
-
-            int max = Math.min((colorValue >> 16 & 255) + 20, 255) * (int)Math.pow(2, 16);
-            max = max + Math.min((colorValue >> 8 & 255) + 20, 255) * (int)Math.pow(2, 8);
-            max = max + Math.min((colorValue & 255) + 20, 255);
-            setPrimaryColors(min, max);
-        } else {
-            System.out.println("Could not find color " + color);
-        }
-        return this;
-    }
-
-    public Species setPrimaryColors(int color1, int color2)
-    {
-        primaryColorMin = color1;
-        primaryColorMax = color2;
-        return this;
-    }
-
-    public Species setPrimaryColors(String color1, String color2)
-    {
-        if (COLOR.colorDictionary.containsKey(color1) && COLOR.colorDictionary.containsKey(color2))
-        {
-            setPrimaryColors(COLOR.colorDictionary.get(color1), COLOR.colorDictionary.get(color2));
-        } else {
-            System.out.println("Could not find both colors " + color1 + " and " + color2);
-        }
-        return this;
-    }
-
-    public Species setSecondaryColor(String color)
-    {
-        if (COLOR.colorDictionary.containsKey(color))
-        {
-            int colorValue = COLOR.colorDictionary.get(color);
-            int min = Math.max((colorValue >> 16 & 255) - 20, 0) * (int)Math.pow(2, 16);
-            min = min + Math.max((colorValue >> 8 & 255) - 20, 0) * (int)Math.pow(2, 8);
-            min = min + Math.max((colorValue & 255) - 20, 0);
-
-            int max = Math.min((colorValue >> 16 & 255) + 20, 255) * (int)Math.pow(2, 16);
-            max = max + Math.min((colorValue >> 8 & 255) + 20, 255) * (int)Math.pow(2, 8);
-            max = max + Math.min((colorValue & 255) + 20, 255);
-            setSecondaryColors(min, max);
-        } else {
-            System.out.println("Could not find color " + color);
-        }
-        return this;
-    }
-
-    public Species setSecondaryColors(int color1, int color2)
-    {
-        secondaryColorMin = color1;
-        secondaryColorMax = color2;
-        return this;
-    }
-
-    public Species setSecondaryColors(String color1, String color2)
-    {
-        if (COLOR.colorDictionary.containsKey(color1) && COLOR.colorDictionary.containsKey(color2))
-        {
-            setSecondaryColors(COLOR.colorDictionary.get(color1), COLOR.colorDictionary.get(color2));
-        } else {
-            System.out.println("Could not find both " + color1 + " and " + color2 + " in the color database");
-        }
-        return this;
     }
 
     public short getMinSize()
@@ -389,37 +237,20 @@ public class Species {
         return this;
     }
 
-    public int getPrimaryColorMin()
-    {
-        return primaryColorMin;
-    }
-
-    public int getPrimaryColorMax()
-    {
-        return primaryColorMax;
-    }
-
-    public int getSecondaryColorMin()
-    {
-        return secondaryColorMin;
-    }
-
-    public int getSecondaryColorMax()
-    {
-        return secondaryColorMax;
-    }
-
+    @Override
     public boolean hasTag(String tag)
     {
         return extraTags.containsKey(tag);
     }
 
+    @Override
     public Species addTag(String tag, Object obby)
     {
         extraTags.put(tag, obby);
         return this;
     }
 
+    @Override
     public Object getTag(String tag)
     {
         if (extraTags.containsKey(tag))
@@ -427,5 +258,11 @@ public class Species {
             return extraTags.get(tag);
         }
         return null;
+    }
+
+    @Override
+    public List<String> getTags()
+    {
+        return new ArrayList<String>(extraTags.keySet());
     }
 }

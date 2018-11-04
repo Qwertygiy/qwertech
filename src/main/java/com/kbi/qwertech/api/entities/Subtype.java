@@ -2,6 +2,7 @@ package com.kbi.qwertech.api.entities;
 
 import com.kbi.qwertech.api.data.COLOR;
 import com.kbi.qwertech.api.registry.MobSpeciesRegistry;
+import com.kbi.qwertech.loaders.RegisterSpecies;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -11,14 +12,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Subtype {
+public class Subtype implements Taggable{
 
     private HashMap<String, Object> extraTags = new HashMap<String, Object>();
 
     public short[] minLimits = new short[8];
     public short[] maxLimits = new short[8];
     public short[] preferred = new short[8];
-    public String[] sounds;
     public int primaryColorMin;
     public int primaryColorMax;
     public int secondaryColorMin;
@@ -35,25 +35,6 @@ public class Subtype {
     public Subtype(Species species)
     {
         assignedSpecies = species;
-        sounds = new String[]{"", "", "", "", ""};
-    }
-
-    private Object model;
-
-    @SideOnly(Side.CLIENT)
-    public net.minecraft.client.model.ModelBase getModel()
-    {
-        if (model != null) {
-            return (net.minecraft.client.model.ModelBase) model;
-        }
-        return assignedSpecies.getModel();
-    }
-
-    @SideOnly(Side.CLIENT)
-    public Subtype setModel(net.minecraft.client.model.ModelBase modelType)
-    {
-        model = modelType;
-        return this;
     }
 
     public Subtype addBiome(BiomeGenBase biome)
@@ -127,186 +108,9 @@ public class Subtype {
 
     @Override
     public String toString() {
-        return getCommonName();
+        return (String)this.getTag(RegisterSpecies.NAME_TRANSLATE);
     }
 
-    public String getCommonName()
-    {
-        return commonName;
-    }
-
-    public Subtype setCommonName(String name)
-    {
-        commonName = name;
-        return this;
-    }
-
-    public String getLivingSound()
-    {
-        return sounds[0];
-    }
-
-    public Subtype setLivingSound(String sound)
-    {
-        sounds[0] = sound;
-        return this;
-    }
-
-    public String getHurtSound()
-    {
-        return sounds[1];
-    }
-
-    public Subtype setHurtSound(String sound)
-    {
-        sounds[1] = sound;
-        return this;
-    }
-
-    public String getDeathSound()
-    {
-        return sounds[2];
-    }
-
-    public Subtype setDeathSound(String sound)
-    {
-        sounds[2] = sound;
-        return this;
-    }
-
-    public String getAngrySound()
-    {
-        return sounds[3];
-    }
-
-    public Subtype setAngrySound(String sound)
-    {
-        sounds[3] = sound;
-        return this;
-    }
-
-    public String getHungrySound()
-    {
-        return sounds[4];
-    }
-
-    public Subtype setHungrySound(String sound)
-    {
-        sounds[4] = sound;
-        return this;
-    }
-
-    public Subtype setPrimaryColor(String color)
-    {
-        if (COLOR.colorDictionary.containsKey(color))
-        {
-            int colorValue = COLOR.colorDictionary.get(color);
-            int min = Math.max((colorValue >> 16 & 255) - 20, 0) * (int)Math.pow(2, 16);
-            min = min + Math.max((colorValue >> 8 & 255) - 20, 0) * (int)Math.pow(2, 8);
-            min = min + Math.max((colorValue & 255) - 20, 0);
-
-            int max = Math.min((colorValue >> 16 & 255) + 20, 255) * (int)Math.pow(2, 16);
-            max = max + Math.min((colorValue >> 8 & 255) + 20, 255) * (int)Math.pow(2, 8);
-            max = max + Math.min((colorValue & 255) + 20, 255);
-            setPrimaryColors(min, max);
-        } else {
-            System.out.println("Could not find color " + color);
-        }
-        return this;
-    }
-
-    public Subtype setPrimaryColors(int color1, int color2)
-    {
-        primaryColorMin = color1;
-        primaryColorMax = color2;
-        return this;
-    }
-
-    public Subtype setPrimaryColors(String color1, String color2)
-    {
-        if (COLOR.colorDictionary.containsKey(color1) && COLOR.colorDictionary.containsKey(color2))
-        {
-            setPrimaryColors(COLOR.colorDictionary.get(color1), COLOR.colorDictionary.get(color2));
-        } else {
-            System.out.println("Could not find both " + color1 + " and " + color2);
-        }
-        return this;
-    }
-
-    public Subtype setSecondaryColor(String color)
-    {
-        if (COLOR.colorDictionary.containsKey(color))
-        {
-            int colorValue = COLOR.colorDictionary.get(color);
-            int min = Math.max((colorValue >> 16 & 255) - 20, 0) * (int)Math.pow(2, 16);
-            min = min + Math.max((colorValue >> 8 & 255) - 20, 0) * (int)Math.pow(2, 8);
-            min = min + Math.max((colorValue & 255) - 20, 0);
-
-            int max = Math.min((colorValue >> 16 & 255) + 20, 255) * (int)Math.pow(2, 16);
-            max = max + Math.min((colorValue >> 8 & 255) + 20, 255) * (int)Math.pow(2, 8);
-            max = max + Math.min((colorValue & 255) + 20, 255);
-            setSecondaryColors(min, max);
-        } else {
-            System.out.println("Could not find color " + color);
-        }
-        return this;
-    }
-
-    public Subtype setSecondaryColors(int color1, int color2)
-    {
-        secondaryColorMin = color1;
-        secondaryColorMax = color2;
-        return this;
-    }
-
-    public Subtype setSecondaryColors(String color1, String color2)
-    {
-        if (COLOR.colorDictionary.containsKey(color1) && COLOR.colorDictionary.containsKey(color2))
-        {
-            setSecondaryColors(COLOR.colorDictionary.get(color1), COLOR.colorDictionary.get(color2));
-        } else {
-            System.out.println("Could not find both " + color1 + " and " + color2 + " in the color database");
-        }
-        return this;
-    }
-
-    public String getPrimaryTexture()
-    {
-        return primaryTexture;
-    }
-
-    public Subtype setPrimaryTexture(String pT)
-    {
-        primaryTexture = pT;
-        return this;
-    }
-
-    public String getSecondaryTexture()
-    {
-        return secondaryTexture;
-    }
-
-    public Subtype setSecondaryTexture(String sT)
-    {
-        secondaryTexture = sT;
-        return this;
-    }
-
-    public String getOverlayTexture() { return overlayTexture;}
-
-    public Subtype setOverlayTexture(String oT)
-    {
-        overlayTexture = oT;
-        return this;
-    }
-
-    public Subtype setTexturePath(String tP)
-    {
-        primaryTexture = tP + "_primary.png";
-        secondaryTexture = tP + "_secondary.png";
-        overlayTexture = tP + "_overlay.png";
-        return this;
-    }
 
     public Subtype setSize(int min, int pref, int max)
     {
@@ -481,17 +285,20 @@ public class Subtype {
         return secondaryColorMax;
     }
 
+    @Override
     public boolean hasTag(String tag)
     {
         return extraTags.containsKey(tag);
     }
 
+    @Override
     public Subtype addTag(String tag, Object obby)
     {
         extraTags.put(tag, obby);
         return this;
     }
 
+    @Override
     public Object getTag(String tag)
     {
         if (extraTags.containsKey(tag))
@@ -499,6 +306,12 @@ public class Subtype {
             return extraTags.get(tag);
         }
         return null;
+    }
+
+    @Override
+    public List<String> getTags()
+    {
+        return new ArrayList<String>(extraTags.keySet());
     }
 
 }
