@@ -73,7 +73,7 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
                     if (((Behavior_Tool)beep).mToolName.equals("magnifyingglass"))
                     {
                         List<String> chats = new ArrayList<String>();
-                        chats.add(this.theSubtype.getCommonName() + "(" + this.theSpecies.getLatinName() + ")");
+                        chats.add(this.theSubtype.getTag(RegisterSpecies.NAME_ENGLISH) + "(" + this.theSpecies.getTag(RegisterSpecies.NAME_LATIN) + ")");
                         int randomStat = this.rand.nextInt(6);
                         switch (randomStat)
                         {
@@ -462,28 +462,75 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
 
     @Override
     protected String getLivingSound() {
-        return theSubtype.getLivingSound();
+        ArrayList<String> sounds = null;
+        if (theSubtype.hasTag(RegisterSpecies.SOUNDS_IDLE))
+        {
+            sounds = (ArrayList<String>)theSubtype.getTag(RegisterSpecies.SOUNDS_IDLE);
+        } else if (theSpecies.hasTag(RegisterSpecies.SOUNDS_IDLE))
+        {
+            sounds = (ArrayList<String>)theSpecies.getTag(RegisterSpecies.SOUNDS_IDLE);
+        }
+        if (sounds != null && !sounds.isEmpty())
+        {
+            return sounds.get(rand.nextInt(sounds.size()));
+        }
+        return "";
     }
 
     @Override
     protected String getHurtSound() {
-        return theSubtype.getHurtSound();
+        ArrayList<String> sounds = null;
+        if (theSubtype.hasTag(RegisterSpecies.SOUNDS_HURT))
+        {
+            sounds = (ArrayList<String>)theSubtype.getTag(RegisterSpecies.SOUNDS_HURT);
+        } else if (theSpecies.hasTag(RegisterSpecies.SOUNDS_HURT))
+        {
+            sounds = (ArrayList<String>)theSpecies.getTag(RegisterSpecies.SOUNDS_HURT);
+        }
+        if (sounds != null && !sounds.isEmpty())
+        {
+            return sounds.get(rand.nextInt(sounds.size()));
+        }
+        return "";
     }
 
     @Override
     protected String getDeathSound() {
-        return theSubtype.getDeathSound();
+        ArrayList<String> sounds = null;
+        if (theSubtype.hasTag(RegisterSpecies.SOUNDS_DEAD))
+        {
+            sounds = (ArrayList<String>)theSubtype.getTag(RegisterSpecies.SOUNDS_DEAD);
+        } else if (theSpecies.hasTag(RegisterSpecies.SOUNDS_DEAD))
+        {
+            sounds = (ArrayList<String>)theSpecies.getTag(RegisterSpecies.SOUNDS_DEAD);
+        } else if (theSubtype.hasTag(RegisterSpecies.SOUNDS_HURT))
+        {
+            sounds = (ArrayList<String>)theSubtype.getTag(RegisterSpecies.SOUNDS_HURT);
+        } else if (theSpecies.hasTag(RegisterSpecies.SOUNDS_HURT))
+        {
+            sounds = (ArrayList<String>)theSpecies.getTag(RegisterSpecies.SOUNDS_HURT);
+        }
+        if (sounds != null && !sounds.isEmpty())
+        {
+            return sounds.get(rand.nextInt(sounds.size()));
+        }
+        return "";
     }
 
     @Override
     protected Item getDropItem() {
-        return theSpecies.getMeat().getItem();
+        if (theSpecies.hasTag(RegisterSpecies.DROP_PRIMARY))
+        {
+            return ((ArrayList<ItemStack>)theSpecies.getTag(RegisterSpecies.DROP_PRIMARY)).get(0).getItem();
+        }
+        return null;
     }
 
     @Override
     protected void dropFewItems(boolean isPlayer, int looting) {
-        if (ST.valid(theSpecies.getRare())) {
-            ItemStack rare = theSpecies.getRare().copy();
+        ArrayList<ItemStack> rares = (ArrayList<ItemStack>)theSpecies.getTag(RegisterSpecies.DROP_RARE);
+        if (rares != null && !rares.isEmpty()) {
+            ItemStack rare = rares.get(rand.nextInt(rares.size())).copy();
             if (isPlayer && this.rand.nextInt(100) < 3 + looting) {
                 NBTTagCompound nbt = UT.NBT.getOrCreate(rare);
                 if (nbt.hasKey("itemColor"))
@@ -499,8 +546,9 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
         short minSize = theSubtype.getMinSize();
         short maxSize = theSubtype.getMaxSize();
         short range = (short)(maxSize - minSize);
-        if (ST.valid(theSpecies.getSecondary())) {
-            ItemStack drop = theSpecies.getSecondary().copy();
+        ArrayList<ItemStack> secondaries = (ArrayList<ItemStack>)theSpecies.getTag(RegisterSpecies.DROP_SECONDARY);
+        if (secondaries != null && !secondaries.isEmpty()) {
+            ItemStack drop = secondaries.get(rand.nextInt(secondaries.size())).copy();
             drop.stackSize = getSize() < minSize + (range * 0.2) ? 1 : getSize() > maxSize - (range * 0.2) ? 3 : 2;
             drop.stackSize = drop.stackSize * (1 + this.rand.nextInt(looting + 1));
 
@@ -513,8 +561,9 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
 
             ST.drop(this, drop);
         }
-        if (ST.valid(theSpecies.getMeat())) {
-            ItemStack meat = theSpecies.getMeat().copy();
+        ArrayList<ItemStack> primaries = (ArrayList<ItemStack>)theSpecies.getTag(RegisterSpecies.DROP_PRIMARY);
+        if (primaries != null && !primaries.isEmpty()) {
+            ItemStack meat = primaries.get(rand.nextInt(primaries.size())).copy();
             meat.stackSize = 1;
             ST.drop(this, meat);
         }
@@ -757,20 +806,20 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
     @Override
     public ItemStack getEggItem(IGeneticMob geneticMob) {
         ItemStack toReturn = QTI.qwerFood.getWithDamage(1, 32);
-        if (theSubtype.hasTag(RegisterSpecies.EGG_ITEM))
+        if (theSubtype.hasTag(RegisterSpecies.ITEM_EGG))
         {
-            toReturn = ((ItemStack)theSubtype.getTag(RegisterSpecies.EGG_ITEM)).copy();
-        } else if (theSpecies.hasTag(RegisterSpecies.EGG_ITEM))
+            toReturn = ((ItemStack)theSubtype.getTag(RegisterSpecies.ITEM_EGG)).copy();
+        } else if (theSpecies.hasTag(RegisterSpecies.ITEM_EGG))
         {
-            toReturn = ((ItemStack)theSpecies.getTag(RegisterSpecies.EGG_ITEM)).copy();
+            toReturn = ((ItemStack)theSpecies.getTag(RegisterSpecies.ITEM_EGG)).copy();
         }
         NBTTagCompound tag = UT.NBT.getOrCreate(toReturn);
-        if (theSubtype.hasTag(RegisterSpecies.EGG_COLOR))
+        if (theSubtype.hasTag(RegisterSpecies.COLOR_EGG))
         {
-            tag.setInteger("itemColor", (Integer)theSubtype.getTag(RegisterSpecies.EGG_COLOR));
-        } else if (theSpecies.hasTag(RegisterSpecies.EGG_COLOR))
+            tag.setInteger("itemColor", (Integer)theSubtype.getTag(RegisterSpecies.COLOR_EGG));
+        } else if (theSpecies.hasTag(RegisterSpecies.COLOR_EGG))
         {
-            tag.setInteger("itemColor", (Integer)theSpecies.getTag(RegisterSpecies.EGG_COLOR));
+            tag.setInteger("itemColor", (Integer)theSpecies.getTag(RegisterSpecies.COLOR_EGG));
         }
         toReturn.setTagCompound(tag);
         return toReturn;
@@ -790,8 +839,8 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
         {
             return 1.0F;
         }
-        Object specTag = theSpecies.getTag(RegisterSpecies.HOSTILEON_HIT);
-        Object subTag = theSubtype.getTag(RegisterSpecies.HOSTILEON_HIT);
+        Object specTag = theSpecies.getTag(RegisterSpecies.ATTACK_ON_HIT);
+        Object subTag = theSubtype.getTag(RegisterSpecies.ATTACK_ON_HIT);
         if (subTag != null)
         {
             Class[] subs = (Class[])subTag;
@@ -831,8 +880,8 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
         {
             return true;
         }
-        Object specTag = theSpecies.getTag(RegisterSpecies.HOSTILEON_SIGHT);
-        Object subTag = theSubtype.getTag(RegisterSpecies.HOSTILEON_SIGHT);
+        Object specTag = theSpecies.getTag(RegisterSpecies.ATTACK_ON_SIGHT);
+        Object subTag = theSubtype.getTag(RegisterSpecies.ATTACK_ON_SIGHT);
         if (subTag != null)
         {
             Class[] subs = (Class[])subTag;
@@ -860,9 +909,9 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
 
     @Override
     public boolean isBreedingItem(ItemStack stack) {
-        if (theSpecies.hasTag("BreedingItems"))
+        if (theSpecies.hasTag(RegisterSpecies.BREEDING_FOOD))
         {
-            Object[] breedingItems = (Object[])theSpecies.getTag("BreedingItems");
+            Object[] breedingItems = (Object[])theSpecies.getTag(RegisterSpecies.BREEDING_FOOD);
             for (Object obbie : breedingItems)
             {
                 if (obbie instanceof ItemStack)
@@ -886,9 +935,9 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
                 }
             }
         }
-        if (theSubtype.hasTag("BreedingItems"))
+        if (theSubtype.hasTag(RegisterSpecies.BREEDING_FOOD))
         {
-            Object[] breedingItems = (Object[])theSubtype.getTag("BreedingItems");
+            Object[] breedingItems = (Object[])theSubtype.getTag(RegisterSpecies.BREEDING_FOOD);
             for (Object obbie : breedingItems)
             {
                 if (obbie instanceof ItemStack)
@@ -912,7 +961,7 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
                 }
             }
         }
-        return !theSpecies.hasTag("BreedingItems") && !theSubtype.hasTag("BreedingItems") && (OM.is("listAllseed", stack) || OP.seed.contains(stack));
+        return !theSpecies.hasTag(RegisterSpecies.BREEDING_FOOD) && !theSubtype.hasTag(RegisterSpecies.BREEDING_FOOD) && (OM.is("listAllseed", stack) || OP.seed.contains(stack));
     }
 
 

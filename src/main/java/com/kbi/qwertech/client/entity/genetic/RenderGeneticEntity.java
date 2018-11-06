@@ -2,6 +2,7 @@ package com.kbi.qwertech.client.entity.genetic;
 
 import com.kbi.qwertech.api.entities.IGeneticMob;
 import com.kbi.qwertech.api.registry.MobSpeciesRegistry;
+import com.kbi.qwertech.loaders.RegisterSpecies;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
@@ -27,7 +28,7 @@ public class RenderGeneticEntity extends RenderLiving {
      */
     protected ResourceLocation getEntityTexture(IGeneticMob mob)
     {
-        return new ResourceLocation(MobSpeciesRegistry.getSpecies(mob.getClass(), (short)0).getSubtype((short)0).getPrimaryTexture());
+        return new ResourceLocation((String)MobSpeciesRegistry.getSpecies(mob.getClass(), (short)0).getSubtype((short)0).getTag(RegisterSpecies.TEXTURE_PRIMARY));
     }
 
     /**

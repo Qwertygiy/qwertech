@@ -764,7 +764,7 @@ public class RegisterItems {
 								aList.add("Species: " + species.getTag(RegisterSpecies.NAME_ENGLISH));
 								if (genes.hasKey("subtype")) {
 									Subtype subtype = species.getSubtype(genes.getShort("subtype"));
-									aList.add("Subtype: " + subtype.getCommonName());
+									aList.add("Subtype: " + subtype.getTag(RegisterSpecies.NAME_ENGLISH));
 								}
 							}
 						}

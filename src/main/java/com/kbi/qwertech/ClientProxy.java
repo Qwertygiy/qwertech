@@ -23,6 +23,7 @@ import com.kbi.qwertech.entities.genetic.EntityPhasianidae;
 import com.kbi.qwertech.entities.neutral.EntityTurkey;
 import com.kbi.qwertech.entities.passive.EntityFrog;
 import com.kbi.qwertech.entities.projectile.*;
+import com.kbi.qwertech.loaders.RegisterSpecies;
 import com.kbi.qwertech.tileentities.*;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -122,15 +123,31 @@ public final class ClientProxy extends CommonProxy { // NO_UCD (unused code)
 		System.out.println("REGISTEREDRENDERER");
 	}
 
+	public void registerModel(Class<? extends IGeneticMob> classy, int species, int subtype, ModelBase model, boolean isChild)
+	{
+		if (!isChild)
+		{
+			Species[] speciesList = MobSpeciesRegistry.getSpeciesList(classy);
+			if (subtype > -1)
+			{
+				RegisterSpecies.setModel(speciesList[species].getSubtype((short)subtype), model);
+			} else {
+				RegisterSpecies.setModel(speciesList[species], model);
+			}
+		} else {
+			Species[] speciesList = MobSpeciesRegistry.getSpeciesList(classy);
+			if (subtype > -1)
+			{
+				RegisterSpecies.setChildModel(speciesList[species].getSubtype((short)subtype), model);
+			} else {
+				RegisterSpecies.setChildModel(speciesList[species], model);
+			}
+		}
+	}
+
 	public void registerModel(Class<? extends IGeneticMob> classy, int species, int subtype, ModelBase model)
 	{
-		Species[] speciesList = MobSpeciesRegistry.getSpeciesList(classy);
-		if (subtype > -1)
-		{
-			speciesList[species].getSubtype((short)subtype).setModel(model);
-		} else {
-			speciesList[species].setModel(model);
-		}
+		registerModel(classy, species, subtype, model, false);
 	}
 
 	public void registerModels()
