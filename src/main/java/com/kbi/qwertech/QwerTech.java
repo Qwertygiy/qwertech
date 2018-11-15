@@ -442,15 +442,16 @@ public final class QwerTech extends Abstract_Mod {
 			//maceHeadRaw.addListener(new Loader_OreProcessing.OreProcessing_Sharpening(maceHead, 1L, true, TD.Atomic.ANTIMATTER.NOT));
 			RM.Sharpening.add(new RecipeMapHandlerPrefix(mattockHeadRaw, 1, CS.NF, 16, 0, 64, CS.NF, mattockHead, 1, CS.NI, CS.NI, CS.T, CS.T, CS.F, TD.Atomic.ANTIMATTER.NOT));
 			RM.Sharpening.add(new RecipeMapHandlerPrefix(maceHeadRaw, 1, CS.NF, 16, 0, 64, CS.NF, maceHead, 1, CS.NI, CS.NI, CS.T, CS.T, CS.F, TD.Atomic.ANTIMATTER.NOT));
-			RM.RollingMill.add(new RecipeMapHandlerPrefix(OP.ring, 1, CS.NF, 16, 0, 64, CS.NF, link, 2, CS.NI, CS.NI, CS.T, CS.T, CS.F, TD.Atomic.ANTIMATTER.NOT));
+			//RM.RollingMill.add(new RecipeMapHandlerPrefix(OP.ring, 1, CS.NF, 16, 0, 64, CS.NF, link, 2, CS.NI, CS.NI, CS.T, CS.T, CS.F, TD.Atomic.ANTIMATTER.NOT));
 			//RM.RollBender.add(new RecipeMapHandlerPrefix(OP.stick, 2, CS.NF, 16, 0, 64, CS.NF, chain, 1, CS.NI, CS.NI, CS.T, CS.T, CS.F, TD.Atomic.ANTIMATTER.NOT));
-            RM.Welder.add(new RecipeMapHandlerPrefix(link, 4, CS.NF, 16, 0, 64, CS.NF,chain, 1, CS.NI, CS.NI, CS.T, CS.T, CS.F, TD.Atomic.ANTIMATTER.NOT));
+            //RM.Welder.add(new RecipeMapHandlerPrefix(link, 4, CS.NF, 16, 0, 64, CS.NF,chain, 1, CS.NI, CS.NI, CS.T, CS.T, CS.F, TD.Atomic.ANTIMATTER.NOT));
 
 
             mattockHead.addListener(new ShapelessCraftFrom( 1, null, new String[][] {{"X ", " f"}}, mattockHeadRaw, null, null, null, null, TD.Atomic.ANTIMATTER.NOT));
 			maceHead.addListener(new ShapelessCraftFrom( 1, null, new String[][] {{"X ", " f"}}, maceHeadRaw, null, null, null, null, TD.Atomic.ANTIMATTER.NOT));
 		}
-		
+
+		OP.ring.addListener(new ShapelessCraftFrom(1, null, new String[][]{{"X"}}, link, null, null, null, null, TD.Atomic.ANTIMATTER.NOT));
 		chain.addListener(new ShapelessCraftFrom(1, null, new String[][]{{"X X", " f ", "X X"}, {" X ", "XfX", " X "}}, link, null, null, null, null, TD.Atomic.ANTIMATTER.NOT));
 		
 		MultiTileEntityMold.MOLD_RECIPES.put(CS.B[1] | CS.B[2] | CS.B[3] | CS.B[4] | CS.B[7] | CS.B[8] | CS.B[12] | CS.B[13] | CS.B[18] | CS.B[19] | CS.B[23] | CS.B[24], mattockHeadRaw);
