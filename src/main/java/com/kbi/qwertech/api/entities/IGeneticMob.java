@@ -1,5 +1,7 @@
 package com.kbi.qwertech.api.entities;
 
+import net.minecraft.nbt.NBTTagCompound;
+
 public interface IGeneticMob {
     short getSpeciesID();
     short getSubtypeID();
@@ -26,4 +28,14 @@ public interface IGeneticMob {
     void setSecondaryColor(int color);
     void setFertility(short fertility);
     void setMaturity(short maturity);
+
+    void setMate(IGeneticMob mate);
+    void setFertilized(boolean fertile);
+
+    IGeneticMob getMate();
+    NBTTagCompound getMateNBT();
+    boolean isFertilized();
+
+    Species getSpecies();
+    Subtype getSubtype();
 }

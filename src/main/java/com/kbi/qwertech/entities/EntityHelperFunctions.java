@@ -4,11 +4,14 @@ import com.kbi.qwertech.api.data.COLOR;
 import com.kbi.qwertech.api.entities.IGeneticMob;
 import com.kbi.qwertech.api.entities.Species;
 import com.kbi.qwertech.api.entities.Subtype;
+import com.kbi.qwertech.api.entities.Taggable;
 import com.kbi.qwertech.api.registry.MobSpeciesRegistry;
-import com.kbi.qwertech.loaders.RegisterSpecies;
+import com.kbi.qwertech.entities.ai.EntityAILayEgg;
 import gregapi.data.CS;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.monster.*;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,9 +20,62 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
+import java.util.List;
 import java.util.Random;
 
+import static com.kbi.qwertech.loaders.RegisterSpecies.*;
+
 public class EntityHelperFunctions {
+
+    public static void assignAI(EntityLiving entity, IGeneticMob mobData, List<String> tags, Taggable theKind)
+    {
+        for (String tag : tags)
+        {
+            switch(tag)
+            {
+                case ATTACK_ON_HIT:
+                    break;
+                case ATTACK_ON_PLAYERHIT:
+                    break;
+                case ATTACK_ON_SIGHT:
+                    break;
+                case ATTACK_ON_SPECIESHIT:
+                    break;
+                case ATTACK_ON_SPECIESORPLAYERHIT:
+                    break;
+                case AVOIDS_ENTITY:
+                    break;
+                case AVOIDS_BLOCK:
+                    break;
+                case LAYS_EGGS:
+                    if ((boolean)theKind.getTag(tag)) {
+                        entity.tasks.addTask(10, new EntityAILayEgg(entity, 2000, 32000));
+                    } else {
+                        List tasks = entity.tasks.taskEntries;
+                        for (int q = 0; q < tasks.size(); q++)
+                        {
+                            Object task = tasks.get(q);
+                            if (task instanceof EntityAILayEgg)
+                            {
+                                tasks.remove(task);
+                                q = q - 1;
+                            }
+                        }
+                    }
+                    break;
+                case AI_LIST:
+                    break;
+            }
+        }
+    }
+
+	public static void assignAI(EntityLiving entity, IGeneticMob mobData)
+	{
+		List<String> specTags = mobData.getSpecies().getTags();
+		List<String> subTags = mobData.getSubtype().getTags();
+		assignAI(entity, mobData, specTags, mobData.getSpecies());
+		assignAI(entity, mobData, subTags, mobData.getSubtype());
+	}
 
 	public static NBTTagCompound sanitizeEntity(NBTTagCompound comp)
 	{
@@ -119,19 +175,19 @@ public class EntityHelperFunctions {
 		{
 			meets = false;
 		}
-		if(COLOR.getMin(toCheck.getPrimaryColor(), checking.getMinPrimaryColor()) != checking.getMinPrimaryColor())
+		if(COLOR.getMin(toCheck.getPrimaryColor(), (int)checking.getTag(COLOR_PRIMARY_MIN)) != (int)checking.getTag(COLOR_PRIMARY_MIN))
 		{
 			meets = false;
 		}
-		if(COLOR.getMax(toCheck.getPrimaryColor(), checking.getMaxPrimaryColor()) != checking.getMaxPrimaryColor())
+		if(COLOR.getMax(toCheck.getPrimaryColor(), (int)checking.getTag(COLOR_PRIMARY_MAX)) != (int)checking.getTag(COLOR_PRIMARY_MAX))
 		{
 			meets = false;
 		}
-		if(COLOR.getMin(toCheck.getSecondaryColor(), checking.getMinSecondaryColor()) != checking.getMinSecondaryColor())
+		if(COLOR.getMin(toCheck.getSecondaryColor(), (int)checking.getTag(COLOR_SECONDARY_MIN)) != (int)checking.getTag(COLOR_SECONDARY_MIN))
 		{
 			meets = false;
 		}
-		if(COLOR.getMax(toCheck.getSecondaryColor(), checking.getMaxSecondaryColor()) != checking.getMaxSecondaryColor())
+		if(COLOR.getMax(toCheck.getSecondaryColor(), (int)checking.getTag(COLOR_PRIMARY_MAX)) != (int)checking.getTag(COLOR_PRIMARY_MAX))
 		{
 			meets = false;
 		}

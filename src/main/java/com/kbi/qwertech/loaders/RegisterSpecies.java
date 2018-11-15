@@ -6,13 +6,16 @@ import com.kbi.qwertech.api.entities.Species;
 import com.kbi.qwertech.api.entities.Subtype;
 import com.kbi.qwertech.api.entities.Taggable;
 import com.kbi.qwertech.api.registry.MobSpeciesRegistry;
+import com.kbi.qwertech.entities.ai.EntityAILayEgg;
 import com.kbi.qwertech.entities.genetic.EntityPhasianidae;
 import cpw.mods.fml.relauncher.FMLLaunchHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import gregapi.data.CS;
 import gregapi.util.ST;
 import gregapi.util.UT;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -28,6 +31,7 @@ public class RegisterSpecies {
         starts with A: attack
         starts with C: color
         starts with D: drop
+        starts with L: list
         starts with M: model
         starts with N: name
         starts with S: sound
@@ -63,7 +67,11 @@ public class RegisterSpecies {
             ATTACK_ON_SPECIESHIT = "AOBH",
             ATTACK_ON_PLAYERHIT = "AOPH",
             ATTACK_ON_SPECIESORPLAYERHIT = "AOPBH",
-            BREEDING_FOOD = "BF";
+            BREEDING_FOOD = "BF",
+            AI_LIST = "LAI",
+            LAYS_EGGS = "LEGG",
+            AVOIDS_ENTITY = "VE",
+            AVOIDS_BLOCK = "VB";
 
     public static Taggable setLatin(Taggable spec, String name)
     {
@@ -99,7 +107,7 @@ public class RegisterSpecies {
     }
     public static Taggable setTextureDir(Taggable spec, String texDir)
     {
-        return spec.addTag(TEXTURE_PRIMARY, texDir + "_primary.png").addTag(TEXTURE_SECONDARY, texDir + "_secondary.png").addTag(TEXTURE_TERTIARY, "_extra.png");
+        return spec.addTag(TEXTURE_PRIMARY, texDir + "_primary.png").addTag(TEXTURE_SECONDARY, texDir + "_secondary.png").addTag(TEXTURE_TERTIARY, texDir + "_overlay.png");
     }
     public static Taggable addLivingSound(Taggable spec, String sound, float pitch, float volume)
     {
@@ -174,7 +182,12 @@ public class RegisterSpecies {
 
     public static Species addEgg(Species spec, ItemStack eggItem, int eggColor)
     {
-        return spec.addTag(ITEM_EGG, eggItem).addTag(COLOR_EGG, eggColor);
+        return addEgg(spec, eggItem, eggColor, true);
+    }
+
+    public static Species addEgg(Species spec, ItemStack eggItem, int eggColor, boolean laysEgg)
+    {
+        return spec.addTag(ITEM_EGG, eggItem).addTag(COLOR_EGG, eggColor).addTag(LAYS_EGGS, laysEgg);
     }
 
     public static Taggable setPrimaryColor(Taggable spec, String color)
@@ -296,6 +309,19 @@ public class RegisterSpecies {
         }
         stacks.add(drop);
         return spec.addTag(DROP_RARE, stacks); //just to be safe
+    }
+
+    public static Taggable addAI(Taggable spec, Class<? extends EntityAIBase> type, Object... parameters)
+    {
+        ArrayList<Object[]> AIlist;
+        if (!spec.hasTag(AI_LIST))
+        {
+            AIlist = new ArrayList<Object[]>();
+        } else {
+            AIlist = (ArrayList<Object[]>)spec.getTag(AI_LIST);
+        }
+        AIlist.add(new Object[]{type, parameters});
+        return spec.addTag(AI_LIST, AIlist);
     }
 
     public static void begin()

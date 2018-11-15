@@ -19,15 +19,7 @@ public class Subtype implements Taggable{
     public short[] minLimits = new short[8];
     public short[] maxLimits = new short[8];
     public short[] preferred = new short[8];
-    public int primaryColorMin;
-    public int primaryColorMax;
-    public int secondaryColorMin;
-    public int secondaryColorMax;
 
-    private String primaryTexture = "";
-    private String secondaryTexture = "";
-    private String overlayTexture = "";
-    private String commonName = "";
     private boolean isNatural = false;
     private final Species assignedSpecies;
     private ArrayList<BiomeGenBase> biomes = new ArrayList<BiomeGenBase>();
@@ -216,16 +208,6 @@ public class Subtype implements Taggable{
         return minLimits[7];
     }
 
-    public int getMinPrimaryColor()
-    {
-        return primaryColorMin;
-    }
-
-    public int getMinSecondaryColor()
-    {
-        return secondaryColorMin;
-    }
-
     public short getPrefSize() { return preferred[0]; }
     public short getPrefStrength() { return preferred[1]; }
     public short getPrefStamina() { return preferred[2]; }
@@ -273,16 +255,6 @@ public class Subtype implements Taggable{
     public short getMaxMaturity()
     {
         return maxLimits[7];
-    }
-
-    public int getMaxPrimaryColor()
-    {
-        return primaryColorMax;
-    }
-
-    public int getMaxSecondaryColor()
-    {
-        return secondaryColorMax;
     }
 
     @Override

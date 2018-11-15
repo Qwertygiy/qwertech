@@ -45,7 +45,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMIs.IEggLayer, GMIs.IHitAggro, GMIs.IAutoAggro, GMIs.IEatStuffOnTheGround {
+public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMIs.IHitAggro, GMIs.IAutoAggro, GMIs.IEatStuffOnTheGround {
 
     private short[] data = new short[8];
     private short species = -1;
@@ -53,7 +53,8 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
     private int primaryColor = 0;
     private int secondaryColor = 0;
     private boolean isFertilized = false;
-    private NBTTagCompound lastMate = null;
+    private IGeneticMob lastMate = null;
+    private NBTTagCompound lastMateTag = null;
     private Species theSpecies = MobSpeciesRegistry.getSpecies(this.getClass(), (short)0);
     private Subtype theSubtype = theSpecies.getSubtype((short)0);
     public int angryTime = 0;
@@ -216,6 +217,7 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
 
     public EntityPhasianidae(World p_i1682_1_) {
         super(p_i1682_1_);
+
         for (Object aiBase : this.tasks.taskEntries)
         {
             if (aiBase instanceof EntityAIPanic || aiBase instanceof EntityAIRunAroundLikeCrazy)
@@ -226,6 +228,7 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
         this.tasks.addTask(1, new EntityAILeapAtTarget(this, 0.4F));
         this.tasks.addTask(2, new EntityAIAttackOnCollide(this, 1.0D, true));
         this.tasks.addTask(3, new EntityAIMoveTowardsSimpleTarget(this, 1.0D, 16F));
+
         if ((species == -1 || subtype == -1) && !p_i1682_1_.isRemote) {
             species = 0;
             subtype = 0;
@@ -244,7 +247,7 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
             setSpeciesID(species);
             setSubtypeID(subtype);
             assignRandomStats(p_i1682_1_.rand, theSpecies, theSubtype);
-            this.timeUntilNextEgg = (int)Math.floor((Short.MAX_VALUE - this.rand.nextInt(this.getFertility() + 1)) * 0.25) + 2000;
+            EntityHelperFunctions.assignAI(this, this);
         }
     }
 
@@ -320,26 +323,6 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
         {
             findTarget();
         }
-        if (!this.worldObj.isRemote && !this.isChild() && this.canLayEgg(this) && --this.timeUntilNextEgg <= 0)
-        {
-            this.playSound("mob.chicken.plop", 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
-            ItemStack egg = this.getEggItem(this);
-            NBTTagCompound nbt = UT.NBT.getOrCreate(egg);
-            if (this.isFertilized) {
-                this.isFertilized = false;
-                EntityPhasianidae returnable = new EntityPhasianidae(this.worldObj, this.species, this.subtype);
-                EntityPhasianidae fakeParent = new EntityPhasianidae(this.worldObj, this.species, this.subtype);
-                fakeParent.readEntityFromNBT(lastMate);
-                EntityHelperFunctions.createOffspring(returnable, this, fakeParent);
-                returnable.writeEntityToNBT(nbt);
-                nbt.setLong("Timer", this.worldObj.getTotalWorldTime() + (Short.MAX_VALUE - this.getMaturity()));
-                egg.setTagCompound(nbt);
-                returnable.setDead();
-                fakeParent.setDead();
-            }
-            ST.drop(this, egg);
-            this.timeUntilNextEgg = (int)Math.floor((Short.MAX_VALUE - this.rand.nextInt(this.getFertility() + 1)) * 0.25) + 2000;
-        }
     }
 
     @Override
@@ -356,7 +339,7 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
 
     public EntityPhasianidae(World world, short aSpecies, short aSubtype)
     {
-        super(world);
+        this(world);
         species = aSpecies;
         subtype = aSubtype;
         theSpecies = MobSpeciesRegistry.getSpecies(this.getClass(), species);
@@ -394,8 +377,8 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
         data[6] = (short)(theSubtype.getPrefFertility() + (Math.round((data[6] - theSubtype.getPrefFertility()) * rand.nextFloat() * rand.nextFloat() * rand.nextFloat())));
         data[7] = (short)(rand.nextInt(theSubtype.getMaxMaturity() - theSubtype.getMinMaturity()) + theSubtype.getMinMaturity());
         data[7] = (short)(theSubtype.getPrefMaturity() + (Math.round((data[7] - theSubtype.getPrefMaturity()) * rand.nextFloat() * rand.nextFloat() * rand.nextFloat())));
-        primaryColor = COLOR.getRandom(theSubtype.getMinPrimaryColor(), theSubtype.getMaxPrimaryColor());
-        secondaryColor = COLOR.getRandom(theSubtype.getMinSecondaryColor(), theSubtype.getMaxSecondaryColor());
+        primaryColor = COLOR.getRandom((int)theSubtype.getTag(RegisterSpecies.COLOR_PRIMARY_MIN), (int)theSubtype.getTag(RegisterSpecies.COLOR_PRIMARY_MAX));
+        secondaryColor = COLOR.getRandom((int)theSubtype.getTag(RegisterSpecies.COLOR_SECONDARY_MIN), (int)theSubtype.getTag(RegisterSpecies.COLOR_SECONDARY_MAX));
         setPrimaryColor(primaryColor);
         setSecondaryColor(secondaryColor);
         setSize(data[0]);
@@ -462,57 +445,57 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
 
     @Override
     protected String getLivingSound() {
-        ArrayList<String> sounds = null;
+        ArrayList<Object[]> sounds = null;
         if (theSubtype.hasTag(RegisterSpecies.SOUNDS_IDLE))
         {
-            sounds = (ArrayList<String>)theSubtype.getTag(RegisterSpecies.SOUNDS_IDLE);
+            sounds = (ArrayList<Object[]>)theSubtype.getTag(RegisterSpecies.SOUNDS_IDLE);
         } else if (theSpecies.hasTag(RegisterSpecies.SOUNDS_IDLE))
         {
-            sounds = (ArrayList<String>)theSpecies.getTag(RegisterSpecies.SOUNDS_IDLE);
+            sounds = (ArrayList<Object[]>)theSpecies.getTag(RegisterSpecies.SOUNDS_IDLE);
         }
         if (sounds != null && !sounds.isEmpty())
         {
-            return sounds.get(rand.nextInt(sounds.size()));
+            return ((String)sounds.get(rand.nextInt(sounds.size()))[0]);
         }
         return "";
     }
 
     @Override
     protected String getHurtSound() {
-        ArrayList<String> sounds = null;
+        ArrayList<Object[]> sounds = null;
         if (theSubtype.hasTag(RegisterSpecies.SOUNDS_HURT))
         {
-            sounds = (ArrayList<String>)theSubtype.getTag(RegisterSpecies.SOUNDS_HURT);
+            sounds = (ArrayList<Object[]>)theSubtype.getTag(RegisterSpecies.SOUNDS_HURT);
         } else if (theSpecies.hasTag(RegisterSpecies.SOUNDS_HURT))
         {
-            sounds = (ArrayList<String>)theSpecies.getTag(RegisterSpecies.SOUNDS_HURT);
+            sounds = (ArrayList<Object[]>)theSpecies.getTag(RegisterSpecies.SOUNDS_HURT);
         }
         if (sounds != null && !sounds.isEmpty())
         {
-            return sounds.get(rand.nextInt(sounds.size()));
+            return ((String)sounds.get(rand.nextInt(sounds.size()))[0]);
         }
         return "";
     }
 
     @Override
     protected String getDeathSound() {
-        ArrayList<String> sounds = null;
+        ArrayList<Object[]> sounds = null;
         if (theSubtype.hasTag(RegisterSpecies.SOUNDS_DEAD))
         {
-            sounds = (ArrayList<String>)theSubtype.getTag(RegisterSpecies.SOUNDS_DEAD);
+            sounds = (ArrayList<Object[]>)theSubtype.getTag(RegisterSpecies.SOUNDS_DEAD);
         } else if (theSpecies.hasTag(RegisterSpecies.SOUNDS_DEAD))
         {
-            sounds = (ArrayList<String>)theSpecies.getTag(RegisterSpecies.SOUNDS_DEAD);
+            sounds = (ArrayList<Object[]>)theSpecies.getTag(RegisterSpecies.SOUNDS_DEAD);
         } else if (theSubtype.hasTag(RegisterSpecies.SOUNDS_HURT))
         {
-            sounds = (ArrayList<String>)theSubtype.getTag(RegisterSpecies.SOUNDS_HURT);
+            sounds = (ArrayList<Object[]>)theSubtype.getTag(RegisterSpecies.SOUNDS_HURT);
         } else if (theSpecies.hasTag(RegisterSpecies.SOUNDS_HURT))
         {
-            sounds = (ArrayList<String>)theSpecies.getTag(RegisterSpecies.SOUNDS_HURT);
+            sounds = (ArrayList<Object[]>)theSpecies.getTag(RegisterSpecies.SOUNDS_HURT);
         }
         if (sounds != null && !sounds.isEmpty())
         {
-            return sounds.get(rand.nextInt(sounds.size()));
+            return ((String)sounds.get(rand.nextInt(sounds.size()))[0]);
         }
         return "";
     }
@@ -577,9 +560,7 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
             returnable = new EntityPhasianidae(this.worldObj, this.species, this.subtype);
             EntityHelperFunctions.createOffspring(returnable, this, (IGeneticMob) p_90011_1_);
         }*/
-        NBTTagCompound tag = new NBTTagCompound();
-        other.writeToNBT(tag);
-        this.lastMate = tag;
+        this.setMate((IGeneticMob)other);
         this.isFertilized = true;
         this.setGrowingAge(6000);
         other.setGrowingAge(6000);
@@ -799,35 +780,20 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
     }
 
     @Override
-    public boolean canLayEgg(IGeneticMob geneticMob) {
-        return true;
+    public void setMate(IGeneticMob mate) {
+        lastMate = mate;
+        lastMateTag = new NBTTagCompound();
+        ((Entity)mate).writeToNBT(lastMateTag);
     }
 
     @Override
-    public ItemStack getEggItem(IGeneticMob geneticMob) {
-        ItemStack toReturn = QTI.qwerFood.getWithDamage(1, 32);
-        if (theSubtype.hasTag(RegisterSpecies.ITEM_EGG))
-        {
-            toReturn = ((ItemStack)theSubtype.getTag(RegisterSpecies.ITEM_EGG)).copy();
-        } else if (theSpecies.hasTag(RegisterSpecies.ITEM_EGG))
-        {
-            toReturn = ((ItemStack)theSpecies.getTag(RegisterSpecies.ITEM_EGG)).copy();
-        }
-        NBTTagCompound tag = UT.NBT.getOrCreate(toReturn);
-        if (theSubtype.hasTag(RegisterSpecies.COLOR_EGG))
-        {
-            tag.setInteger("itemColor", (Integer)theSubtype.getTag(RegisterSpecies.COLOR_EGG));
-        } else if (theSpecies.hasTag(RegisterSpecies.COLOR_EGG))
-        {
-            tag.setInteger("itemColor", (Integer)theSpecies.getTag(RegisterSpecies.COLOR_EGG));
-        }
-        toReturn.setTagCompound(tag);
-        return toReturn;
+    public IGeneticMob getMate() {
+        return lastMate;
     }
 
     @Override
-    public boolean willEggHatch(IGeneticMob geneticMob) {
-        return isFertilized;
+    public NBTTagCompound getMateNBT() {
+        return lastMateTag;
     }
 
     @Override
@@ -1016,5 +982,25 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
     {
         super.applyEntityAttributes();
         //this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(1.0D);
+    }
+
+    @Override
+    public boolean isFertilized() {
+        return isFertilized;
+    }
+
+    @Override
+    public void setFertilized(boolean fertile) {
+        isFertilized = fertile;
+    }
+
+    @Override
+    public Species getSpecies() {
+        return theSpecies;
+    }
+
+    @Override
+    public Subtype getSubtype() {
+        return theSubtype;
     }
 }

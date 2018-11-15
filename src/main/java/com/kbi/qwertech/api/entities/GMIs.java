@@ -19,37 +19,6 @@ import net.minecraft.util.Vec3;
 public class GMIs {
 
     /**
-     * IEggLayer
-     * Should be implemented for every Genetic Mob that has the chance to lay eggs.
-     * Should NOT be implemented if the mob periodically drops something other than an egg.
-     */
-    public interface IEggLayer {
-        /**
-         * canLayEgg
-         * Whether this mob can currently lay an egg.
-         * @param geneticMob the mob being checked
-         * @return true if egglaying is possible
-         */
-        boolean canLayEgg(IGeneticMob geneticMob);
-
-        /**
-         * getEggItem
-         * The ItemStack that this mob would currently drop as an egg.
-         * @param geneticMob the mob being checked
-         * @return the egg
-         */
-        ItemStack getEggItem(IGeneticMob geneticMob);
-
-        /**
-         * willEggHatch
-         * Whether an egg laid right now by this mob is fertilized and will hatch into a baby mob.
-         * @param geneticMob the mob being checked
-         * @return true if it will eventually hatch
-         */
-        boolean willEggHatch(IGeneticMob geneticMob);
-    }
-
-    /**
      * IHitAggro
      * Should be implemented if the mob has the chance to strike back at an attacker.
      */
