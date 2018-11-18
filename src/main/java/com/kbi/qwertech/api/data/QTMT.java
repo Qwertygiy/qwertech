@@ -78,6 +78,8 @@ public class QTMT {
 		ChemicalY9.mToolSpeed = ChemicalY9.mToolSpeed * 1.5F;
 		ChemicalY10.mToolSpeed = ChemicalY10.mToolSpeed * 1.5F;
 
+		MT.TECH.Brick.setRGBa(183, 90, 64, 255);
+
 		OP.blockDust.disableItemGeneration(Compost, CompostRaw);
 	}
 }

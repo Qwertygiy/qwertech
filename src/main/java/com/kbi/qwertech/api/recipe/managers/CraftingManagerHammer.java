@@ -258,7 +258,7 @@ public class CraftingManagerHammer implements Runnable {
     	this.addRecipe(new HammerablePrefixRecipe(OP.gemChipped, 	2,	new ICondition.And(TD.Atomic.ANTIMATTER.NOT), 													new Object[]{OP.gemFlawed}						));
     	this.addRecipe(new HammerablePrefixRecipe(OP.dustSmall, 		new ICondition.And(TD.Atomic.ANTIMATTER.NOT), 													new Object[]{OP.gemChipped}						));
     	
-    	this.addRecipe(new HammerablePrefixRecipe(OreDictPrefix.get("link"),new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE),						new Object[]{OP.ring}							));
+    	//this.addRecipe(new HammerablePrefixRecipe(OreDictPrefix.get("link"),new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE),						new Object[]{OP.ring}							));
     	this.addRecipe(new HammerablePrefixRecipe(OreDictPrefix.get("chain"),new ICondition.And(TD.Atomic.ANTIMATTER.NOT, TD.Processing.SMITHABLE), 					new Object[]{OP.stick, OP.stick, OP.stick, OP.stick}, "craftingToolBendingCylinderSmall"));
     	
     	if (QTConfigs.enableArmor)

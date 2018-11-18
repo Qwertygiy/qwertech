@@ -12,6 +12,7 @@ import com.kbi.qwertech.api.recipe.HammerableShapedRecipe;
 import com.kbi.qwertech.api.recipe.QTArmor;
 import com.kbi.qwertech.api.recipe.managers.CraftingManagerHammer;
 import cpw.mods.fml.common.event.FMLInterModComms;
+import gregapi.code.ICondition;
 import gregapi.data.MT;
 import gregapi.oredict.OreDictItemData;
 import gregapi.oredict.OreDictMaterial;
@@ -72,8 +73,10 @@ public class NEI_Hammer_Handler extends ShapedRecipeHandler {
 	public class HammerableCachedRecipe extends CachedShapedRecipe
 	{
 
-        public HammerableCachedRecipe(int width, int height, Object[] items, ItemStack out) {
+		ICondition condition;
+        public HammerableCachedRecipe(int width, int height, Object[] items, ItemStack out, ICondition icondition) {
             super(width, height, items, out);
+            condition = icondition;
         }
 
         /*public HammerableCachedRecipe(ShapedRecipes recipe) {
@@ -213,7 +216,9 @@ public class NEI_Hammer_Handler extends ShapedRecipeHandler {
 					OreDictItemData mData = OM.anydata(result);
 					if (mData != null)
 					{
-						recipe = hammerShapedRecipe((HammerableShapedRecipe)irecipe, mData.mPrefix, mData.mMaterial.mMaterial);
+						if (((HammerableShapedRecipe) irecipe).mCondition.isTrue(mData.mMaterial.mMaterial)) {
+							recipe = hammerShapedRecipe((HammerableShapedRecipe) irecipe, mData.mPrefix, mData.mMaterial.mMaterial);
+						}
 					} else {
 						recipe = hammerShapedRecipe((HammerableShapedRecipe)irecipe);
 					}
@@ -255,7 +260,9 @@ public class NEI_Hammer_Handler extends ShapedRecipeHandler {
 				OreDictItemData mData = OM.anydata(ingredient);
 				if (mData != null)
 				{
-					recipe = hammerShapedRecipe((HammerableShapedRecipe)irecipe, mData.mPrefix, mData.mMaterial.mMaterial);
+					if (((HammerableShapedRecipe) irecipe).mCondition.isTrue(mData.mMaterial.mMaterial)) {
+						recipe = hammerShapedRecipe((HammerableShapedRecipe) irecipe, mData.mPrefix, mData.mMaterial.mMaterial);
+					}
 				} else {
 					recipe = hammerShapedRecipe((HammerableShapedRecipe)irecipe);
 				}
@@ -371,7 +378,7 @@ public class NEI_Hammer_Handler extends ShapedRecipeHandler {
 			}
 			if (UT.Code.containsSomething(returning.toArray()) && output != null)
 			{
-				return new HammerableCachedRecipe(3, 3, returning.toArray(), output);
+				return new HammerableCachedRecipe(3, 3, returning.toArray(), output, recipe.mCondition);
 			}
 		} catch (Exception e) {
 			codechicken.nei.NEIClientConfig.logger.error("Error loading recipe: ", e); }
@@ -400,7 +407,11 @@ public class NEI_Hammer_Handler extends ShapedRecipeHandler {
 					{
 						if (data.mMaterial.mMaterial == MT.NULL || (data.mMaterial.mMaterial == QTMT.Undefined && mat != QTMT.Undefined))
 						{
-							adderble.add(data.mPrefix.mat(mat, 1));
+							if (recipe.mCondition.isTrue(mat)) {
+								adderble.add(data.mPrefix.mat(mat, 1));
+							} else {
+								return null;
+							}
 						} else {
 							adderble.add(data.mPrefix.mat(data.mMaterial.mMaterial, 1));
 						}
@@ -419,7 +430,7 @@ public class NEI_Hammer_Handler extends ShapedRecipeHandler {
 				output = outputData.mPrefix.mat(mat, output.stackSize);
 			}
 			if (output == null) return null;
-            return new HammerableCachedRecipe(recipe.width, recipe.height, items, output);
+            return new HammerableCachedRecipe(recipe.width, recipe.height, items, output, recipe.mCondition);
         } catch (Exception e) {
             NEIClientConfig.logger.error("Error loading recipe: ", e);
             return null;
@@ -478,7 +489,7 @@ public class NEI_Hammer_Handler extends ShapedRecipeHandler {
             	tag.setTag("QT.ArmorStats", armor);
             	UT.NBT.set(output, tag);
             }
-            return new HammerableCachedRecipe(recipe.width, recipe.height, items, output);
+            return new HammerableCachedRecipe(recipe.width, recipe.height, items, output, recipe.mCondition);
         } catch (Exception e) {
             NEIClientConfig.logger.error("Error loading recipe: ", e);
             return null;
