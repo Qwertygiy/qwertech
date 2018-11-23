@@ -25,9 +25,12 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.0.0-a.38"
+version = "1.0.0-a.39"
 group= "com.kbi.qwertech" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "qwertech"
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
 
 minecraft {
     version = "1.7.10-10.13.4.1614-1.7.10"
