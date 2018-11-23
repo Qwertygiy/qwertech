@@ -966,7 +966,8 @@ public class CraftingTableT1 extends TileEntityBase09FacingSingle implements ITi
 		
 		public void displayHammerable(int p1, int p2)
 		{
-			if (this.inventorySlots.getSlot(10).getHasStack())
+			//System.out.println(this.inventorySlots.getSlot(10).getStack());
+			if (this.inventorySlots.getSlot(10).getStack() != null)
 			{
 				this.drawCenteredString(this.fontRendererObj, "TABLE IS", 41, 55, 11010048);
 				this.drawCenteredString(this.fontRendererObj, "TOO WEAK", 41, 66, 11010048);
