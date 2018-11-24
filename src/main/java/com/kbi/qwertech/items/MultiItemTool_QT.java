@@ -66,6 +66,7 @@ public class MultiItemTool_QT extends MultiItemTool {
 		        		FakePlayer player = FakePlayerFactory.get((WorldServer)entity.worldObj, new GameProfile(new UUID('0', '0'), entity.getCommandSenderName()));
 		        		player.setLocationAndAngles(entity.posX, entity.posY, entity.posZ, entity.rotationYaw, entity.rotationPitch);
 		        		player.rotationYawHead = entity.getRotationYawHead();
+		        		player.setCurrentItemOrArmor(0, stack);
 		        		this.onSwipeEntity(stack, player, (Entity)list.get(q));
 		        		player = null;
 		        	}
