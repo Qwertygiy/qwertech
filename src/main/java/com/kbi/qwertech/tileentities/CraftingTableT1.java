@@ -129,6 +129,7 @@ public class CraftingTableT1 extends TileEntityBase09FacingSingle implements ITi
 					this.worldObj.spawnParticle("fireworksSpark", this.getX() + 0.6, this.getY() + 1, this.getZ() + 0.6, CS.RANDOM.nextDouble() * 0.1D, 0.1D, CS.RANDOM.nextDouble() * 0.1D);
 					this.worldObj.spawnParticle("fireworksSpark", this.getX() + 0.6, this.getY() + 1, this.getZ() + 0.4, CS.RANDOM.nextDouble() * -0.1D, 0.1D, CS.RANDOM.nextDouble() * -0.1D);
 				}
+                this.handleHammer(aPlayer, aStack);
 				return super.onToolClick2(aTool, aRemainingDurability, aQuality, aPlayer, aChatReturn, aPlayerInventory, aSneaking, aStack, aSide, aHitX, aHitY, aHitZ);
 			}
 			long returnit = this.handleHammer(aPlayer, aStack);
@@ -353,7 +354,9 @@ public class CraftingTableT1 extends TileEntityBase09FacingSingle implements ITi
 	public long handleHammer(Entity player, ItemStack stack)
 	{
 		this.mUpdatedGrid = true;
-		this.worldObj.func_147480_a(this.xCoord, this.yCoord, this.zCoord, true);
+		if (!this.worldObj.isRemote) {
+            this.worldObj.func_147480_a(this.xCoord, this.yCoord, this.zCoord, true);
+        }
 		return 12500;
 	}
 	
@@ -955,6 +958,11 @@ public class CraftingTableT1 extends TileEntityBase09FacingSingle implements ITi
 		public GUIClientAdvancedCraftingTable(InventoryPlayer aInventoryPlayer, CraftingTableT1 aTileEntity) {
 			super(new GUICommonAdvancedCraftingTable(aInventoryPlayer, aTileEntity), aTileEntity.mGUITexture);
 		}
+
+		public GUIClientAdvancedCraftingTable(ContainerCommon container, String background)
+        {
+            super(container, background);
+        }
 		
 		@Override
 		public void drawGuiContainerForegroundLayer(int p1, int p2)
@@ -966,7 +974,7 @@ public class CraftingTableT1 extends TileEntityBase09FacingSingle implements ITi
 		
 		public void displayHammerable(int p1, int p2)
 		{
-			if (this.inventorySlots.getSlot(10).getHasStack())
+			if (this.inventorySlots.getSlot(10).getStack() != null)
 			{
 				this.drawCenteredString(this.fontRendererObj, "TABLE IS", 41, 55, 11010048);
 				this.drawCenteredString(this.fontRendererObj, "TOO WEAK", 41, 66, 11010048);
