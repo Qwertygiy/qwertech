@@ -586,21 +586,21 @@ public final class QwerTech extends Abstract_Mod {
 		for (int q = 0; q < tier2i.length; q++)
 		{
 			OreDictMaterial mat = tier2i[q];
-			machines.add(mat.mNameLocal + " Crafting Table", "Crafting Tables", 270 + q, 0, CraftingTableT2.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 12, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", "CCC", "CCC", 'C', OP.chunkGt.dat(mat));
+			machines.add(mat.mNameLocal + " Crafting Table", "Crafting Tables", 270 + q, 0, CraftingTableT2.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 13, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", "CCC", "CCC", 'C', OP.chunkGt.dat(mat));
 			OreDictionary.registerOre("craftingTable", machines.getItem(270 + q));
 			OreDictionary.registerOre("craftingTable" + mat.mNameInternal, machines.getItem(270 + q));
 		}
 		for (int q = 0; q < tier2g.length; q++)
 		{
 			OreDictMaterial mat = tier2g[q];
-			machines.add(mat.mNameLocal + " Crafting Table", "Crafting Tables", 280 + q, 0, CraftingTableT2.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 12, CS.NBT_TEXTURE, "qwertech:gem", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", "CCC", "CCC", 'C', OP.gemFlawed.dat(mat));
+			machines.add(mat.mNameLocal + " Crafting Table", "Crafting Tables", 280 + q, 0, CraftingTableT2.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 13, CS.NBT_TEXTURE, "qwertech:gem", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", "CCC", "CCC", 'C', OP.gemFlawed.dat(mat));
 			OreDictionary.registerOre("craftingTable", machines.getItem(280 + q));
 			OreDictionary.registerOre("craftingTable" + mat.mNameInternal, machines.getItem(280 + q));
 		}
 		for (int q = 0; q < tier2r.length; q++)
 		{
 			OreDictMaterial mat = tier2r[q];
-			machines.add(mat.mNameLocal + " Crafting Table", "Crafting Tables", 288 + q, 0, CraftingTableT2.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 12, CS.NBT_TEXTURE, "qwertech:rock", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", "CCC", "CCC", 'C', OP.rockGt.dat(mat));
+			machines.add(mat.mNameLocal + " Crafting Table", "Crafting Tables", 288 + q, 0, CraftingTableT2.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 13, CS.NBT_TEXTURE, "qwertech:rock", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", "CCC", "CCC", 'C', OP.rockGt.dat(mat));
 			OreDictionary.registerOre("craftingTable", machines.getItem(288 + q));
 			OreDictionary.registerOre("craftingTable" + mat.mNameInternal, machines.getItem(288 + q));
 		}
@@ -612,17 +612,17 @@ public final class QwerTech extends Abstract_Mod {
 		for (int q = 0; q < tier3i.length; q++)
 		{
 			OreDictMaterial mat = tier3i[q];
-			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 300 + q, 0, CraftingTableT3.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 12, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", 'C', OP.chunkGt.dat(mat));
+			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 300 + q, 0, CraftingTableT3.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 13, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", 'C', OP.chunkGt.dat(mat));
 		}
 		for (int q = 0; q < tier3g.length; q++)
 		{
 			OreDictMaterial mat = tier3g[q];
-			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 310 + q, 0, CraftingTableT3.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 12, CS.NBT_TEXTURE, "qwertech:gem", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", 'C', OP.gemFlawed.dat(mat));
+			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 310 + q, 0, CraftingTableT3.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 13, CS.NBT_TEXTURE, "qwertech:gem", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", 'C', OP.gemFlawed.dat(mat));
 		}
 		for (int q = 0; q < tier3r.length; q++)
 		{
 			OreDictMaterial mat = tier3r[q];
-			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 320 + q, 0, CraftingTableT3.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 12, CS.NBT_TEXTURE, "qwertech:rock", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", 'C', OP.rockGt.dat(mat));
+			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 320 + q, 0, CraftingTableT3.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 13, CS.NBT_TEXTURE, "qwertech:rock", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", 'C', OP.rockGt.dat(mat));
 		}
 		
 		Class<? extends TileEntity> toUse = CraftingTableT4.class;
