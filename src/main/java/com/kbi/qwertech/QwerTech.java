@@ -16,6 +16,7 @@ import com.kbi.qwertech.blocks.BlockSoil;
 import com.kbi.qwertech.client.QT_GUIHandler;
 import com.kbi.qwertech.entities.projectile.EntityShuriken;
 import com.kbi.qwertech.items.MultiItemTool_QT;
+import com.kbi.qwertech.items.behavior.Behavior_Slingshot;
 import com.kbi.qwertech.items.behavior.Dispenser_Shuriken;
 import com.kbi.qwertech.items.stats.*;
 import com.kbi.qwertech.loaders.*;
@@ -486,6 +487,8 @@ public final class QwerTech extends Abstract_Mod {
         RegisterLoot.init();
         
         ModLoadBase.runInit();
+
+        CS.ToolsGT.sMetaTool.addItemBehavior(CS.ToolsGT.WRENCH, new Behavior_Slingshot("", 20, 40));
 
         CR.shaped(ST.make(soilBlock, 2, 8), CR.DEF, "AA", "AA", 'A', "treeLeaves");
         CR.shaped(ST.make(soilBlock, 1, 5), CR.DEF, "AA", 'A', ST.make(Blocks.leaves, 1, 1));

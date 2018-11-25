@@ -1,11 +1,19 @@
 package com.kbi.qwertech;
 
+import com.kbi.qwertech.api.data.QTI;
 import com.kbi.qwertech.loaders.RegisterArmor;
 import com.kbi.qwertech.loaders.RegisterMobs;
 import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import gregapi.api.Abstract_Mod;
 import gregapi.api.Abstract_Proxy;
+import gregapi.data.CS;
+import gregapi.data.OP;
+import gregapi.item.multiitem.MultiItemTool;
+import gregapi.oredict.OreDictMaterial;
+import gregapi.oredict.OreDictPrefix;
+import gregapi.util.UT;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.CommandEvent;
@@ -430,10 +438,111 @@ public class CommonProxy extends Abstract_Proxy {
     	
     }
     
-    //@SubscribeEvent
+    @SubscribeEvent
     public void onPlayerItemUseFinish(PlayerUseItemEvent.Finish event)
     {
-    	
+    	if (event.item != null && event.item.getItem() == CS.ToolsGT.sMetaTool && event.item.getItemDamage() == CS.ToolsGT.WRENCH)
+        {
+          if (event.entityPlayer != null)
+          {
+            int previousSlot = event.entityPlayer.inventory.currentItem - 1;
+            if (previousSlot > -1) {
+              ItemStack previous = event.entityPlayer.inventory.getStackInSlot(previousSlot);
+              if (previous != null)
+              {
+                if (previous.getItem() instanceof MultiItemTool)
+                {
+                  if (MultiItemTool.getToolDamage(previous) == 0)
+                  {
+                    OreDictMaterial mat = MultiItemTool.getPrimaryMaterial(previous);
+                    ItemStack stack = previous;
+                    if (previous.getItem() == CS.ToolsGT.sMetaTool)
+                    {
+                      switch(previous.getItemDamage())
+                      {
+                        case CS.ToolsGT.SWORD:
+                          stack = OP.toolHeadSword.mat(mat, 1);
+                          break;
+                        case CS.ToolsGT.CHISEL:
+                          stack = OP.toolHeadChisel.mat(mat, 1);
+                          break;
+                        case CS.ToolsGT.FILE:
+                          stack = OP.toolHeadFile.mat(mat, 1);
+                          break;
+                        case CS.ToolsGT.HARDHAMMER:
+                        case CS.ToolsGT.SOFTHAMMER:
+                          stack = OP.toolHeadHammer.mat(mat, 1);
+                          break;
+                        case CS.ToolsGT.PICKAXE:
+                          stack = OP.toolHeadPickaxe.mat(mat, 1);
+                          break;
+                        case CS.ToolsGT.GEM_PICK:
+                          stack = OP.toolHeadPickaxeGem.mat(mat, 1);
+                          break;
+                        case CS.ToolsGT.CONSTRUCTION_PICK:
+                          stack = OP.toolHeadConstructionPickaxe.mat(mat, 1);
+                          break;
+                        case CS.ToolsGT.AXE:
+                          stack = OP.toolHeadAxe.mat(mat, 1);
+                          break;
+                        case CS.ToolsGT.DOUBLE_AXE:
+                          stack = OP.toolHeadAxeDouble.mat(mat, 1);
+                          break;
+                        case CS.ToolsGT.BUTCHERYKNIFE:
+                          stack = OP.plate.mat(mat, 4);
+                          break;
+                        case CS.ToolsGT.HOE:
+                          stack = OP.toolHeadHoe.mat(mat, 1);
+                          break;
+                        case CS.ToolsGT.PLOW:
+                          stack = OP.toolHeadPlow.mat(mat, 1);
+                          break;
+                        case CS.ToolsGT.SAW:
+                          stack = OP.toolHeadSaw.mat(mat, 1);
+                          break;
+                        case CS.ToolsGT.SCREWDRIVER:
+                          stack = OP.toolHeadScrewdriver.mat(mat, 1);
+                          break;
+                        case CS.ToolsGT.SENSE:
+                          stack = OP.toolHeadSense.mat(mat, 1);
+                          break;
+                        case CS.ToolsGT.SHOVEL:
+                          stack = OP.toolHeadShovel.mat(mat, 1);
+                          break;
+                        case CS.ToolsGT.SPADE:
+                          stack = OP.toolHeadSpade.mat(mat, 1);
+                          break;
+                        case CS.ToolsGT.UNIVERSALSPADE:
+                          stack = OP.toolHeadUniversalSpade.mat(mat, 1);
+                          break;
+                        default:
+                          return;
+                      }
+                    } else if (previous.getItem() == QTI.qwerTool.getItem())
+                    {
+                      switch(previous.getItemDamage())
+                      {
+                        case 0:
+                          stack = OreDictPrefix.get("toolHeadMattock").mat(mat, 1);
+                          break;
+                        case 6:
+                          stack = OreDictPrefix.get("toolHeadMace").mat(mat, 1);
+                          break;
+                        default:
+                          return;
+                      }
+                    }
+                    if (stack != previous) {
+                      CS.ToolsGT.sMetaTool.doDamage(event.item, 20);
+                      UT.Sounds.send(event.entityPlayer.worldObj, "qwertech:metal.slide", 0.5F, (CS.RNGSUS.nextInt(5) + 8)/10F, (int)event.entityPlayer.posX, (int)event.entityPlayer.posY, (int)event.entityPlayer.posZ);
+                      event.entityPlayer.inventory.setInventorySlotContents(previousSlot, stack);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
     }
     
     @SubscribeEvent
