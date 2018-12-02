@@ -2,8 +2,8 @@ buildscript {
     repositories {
         mavenCentral()
 		maven {
-        name = "gt"
-        url = "http://gregtech.overminddl1.com/"
+			name = "gt"
+			url = "https://gregtech.overminddl1.com/"
 		}
 		maven {
 			name = "forge"
@@ -23,9 +23,16 @@ buildscript {
     }
 }
 
+repositories {
+	maven {
+		name = "gt"
+		url = "https://gregtech.overminddl1.com/"
+	}
+}
+
 apply plugin: 'forge'
 
-version = "1.0.0-a.39"
+version = "1.0.0-a.40"
 group= "com.kbi.qwertech" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "qwertech"
 
@@ -54,6 +61,7 @@ dependencies {
 	//compile "li.cil.oc:OpenComputers:MC1.7.10-1.6.2.1078-dev:dev"
 	//compile 'net.industrial-craft:industrialcraft-2:2.2.828-experimental:api'
 	//compile group: 'com.gregoriust.gregtech', name: 'gregtech_1.7.10', version: '6.05.48', classifier: 'dev'
+	compile "com.gregoriust.gregtech:gregtech_1.7.10:SNAPSHOT:dev"
 }
 
 processResources

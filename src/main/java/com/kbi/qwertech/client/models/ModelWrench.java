@@ -1,5 +1,6 @@
 package com.kbi.qwertech.client.models;
 
+import gregapi.data.CS;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
@@ -69,9 +70,19 @@ public class ModelWrench extends ModelBaseTool {
     }
 
     @Override
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
+    public void render(Entity entity, float duration, float f1, float f2, float f3, float f4, float f5) {
         GL11.glPushMatrix();
         GL11.glScaled(1D / modelScale[0], 1D / modelScale[1], 1D / modelScale[2]);
+        if (duration < 1) {
+            //we're good
+        } else if (duration < 71975) {
+            GL11.glRotatef((duration - 71960) * (f1 == 1 ? -4 : 4), -0.5F, -0.2F, -0.1F);
+        } else if (duration < 71995) {
+            GL11.glRotatef((58F + (duration % 3)) * (f1 == 1 ? -1 : 1), -0.5F, -0.2F, -0.1F);
+        } else {
+            //System.out.println(duration);
+            GL11.glRotatef((72000 - duration) * (f1 == 1 ? -12 : 12), -0.5F, -0.2F, -0.1F);
+        }
         applyColorPrimary();
         this.bottomcurvebottom.render(f5);
         this.bottomcurvetop.render(f5);
