@@ -1,5 +1,6 @@
 package com.kbi.qwertech.client;
 
+import com.kbi.qwertech.api.data.QTI;
 import com.kbi.qwertech.client.models.*;
 import gregapi.data.MT;
 import gregapi.data.OP;
@@ -12,10 +13,12 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
+import net.minecraftforge.client.MinecraftForgeClient;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
@@ -315,15 +318,86 @@ public class GT_Tool_Renderer implements IItemRenderer {
 				}
 				break;
 			case 16:
+				float inUse = 0.0F;
+				ItemStack before = null;
+				if (data[1] instanceof EntityPlayer)
+				{
+					inUse = ((EntityPlayer)data[1]).getItemInUseDuration();
+					before = ((EntityPlayer)data[1]).inventory.getStackInSlot(((EntityPlayer)data[1]).inventory.currentItem - 1);
+				}
 				switch (type) {
 					case EQUIPPED:
 						//case EQUIPPED_FIRST_PERSON:
 					{
-						renderModel(wrenchRenderer, item, (Entity) data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/wrench.png"), 0, 0, -20, -0.1F, 0.25F, 0F);
+						if (before != null && before.getItem() != null && inUse > 0)
+						{
+							if (before.getItem() == item.getItem()) {
+								renderModel(wrenchRenderer, item, (Entity) data[1], inUse, 1F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/wrench.png"), 0, 0, -20, -0.1F, 0.25F, 0F);
+								GL11.glTranslatef(-0.1F, -0.1F, 0.85F);
+								if (inUse < 71975) {
+									GL11.glRotatef((inUse - 71960) * 2, -0.5F, -0.3F, -0.1F);
+								} else if (inUse < 71995) {
+									GL11.glRotatef((58F + (inUse % 3)) * 0.5F, -0.5F, -0.3F, -0.1F);
+								} else {
+									//System.out.println(duration);
+									GL11.glRotatef((72000 - inUse) * 6, -0.5F, -0.3F, -0.1F);
+								}
+								renderItem(type, before, data);
+							} else if (before.getItem() == QTI.qwerTool.getItem())
+							{
+								renderModel(wrenchRenderer, item, (Entity) data[1], inUse, 1F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/wrench.png"), 0, 0, -20, -0.1F, 0.25F, 0F);
+								GL11.glTranslatef(-0.1F, -0.1F, 0.85F);
+								if (inUse < 71975) {
+									GL11.glRotatef((inUse - 71960) * 2, -0.5F, -0.3F, -0.1F);
+								} else if (inUse < 71995) {
+									GL11.glRotatef((58F + (inUse % 3)) * 0.5F, -0.5F, -0.3F, -0.1F);
+								} else {
+									//System.out.println(duration);
+									GL11.glRotatef((72000 - inUse) * 6, -0.5F, -0.3F, -0.1F);
+								}
+								MinecraftForgeClient.getItemRenderer(before, type).renderItem(type, before, data);
+							} else {
+								renderModel(wrenchRenderer, item, (Entity) data[1], 0, 1F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/wrench.png"), 0, 0, -20, -0.1F, 0.25F, 0F);
+							}
+						} else {
+							renderModel(wrenchRenderer, item, (Entity) data[1], 0, 1F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/wrench.png"), 0, 0, -20, -0.1F, 0.25F, 0F);
+						}
 						break;
 					}
 					case EQUIPPED_FIRST_PERSON: {
-						renderModel(wrenchRenderer, item, (Entity) data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/wrench.png"), 15, 0, -45, -0F, 0.5F, 0F);
+						if (before != null && before.getItem() != null && inUse > 0)
+						{
+							if (before.getItem() == item.getItem()) {
+								renderModel(wrenchRenderer, item, (Entity) data[1], inUse, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/wrench.png"), 15, 0, -45, -0F, 0.5F, 0F);
+								GL11.glTranslatef(0.1F, 0.1F, -1F);
+								if (inUse < 71975) {
+									GL11.glRotatef((inUse - 71960) * -2, -0.5F, -0.3F, -0.1F);
+								} else if (inUse < 71995) {
+									GL11.glRotatef((58F + (inUse % 3)) * -0.5F, -0.5F, -0.3F, -0.1F);
+								} else {
+									//System.out.println(duration);
+									GL11.glRotatef((72000 - inUse) * -6, -0.5F, -0.3F, -0.1F);
+								}
+								renderItem(type, before, data);
+							} else if (before.getItem() == QTI.qwerTool.getItem())
+							{
+								renderModel(wrenchRenderer, item, (Entity) data[1], inUse, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/wrench.png"), 15, 0, -45, -0F, 0.5F, 0F);
+								GL11.glTranslatef(0.1F, 0.1F, -1F);
+								if (inUse < 71975) {
+									GL11.glRotatef((inUse - 71960) * -2, -0.5F, -0.3F, -0.1F);
+								} else if (inUse < 71995) {
+									GL11.glRotatef((58F + (inUse % 3)) * -0.5F, -0.5F, -0.3F, -0.1F);
+								} else {
+									//System.out.println(duration);
+									GL11.glRotatef((72000 - inUse) * -6, -0.5F, -0.3F, -0.1F);
+								}
+								MinecraftForgeClient.getItemRenderer(before, type).renderItem(type, before, data);
+							} else {
+								renderModel(wrenchRenderer, item, (Entity) data[1], 0, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/wrench.png"), 15, 0, -45, -0F, 0.5F, 0F);
+							}
+						} else {
+							renderModel(wrenchRenderer, item, (Entity) data[1], 0, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, new ResourceLocation("qwertech:textures/items/modeled/wrench.png"), 15, 0, -45, -0F, 0.5F, 0F);
+						}
 						break;
 					}
 					default:
