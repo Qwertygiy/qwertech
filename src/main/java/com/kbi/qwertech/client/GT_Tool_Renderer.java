@@ -323,7 +323,10 @@ public class GT_Tool_Renderer implements IItemRenderer {
 				if (data[1] instanceof EntityPlayer)
 				{
 					inUse = ((EntityPlayer)data[1]).getItemInUseDuration();
-					before = ((EntityPlayer)data[1]).inventory.getStackInSlot(((EntityPlayer)data[1]).inventory.currentItem - 1);
+					int nurm = ((EntityPlayer)data[1]).inventory.currentItem;
+					if (nurm > 0) {
+                        before = ((EntityPlayer) data[1]).inventory.getStackInSlot(nurm - 1);
+                    }
 				}
 				switch (type) {
 					case EQUIPPED:
