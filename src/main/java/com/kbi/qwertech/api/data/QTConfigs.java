@@ -34,4 +34,16 @@ public class QTConfigs {
 	public static boolean enableArmor;
 
 	public static boolean chemicalXRandom;
+
+	public static int effectAnchorY = 0;
+	public static int effectAnchorX = 0;
+	public static int effectOffsetY = 0;
+	public static int effectOffsetX = 0;
+	public static int effectCenterX = 0;
+	public static int effectCenterY = 0;
+	public static boolean effectHorizontal;
+	public static int effectRowLimit = 0;
+	public static boolean effectUseDefault;
+	public static int effectDefaultInUse = 0;
+	public static int effectBackgroundType = 0;
 }

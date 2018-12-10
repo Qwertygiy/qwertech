@@ -200,6 +200,24 @@ public final class QwerTech extends Abstract_Mod {
 		QTConfigs.enableArmor = tSections.get("armor", "enableArmor", true, "Allow the creation of QwerTech armor").setShowInGui(true).getBoolean(true);
 		
 		tSections.save();
+
+		Configuration UI = new Configuration(new File(CS.DirectoriesGT.CONFIG_GT, "QT_UI_Display.cfg"));
+		UI.load();
+
+		QTConfigs.effectAnchorX = UI.get("effects_custom", "effectAnchorX", 1, "If default is disabled, which screen edge the effect icons will adhere to: left (0), middle (1), or right (2)").setShowInGui(true).getInt(1);
+		QTConfigs.effectAnchorY = UI.get("effects_custom", "effectAnchorY", 2, "If default is disabled, which screen edge the effect icons will adhere to: top (0), middle (1), or bottom (2)").setShowInGui(true).getInt(2);
+		QTConfigs.effectOffsetX = UI.get("effects_custom", "effectOffsetX", -89, "If default is disabled, how far from the X edge the icons will be placed.").setShowInGui(true).getInt(-89);
+		QTConfigs.effectOffsetY = UI.get("effects_custom", "effectOffsetY", -46, "If default is disabled, how far from the Y edge the icons will be placed.").setShowInGui(true).getInt(-46);
+		QTConfigs.effectUseDefault = UI.get("effects", "useDefault", true, "Disable to manually change the positioning of the effect icons.").setShowInGui(true).getBoolean(true);
+		QTConfigs.effectDefaultInUse = UI.get("effects", "defaultType", 0, "Which default position is currently in use. 0: above health").setShowInGui(true).getInt(0);
+
+		QTConfigs.effectCenterX = UI.get("effects_custom", "effectCenterX", 0, "If default is disabled, which way the icons will render from the offset: to the right (0), centered (1) or to the left (2)").setShowInGui(true).getInt(0);
+        QTConfigs.effectCenterY = UI.get("effects_custom", "effectCenterY", 0, "If default is disabled, which way the icons will render from the offset: below (0), centered (1) or above (2)").setShowInGui(true).getInt(0);
+        QTConfigs.effectHorizontal = UI.get("effects_custom", "effectHorizontal", true, "If default is disabled, whether the icons will generate in a row left to right (true) or top to bottom (false)").setShowInGui(true).getBoolean(true);
+        QTConfigs.effectRowLimit = UI.get("effects_custom", "effectRowLimit", 0, "If default is disabled, setting this to a value above 1 will generate a new row of icons after every so many icons.").setShowInGui(true).getInt(0);
+        QTConfigs.effectBackgroundType = UI.get("effects", "effectOutline", 0, "-1 = no outline, 0 = rounded outline, 1 = square outline, 2 = circle outline").setShowInGui(true).getInt(0);
+
+        UI.save();
 	}
 
 	@Override
