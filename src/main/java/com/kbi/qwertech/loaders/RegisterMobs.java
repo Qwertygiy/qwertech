@@ -279,7 +279,7 @@ public class RegisterMobs {
 		}
 		if (MD.GC_GALAXYSPACE.mLoaded)
 		{
-			metals.add(MT.Adamantite);
+			metals.add(MT.Ad);
 			rocks.add(MT.MarsRock);
 			rocks.add(MT.MoonRock);
 			rocks.add(MT.Endstone);
@@ -290,7 +290,7 @@ public class RegisterMobs {
 			metals.add(MT.Sanguinite);
 			metals.add(MT.Orichalcum);
 			metals.add(MT.Mithril);
-			metals.add(MT.Adamantine);
+			metals.add(MT.Ad);
 			metals.add(MT.Atlarus);
 		}
 	}

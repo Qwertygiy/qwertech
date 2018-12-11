@@ -133,7 +133,7 @@ public class RegisterSpecies {
         } else {
             List<Object> audio = new ArrayList<Object>();
             audio.add(new Object[]{sound, pitch, volume});
-            spec.addTag(SOUNDS_IDLE, audio); //juuuust to be sure.
+            spec.addTag(SOUNDS_HURT, audio); //juuuust to be sure.
         }
         return spec;
     }
@@ -147,7 +147,7 @@ public class RegisterSpecies {
         } else {
             List<Object> audio = new ArrayList<Object>();
             audio.add(new Object[]{sound, pitch, volume});
-            spec.addTag(SOUNDS_IDLE, audio); //juuuust to be sure.
+            spec.addTag(SOUNDS_ANGRY, audio); //juuuust to be sure.
         }
         return spec;
     }
@@ -161,7 +161,7 @@ public class RegisterSpecies {
         } else {
             List<Object> audio = new ArrayList<Object>();
             audio.add(new Object[]{sound, pitch, volume});
-            spec.addTag(SOUNDS_IDLE, audio); //juuuust to be sure.
+            spec.addTag(SOUNDS_DEAD, audio); //juuuust to be sure.
         }
         return spec;
     }
@@ -175,7 +175,7 @@ public class RegisterSpecies {
         } else {
             List<Object> audio = new ArrayList<Object>();
             audio.add(new Object[]{sound, pitch, volume});
-            spec.addTag(SOUNDS_IDLE, audio); //juuuust to be sure.
+            spec.addTag(SOUNDS_LOVE, audio); //juuuust to be sure.
         }
         return spec;
     }
