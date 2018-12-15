@@ -1,10 +1,7 @@
 package com.kbi.qwertech.api.entities;
 
-import com.kbi.qwertech.api.data.COLOR;
 import com.kbi.qwertech.api.registry.MobSpeciesRegistry;
 import com.kbi.qwertech.loaders.RegisterSpecies;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 
@@ -73,10 +70,7 @@ public class Subtype implements Taggable{
         {
             biomes.remove(biome);
             List<Subtype> thisBiome = assignedSpecies.spawnMap.get(biome);
-            if (thisBiome.contains(this))
-            {
-                thisBiome.remove(this);
-            }
+            thisBiome.remove(this);
             assignedSpecies.spawnMap.put(biome, thisBiome);
         }
         return this;

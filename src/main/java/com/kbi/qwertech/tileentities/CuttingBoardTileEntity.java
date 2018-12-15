@@ -190,8 +190,7 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
                 return true;
             }
         }
-        if (aPlayer.getHeldItem() == null && openGUI(aPlayer, 0)) return true;
-        return false;
+        return aPlayer.getHeldItem() == null && openGUI(aPlayer, 0);
     }
 
     @Override
@@ -603,11 +602,7 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
                     if (GUI.currentRecipes.size() > w) {
                         CountertopRecipe recipe = GUI.currentRecipes.get(w + GUI.craftResults.starting);
                         if (recipe != null) {
-                            if (recipe.matchesLists(GUI.inventoryItemStacks.subList(0, 8), GUI.currentRecipes)) {
-                                isAvailable[w] = true;
-                            } else {
-                                isAvailable[w] = false;
-                            }
+                            isAvailable[w] = recipe.matchesLists(GUI.inventoryItemStacks.subList(0, 8), GUI.currentRecipes);
                         } else {
                             isAvailable[w] = false;
                         }
@@ -670,7 +665,7 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
                 while (iterable.hasNext())
                 {
                     Map.Entry entry = (Map.Entry)iterable.next();
-                    list.add((String)entry.getKey() + ": " + (Integer)entry.getValue());
+                    list.add(entry.getKey() + ": " + entry.getValue());
                 }
 
                 FontRenderer font = stack.getItem().getFontRenderer(stack);

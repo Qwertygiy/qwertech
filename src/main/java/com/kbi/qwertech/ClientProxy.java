@@ -37,7 +37,6 @@ import gregapi.data.CS;
 import gregapi.data.LH;
 import gregapi.data.OP;
 import net.minecraft.client.model.ModelBase;
-import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -227,7 +226,7 @@ public final class ClientProxy extends CommonProxy { // NO_UCD (unused code)
 								}
 							} else if (ob instanceof String)
 							{
-								if (amounts.containsKey((String)ob)) {
+								if (amounts.containsKey(ob)) {
 									amounts.put((String) ob, amounts.get((String) ob + 1));
 								} else {
 									amounts.put((String)ob, 1);
@@ -238,7 +237,7 @@ public final class ClientProxy extends CommonProxy { // NO_UCD (unused code)
 						while (iterable.hasNext())
 						{
 							Map.Entry entry = (Map.Entry)iterable.next();
-							event.toolTip.add(LH.Chat.CYAN + (String)entry.getKey() + ": " + (Integer)entry.getValue());
+							event.toolTip.add(LH.Chat.CYAN + entry.getKey() + ": " + entry.getValue());
 						}
 
 					}

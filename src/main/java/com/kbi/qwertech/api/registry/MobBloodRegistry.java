@@ -4,13 +4,9 @@ import gregapi.util.UT;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.*;
 import net.minecraft.entity.passive.*;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
 
 public class MobBloodRegistry {
 	private static HashMap<String, Class> mobList = new HashMap();

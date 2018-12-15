@@ -1,5 +1,7 @@
 package com.kbi.qwertech.loaders.mod;
 
+import com.kbi.qwertech.QwerTech;
+import com.kbi.qwertech.api.data.QTConfigs;
 import gregapi.code.ModData;
 import gregapi.data.CS;
 import gregapi.data.MD;
@@ -7,9 +9,6 @@ import gregapi.util.CR;
 import gregapi.util.ST;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.oredict.OreDictionary;
-
-import com.kbi.qwertech.QwerTech;
-import com.kbi.qwertech.api.data.QTConfigs;
 
 public class ModLoad_GT extends ModLoadBase {
 

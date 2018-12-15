@@ -1,8 +1,5 @@
 package com.kbi.qwertech.entities.ai;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -12,6 +9,9 @@ import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EntityAIUseCompass extends EntityAITarget {
 	

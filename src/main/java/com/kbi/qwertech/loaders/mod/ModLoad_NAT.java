@@ -1,12 +1,11 @@
 package com.kbi.qwertech.loaders.mod;
 
 import com.kbi.qwertech.api.data.WOOD;
-
+import cpw.mods.fml.common.registry.GameRegistry;
 import gregapi.code.ModData;
 import gregapi.util.ST;
 import net.minecraft.block.Block;
 import net.minecraftforge.oredict.OreDictionary;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ModLoad_NAT extends ModLoadBase {
 

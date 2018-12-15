@@ -1,18 +1,15 @@
 package com.kbi.qwertech.client.entity.projectile;
 
-import net.minecraft.client.renderer.entity.RenderEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.ResourceLocation;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
 import com.kbi.qwertech.QwerTech;
 import com.kbi.qwertech.client.models.ModelFoil;
 import com.kbi.qwertech.entities.projectile.EntityFoil;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.entity.RenderEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 @SideOnly(Side.CLIENT)
 public class RenderEntityFoil extends RenderEntity {

@@ -1,9 +1,6 @@
 package com.kbi.qwertech.tileentities;
 
-import static gregapi.data.CS.F;
-import static gregapi.data.CS.NW_API;
-import static gregapi.data.CS.T;
-import static gregapi.data.CS.W;
+import com.kbi.qwertech.blocks.ChiselableBlock;
 import gregapi.block.prefixblock.PrefixBlockTileEntity;
 import gregapi.network.INetworkHandler;
 import gregapi.network.packets.data.PacketSyncDataName;
@@ -15,7 +12,7 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 
-import com.kbi.qwertech.blocks.ChiselableBlock;
+import static gregapi.data.CS.*;
 
 public class ChiselableTileEntity extends PrefixBlockTileEntity {
 	public short mDesign = W;

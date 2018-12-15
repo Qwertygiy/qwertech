@@ -1,18 +1,11 @@
 package com.kbi.qwertech.items.stats;
 
+import com.kbi.qwertech.QwerTech;
 import gregapi.data.MT;
 import gregapi.item.multiitem.MultiItemTool;
 import gregapi.item.multiitem.tools.ToolStats;
 import gregapi.render.IIconContainer;
-
-import java.util.List;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockButton;
-import net.minecraft.block.BlockPressurePlate;
-import net.minecraft.block.BlockRedstoneWire;
-import net.minecraft.block.BlockTorch;
-import net.minecraft.block.BlockTripWire;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityGolem;
@@ -21,7 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent;
 
-import com.kbi.qwertech.QwerTech;
+import java.util.List;
 
 public class QT_Tool_Knuckles
   extends ToolStats

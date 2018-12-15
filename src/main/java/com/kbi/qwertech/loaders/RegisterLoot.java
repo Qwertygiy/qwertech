@@ -1,19 +1,17 @@
 package com.kbi.qwertech.loaders;
 
+import com.kbi.qwertech.api.data.QTConfigs;
+import com.kbi.qwertech.api.data.QTI;
 import gregapi.data.CS;
 import gregapi.data.MT;
 import gregapi.item.multiitem.MultiItemTool;
 import gregapi.oredict.OreDictMaterial;
 import gregapi.oredict.OreDictPrefix;
-
-import java.util.HashMap;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraftforge.common.ChestGenHooks;
 
-import com.kbi.qwertech.api.data.QTConfigs;
-import com.kbi.qwertech.api.data.QTI;
+import java.util.HashMap;
 
 public class RegisterLoot {
 	

@@ -1,12 +1,7 @@
 package com.kbi.qwertech.api.armor;
 
-import static gregapi.data.CS.RNGSUS;
-import static gregapi.data.CS.U;
-import static gregapi.data.CS.U4;
-import static gregapi.data.CS.UNCOLOURED;
-import static gregapi.data.CS.ZL_ENCHANTMENT;
 import gregapi.data.CS;
-import gregapi.data.CS.SFX;
+import gregapi.data.CS.*;
 import gregapi.data.MT;
 import gregapi.data.OP;
 import gregapi.old.Textures;
@@ -25,6 +20,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
+
+import static gregapi.data.CS.*;
 
 /**
  * ArmorBase

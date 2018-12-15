@@ -1,10 +1,5 @@
 package com.kbi.qwertech.api.data;
 
-import static gregapi.data.CS.F;
-import static gregapi.data.CS.NB;
-import static gregapi.data.CS.OUT;
-import static gregapi.data.CS.T;
-import static gregapi.data.CS.W;
 import gregapi.api.Abstract_Mod;
 import gregapi.code.IItemContainer;
 import gregapi.code.TagData;
@@ -18,6 +13,8 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+
+import static gregapi.data.CS.*;
 
 public enum QTI implements IItemContainer {
 	moldArrow,

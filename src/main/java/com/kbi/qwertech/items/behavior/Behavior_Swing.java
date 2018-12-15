@@ -1,5 +1,8 @@
 package com.kbi.qwertech.items.behavior;
 
+import com.kbi.qwertech.QwerTech;
+import com.kbi.qwertech.entities.extended.ExtendedPropertiesDeflected;
+import cpw.mods.fml.common.registry.IThrowableEntity;
 import gregapi.item.multiitem.MultiItem;
 import gregapi.util.UT;
 import net.minecraft.entity.Entity;
@@ -13,11 +16,6 @@ import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Vec3;
-
-import com.kbi.qwertech.QwerTech;
-import com.kbi.qwertech.entities.extended.ExtendedPropertiesDeflected;
-
-import cpw.mods.fml.common.registry.IThrowableEntity;
 
 public class Behavior_Swing extends Behavior_AOE {
 

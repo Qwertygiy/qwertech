@@ -1,5 +1,6 @@
 package com.kbi.qwertech.entities.projectile;
 
+import cpw.mods.fml.common.registry.IThrowableEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
@@ -8,7 +9,6 @@ import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.registry.IThrowableEntity;
 
 public class EntityEgg extends net.minecraft.entity.projectile.EntityEgg implements IThrowableEntity {
 
