@@ -28,6 +28,7 @@ public abstract class ModLoadBase {
 	public static void runInit()
 	{
 		registeredLoaders = new ArrayList();
+		new ModLoad_AETHER();
 		new ModLoad_ARS();
 		new ModLoad_BAMBOO();
 		new ModLoad_BINNIE_TREE();
