@@ -29,6 +29,7 @@ public abstract class ModLoadBase {
 	{
 		registeredLoaders = new ArrayList();
 		new ModLoad_ARS();
+		new ModLoad_BAMBOO();
 		new ModLoad_BINNIE_TREE();
 		new ModLoad_BoP();
 		new ModLoad_BOTA();
