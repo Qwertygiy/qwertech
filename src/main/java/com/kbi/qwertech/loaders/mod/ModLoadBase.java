@@ -35,6 +35,7 @@ public abstract class ModLoadBase {
 		new ModLoad_BoP();
 		new ModLoad_BOTA();
 		new ModLoad_BTL();
+		new ModLoad_EB();
 		new ModLoad_EBXL();
 		new ModLoad_EiO();
 		new ModLoad_FR();
