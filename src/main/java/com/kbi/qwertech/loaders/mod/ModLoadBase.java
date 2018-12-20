@@ -51,6 +51,7 @@ public abstract class ModLoadBase {
 		new ModLoad_TE_FOUNDATION();
 		new ModLoad_TF();
 		new ModLoad_TFC();
+		new ModLoad_TROPIC();
 		new ModLoad_WTCH();
 		for (int q = 0; q < registeredLoaders.size(); q++)
 		{
