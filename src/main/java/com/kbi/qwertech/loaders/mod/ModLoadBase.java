@@ -33,6 +33,7 @@ public abstract class ModLoadBase {
 		new ModLoad_BINNIE_TREE();
 		new ModLoad_BoP();
 		new ModLoad_BOTA();
+		new ModLoad_BTL();
 		new ModLoad_EBXL();
 		new ModLoad_EiO();
 		new ModLoad_FR();
