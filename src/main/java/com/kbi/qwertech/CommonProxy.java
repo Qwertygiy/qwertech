@@ -3,6 +3,7 @@ package com.kbi.qwertech;
 import com.kbi.qwertech.api.data.QTI;
 import com.kbi.qwertech.loaders.RegisterArmor;
 import com.kbi.qwertech.loaders.RegisterMobs;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import gregapi.api.Abstract_Mod;
@@ -66,6 +67,7 @@ public class CommonProxy extends Abstract_Proxy {
 	@Override
 	public void onProxyAfterPostInit		(Abstract_Mod aMod, FMLPostInitializationEvent	aEvent) {
 		MinecraftForge.EVENT_BUS.register(this);
+        FMLCommonHandler.instance().bus().register(this);
 		//this allows it to read game events for other classes without having to be added unnecessarily to all the game building events.
 	}
     @Override
