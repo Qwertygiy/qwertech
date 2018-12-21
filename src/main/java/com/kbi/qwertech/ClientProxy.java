@@ -27,6 +27,7 @@ import com.kbi.qwertech.loaders.RegisterSpecies;
 import com.kbi.qwertech.tileentities.*;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -173,6 +174,7 @@ public final class ClientProxy extends CommonProxy { // NO_UCD (unused code)
 	@Override
 	public void onProxyAfterPostInit		(Abstract_Mod aMod, FMLPostInitializationEvent	aEvent) {
 		MinecraftForge.EVENT_BUS.register(this);
+		FMLCommonHandler.instance().bus().register(this);
 		//this allows it to read game events for other classes without having to be added unnecessarily to all the game building events.
 	}
 	
