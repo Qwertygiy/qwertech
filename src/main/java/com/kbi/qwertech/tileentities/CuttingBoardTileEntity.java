@@ -359,7 +359,7 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
             addSlotToContainer(new SlotScroll(craftResults, 13, 134, 86, F, F, 64));
             addSlotToContainer(new SlotScroll(craftResults, 14, 152, 86, F, F, 64));
 
-            addSlotToContainer(new Slot_Holo(mTileEntity, 8, 31, 50, F, F, 1).setTooltip("Dump to Inventory", LH.Chat.WHITE));
+            addSlotToContainer(new Slot_Holo(mTileEntity, 8, 32, 51, F, F, 1).setTooltip("Dump to Inventory", LH.Chat.WHITE));
 
             return super.addSlots(aInventoryPlayer);
         }
@@ -446,7 +446,11 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
                 }
                 return null;
             }
-            if (aSlotIndex > 22 || aSlotIndex < 0) return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
+            if (aSlotIndex > 22 || aSlotIndex < 0) {
+                ItemStack returnable = super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
+                onCraftMatrixChanged((CuttingBoardTileEntity)mTileEntity);
+                return returnable;
+            }
             //System.out.println("It's one to do stuff with");
             Slot tSlot = ((Slot) inventorySlots.get(aSlotIndex));
             ItemStack tStack = tSlot.getStack();
