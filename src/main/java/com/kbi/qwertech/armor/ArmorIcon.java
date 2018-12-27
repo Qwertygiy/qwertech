@@ -1,12 +1,13 @@
 package com.kbi.qwertech.armor;
 
-import static gregapi.data.CS.UNCOLOURED;
 import gregapi.GT_API;
 import gregapi.render.IIconContainer;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
+
+import static gregapi.data.CS.UNCOLOURED;
 
 public class ArmorIcon implements IIconContainer, Runnable {
 	protected IIcon mIcon, mOverlay;

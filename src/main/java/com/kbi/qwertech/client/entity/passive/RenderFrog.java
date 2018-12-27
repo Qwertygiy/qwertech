@@ -1,13 +1,12 @@
 package com.kbi.qwertech.client.entity.passive;
 
+import com.kbi.qwertech.entities.passive.EntityFrog;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
-
-import com.kbi.qwertech.entities.passive.EntityFrog;
 
 public class RenderFrog extends RenderLiving {
 

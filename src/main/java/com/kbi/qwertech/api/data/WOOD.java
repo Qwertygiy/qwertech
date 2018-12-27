@@ -138,7 +138,11 @@ public class WOOD {
 	Sycamore			= 		makeWood(142,	 "Sycamore"			, "Sycamore",			MD.TFC,		214, 	155, 	69,		255													),
 	WhiteCedar			= 		makeWood(143,	 "WhiteCedar"		, "White Cedar",		MD.TFC,		219, 	219, 	205,	255		,"White Cedar","Whitecedar"					),
 	WhiteElm			= 		makeWood(144,	 "WhiteElm"			, "White Elm",			MD.TFC,		162, 	167, 	103,	255		,"White Elm","Whiteelm"						),
-											
+	WeedWood			=		makeWood(145, 	"Weedwood"			, "Weedwood", 			MD.BTL,		100,	75, 40, 255, "Weed", "Weed Wood", "WeedWood"),
+    Skyroot             =       makeWood(146,   "Skyroot"           , "Skyroot",            MD.AETHER,60,     26,  38,      255,"Sky Root", "SkyRoot"),
+	Thorntree			=		makeWood(147, "Thorntree", "Thorntree", MD.EB, 180, 	144, 	90, 	255, "Thorn", "Thorn Tree"),
+	SilverPine			=		makeWood(148, "SilverPine", "Silver Pine", MD.EB, 32, 7, 70, 255, "Silver Pine"),
+
 	QuakingAspen		=		makeWood(150,	 "QuakingAspen"		, "Quaking Aspen",		MD.QT,		219,	201,	177,	255		,"Quaking Aspen","AmericanAspen"			),
 	CommonAspen			=		makeWood(151,	 "CommonAspen"		, "Common Aspen",		MD.QT,		218,	180,	141,	255		,"Common Aspen","EuropeanAspen"				),
 	WhitePoplar			=		makeWood(152,	 "WhitePoplar"		, "White Poplar",		MD.QT,		205,	171,	133,	255		,"White Poplar","Abele"						),

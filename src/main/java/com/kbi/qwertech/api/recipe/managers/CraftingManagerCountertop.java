@@ -276,5 +276,30 @@ public class CraftingManagerCountertop implements Runnable {
         addRecipe(IL.Food_Burger_Chum.get(1), IL.Food_Buns_Sliced.get(1), IL.Food_Chum.get(1));
         addRecipe(IL.Food_Burger_Tofu.get(1), IL.Food_Buns_Sliced.get(1), OP.ingot.mat(MT.Tofu, 1));
         addRecipe(IL.Food_Burger_Fish.get(1), IL.Food_Buns_Sliced.get(1), OP.ingot.mat(MT.FishCooked, 1));
+        addRecipe(IL.Food_Breads_Sliced.get(1), IL.Food_Bread_Sliced.get(1), IL.Food_Bread_Sliced.get(1));
+        addRecipe(IL.Food_Bread_Sliced.get(2), IL.Food_Bread.get(1), "craftingToolKnife");
+        addRecipe(IL.Food_Sandwich_Veggie.get(1), IL.Food_Breads_Sliced.get(1), IL.Food_Cucumber_Sliced.get(1), IL.Food_Cucumber_Sliced.get(1), IL.Food_Tomato_Sliced.get(1), IL.Food_Tomato_Sliced.get(1), IL.Food_Onion_Sliced.get(1));
+        addRecipe(IL.Food_Sandwich_Veggie.get(1), IL.Food_Bread_Sliced.get(1), IL.Food_Bread_Sliced.get(1), IL.Food_Cucumber_Sliced.get(1), IL.Food_Cucumber_Sliced.get(1), IL.Food_Tomato_Sliced.get(1), IL.Food_Tomato_Sliced.get(1), IL.Food_Onion_Sliced.get(1));
+        addRecipe(IL.Food_Sandwich_Cheese.get(1), IL.Food_Breads_Sliced.get(1), IL.Food_Cheese_Sliced.get(1), IL.Food_Cheese_Sliced.get(1), IL.Food_Cheese_Sliced.get(1), IL.Food_Cheese_Sliced.get(1), IL.Food_Cheese_Sliced.get(1));
+        addRecipe(IL.Food_Sandwich_Cheese.get(1), IL.Food_Bread_Sliced.get(1), IL.Food_Bread_Sliced.get(1), IL.Food_Cheese_Sliced.get(1), IL.Food_Cheese_Sliced.get(1), IL.Food_Cheese_Sliced.get(1), IL.Food_Cheese_Sliced.get(1), IL.Food_Cheese_Sliced.get(1));
+        addRecipe(IL.Food_Sandwich_Bacon.get(1), IL.Food_Breads_Sliced.get(1), "foodBaconcooked", "foodBaconcooked", "foodBaconcooked");
+        addRecipe(IL.Food_Sandwich_Bacon.get(1), IL.Food_Bread_Sliced.get(1), IL.Food_Bread_Sliced.get(1), "foodBaconcooked", "foodBaconcooked", "foodBaconcooked");
+        addRecipe(IL.Food_Sandwich_Steak.get(1), IL.Food_Breads_Sliced.get(1), ST.make(Items.cooked_beef, 1L, 32767L));
+        addRecipe(IL.Food_Sandwich_Steak.get(1), IL.Food_Bread_Sliced.get(1), IL.Food_Bread_Sliced.get(1), ST.make(Items.cooked_beef, 1L, 32767L));
+        addRecipe(IL.Food_Baguettes_Sliced.get(1), IL.Food_Baguette_Sliced.get(1), IL.Food_Baguette_Sliced.get(1));
+        addRecipe(IL.Food_Baguette_Sliced.get(2), IL.Food_Baguette.get(1), "craftingToolKnife");
+        addRecipe(IL.Food_Large_Sandwich_Veggie.get(1), IL.Food_Baguettes_Sliced.get(1), IL.Food_Cucumber_Sliced.get(1), IL.Food_Cucumber_Sliced.get(1), IL.Food_Cucumber_Sliced.get(1), IL.Food_Tomato_Sliced.get(1), IL.Food_Tomato_Sliced.get(1), IL.Food_Tomato_Sliced.get(1), IL.Food_Onion_Sliced.get(1));
+        addRecipe(IL.Food_Large_Sandwich_Veggie.get(1), IL.Food_Baguette_Sliced.get(1), IL.Food_Baguette_Sliced.get(1), IL.Food_Cucumber_Sliced.get(1), IL.Food_Cucumber_Sliced.get(1), IL.Food_Cucumber_Sliced.get(1), IL.Food_Tomato_Sliced.get(1), IL.Food_Tomato_Sliced.get(1), IL.Food_Tomato_Sliced.get(1), IL.Food_Onion_Sliced.get(1));
+        addRecipe(IL.Food_Large_Sandwich_Bacon.get(1), IL.Food_Baguettes_Sliced.get(1), "foodBaconcooked", "foodBaconcooked", "foodBaconcooked", "foodBaconcooked", "foodBaconcooked", "foodBaconcooked");
+        addRecipe(IL.Food_Large_Sandwich_Bacon.get(1), IL.Food_Baguette_Sliced.get(1), IL.Food_Baguette_Sliced.get(1), "foodBaconcooked", "foodBaconcooked", "foodBaconcooked", "foodBaconcooked", "foodBaconcooked", "foodBaconcooked");
+        addRecipe(IL.Food_Large_Sandwich_Cheese.get(1),IL.Food_Baguettes_Sliced.get(1), IL.Food_Cheese_Sliced.get(1), IL.Food_Cheese_Sliced.get(1), IL.Food_Cheese_Sliced.get(1), IL.Food_Cheese_Sliced.get(1), IL.Food_Cheese_Sliced.get(1), IL.Food_Cheese_Sliced.get(1), IL.Food_Cheese_Sliced.get(1));
+        addRecipe(IL.Food_Large_Sandwich_Cheese.get(1),IL.Food_Baguette_Sliced.get(1), IL.Food_Baguette_Sliced.get(1), IL.Food_Cheese_Sliced.get(1), IL.Food_Cheese_Sliced.get(1), IL.Food_Cheese_Sliced.get(1), IL.Food_Cheese_Sliced.get(1), IL.Food_Cheese_Sliced.get(1), IL.Food_Cheese_Sliced.get(1), IL.Food_Cheese_Sliced.get(1));
+        addRecipe(IL.Food_Large_Sandwich_Steak.get(1), IL.Food_Baguettes_Sliced.get(1), ST.make(Items.cooked_beef, 1L, 32767L), ST.make(Items.cooked_beef, 1L, 32767L));
+        addRecipe(IL.Food_Large_Sandwich_Steak.get(1), IL.Food_Baguette_Sliced.get(1), IL.Food_Baguette_Sliced.get(1), ST.make(Items.cooked_beef, 1L, 32767L), ST.make(Items.cooked_beef, 1L, 32767L));
+        addRecipe(IL.Food_Fries_Raw.get(1), "craftingToolKnife", "cropPotato");
+        addRecipe(IL.Food_Fries_Packaged.get(1), IL.Food_Fries.get(1), "plateDoublePaper");
+        addRecipe(IL.Food_PotatoChips_Raw.get(1), "craftingToolKnife", "cropPotato");
+        addRecipe(IL.Food_PotatoChips_Packaged.get(1), "foilAluminium", IL.Food_PotatoChips.get(1));
+        addRecipe(IL.Food_ChiliChips_Packaged.get(1), "foilAluminium", IL.Food_ChiliChips.get(1));
     }
 }

@@ -1,19 +1,17 @@
 package com.kbi.qwertech.entities.ai;
 
+import com.kbi.qwertech.api.registry.MobBreedRegistry;
 import gregapi.oredict.OreDictManager;
 import gregapi.util.ST;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-import com.kbi.qwertech.api.registry.MobBreedRegistry;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 public class EntityAITemptAdvanced extends EntityAIBase
 {

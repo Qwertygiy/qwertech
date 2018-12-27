@@ -1,13 +1,12 @@
 package com.kbi.qwertech.network.packets;
 
-import static gregapi.data.CS.ERR;
+import com.google.common.io.ByteArrayDataInput;
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import gregapi.network.INetworkHandler;
 import gregapi.network.IPacket;
 import gregapi.tileentity.base.TileEntityBase05Inventories;
 import gregapi.util.ST;
-
-import java.io.IOException;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
@@ -16,9 +15,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 
-import com.google.common.io.ByteArrayDataInput;
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
+import java.io.IOException;
+
+import static gregapi.data.CS.ERR;
 
 public class PacketInventorySync implements IPacket {
 	private ItemStack mStack;

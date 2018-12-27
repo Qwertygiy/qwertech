@@ -190,8 +190,7 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
                 return true;
             }
         }
-        if (aPlayer.getHeldItem() == null && openGUI(aPlayer, 0)) return true;
-        return false;
+        return aPlayer.getHeldItem() == null && openGUI(aPlayer, 0);
     }
 
     @Override
@@ -360,7 +359,7 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
             addSlotToContainer(new SlotScroll(craftResults, 13, 134, 86, F, F, 64));
             addSlotToContainer(new SlotScroll(craftResults, 14, 152, 86, F, F, 64));
 
-            addSlotToContainer(new Slot_Holo(mTileEntity, 8, 31, 50, F, F, 1).setTooltip("Dump to Inventory", LH.Chat.WHITE));
+            addSlotToContainer(new Slot_Holo(mTileEntity, 8, 32, 51, F, F, 1).setTooltip("Dump to Inventory", LH.Chat.WHITE));
 
             return super.addSlots(aInventoryPlayer);
         }
@@ -447,7 +446,11 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
                 }
                 return null;
             }
-            if (aSlotIndex > 22 || aSlotIndex < 0) return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
+            if (aSlotIndex > 22 || aSlotIndex < 0) {
+                ItemStack returnable = super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
+                onCraftMatrixChanged((CuttingBoardTileEntity)mTileEntity);
+                return returnable;
+            }
             //System.out.println("It's one to do stuff with");
             Slot tSlot = ((Slot) inventorySlots.get(aSlotIndex));
             ItemStack tStack = tSlot.getStack();
@@ -603,11 +606,7 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
                     if (GUI.currentRecipes.size() > w) {
                         CountertopRecipe recipe = GUI.currentRecipes.get(w + GUI.craftResults.starting);
                         if (recipe != null) {
-                            if (recipe.matchesLists(GUI.inventoryItemStacks.subList(0, 8), GUI.currentRecipes)) {
-                                isAvailable[w] = true;
-                            } else {
-                                isAvailable[w] = false;
-                            }
+                            isAvailable[w] = recipe.matchesLists(GUI.inventoryItemStacks.subList(0, 8), GUI.currentRecipes);
                         } else {
                             isAvailable[w] = false;
                         }
@@ -670,7 +669,7 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
                 while (iterable.hasNext())
                 {
                     Map.Entry entry = (Map.Entry)iterable.next();
-                    list.add((String)entry.getKey() + ": " + (Integer)entry.getValue());
+                    list.add(entry.getKey() + ": " + entry.getValue());
                 }
 
                 FontRenderer font = stack.getItem().getFontRenderer(stack);

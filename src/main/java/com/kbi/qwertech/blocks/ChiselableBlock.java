@@ -1,7 +1,7 @@
 package com.kbi.qwertech.blocks;
 
-import static gregapi.data.CS.F;
-import static gregapi.data.CS.T;
+import com.kbi.qwertech.QwerTech;
+import com.kbi.qwertech.tileentities.ChiselableTileEntity;
 import gregapi.GT_API_Proxy;
 import gregapi.block.IBlockSyncData;
 import gregapi.block.behaviors.Drops;
@@ -23,9 +23,6 @@ import gregapi.render.ITexture;
 import gregapi.util.ST;
 import gregapi.util.UT;
 import gregapi.util.WD;
-
-import java.util.List;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -36,8 +33,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import com.kbi.qwertech.QwerTech;
-import com.kbi.qwertech.tileentities.ChiselableTileEntity;
+import java.util.List;
+
+import static gregapi.data.CS.F;
+import static gregapi.data.CS.T;
 
 public class ChiselableBlock extends PrefixBlock implements IBlockSyncData.IBlockSyncDataAndIDs {
 

@@ -1,11 +1,11 @@
 package com.kbi.qwertech.loaders.mod;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import gregapi.code.ModData;
 import gregapi.data.MD;
 import gregapi.util.ST;
 import net.minecraft.block.Block;
 import net.minecraftforge.oredict.OreDictionary;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ModLoad_BoP extends ModLoadBase {
 

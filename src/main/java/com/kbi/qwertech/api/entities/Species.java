@@ -1,10 +1,6 @@
 package com.kbi.qwertech.api.entities;
 
-import com.kbi.qwertech.api.data.COLOR;
 import com.kbi.qwertech.loaders.RegisterSpecies;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.item.ItemStack;
 import net.minecraft.world.biome.BiomeGenBase;
 
 import java.util.ArrayList;

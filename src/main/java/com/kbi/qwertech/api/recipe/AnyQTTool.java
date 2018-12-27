@@ -227,7 +227,7 @@ public class AnyQTTool implements ICraftingRecipeGT, IRecipe
 							match = compareMats(nex.mMaterial.mMaterial, tData.mMaterial.mMaterial);
 						}
 					} else if (next instanceof String && tData != null) {
-						if (tData.toString().equals((String) next))
+						if (tData.toString().equals(next))
 						{
 							match = true;
 						}

@@ -1,32 +1,20 @@
 package com.kbi.qwertech.client;
 
+import com.kbi.qwertech.client.models.*;
 import gregapi.data.MT;
 import gregapi.data.OP;
 import gregapi.oredict.OreDictMaterial;
-
-import java.util.HashMap;
-
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.oredict.OreDictionary;
-
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 
-import com.kbi.qwertech.client.models.ModelBaseTool;
-import com.kbi.qwertech.client.models.ModelGear;
-import com.kbi.qwertech.client.models.ModelIngot;
-import com.kbi.qwertech.client.models.ModelStick;
-import com.kbi.qwertech.client.models.ModelStickLong;
+import java.util.HashMap;
 
 public class Material_Item_Renderer implements IItemRenderer {
 

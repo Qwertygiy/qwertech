@@ -2,10 +2,8 @@ package com.kbi.qwertech.loaders;
 
 import com.kbi.qwertech.QwerTech;
 import com.kbi.qwertech.api.armor.upgrades.IArmorUpgrade;
-import com.kbi.qwertech.api.data.COLOR;
 import com.kbi.qwertech.api.data.QTI;
 import com.kbi.qwertech.api.data.QTMT;
-import com.kbi.qwertech.api.entities.IGeneticMob;
 import com.kbi.qwertech.api.entities.Species;
 import com.kbi.qwertech.api.entities.Subtype;
 import com.kbi.qwertech.api.registry.ArmorUpgradeRegistry;
@@ -20,7 +18,6 @@ import com.kbi.qwertech.items.behavior.Behavior_Spawn;
 import com.kbi.qwertech.items.behavior.Behavior_ThrowEgg;
 import cpw.mods.fml.common.Optional.Interface;
 import cpw.mods.fml.common.Optional.InterfaceList;
-import cpw.mods.fml.common.registry.EntityRegistry;
 import gregapi.data.*;
 import gregapi.data.CS.ModIDs;
 import gregapi.item.multiitem.MultiItemRandom;
@@ -49,19 +46,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
-import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.IIcon;
-import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.List;
 
-import static gregapi.data.CS.F;
 import static gregapi.data.CS.T;
 
 @InterfaceList(value = {

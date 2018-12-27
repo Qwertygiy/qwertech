@@ -1,5 +1,6 @@
 package com.kbi.qwertech.items.behavior;
 
+import com.kbi.qwertech.entities.projectile.EntityShuriken;
 import gregapi.oredict.OreDictManager;
 import gregapi.oredict.OreDictMaterial;
 import gregapi.util.UT;
@@ -12,8 +13,6 @@ import net.minecraft.entity.IProjectile;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-
-import com.kbi.qwertech.entities.projectile.EntityShuriken;
 
 public class Dispenser_Shuriken extends BehaviorProjectileDispense {
 	

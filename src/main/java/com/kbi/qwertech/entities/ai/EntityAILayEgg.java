@@ -6,8 +6,6 @@ import com.kbi.qwertech.api.entities.Species;
 import com.kbi.qwertech.api.entities.Subtype;
 import com.kbi.qwertech.entities.EntityHelperFunctions;
 import com.kbi.qwertech.loaders.RegisterSpecies;
-import gregapi.data.CS;
-import gregapi.util.ST;
 import gregapi.util.UT;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
@@ -16,7 +14,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 
 public class EntityAILayEgg extends EntityAIBase {
 

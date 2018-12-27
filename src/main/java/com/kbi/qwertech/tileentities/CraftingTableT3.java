@@ -30,8 +30,6 @@ import org.lwjgl.opengl.GL11;
 import java.awt.*;
 import java.util.List;
 
-import com.kbi.qwertech.tileentities.CraftingTableT2.GUICommonAdvancedCraftingTable2;
-
 import static gregapi.data.CS.*;
 
 public class CraftingTableT3 extends CraftingTableT1 implements IMultiTileEntity.IMTE_SyncDataByte {

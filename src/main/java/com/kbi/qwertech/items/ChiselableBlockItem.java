@@ -1,23 +1,21 @@
 package com.kbi.qwertech.items;
 
-import static gregapi.data.CS.SHOW_HIDDEN_MATERIALS;
-import static gregapi.data.CS.SHOW_HIDDEN_PREFIXES;
-import static gregapi.data.CS.SHOW_ORE_BLOCK_PREFIXES;
 import gregapi.block.prefixblock.PrefixBlockItem;
 import gregapi.data.LH;
 import gregapi.data.TD;
 import gregapi.util.ST;
 import gregapi.util.UT;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static gregapi.data.CS.*;
 
 public class ChiselableBlockItem extends PrefixBlockItem {
 	ArrayList names = new ArrayList();

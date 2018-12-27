@@ -28,10 +28,14 @@ public abstract class ModLoadBase {
 	public static void runInit()
 	{
 		registeredLoaders = new ArrayList();
+		new ModLoad_AETHER();
 		new ModLoad_ARS();
+		new ModLoad_BAMBOO();
 		new ModLoad_BINNIE_TREE();
 		new ModLoad_BoP();
 		new ModLoad_BOTA();
+		new ModLoad_BTL();
+		new ModLoad_EB();
 		new ModLoad_EBXL();
 		new ModLoad_EiO();
 		new ModLoad_FR();
@@ -47,6 +51,7 @@ public abstract class ModLoadBase {
 		new ModLoad_TE_FOUNDATION();
 		new ModLoad_TF();
 		new ModLoad_TFC();
+		new ModLoad_TROPIC();
 		new ModLoad_WTCH();
 		for (int q = 0; q < registeredLoaders.size(); q++)
 		{
