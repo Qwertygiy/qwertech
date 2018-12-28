@@ -266,19 +266,19 @@ public class CuttingBoardTileEntity extends TileEntityBase09FacingSingle impleme
     @Override
     public boolean setBlockBounds2(Block block, int aRenderPass, boolean[] aShouldSideBeRendered) {
         short xneg = 1, xpos = 15, zneg = 1, zpos = 15;
-        if (this.getOpacityAtSide(CS.SIDE_X_NEG) || (this.getAdjacentTileEntity(CS.SIDE_X_NEG).exists() && this.getAdjacentTileEntity(CS.SIDE_X_NEG).mTileEntity.getClass() == this.getClass()))
+        if (this.getOpacityAtSide(CS.SIDE_X_NEG) || (this.getAdjacentTileEntity(CS.SIDE_X_NEG).exists() && this.getAdjacentTileEntity(CS.SIDE_X_NEG).mTileEntity instanceof CuttingBoardTileEntity))
         {
             xneg = 0;
         }
-        if (this.getOpacityAtSide(CS.SIDE_X_POS) || (this.getAdjacentTileEntity(CS.SIDE_X_POS).exists() && this.getAdjacentTileEntity(CS.SIDE_X_POS).mTileEntity.getClass() == this.getClass()))
+        if (this.getOpacityAtSide(CS.SIDE_X_POS) || (this.getAdjacentTileEntity(CS.SIDE_X_POS).exists() && this.getAdjacentTileEntity(CS.SIDE_X_POS).mTileEntity instanceof CuttingBoardTileEntity))
         {
             xpos = 16;
         }
-        if (this.getOpacityAtSide(CS.SIDE_Z_NEG) || (this.getAdjacentTileEntity(CS.SIDE_Z_NEG).exists() && this.getAdjacentTileEntity(CS.SIDE_Z_NEG).mTileEntity.getClass() == this.getClass()))
+        if (this.getOpacityAtSide(CS.SIDE_Z_NEG) || (this.getAdjacentTileEntity(CS.SIDE_Z_NEG).exists() && this.getAdjacentTileEntity(CS.SIDE_Z_NEG).mTileEntity instanceof CuttingBoardTileEntity))
         {
             zneg = 0;
         }
-        if (this.getOpacityAtSide(CS.SIDE_Z_POS) || (this.getAdjacentTileEntity(CS.SIDE_Z_POS).exists() && this.getAdjacentTileEntity(CS.SIDE_Z_POS).mTileEntity.getClass() == this.getClass()))
+        if (this.getOpacityAtSide(CS.SIDE_Z_POS) || (this.getAdjacentTileEntity(CS.SIDE_Z_POS).exists() && this.getAdjacentTileEntity(CS.SIDE_Z_POS).mTileEntity instanceof CuttingBoardTileEntity))
         {
             zpos = 16;
         }
