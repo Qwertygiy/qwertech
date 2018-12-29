@@ -24,8 +24,8 @@ public class WoodSpecificCrafting implements IRecipe
 
     private ItemStack output = null;
     private Object[] input = null;
-    private int width = 0;
-    private int height = 0;
+    public int width = 0;
+    public int height = 0;
     private boolean mirrored = true;
     
     private List<String> validNames;

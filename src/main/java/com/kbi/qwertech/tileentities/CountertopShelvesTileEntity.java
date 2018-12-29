@@ -38,7 +38,7 @@ public class CountertopShelvesTileEntity extends CuttingBoardTileEntity {
         if (aGUIID == 0) {
             return new GUIClientCuttingBoard(aPlayer.inventory, this);
         } else {
-            return new ContainerClientDefault(new ContainerCommonDefault(aPlayer.inventory, this, 12, 18));
+            return new ContainerClientDefault(new ContainerCommonDefault(aPlayer.inventory, this, 9, 18));
         }
     }
     @Override public Object getGUIServer2(int aGUIID, EntityPlayer aPlayer)
@@ -46,7 +46,7 @@ public class CountertopShelvesTileEntity extends CuttingBoardTileEntity {
         if (aGUIID == 0) {
             return new GUICommonCuttingBoard(aPlayer.inventory, this);
         } else {
-            return new ContainerCommonDefault(aPlayer.inventory, this, 12, 18);
+            return new ContainerCommonDefault(aPlayer.inventory, this, 9, 18);
         }
     }
 
@@ -145,8 +145,14 @@ public class CountertopShelvesTileEntity extends CuttingBoardTileEntity {
     }
 
     @Override
+    public void addToolTips(List aList, ItemStack aStack, boolean aF3_H) {
+        super.addToolTips(aList, aStack, aF3_H);
+        aList.add(3, "Drawer size: 18 stacks");
+    }
+
+    @Override
     public boolean canDrop(int i) {
-        return i < 8 || i > 12;
+        return i != 8;
     }
 
     @SideOnly(Side.CLIENT)
@@ -181,19 +187,27 @@ public class CountertopShelvesTileEntity extends CuttingBoardTileEntity {
         short xneg = 1, xpos = 15, zneg = 1, zpos = 15;
         if (this.getOpacityAtSide(CS.SIDE_X_NEG) || (this.getAdjacentTileEntity(CS.SIDE_X_NEG).exists() && this.getAdjacentTileEntity(CS.SIDE_X_NEG).mTileEntity instanceof CuttingBoardTileEntity))
         {
-            xneg = 0;
+            if (this.mFacing != CS.SIDE_X_NEG) {
+                xneg = 0;
+            }
         }
         if (this.getOpacityAtSide(CS.SIDE_X_POS) || (this.getAdjacentTileEntity(CS.SIDE_X_POS).exists() && this.getAdjacentTileEntity(CS.SIDE_X_POS).mTileEntity instanceof CuttingBoardTileEntity))
         {
-            xpos = 16;
+            if (this.mFacing != CS.SIDE_X_POS) {
+                xpos = 16;
+            }
         }
         if (this.getOpacityAtSide(CS.SIDE_Z_NEG) || (this.getAdjacentTileEntity(CS.SIDE_Z_NEG).exists() && this.getAdjacentTileEntity(CS.SIDE_Z_NEG).mTileEntity instanceof CuttingBoardTileEntity))
         {
-            zneg = 0;
+            if (this.mFacing != CS.SIDE_Z_NEG) {
+                zneg = 0;
+            }
         }
         if (this.getOpacityAtSide(CS.SIDE_Z_POS) || (this.getAdjacentTileEntity(CS.SIDE_Z_POS).exists() && this.getAdjacentTileEntity(CS.SIDE_Z_POS).mTileEntity instanceof CuttingBoardTileEntity))
         {
-            zpos = 16;
+            if (this.mFacing != CS.SIDE_Z_POS) {
+                zpos = 16;
+            }
         }
         switch (aRenderPass) {
             case 0:

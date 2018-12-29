@@ -20,6 +20,7 @@ public class ModLoad_GT extends ModLoadBase {
 	@Override
 	public void tweakRecipes()
 	{
+		CR.remout(ST.make(Blocks.chest, 1, 0));
 		if (QTConfigs.removeVanillaCrafting)
 		{
 			CR.remout(ST.make(Blocks.crafting_table, 1, 0));
