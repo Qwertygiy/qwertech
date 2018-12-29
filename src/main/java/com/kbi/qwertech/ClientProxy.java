@@ -42,6 +42,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 
 import java.util.*;
@@ -173,12 +174,10 @@ public final class ClientProxy extends CommonProxy { // NO_UCD (unused code)
 	
 	@Override
 	public void onProxyAfterPostInit		(Abstract_Mod aMod, FMLPostInitializationEvent	aEvent) {
-		MinecraftForge.EVENT_BUS.register(this);
-		FMLCommonHandler.instance().bus().register(this);
-		//this allows it to read game events for other classes without having to be added unnecessarily to all the game building events.
+		super.onProxyAfterPostInit(aMod, aEvent);
 	}
-	
-	 @SubscribeEvent
+
+	@SubscribeEvent
 	    public void onTooltip(ItemTooltipEvent event)
 	    {
 	    	if (ArmorUpgradeRegistry.instance.getUpgrade(event.itemStack) != null)

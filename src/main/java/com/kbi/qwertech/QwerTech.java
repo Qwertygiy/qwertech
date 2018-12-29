@@ -227,6 +227,8 @@ public final class QwerTech extends Abstract_Mod {
 		
 		QTMT.ChemicalX.toString();
 		COLOR.put("Black", 0);
+		NOTE.A2.get();
+		MUSE.addSome();
 		
 		this.doConfigurations();
 		
@@ -457,7 +459,10 @@ public final class QwerTech extends Abstract_Mod {
 			qwerTool.addTool(16, "Sturdy Shovel", "Diggy diggy hole", new QT_Tool_SturdyShovel().setMaterialAmount(OP.toolHeadShovel.mAmount), "craftingToolShovel", TC.stack(TC.INSTRUMENTUM, 2), TC.stack(TC.TERRA, 1), "shovel");
 
 			qwerTool.addTool(18, "Sturdy Pickaxe", "This is boring", new QT_Tool_SturdyPickaxe().setMaterialAmount(OP.toolHeadPickaxe.mAmount), "craftingToolPickaxe", TC.stack(TC.INSTRUMENTUM, 2), TC.stack(TC.PERDITIO, 1), "pickaxe");
-			
+
+			qwerTool.addTool(20, "Kazoo", "A true " + LH.Chat.ITALIC + "instrument" + LH.Chat.RESET + LH.Chat.GRAY + " of torture", new QT_Tool_Kazoo().setMaterialAmount(OP.stick.mAmount), "kazoo");
+			OP.ring.addListener(new OreProcessing_QTTool(20, ConfigCategories.Recipes.gregtechtools + "." + "Kazoo", false, false, 0L, 0L, MT.Paper, new String[][]{{"XO ", " Sk"}}, null, ST.make(Items.paper, 1, 0), null, null, null, null, TD.Atomic.ANTIMATTER.NOT));
+
 			//mattockHeadRaw.addListener(new Loader_OreProcessing.OreProcessing_Sharpening(mattockHead, 1L, true, TD.Atomic.ANTIMATTER.NOT));
 			//maceHeadRaw.addListener(new Loader_OreProcessing.OreProcessing_Sharpening(maceHead, 1L, true, TD.Atomic.ANTIMATTER.NOT));
 			RM.Sharpening.add(new RecipeMapHandlerPrefix(mattockHeadRaw, 1, CS.NF, 16, 0, 64, CS.NF, mattockHead, 1, CS.NI, CS.NI, CS.T, CS.T, CS.F, TD.Atomic.ANTIMATTER.NOT));
