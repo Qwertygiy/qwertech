@@ -691,7 +691,7 @@ public final class QwerTech extends Abstract_Mod {
 			{
 				machines.add(woodType.mNameLocal + " Countertop", "Countertops", 410 + q, 0, CuttingBoardTileEntity.class, 0, 16, wood, UT.NBT.make(null, CS.NBT_MATERIAL, woodType, CS.NBT_INV_SIZE, 9, CS.NBT_TEXTURE, "qwertech:wood", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(woodType.fRGBaSolid)), "S", "P", 'S', "slabWood", 'P', "plank" + woodType.mNameInternal);
 				machines.add(woodType.mNameLocal + " Compost Bin", "Compost Bins", 715 + q, 0, CompostBinTileEntity.class, 0, 64, wood, UT.NBT.make(null, CS.NBT_MATERIAL, woodType, CS.NBT_INV_SIZE, 12, CS.NBT_TEXTURE, "qwertech:wood", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(woodType.fRGBaSolid)), "SSS", " P ", 'S', "stickWood", 'P', "plank" + woodType.mNameInternal);
-                machines.add(woodType.mNameLocal + " Chest", "Chests", 1510 + q, 0, MultiTileEntityChest.class, 0, 64, wood, UT.NBT.make(null, CS.NBT_MATERIAL, woodType, CS.NBT_INV_SIZE, 27, CS.NBT_TEXTURE, "woodenchest", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(woodType.fRGBaSolid)));
+                machines.add(woodType.mNameLocal + " Chest", "Chests", 1510 + q, 0, ChestTileEntity.class, 0, 64, wood, UT.NBT.make(null, CS.NBT_MATERIAL, woodType, CS.NBT_INV_SIZE, 27, CS.NBT_TEXTURE, "woodenchest", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(woodType.fRGBaSolid)));
                 CR.shapeless(ST.make(Blocks.chest, 1, 0), CR.DEF, new Object[]{machines.getItem(1510 + q)});
                 OM.reg(OD.craftingChest, machines.getItem(1510 + q));
                 OM.reg("craftingChestWood", machines.getItem(1510 + q));
@@ -700,7 +700,7 @@ public final class QwerTech extends Abstract_Mod {
                 CR.shaped(machines.getItem(980 + q), new Object[]{"GCG", "PHP", 'C', machines.getItem(410 + q), 'P', "plank" + woodType.mNameInternal, 'H', machines.getItem(1510 + q), 'G', OD.slimeball});
             }
         }
-        machines.add("Wooden Chest", "Chests", 1510, 0, MultiTileEntityChest.class, 0, 64, wood, UT.NBT.make(null, CS.NBT_MATERIAL, MT.Wood, CS.NBT_INV_SIZE, 27, CS.NBT_TEXTURE, "woodenchest", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(MT.Wood.fRGBaSolid)));
+        machines.add("Wooden Chest", "Chests", 1510, 0, ChestTileEntity.class, 0, 64, wood, UT.NBT.make(null, CS.NBT_MATERIAL, MT.Wood, CS.NBT_INV_SIZE, 27, CS.NBT_TEXTURE, "woodenchest", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(MT.Wood.fRGBaSolid)));
         CR.shapeless(ST.make(Blocks.chest, 1, 0), CR.DEF, new Object[]{machines.getItem(1510)});
         OM.reg(OD.craftingChest, machines.getItem(1510));
         OM.reg("craftingChestWood", machines.getItem(1510));
