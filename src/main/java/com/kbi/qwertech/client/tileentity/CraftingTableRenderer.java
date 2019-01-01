@@ -62,7 +62,7 @@ public class CraftingTableRenderer extends TileEntitySpecialRenderer {
         	GL11.glScalef(0.2F, 0.2F, 0.2F);
         }
         	
-        if (leItem instanceof ItemBlock)
+        if (item.getItemSpriteNumber() == 0 && leItem instanceof ItemBlock && RenderBlocks.renderItemIn3d(Block.getBlockFromItem(leItem).getRenderType()))
         {
         	Minecraft.getMinecraft().renderEngine.bindTexture(Minecraft.getMinecraft().renderEngine.getResourceLocation(item.getItemSpriteNumber()));
 	        TextureUtil.func_152777_a(false, false, 1.0F);

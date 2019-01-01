@@ -1,4 +1,31 @@
 {
+  "note.kazoo.3": {
+    "category": "player",
+    "sounds": [
+      {
+        "name": "note/kazooE3",
+        "stream": false
+      }
+    ]
+  },
+  "note.kazoo.2": {
+    "category": "player",
+    "sounds": [
+      {
+        "name": "note/kazooE2",
+        "stream": false
+      }
+    ]
+  },
+  "note.kazoo.4": {
+    "category": "player",
+    "sounds": [
+      {
+        "name": "note/kazooE4",
+        "stream": false
+      }
+    ]
+  },
   "metal.slide": {
     "category": "player",
     "sounds": [

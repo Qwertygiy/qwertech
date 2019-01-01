@@ -2,6 +2,8 @@ package com.kbi.qwertech.tileentities;
 
 import com.kbi.qwertech.QwerTech;
 import com.kbi.qwertech.api.data.QTMT;
+import gregapi.block.multitileentity.IMultiTileEntity;
+import gregapi.block.multitileentity.MultiTileEntityBlockInternal;
 import gregapi.data.CS;
 import gregapi.data.MT;
 import gregapi.data.OP;
@@ -14,18 +16,28 @@ import gregapi.tileentity.base.TileEntityBase09FacingSingle;
 import gregapi.util.OM;
 import gregapi.util.ST;
 import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.EnumAction;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import java.util.List;
 
-public class CompostBinTileEntity extends TileEntityBase09FacingSingle {
+import static gregapi.data.CS.SHOW_HIDDEN_MATERIALS;
+
+public class CompostBinTileEntity extends TileEntityBase09FacingSingle implements IMultiTileEntity.IMTE_GetSubItems {
 
     protected byte fillLevel = -128;
     protected byte lastFillLevel = -127;
+
+    @Override
+    public boolean getSubItems(MultiTileEntityBlockInternal aBlock, Item aItem,
+                               CreativeTabs aTab, List aList, short aID) {
+        return SHOW_HIDDEN_MATERIALS || !mMaterial.mHidden;
+    }
 
     @Override
     public void onTick2(long aTimer, boolean aIsServerSide) {

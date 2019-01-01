@@ -220,7 +220,12 @@ public class NEI_Wood_Handler extends ShapedRecipeHandler {
             {
             	if (output != null)
             	{
-            		inputs = (OreDictionary.getOres("plank" + WOOD.woodList[output.getItemDamage()].mNameInternal));
+            		int woodDif = (output.getItemDamage() - recipe.getRecipeOutput().getItemDamage());
+            		if (woodDif > -1 && woodDif < WOOD.woodList.length) {
+						inputs = (OreDictionary.getOres("plank" + WOOD.woodList[(output.getItemDamage() - recipe.getRecipeOutput().getItemDamage())].mNameInternal));
+					} else {
+            			return null;
+					}
             	} else {
             		inputs = OreDictionary.getOres("plankWood");
             	}
@@ -253,14 +258,14 @@ public class NEI_Wood_Handler extends ShapedRecipeHandler {
             			{      
             				if (WOOD.woodMap.get(result.substring(5)) != null)
             				{
-            					output.setItemDamage(WOOD.woodMap.get(result.substring(5)));
+            					output.setItemDamage(output.getItemDamage() + WOOD.woodMap.get(result.substring(5)));
             				}
             			}
             		}
             	}
             }
             output.stackSize = recipe.getRecipeOutput().stackSize;
-            return new WoodCachedRecipe(2, 2, items, output);
+            return new WoodCachedRecipe(recipe.width, recipe.height, items, output);
         } catch (Exception e) {
             NEIClientConfig.logger.error("Error loading recipe: ", e);
             return null;

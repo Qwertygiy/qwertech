@@ -618,7 +618,7 @@ public class CraftingTableT1 extends TileEntityBase09FacingSingle implements ITi
 						{
 							aPlayer.setCurrentItemOrArmor(0, returnable);
 						}
-					} else if (ST.equal(inHand,getCraftingOutput()) && inHand.stackSize + getCraftingOutput().stackSize < inHand.getItem().getItemStackLimit(inHand))
+					} else if (ST.equal(inHand,getCraftingOutput()) && inHand.stackSize + getCraftingOutput().stackSize <= inHand.getItem().getItemStackLimit(inHand))
 					{
 						ItemStack returnable = consumeMaterials(aPlayer, aPlayer.getHeldItem(), false);
 						aPlayer.setCurrentItemOrArmor(0, returnable);

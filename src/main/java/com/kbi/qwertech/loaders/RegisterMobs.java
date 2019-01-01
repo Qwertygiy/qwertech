@@ -32,6 +32,7 @@ import net.minecraft.entity.ai.EntityAITempt;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.*;
 import net.minecraft.entity.passive.*;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -743,6 +744,15 @@ public class RegisterMobs {
     //@SubscribeEvent
     public void onLivingHurt(LivingHurtEvent event)
     {
+		ItemStack held = event.entityLiving.getHeldItem();
+		if (held != null && held.getItem() == QTI.qwerTool.getItem() && held.getItemDamage() == 20)
+		{
+			if (event.source.getEntity() instanceof EntityPlayer || event.source.getEntity() instanceof EntityZombie || event.source.getEntity() instanceof EntityWolf) {
+				((MultiItemTool)held.getItem()).doDamage(held, 25);
+				event.entityLiving.setCurrentItemOrArmor(0, null);
+				event.entityLiving.entityDropItem(held, 0.5F);
+			}
+		}
     	for (int q = 1; q < 5; q++)
     	{
     		ItemStack armorPiece = ((EntityLivingBase)event.entity).getEquipmentInSlot(q);

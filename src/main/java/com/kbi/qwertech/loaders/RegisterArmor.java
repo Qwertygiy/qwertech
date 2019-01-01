@@ -203,6 +203,7 @@ public class RegisterArmor {
 	
 	private void registerIcons()
 	{
+		iconTitle.put("qwertech:kazoo", new ArmorIcon("qwertech:kazoo"));
 		for (int q = 0; q < types.size(); q++)
 		{
 			String type = types.get(q);

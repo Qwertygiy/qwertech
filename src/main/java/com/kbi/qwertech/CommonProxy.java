@@ -14,6 +14,9 @@ import gregapi.item.multiitem.MultiItemTool;
 import gregapi.oredict.OreDictMaterial;
 import gregapi.oredict.OreDictPrefix;
 import gregapi.util.UT;
+import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.entity.passive.EntityWolf;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AnvilUpdateEvent;
@@ -172,7 +175,7 @@ public class CommonProxy extends Abstract_Proxy {
     //@SubscribeEvent
     public void livingAttacked(LivingAttackEvent event)
     {
-    	
+
     }
     
     @SubscribeEvent
