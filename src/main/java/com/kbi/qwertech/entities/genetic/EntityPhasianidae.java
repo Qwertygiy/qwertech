@@ -273,7 +273,7 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
             } else if (entity instanceof EntityLivingBase){
                 if (shouldAutoAggro(this, (EntityLivingBase)entity))
                 {
-                    System.out.println("We should attack " + entity + " because we're " + getSnarl());
+                    //System.out.println("We should attack " + entity + " because we're " + getSnarl());
                     this.setAttackTarget((EntityLivingBase)entity);
                     this.angryTime = 10000;
                     return;
@@ -282,15 +282,16 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
         }
         if (theFood != null && this.getGrowingAge() < 1000 && !this.isInLove())
         {
-            System.out.println("Going after food");
+            //System.out.println("Going after food");
             this.setTarget(theFood);
             if (this.getDistanceToEntity(theFood) < 1F)
             {
-                if (this.getGrowingAge() == 0)
+                int age = this.getGrowingAge();
+                if (age == 0)
                 {
                     this.func_146082_f(null);
-                } else {
-                    this.setGrowingAge(this.getGrowingAge() + 1000);
+                } else if (age < 0) {
+                    this.setGrowingAge(age + Math.min(1000, age * -1/10));
                 }
                 if (theFood.getEntityItem().stackSize > 1)
                 {
