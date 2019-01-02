@@ -969,10 +969,10 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
     {
         //System.out.println("Our data is: " + data[0] + ", " + data[1] + ", " + data[2]);
         double health = (getSize() + (getStrength() * 0.5)) * 0.005;
-        double speed = (getStrength() - (getSize() * 0.5) + (getStamina() * 0.5)) * 0.0001;
+        double speed = 0.19 + ((getStrength() + getStamina() - getSize()) * 0.00001);
         this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(health);
-        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(Math.max(0.1D, Math.min(speed, 0.5D)));
-        //System.out.println("With a size of " + getSize() + ", strength of " + getStrength() + ", and stamina of " + getStamina() + ", Health is now " + health + " and we adjusted speed from " + speed + " to " + this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getBaseValue());
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(Math.max(0.05D, Math.min(speed, 0.5D)));
+        System.out.println("With a size of " + getSize() + ", strength of " + getStrength() + ", and stamina of " + getStamina() + ", Health is now " + health + " and we adjusted speed from " + speed + " to " + this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getBaseValue());
     }
 
     @Override
