@@ -706,6 +706,7 @@ public final class QwerTech extends Abstract_Mod {
         OM.reg("craftingChestWood", machines.getItem(1510));
         GameRegistry.addRecipe(new WoodSpecificCrafting(machines.getItem(1510), "PPP", "P P", "PPP", 'P', "plankWood"));
 
+        machines.add("Nest (ground)", "Natural", 1770, -1, NestTileEntity.class, 0, 1, wood, UT.NBT.make(null, CS.NBT_INV_SIZE, 5, CS.NBT_HARDNESS, 1.0F, CS.NBT_RESISTANCE, 1.0F));
     }
 
 	@Override

@@ -1,5 +1,6 @@
 package com.kbi.qwertech.entities.genetic;
 
+import com.kbi.qwertech.QwerTech;
 import com.kbi.qwertech.api.data.COLOR;
 import com.kbi.qwertech.api.entities.GMIs;
 import com.kbi.qwertech.api.entities.IGeneticMob;
@@ -8,6 +9,7 @@ import com.kbi.qwertech.api.entities.Subtype;
 import com.kbi.qwertech.api.registry.MobSpeciesRegistry;
 import com.kbi.qwertech.entities.EntityHelperFunctions;
 import com.kbi.qwertech.entities.ai.EntityAIMoveTowardsSimpleTarget;
+import com.kbi.qwertech.entities.ai.EntityAINesting;
 import com.kbi.qwertech.loaders.RegisterSpecies;
 import gregapi.data.OP;
 import gregapi.item.multiitem.MultiItem;
@@ -226,11 +228,12 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
         this.tasks.addTask(1, new EntityAILeapAtTarget(this, 0.4F));
         this.tasks.addTask(2, new EntityAIAttackOnCollide(this, 1.0D, true));
         this.tasks.addTask(3, new EntityAIMoveTowardsSimpleTarget(this, 1.0D, 16F));
+        this.tasks.addTask(1, new EntityAINesting(this, QwerTech.machines.getItem(1770)));
 
         if ((species == -1 || subtype == -1) && !p_i1682_1_.isRemote) {
             species = 0;
             subtype = 0;
-            BiomeGenBase theBiome = p_i1682_1_.getBiomeGenForCoords(this.serverPosX, this.serverPosZ);
+            BiomeGenBase theBiome = p_i1682_1_.getBiomeGenForCoords((int)Math.floor(this.posX), (int)Math.floor(this.posZ));
             List<Species> possible = MobSpeciesRegistry.getSpeciesForBiome(this.getClass(), theBiome);
             if (possible.size() > 0) {
                 short chosen = (short)p_i1682_1_.rand.nextInt(possible.size());
@@ -975,7 +978,8 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
         this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(health);
         this.setHealth((float)health * currentHealth);
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(Math.max(0.05D, Math.min(speed, 0.5D)));
-        System.out.println("With a size of " + getSize() + ", strength of " + getStrength() + ", and stamina of " + getStamina() + ", Health is now " + health + " and we adjusted speed from " + speed + " to " + this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getBaseValue());
+        this.setAIMoveSpeed((float)Math.max(0.05D, Math.min(speed, 0.5D)));
+        //System.out.println("With a size of " + getSize() + ", strength of " + getStrength() + ", and stamina of " + getStamina() + ", Health is now " + health + " and we adjusted speed from " + speed + " to " + this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getBaseValue());
     }
 
     @Override
