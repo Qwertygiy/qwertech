@@ -43,6 +43,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -484,20 +485,20 @@ public class RegisterItems {
 			QTI.salsaMild.set(ST.make(this, 1, 1001));
 			QTI.salsaMedium.set(ST.make(this, 1, 1002));
 			QTI.salsaMagmatic.set(ST.make(this, 1, 1003));
-			
-			RM.add_smelting(QTI.turkeyBreastRaw.get(1), QTI.turkeyBreastCooked.get(1));
-			RM.add_smelting(QTI.turkeyLegRaw.get(1), QTI.turkeyLegCooked.get(1));
-			RM.add_smelting(QTI.chickenWingRaw.get(1), QTI.chickenWingCooked.get(1));
-			RM.add_smelting(QTI.turkeyWingRaw.get(1), QTI.turkeyWingCooked.get(1));
-			RM.add_smelting(QTI.chickenLegRaw.get(1), QTI.chickenLegCooked.get(1));
-			RM.add_smelting(QTI.turkeyWholeRaw.get(1), QTI.turkeyWholeCooked.get(1));
-			RM.add_smelting(QTI.chickenBreastRaw.get(1), QTI.chickenBreastCooked.get(1));
-			RM.add_smelting(QTI.chickenWholeRaw.get(1), QTI.chickenWholeCooked.get(1));
-			RM.add_smelting(QTI.frogLegRaw.get(1), QTI.frogLegCooked.get(1));
-			RM.add_smelting(QTI.junglefowlBreastRaw.get(1), QTI.junglefowlBreastCooked.get(1));
-			RM.add_smelting(QTI.junglefowlLegRaw.get(1), QTI.junglefowlLegCooked.get(1));
-			RM.add_smelting(QTI.junglefowlWholeRaw.get(1), QTI.junglefowlWholeCooked.get(1));
-			RM.add_smelting(QTI.junglefowlWingRaw.get(1), QTI.junglefowlWingCooked.get(1));
+
+			FurnaceRecipes.smelting().func_151394_a(QTI.turkeyBreastRaw.get(1), QTI.turkeyBreastCooked.get(1), 1.0F);
+			FurnaceRecipes.smelting().func_151394_a(QTI.turkeyLegRaw.get(1), QTI.turkeyLegCooked.get(1), 1.0F);
+			FurnaceRecipes.smelting().func_151394_a(QTI.chickenWingRaw.get(1), QTI.chickenWingCooked.get(1), 1.0F);
+			FurnaceRecipes.smelting().func_151394_a(QTI.turkeyWingRaw.get(1), QTI.turkeyWingCooked.get(1), 1.0F);
+			FurnaceRecipes.smelting().func_151394_a(QTI.chickenLegRaw.get(1), QTI.chickenLegCooked.get(1), 1.0F);
+			FurnaceRecipes.smelting().func_151394_a(QTI.turkeyWholeRaw.get(1), QTI.turkeyWholeCooked.get(1), 1.0F);
+			FurnaceRecipes.smelting().func_151394_a(QTI.chickenBreastRaw.get(1), QTI.chickenBreastCooked.get(1), 1.0F);
+			FurnaceRecipes.smelting().func_151394_a(QTI.chickenWholeRaw.get(1), QTI.chickenWholeCooked.get(1), 1.0F);
+			FurnaceRecipes.smelting().func_151394_a(QTI.frogLegRaw.get(1), QTI.frogLegCooked.get(1), 1.0F);
+			FurnaceRecipes.smelting().func_151394_a(QTI.junglefowlBreastRaw.get(1), QTI.junglefowlBreastCooked.get(1), 1.0F);
+			FurnaceRecipes.smelting().func_151394_a(QTI.junglefowlLegRaw.get(1), QTI.junglefowlLegCooked.get(1), 1.0F);
+			FurnaceRecipes.smelting().func_151394_a(QTI.junglefowlWholeRaw.get(1), QTI.junglefowlWholeCooked.get(1), 1.0F);
+			FurnaceRecipes.smelting().func_151394_a(QTI.junglefowlWingRaw.get(1), QTI.junglefowlWingCooked.get(1), 1.0F);
 			
 			//mix cheese chunks to make mozzarella
 			RM.Mixer.addRecipe2(true, 16L, 16L, OP.chunkGt.mat(MT.Cheese, 2), OP.chunkGt.mat(MT.Cheese, 2), QTI.mozzarella.get(1));
