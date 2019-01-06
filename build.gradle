@@ -102,6 +102,9 @@ sourceSets {
 
 // copy the main sources and filter any '$version' occurences. 
 task processVersion (type: Copy) { 
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+    outputs.upToDateWhen { false }
     from "build/sources/java/com/kbi/qwertech/QwerTech.java"
     into filteredSourceDir 
     expand 'version':project.version
