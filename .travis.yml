@@ -1,1 +1,18 @@
 language: java
+script: ./gradlew build
+before_deploy:
+# Set up git user name and tag this commit
+- git config --local user.name "Qwertygiy"
+- git config --local user.email "qwertygiy@gmail.com"
+- export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+- git tag $TRAVIS_TAG
+deploy:
+  provider: releases
+  api_key: "721dc89d4af0a39be228c9f9f0ae4c7b3c2e7db4"
+  file_glob: true
+    file: build/libs/*
+  skip_cleanup: true
+  name: ${TRAVIS_TAG}
+  prerelease: true
+  on:
+    tags: true
