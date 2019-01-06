@@ -20,6 +20,7 @@ buildscript {
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+        classpath 'com.gregoriust.gregtech:gregtech_1.7.10:SNAPSHOT:dev'
     }
 }
 
@@ -99,6 +100,15 @@ sourceSets {
 }
 
 
+// copy the main sources and filter any '$version' occurences. 
+task processVersion (type: Copy) { 
+    from "build/sources/java/com/kbi/qwertech/QwerTech.java"
+    into filteredSourceDir 
+    expand 'version':project.version
+} 
+
+compileJava.dependsOn processVersion 
+
 sourceSets {
     // This source set will contain all sources that we filter 
     filtered { 
@@ -110,16 +120,6 @@ sourceSets {
 
 // tell the compileJava task to compile the filtered source 
 compileJava.source = sourceSets.filtered.java 
-
-
-// copy the main sources and filter any '$version' occurences. 
-task processVersion (type: Copy) { 
-    from "build/sources/java/com/kbi/qwertech/QwerTech.java"
-    into filteredSourceDir 
-    expand 'version':project.version
-} 
-
-compileJava.dependsOn processVersion 
 
 task deobfJar(type: Jar, dependsOn: 'jar') {
     from "build/classes/main"
