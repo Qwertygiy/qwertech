@@ -6,7 +6,7 @@ deploy:
   api_key:
     secure: "721dc89d4af0a39be228c9f9f0ae4c7b3c2e7db4"
   file_glob: true
-    file: "build/libs/*"
+  file: build/libs/*
   skip_cleanup: true
   name: ${TRAVIS_TAG}
   prerelease: true
