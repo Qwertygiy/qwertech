@@ -101,7 +101,7 @@ sourceSets {
 
 
 // copy the main sources and filter any '$version' occurences. 
-task processVersion (type: Copy) { 
+task processVersion (type: Copy, dependsOn: 'sourceMainJava') { 
     inputs.property "version", project.version
     inputs.property "mcversion", project.minecraft.version
     outputs.upToDateWhen { false }
