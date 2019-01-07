@@ -45,6 +45,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static com.kbi.qwertech.loaders.RegisterSpecies.NAME_ENGLISH;
+
 public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMIs.IHitAggro, GMIs.IAutoAggro, GMIs.IEatStuffOnTheGround {
 
     private short[] data = new short[8];
@@ -58,6 +60,11 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
     private Species theSpecies = MobSpeciesRegistry.getSpecies(this.getClass(), (short)0);
     private Subtype theSubtype = theSpecies.getSubtype((short)0);
     public int angryTime = 0;
+
+    @Override
+    public String getCommandSenderName() {
+        return hasCustomNameTag() ? getCustomNameTag() : (String)this.getSpecies().getTag(NAME_ENGLISH) + " (" + (String)this.getSubtype().getTag(NAME_ENGLISH) + ")";
+    }
 
     @Override
     public boolean interact(EntityPlayer playa) {
@@ -74,7 +81,7 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
                     if (((Behavior_Tool)beep).mToolName.equals("magnifyingglass"))
                     {
                         List<String> chats = new ArrayList<String>();
-                        chats.add(this.theSubtype.getTag(RegisterSpecies.NAME_ENGLISH) + "(" + this.theSpecies.getTag(RegisterSpecies.NAME_LATIN) + ")");
+                        chats.add(this.theSubtype.getTag(NAME_ENGLISH) + "(" + this.theSpecies.getTag(RegisterSpecies.NAME_LATIN) + ")");
                         int randomStat = this.rand.nextInt(6);
                         switch (randomStat)
                         {

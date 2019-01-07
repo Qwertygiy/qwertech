@@ -26,13 +26,12 @@ public class EntityAINesting extends EntityAIBase
     private double xPosition;
     private double yPosition;
     private double zPosition;
-    private double speed;
     private ItemStack makeANest;
+    private NestTileEntity ourNest;
 
     public EntityAINesting(EntityLiving p1, ItemStack nestStack)
     {
         this.entity = p1;
-        this.speed = p1.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue();
         this.makeANest = nestStack;
         this.setMutexBits(1);
     }
@@ -63,8 +62,11 @@ public class EntityAINesting extends EntityAIBase
                             TileEntity TE = el.worldObj.getTileEntity(x, y, z);
                             if (TE instanceof NestTileEntity)
                             {
-                                if (el.getNavigator().getPathToXYZ(x, y, z) != null) {
-                                    return Vec3.createVectorHelper(x, y, z);
+                                NestTileEntity nte = (NestTileEntity)TE;
+                                if (nte.setNestingEntity(el)) {
+                                    if (el.getNavigator().getPathToXYZ(x, y, z) != null) {
+                                        return Vec3.createVectorHelper(x, y, z);
+                                    }
                                 }
                             }
                         } else {
@@ -124,8 +126,14 @@ public class EntityAINesting extends EntityAIBase
                 return false;
             }
             //System.out.println("We're lookin' for a nest here at " + entity.posX + ", " + entity.posZ);
-            //Vec3 vec3 = RandomPositionGenerator.findRandomTarget(this.entity, 10, 7);
-            Vec3 vec3 = findSuitableNest(entity, 16, true);
+            Vec3 vec3;
+            if (ourNest != null && ourNest.getWorld() == entity.worldObj)
+            {
+                vec3 = Vec3.createVectorHelper(ourNest.xCoord, ourNest.yCoord, ourNest.zCoord);
+            } else {
+                ourNest = null;
+                vec3 = findSuitableNest(entity, 16, true);
+            }
 
             if (vec3 == null)
             {
@@ -171,6 +179,9 @@ public class EntityAINesting extends EntityAIBase
                     {
                         WD.set(world, x, y + 1, z, makeANest);
                         WD.air(world, x, y + 2, z);
+                        te = world.getTileEntity(x, y + 1, z);
+                        ((NestTileEntity)te).setNestingEntity(this.entity);
+                        ourNest = (NestTileEntity)te;
                         //System.out.println("There should be a nest here now");
                     }
                     return false;
@@ -188,6 +199,7 @@ public class EntityAINesting extends EntityAIBase
                 }
             } else {
                 //System.out.println("We reached our existing nest");
+                ourNest = (NestTileEntity)te;
                 return false;
             }
         }

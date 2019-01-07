@@ -6,11 +6,19 @@ import gregapi.render.BlockTextureDefault;
 import gregapi.render.IIconContainer;
 import gregapi.render.ITexture;
 import gregapi.tileentity.base.TileEntityBase05Inventories;
+import gregapi.util.OM;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static gregapi.data.CS.PX_P;
 
@@ -27,7 +35,88 @@ public class NestTileEntity extends TileEntityBase05Inventories implements IMult
 
     public static IIconContainer nest = new Textures.BlockIcons.CustomIcon("qwertech:soil/drystraw");
     public short[] ourcolor = null;
+    protected EntityLiving chosenEntity;
 
+    @Override
+    public void readFromNBT2(NBTTagCompound aNBT) {
+        super.readFromNBT2(aNBT);
+        String entityID = aNBT.getString("ENT");
+        if (entityID != null)
+        {
+            UUID uuid = UUID.fromString(entityID);
+            if (chosenEntity == null || chosenEntity.getUniqueID() != uuid)
+            {
+                chosenEntity = null;
+                List entities = worldObj.getEntitiesWithinAABB(EntityLiving.class, this.box().expand(32, 16, 32));
+                for (Object entity : entities) {
+                    EntityLiving eL = (EntityLiving)entity;
+                    if (eL.getUniqueID() == uuid)
+                    {
+                        chosenEntity = eL;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void writeToNBT2(NBTTagCompound aNBT) {
+        super.writeToNBT2(aNBT);
+        if (chosenEntity != null)
+        {
+            aNBT.setString("ENT", chosenEntity.getPersistentID().toString());
+        }
+    }
+
+    /**
+     * Attempts to set the passed entity as the owner of the nest.
+     * @param entityLiving The entity to nest here.
+     * @return true if the nest is unoccupied by a living nearby creature and the passed entity is an adult.
+     */
+    public boolean setNestingEntity(EntityLiving entityLiving)
+    {
+        if (entityLiving == chosenEntity)
+        {
+            return true;
+        }
+        if (chosenEntity != null && !chosenEntity.isDead && chosenEntity.getDistance(xCoord, yCoord, zCoord) < 32)
+        {
+            return false;
+        }
+        if (entityLiving.isChild())
+        {
+            return false;
+        }
+        chosenEntity = entityLiving;
+        return true;
+    }
+
+    public EntityLiving getNestingEntity()
+    {
+        if (chosenEntity.isDead || chosenEntity.getDistance(xCoord, yCoord, zCoord) > 32)
+        {
+            System.out.println("Too far away: " + chosenEntity.getDistance(xCoord, yCoord, zCoord));
+            chosenEntity = null;
+        }
+        return chosenEntity;
+    }
+
+    @Override
+    public boolean onBlockActivated2(EntityPlayer aPlayer, byte aSide, float aHitX, float aHitY, float aHitZ) {
+        ItemStack stack = aPlayer.getHeldItem();
+        if (stack != null && OM.is("magnifyingglass", stack))
+        {
+            List<String> chats = new ArrayList<String>();
+            if (getNestingEntity() == null)
+            {
+                chats.add("It seems this nest has been abandoned by its owner.");
+            } else {
+                chats.add("This nest belongs to a " + getNestingEntity().getCommandSenderName());
+            }
+        }
+        return super.onBlockActivated2(aPlayer, aSide, aHitX, aHitY, aHitZ);
+    }
 
     @Override
     public ITexture getTexture(Block aBlock, int aRenderPass, byte aSide, boolean[] aShouldSideBeRendered) {

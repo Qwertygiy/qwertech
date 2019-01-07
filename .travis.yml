@@ -9,5 +9,3 @@ deploy:
   skip_cleanup: true
   name: ${TRAVIS_TAG}
   prerelease: true
-  on:
-    tags: true
