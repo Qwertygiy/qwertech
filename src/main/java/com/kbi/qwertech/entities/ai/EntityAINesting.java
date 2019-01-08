@@ -1,9 +1,16 @@
 package com.kbi.qwertech.entities.ai;
 
 import com.kbi.qwertech.QwerTech;
+import com.kbi.qwertech.api.data.QTI;
+import com.kbi.qwertech.api.entities.IGeneticMob;
+import com.kbi.qwertech.api.entities.Species;
+import com.kbi.qwertech.api.entities.Subtype;
 import com.kbi.qwertech.blocks.BlockSoil;
+import com.kbi.qwertech.entities.EntityHelperFunctions;
+import com.kbi.qwertech.loaders.RegisterSpecies;
 import com.kbi.qwertech.tileentities.NestTileEntity;
 import gregapi.block.misc.BlockBaseFlower;
+import gregapi.util.UT;
 import gregapi.util.WD;
 import net.minecraft.block.*;
 import net.minecraft.entity.EntityCreature;
@@ -14,11 +21,14 @@ import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import java.lang.reflect.Constructor;
 
 public class EntityAINesting extends EntityAIBase
 {
@@ -28,6 +38,7 @@ public class EntityAINesting extends EntityAIBase
     private double zPosition;
     private ItemStack makeANest;
     private NestTileEntity ourNest;
+    private boolean laidTonight = false;
 
     public EntityAINesting(EntityLiving p1, ItemStack nestStack)
     {
@@ -99,13 +110,91 @@ public class EntityAINesting extends EntityAIBase
         return null;
     }
 
+    private ItemStack setEggData()
+    {
+        Species species = ((IGeneticMob)entity).getSpecies();
+        Subtype subtype = ((IGeneticMob)entity).getSubtype();
+        ItemStack toReturn = null;
+        if (subtype.hasTag(RegisterSpecies.ITEM_EGG))
+        {
+            toReturn = ((ItemStack)subtype.getTag(RegisterSpecies.ITEM_EGG)).copy();
+        } else if (species.hasTag(RegisterSpecies.ITEM_EGG))
+        {
+            toReturn = ((ItemStack)species.getTag(RegisterSpecies.ITEM_EGG)).copy();
+        }
+        if (toReturn == null) return null;
+        NBTTagCompound tag = UT.NBT.getOrCreate(toReturn);
+        if (subtype.hasTag(RegisterSpecies.COLOR_EGG))
+        {
+            tag.setInteger("itemColor", (Integer)subtype.getTag(RegisterSpecies.COLOR_EGG));
+        } else if (species.hasTag(RegisterSpecies.COLOR_EGG))
+        {
+            tag.setInteger("itemColor", (Integer)species.getTag(RegisterSpecies.COLOR_EGG));
+        }
+        toReturn.setTagCompound(tag);
+        return toReturn;
+    }
+
+    public void successfulNesting() {
+        if (!laidTonight && !entity.isDead && ourNest != null && entity instanceof IGeneticMob)
+        {
+            IGeneticMob igm = (IGeneticMob)entity;
+            ItemStack egg = setEggData();
+            if (egg == null) return;
+            NBTTagCompound nbt = UT.NBT.getOrCreate(egg);
+            if (igm.isFertilized())
+            {
+                igm.setFertilized(false);
+                EntityLivingBase returnable;
+                try {
+                    Constructor constructor = entity.getClass().getConstructor(World.class);
+                    returnable = (EntityLivingBase)constructor.newInstance(entity.worldObj);
+                    ((IGeneticMob)returnable).setSpeciesID((igm).getSpeciesID());
+                    ((IGeneticMob)returnable).setSubtypeID((igm).getSubtypeID());
+                    EntityLivingBase fakeParent = (EntityLivingBase)constructor.newInstance(entity.worldObj);
+                    fakeParent.readEntityFromNBT((igm).getMateNBT());
+                    EntityHelperFunctions.createOffspring((IGeneticMob)returnable, igm, (IGeneticMob)fakeParent);
+                    returnable.writeEntityToNBT(nbt);
+                    fakeParent.setDead();
+                    returnable.setDead();
+                } catch (Exception e) {
+                    System.out.println("Error in resolving mate:");
+                    e.printStackTrace();
+                    entity.writeEntityToNBT(nbt);
+                }
+                nbt.setLong("Timer", entity.worldObj.getTotalWorldTime() + (Short.MAX_VALUE - (igm).getMaturity()));
+                egg.setTagCompound(nbt);
+            }
+            int randy = entity.worldObj.rand.nextInt(16000 + igm.getFertility());
+            if (randy > 26000)
+            {
+                egg.stackSize = 3;
+            } else if (randy > 16000)
+            {
+                egg.stackSize = 2;
+            } else {
+                egg.stackSize = 1;
+            }
+            for (int q = 0; q < ourNest.invsize(); q++)
+            {
+                if (ourNest.addStackToSlot(q, egg))
+                {
+                    laidTonight = true;
+                    break;
+                }
+            }
+        }
+    }
+
     /**
      * Returns whether the EntityAIBase should begin execution.
      */
+    @Override
     public boolean shouldExecute()
     {
         if (this.entity.worldObj.isDaytime())
         {
+            laidTonight = false;
             return false;
         } else if (this.entity.getAge() >= 100)
         {
@@ -158,6 +247,7 @@ public class EntityAINesting extends EntityAIBase
     /**
      * Returns whether an in-progress EntityAIBase should continue executing
      */
+    @Override
     public boolean continueExecuting()
     {
         if (Math.floor(this.entity.posX) == this.xPosition && Math.floor(this.entity.posZ) == this.zPosition && this.entity.posY - this.yPosition > -0.1 && this.entity.posY - this.yPosition < 1.1)
@@ -184,6 +274,7 @@ public class EntityAINesting extends EntityAIBase
                         ourNest = (NestTileEntity)te;
                         //System.out.println("There should be a nest here now");
                     }
+                    successfulNesting();
                     return false;
 
                 } else {
@@ -200,6 +291,7 @@ public class EntityAINesting extends EntityAIBase
             } else {
                 //System.out.println("We reached our existing nest");
                 ourNest = (NestTileEntity)te;
+                successfulNesting();
                 return false;
             }
         }
@@ -214,6 +306,7 @@ public class EntityAINesting extends EntityAIBase
     /**
      * Execute a one shot task or start executing a continuous task
      */
+    @Override
     public void startExecuting()
     {
         this.entity.getNavigator().tryMoveToXYZ(this.xPosition, this.yPosition, this.zPosition, 1);
