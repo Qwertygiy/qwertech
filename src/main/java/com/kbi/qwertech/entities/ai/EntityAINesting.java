@@ -216,7 +216,7 @@ public class EntityAINesting extends EntityAIBase
             }
             //System.out.println("We're lookin' for a nest here at " + entity.posX + ", " + entity.posZ);
             Vec3 vec3;
-            if (ourNest != null && ourNest.getWorld() == entity.worldObj)
+            if (ourNest != null && ourNest.getWorld() == entity.worldObj && entity.worldObj.getTileEntity(ourNest.xCoord, ourNest.yCoord, ourNest.zCoord) == ourNest)
             {
                 vec3 = Vec3.createVectorHelper(ourNest.xCoord, ourNest.yCoord, ourNest.zCoord);
             } else {

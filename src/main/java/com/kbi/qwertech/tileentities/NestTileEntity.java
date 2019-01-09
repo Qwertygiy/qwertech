@@ -3,6 +3,8 @@ package com.kbi.qwertech.tileentities;
 import com.kbi.qwertech.api.data.QTI;
 import com.kbi.qwertech.network.packets.PacketInventorySync;
 import gregapi.block.multitileentity.IMultiTileEntity;
+import gregapi.code.ArrayListNoNulls;
+import gregapi.data.IL;
 import gregapi.data.MT;
 import gregapi.data.OP;
 import gregapi.old.Textures;
@@ -16,11 +18,13 @@ import gregapi.util.UT;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
+import org.apache.logging.log4j.LogManager;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -34,18 +38,37 @@ import static gregapi.data.CS.T;
 public class NestTileEntity extends TileEntityBase05Inventories implements IMultiTileEntity.IMTE_GetBlocksMovement, IMultiTileEntity.IMTE_AddCollisionBoxesToList, IMultiTileEntity.IMTE_SetBlockBoundsBasedOnState, IMultiTileEntity.IMTE_GetSelectedBoundingBoxFromPool, IMultiTileEntity.IMTE_GetCollisionBoundingBoxFromPool {
 
     protected boolean mUpdatedGrid = true;
+
     @Override
     public void onTick(long aTimer, boolean aIsServerSide) {
         super.onTick(aTimer, aIsServerSide);
         if (aIsServerSide) {
             if (mUpdatedGrid) {
-                mBlockUpdated = true;
                 sendDisplays();
                 mUpdatedGrid = F;
             } else if (aTimer % (200 + (xCoord % 10) + (zCoord % 10)) == 0)
             {
-                mBlockUpdated = true;
                 sendDisplays();
+                for (int q = 0; q < this.invsize(); q++)
+                {
+                    if (slotHas(q))
+                    {
+                        ItemStack stack = slot(q);
+                        NBTTagCompound tagCompound = UT.NBT.getOrCreate(stack);
+                        long timer = tagCompound.getLong("Timer");
+                        if (timer > 0 && worldObj.getTotalWorldTime() > timer)
+                        {
+                            worldObj.spawnEntityInWorld(new EntityItem(worldObj, xCoord + 0.5, yCoord + 1.5, zCoord + 0.5, stack));
+                            slot(q, null);
+                        }
+                    }
+                }
+            }
+        } else {
+            if (mUpdatedGrid)
+            {
+                this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                mUpdatedGrid = false;
             }
         }
     }
@@ -63,6 +86,15 @@ public class NestTileEntity extends TileEntityBase05Inventories implements IMult
         {
             QTI.NW_API.sendToAllPlayersInRange(new PacketInventorySync(slot(q), this.xCoord, this.yCoord, this.zCoord, q), this.worldObj, this.xCoord, this.zCoord);
         }
+        this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+    }
+
+    @Override
+    public ArrayListNoNulls<ItemStack> getDrops(int aFortune, boolean aSilkTouch) {
+        if (aSilkTouch) return super.getDrops(aFortune, aSilkTouch);
+        ArrayListNoNulls<ItemStack> returnable = new ArrayListNoNulls<>();
+        returnable.add(IL.Grass_Moldy.get(2 + this.getRandomNumber(aFortune + 1)));
+        return returnable;
     }
 
     @Override
@@ -83,7 +115,7 @@ public class NestTileEntity extends TileEntityBase05Inventories implements IMult
     public void readFromNBT2(NBTTagCompound aNBT) {
         super.readFromNBT2(aNBT);
         String entityID = aNBT.getString("ENT");
-        if (entityID != null)
+        if (entityID != null && entityID.length() > 0)
         {
             UUID uuid = UUID.fromString(entityID);
             if (chosenEntity == null || chosenEntity.getUniqueID() != uuid)
@@ -109,6 +141,8 @@ public class NestTileEntity extends TileEntityBase05Inventories implements IMult
         if (chosenEntity != null)
         {
             aNBT.setString("ENT", chosenEntity.getPersistentID().toString());
+        } else {
+            aNBT.setString("ENT", "");
         }
     }
 
@@ -192,18 +226,18 @@ public class NestTileEntity extends TileEntityBase05Inventories implements IMult
     public boolean setBlockBounds(Block aBlock, int aRenderPass, boolean[] aShouldSideBeRendered) {
         switch(aRenderPass) {
             case 9:
-                aBlock.setBlockBounds(PX_P[8], PX_P[1], PX_P[10], PX_P[10], PX_P[5], PX_P[12]);
+                aBlock.setBlockBounds(PX_P[7], PX_P[1], PX_P[9], PX_P[10], PX_P[5], PX_P[12]);
             case 8:
-                aBlock.setBlockBounds(PX_P[10], PX_P[1], PX_P[5], PX_P[12], PX_P[5], PX_P[7]);
+                aBlock.setBlockBounds(PX_P[9], PX_P[1], PX_P[5], PX_P[12], PX_P[5], PX_P[8]);
                 break;
             case 7:
-                aBlock.setBlockBounds(PX_P[5], PX_P[1], PX_P[8], PX_P[7], PX_P[5], PX_P[11]);
+                aBlock.setBlockBounds(PX_P[5], PX_P[1], PX_P[7], PX_P[8], PX_P[5], PX_P[11]);
                 break;
             case 6:
-                aBlock.setBlockBounds(PX_P[5], PX_P[1], PX_P[6], PX_P[7], PX_P[5], PX_P[8]);
+                aBlock.setBlockBounds(PX_P[5], PX_P[1], PX_P[6], PX_P[8], PX_P[5], PX_P[9]);
                 break;
             case 5:
-                aBlock.setBlockBounds(PX_P[7], PX_P[1], PX_P[7], PX_P[9], PX_P[5], PX_P[9]);
+                aBlock.setBlockBounds(PX_P[7], PX_P[1], PX_P[7], PX_P[10], PX_P[5], PX_P[10]);
                 break;
             case 4:
                 aBlock.setBlockBounds(PX_P[0], PX_P[1], PX_P[14], PX_P[16], PX_P[3], PX_P[16]);
@@ -225,6 +259,7 @@ public class NestTileEntity extends TileEntityBase05Inventories implements IMult
 
     @Override
     public int getRenderPasses(Block aBlock, boolean[] aShouldSideBeRendered) {
+        if (xCoord == 0 && yCoord == 0 && zCoord == 0) return 5; //skip check altogether in inventory
         boolean empty = true;
         for (int q = 0; q < this.getSizeInventory(); q++)
         {

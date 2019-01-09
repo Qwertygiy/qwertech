@@ -95,7 +95,7 @@ public class PacketInventorySync implements IPacket {
 	public void process(IBlockAccess aWorld, INetworkHandler aNetworkHandler) {
 		//System.out.println("Recieved inventory packet for slot " + slot + " at " + xCoord + "x " + yCoord + "y " + zCoord  + "z");
 		TileEntity te = aWorld.getTileEntity(xCoord, yCoord, zCoord);
-		if (te != null && te instanceof TileEntityBase05Inventories)
+		if (te instanceof TileEntityBase05Inventories)
 		{
 			//System.out.println("Successful");
 			TileEntityBase05Inventories tb = (TileEntityBase05Inventories)te;
