@@ -20,6 +20,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -35,7 +36,7 @@ import static gregapi.data.CS.F;
 import static gregapi.data.CS.PX_P;
 import static gregapi.data.CS.T;
 
-public class NestTileEntity extends TileEntityBase05Inventories implements IMultiTileEntity.IMTE_GetBlocksMovement, IMultiTileEntity.IMTE_AddCollisionBoxesToList, IMultiTileEntity.IMTE_SetBlockBoundsBasedOnState, IMultiTileEntity.IMTE_GetSelectedBoundingBoxFromPool, IMultiTileEntity.IMTE_GetCollisionBoundingBoxFromPool {
+public class NestTileEntity extends TileEntityBase05Inventories implements IMultiTileEntity.IMTE_GetBlocksMovement, IMultiTileEntity.IMTE_AddCollisionBoxesToList, IMultiTileEntity.IMTE_SetBlockBoundsBasedOnState, IMultiTileEntity.IMTE_GetSelectedBoundingBoxFromPool, IMultiTileEntity.IMTE_GetCollisionBoundingBoxFromPool, ISidedInventory {
 
     protected boolean mUpdatedGrid = true;
 
@@ -327,5 +328,20 @@ public class NestTileEntity extends TileEntityBase05Inventories implements IMult
         } else {
             return this.box(PX_P[0], PX_P[0], PX_P[0], PX_P[16], PX_P[5], PX_P[16]);
         }
+    }
+
+    @Override
+    public int[] getAccessibleSlotsFromSide(int side) {
+        return new int[0];
+    }
+
+    @Override
+    public boolean canInsertItem(int slot, ItemStack stack, int side) {
+        return false;
+    }
+
+    @Override
+    public boolean canExtractItem(int slot, ItemStack stack, int side) {
+        return false;
     }
 }

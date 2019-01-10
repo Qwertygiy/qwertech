@@ -2,6 +2,7 @@ package com.kbi.qwertech.tileentities;
 
 import gregapi.block.multitileentity.IMultiTileEntity;
 import gregapi.block.multitileentity.MultiTileEntityBlockInternal;
+import gregapi.data.CS;
 import gregapi.data.MT;
 import gregapi.data.OP;
 import gregapi.old.Textures;
@@ -139,7 +140,7 @@ public class NestBoxTileEntity extends NestTileEntity implements IMultiTileEntit
                 aBlock.setBlockBounds(PX_P[0], PX_P[0], PX_P[0], PX_P[2], PX_P[7], PX_P[16]);
                 break;
             case 5:
-                aBlock.setBlockBounds(PX_P[1], PX_P[0], PX_P[1], PX_P[15], PX_P[1], PX_P[15]);
+                aBlock.setBlockBounds(PX_P[2], PX_P[0], PX_P[2], PX_P[14], PX_P[1], PX_P[14]);
                 break;
             case 4:
                 aBlock.setBlockBounds(PX_P[1], PX_P[2], PX_P[13], PX_P[15], PX_P[4], PX_P[15]);
@@ -157,6 +158,25 @@ public class NestBoxTileEntity extends NestTileEntity implements IMultiTileEntit
                 aBlock.setBlockBounds(PX_P[1], PX_P[1], PX_P[1], PX_P[15], PX_P[2], PX_P[15]);
         }
         return true;
+    }
+
+    @Override
+    public int[] getAccessibleSlotsFromSide(int side) {
+        if (side == CS.SIDE_TOP || side == CS.SIDE_BOTTOM)
+        {
+            return new int[]{0, 1, 2, 3, 4};
+        }
+        return new int[0];
+    }
+
+    @Override
+    public boolean canInsertItem(int slot, ItemStack stack, int side) {
+        return side == CS.SIDE_TOP;
+    }
+
+    @Override
+    public boolean canExtractItem(int slot, ItemStack stack, int side) {
+        return side == CS.SIDE_BOTTOM;
     }
 
 }
