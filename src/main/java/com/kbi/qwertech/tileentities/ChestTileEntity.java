@@ -7,12 +7,9 @@ import gregapi.block.multitileentity.MultiTileEntityRegistry;
 import gregapi.block.multitileentity.example.MultiTileEntityChest;
 import gregapi.data.MD;
 import gregapi.gui.ContainerClient;
-import gregapi.gui.ContainerClientChest;
 import gregapi.gui.ContainerCommonChest;
 import gregapi.tileentity.ITileEntityInventoryGUI;
 import gregapi.util.UT;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -21,11 +18,7 @@ import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 import static gregapi.data.CS.*;
-import static gregapi.data.CS.COMPASS_FROM_SIDE;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL11.glEnable;
-import static org.lwjgl.opengl.GL11.glPopMatrix;
-import static org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL;
 
 public class ChestTileEntity extends MultiTileEntityChest {
     @Override

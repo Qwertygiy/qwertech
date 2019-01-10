@@ -35,7 +35,6 @@ import gregapi.block.ItemBlockBase;
 import gregapi.block.metatype.BlockStones;
 import gregapi.block.multitileentity.MultiTileEntityBlock;
 import gregapi.block.multitileentity.MultiTileEntityRegistry;
-import gregapi.block.multitileentity.example.MultiTileEntityChest;
 import gregapi.code.ICondition.And;
 import gregapi.code.ModData;
 import gregapi.config.ConfigCategories;

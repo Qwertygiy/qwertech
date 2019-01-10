@@ -1,7 +1,6 @@
 package com.kbi.qwertech.tileentities;
 
 import com.kbi.qwertech.api.data.QTI;
-import com.kbi.qwertech.api.recipe.CountertopRecipe;
 import com.kbi.qwertech.network.packets.PacketInventorySync;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -10,7 +9,6 @@ import gregapi.data.CS;
 import gregapi.data.TD;
 import gregapi.gui.ContainerClientDefault;
 import gregapi.gui.ContainerCommonDefault;
-import gregapi.item.multiitem.MultiItemTool;
 import gregapi.render.BlockTextureDefault;
 import gregapi.render.IIconContainer;
 import gregapi.render.ITexture;
@@ -18,11 +16,8 @@ import gregapi.util.ST;
 import gregapi.util.UT;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static gregapi.data.CS.PX_P;
