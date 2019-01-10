@@ -2,7 +2,6 @@ package com.kbi.qwertech.items.behavior;
 
 import com.kbi.qwertech.api.data.MUSE;
 import com.kbi.qwertech.api.data.NOTE;
-import gregapi.data.CS;
 import gregapi.item.multiitem.MultiItem;
 import gregapi.item.multiitem.behaviors.IBehavior;
 import gregapi.util.UT;
@@ -10,8 +9,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.world.World;
 

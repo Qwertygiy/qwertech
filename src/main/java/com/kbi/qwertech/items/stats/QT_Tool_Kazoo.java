@@ -1,8 +1,6 @@
 package com.kbi.qwertech.items.stats;
 
 import com.kbi.qwertech.items.behavior.Behavior_Note;
-import com.kbi.qwertech.items.behavior.Behavior_Scrape;
-import com.kbi.qwertech.items.behavior.Behavior_Swing;
 import com.kbi.qwertech.loaders.RegisterArmor;
 import gregapi.item.multiitem.MultiItemTool;
 import gregapi.item.multiitem.tools.ToolStats;

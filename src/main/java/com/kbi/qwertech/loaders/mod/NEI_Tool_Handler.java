@@ -25,8 +25,8 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.awt.*;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 public class NEI_Tool_Handler extends ShapelessRecipeHandler {
 

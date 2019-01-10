@@ -35,7 +35,6 @@ import gregapi.block.ItemBlockBase;
 import gregapi.block.metatype.BlockStones;
 import gregapi.block.multitileentity.MultiTileEntityBlock;
 import gregapi.block.multitileentity.MultiTileEntityRegistry;
-import gregapi.block.multitileentity.example.MultiTileEntityChest;
 import gregapi.code.ICondition.And;
 import gregapi.code.ModData;
 import gregapi.config.ConfigCategories;
@@ -65,6 +64,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -110,6 +110,7 @@ public final class QwerTech extends Abstract_Mod {
 	@Mod.EventHandler public final void onServerStopped		(FMLServerStoppedEvent		aEvent) {onModServerStopped(aEvent);}
     
 	public static HashMap<String, ItemStack> food;
+	public static NBTTagCompound NullBT = null;
 	
 	private static MultiItemTool qwerTool;
 	private static MultiItemRandom qwerFood;
@@ -584,13 +585,13 @@ public final class QwerTech extends Abstract_Mod {
                 {
                     woodType.hide(true);
                 }
-				machines.add(woodType.mNameLocal + " Crafting Table", "Crafting Tables", q, 0, CraftingTableT1.class, 0, 16, wood, UT.NBT.make(null, CS.NBT_MATERIAL, woodType, CS.NBT_INV_SIZE, 12, CS.NBT_TEXTURE, "qwertech:wood", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(woodType.fRGBaSolid)));
+				machines.add(woodType.mNameLocal + " Crafting Table", "Crafting Tables", q, 0, CraftingTableT1.class, 0, 16, wood, UT.NBT.make(NullBT, CS.NBT_MATERIAL, woodType, CS.NBT_INV_SIZE, 12, CS.NBT_TEXTURE, "qwertech:wood", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(woodType.fRGBaSolid)));
 				CR.shapeless(ST.make(Blocks.crafting_table, 1, 0), CR.DEF, new Object[]{machines.getItem(q)});
 				OreDictionary.registerOre("craftingWorkBenchWood", machines.getItem(q));
 				OreDictionary.registerOre("craftingWorkBench", machines.getItem(q));
 			}
 		}
-		machines.add("Wooden Crafting Table", "Crafting Tables", 0, 0, CraftingTableT1.class, 0, 16, wood, UT.NBT.make(null, CS.NBT_MATERIAL, MT.Wood, CS.NBT_INV_SIZE, 12, CS.NBT_TEXTURE, "qwertech:wood", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(MT.Wood.fRGBaSolid)));
+		machines.add("Wooden Crafting Table", "Crafting Tables", 0, 0, CraftingTableT1.class, 0, 16, wood, UT.NBT.make(NullBT, CS.NBT_MATERIAL, MT.Wood, CS.NBT_INV_SIZE, 12, CS.NBT_TEXTURE, "qwertech:wood", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(MT.Wood.fRGBaSolid)));
 		CR.shapeless(ST.make(Blocks.crafting_table, 1, 0), CR.DEF, new Object[]{machines.getItem(0)});
 		OreDictionary.registerOre("craftingWorkBenchWood", machines.getItem(0));
 		OreDictionary.registerOre("craftingWorkBench", machines.getItem(0));
@@ -601,12 +602,12 @@ public final class QwerTech extends Abstract_Mod {
 		for (int q = 0; q < tier1.length; q++)
 		{
 			OreDictMaterial mat = tier1[q];
-			machines.add(mat.mNameLocal + " Crafting Table", "Crafting Tables", 257 + q, 0, CraftingTableT1.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 12, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", "CCC", "CCC", 'C', OP.chunkGt.dat(mat));
+			machines.add(mat.mNameLocal + " Crafting Table", "Crafting Tables", 257 + q, 0, CraftingTableT1.class, 0, 16, metal, UT.NBT.make(NullBT, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 12, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", "CCC", "CCC", 'C', OP.chunkGt.dat(mat));
 			OreDictionary.registerOre("craftingWorkBench", machines.getItem(257 + q));
 			OreDictionary.registerOre("craftingWorkBench" + mat.mNameInternal, machines.getItem(257 + q));
 		}
 		
-		machines.add("Sandstone Crafting Table", "Crafting Tables", 256, 0, CraftingTableT1.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, MT.Sand, CS.NBT_INV_SIZE, 12, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(MT.Sand.fRGBaSolid)), "CCC", "CCC", "CCC", 'C', ST.make(Blocks.sandstone, 1, CS.W));
+		machines.add("Sandstone Crafting Table", "Crafting Tables", 256, 0, CraftingTableT1.class, 0, 16, metal, UT.NBT.make(NullBT, CS.NBT_MATERIAL, MT.Sand, CS.NBT_INV_SIZE, 12, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(MT.Sand.fRGBaSolid)), "CCC", "CCC", "CCC", 'C', ST.make(Blocks.sandstone, 1, CS.W));
 		OreDictionary.registerOre("craftingWorkBench", machines.getItem(256));
 		OreDictionary.registerOre("craftingWorkBenchSandstone", machines.getItem(256));
 		
@@ -617,21 +618,21 @@ public final class QwerTech extends Abstract_Mod {
 		for (int q = 0; q < tier2i.length; q++)
 		{
 			OreDictMaterial mat = tier2i[q];
-			machines.add(mat.mNameLocal + " Crafting Table", "Crafting Tables", 270 + q, 0, CraftingTableT2.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 13, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", "CCC", "CCC", 'C', OP.chunkGt.dat(mat));
+			machines.add(mat.mNameLocal + " Crafting Table", "Crafting Tables", 270 + q, 0, CraftingTableT2.class, 0, 16, metal, UT.NBT.make(NullBT, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 13, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", "CCC", "CCC", 'C', OP.chunkGt.dat(mat));
 			OreDictionary.registerOre("craftingWorkBench", machines.getItem(270 + q));
 			OreDictionary.registerOre("craftingWorkBench" + mat.mNameInternal, machines.getItem(270 + q));
 		}
 		for (int q = 0; q < tier2g.length; q++)
 		{
 			OreDictMaterial mat = tier2g[q];
-			machines.add(mat.mNameLocal + " Crafting Table", "Crafting Tables", 280 + q, 0, CraftingTableT2.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 13, CS.NBT_TEXTURE, "qwertech:gem", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", "CCC", "CCC", 'C', OP.gemFlawed.dat(mat));
+			machines.add(mat.mNameLocal + " Crafting Table", "Crafting Tables", 280 + q, 0, CraftingTableT2.class, 0, 16, metal, UT.NBT.make(NullBT, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 13, CS.NBT_TEXTURE, "qwertech:gem", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", "CCC", "CCC", 'C', OP.gemFlawed.dat(mat));
 			OreDictionary.registerOre("craftingWorkBench", machines.getItem(280 + q));
 			OreDictionary.registerOre("craftingWorkBench" + mat.mNameInternal, machines.getItem(280 + q));
 		}
 		for (int q = 0; q < tier2r.length; q++)
 		{
 			OreDictMaterial mat = tier2r[q];
-			machines.add(mat.mNameLocal + " Crafting Table", "Crafting Tables", 288 + q, 0, CraftingTableT2.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 13, CS.NBT_TEXTURE, "qwertech:rock", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", "CCC", "CCC", 'C', OP.rockGt.dat(mat));
+			machines.add(mat.mNameLocal + " Crafting Table", "Crafting Tables", 288 + q, 0, CraftingTableT2.class, 0, 16, metal, UT.NBT.make(NullBT, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 13, CS.NBT_TEXTURE, "qwertech:rock", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", "CCC", "CCC", 'C', OP.rockGt.dat(mat));
 			OreDictionary.registerOre("craftingWorkBench", machines.getItem(288 + q));
 			OreDictionary.registerOre("craftingWorkBench" + mat.mNameInternal, machines.getItem(288 + q));
 		}
@@ -643,17 +644,17 @@ public final class QwerTech extends Abstract_Mod {
 		for (int q = 0; q < tier3i.length; q++)
 		{
 			OreDictMaterial mat = tier3i[q];
-			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 300 + q, 0, CraftingTableT3.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 13, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", 'C', OP.chunkGt.dat(mat));
+			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 300 + q, 0, CraftingTableT3.class, 0, 16, metal, UT.NBT.make(NullBT, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 13, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", 'C', OP.chunkGt.dat(mat));
 		}
 		for (int q = 0; q < tier3g.length; q++)
 		{
 			OreDictMaterial mat = tier3g[q];
-			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 310 + q, 0, CraftingTableT3.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 13, CS.NBT_TEXTURE, "qwertech:gem", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", 'C', OP.gemFlawed.dat(mat));
+			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 310 + q, 0, CraftingTableT3.class, 0, 16, metal, UT.NBT.make(NullBT, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 13, CS.NBT_TEXTURE, "qwertech:gem", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", 'C', OP.gemFlawed.dat(mat));
 		}
 		for (int q = 0; q < tier3r.length; q++)
 		{
 			OreDictMaterial mat = tier3r[q];
-			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 320 + q, 0, CraftingTableT3.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 13, CS.NBT_TEXTURE, "qwertech:rock", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", 'C', OP.rockGt.dat(mat));
+			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 320 + q, 0, CraftingTableT3.class, 0, 16, metal, UT.NBT.make(NullBT, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 13, CS.NBT_TEXTURE, "qwertech:rock", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", 'C', OP.rockGt.dat(mat));
 		}
 		
 		Class<? extends TileEntity> toUse = CraftingTableT4.class;
@@ -665,14 +666,14 @@ public final class QwerTech extends Abstract_Mod {
 		for (int q = 0; q < tier4i.length; q++)
 		{
 			OreDictMaterial mat = tier4i[q];
-			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 330 + q, 0, toUse, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 30, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", 'C', OP.chunkGt.dat(mat));
+			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 330 + q, 0, toUse, 0, 16, metal, UT.NBT.make(NullBT, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 30, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", 'C', OP.chunkGt.dat(mat));
 		}
 		
 		OreDictMaterial[] tier5i = new OreDictMaterial[]{MT.StainlessSteel, MT.TungstenSteel, MT.Ti, MT.Ad, MT.Bedrock, MT.Desh, MT.TungstenCarbide, MT.DuraniumAlloy, MT.W, MT.TritaniumAlloy};
 		for (int q = 0; q < tier5i.length; q++)
 		{
 			OreDictMaterial mat = tier5i[q];
-			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 340 + q, 0, toUse, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 30, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", 'C', OP.chunkGt.dat(mat));
+			machines.add(mat.mNameLocal + " Crafting Anvil", "Crafting Tables", 340 + q, 0, toUse, 0, 16, metal, UT.NBT.make(NullBT, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 30, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "CCC", " C ", "CCC", 'C', OP.chunkGt.dat(mat));
 		}
 		
 		machines.add("Crafting Helper", "", 400, 0, CraftingHelper.class, 15, 0, air, UT.NBT.make());
@@ -681,7 +682,7 @@ public final class QwerTech extends Abstract_Mod {
 		for (int q = 0; q < upgradeDeskMats.length; q++)
 		{
 			OreDictMaterial mat = upgradeDeskMats[q];
-			machines.add(mat.mNameLocal + " Upgrade Desk", "Upgrade Desks", 401 + q, 0, UpgradeDesk.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 1, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "RfR", "RSR", "CCC", 'C', OP.plate.dat(mat), 'R', OP.stick.dat(ANY.Steel), 'S', OP.springSmall.dat(ANY.Steel));
+			machines.add(mat.mNameLocal + " Upgrade Desk", "Upgrade Desks", 401 + q, 0, UpgradeDesk.class, 0, 16, metal, UT.NBT.make(NullBT, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 1, CS.NBT_TEXTURE, "qwertech:metal", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "RfR", "RSR", "CCC", 'C', OP.plate.dat(mat), 'R', OP.stick.dat(ANY.Steel), 'S', OP.springSmall.dat(ANY.Steel));
 		}
 
 		for (int q = 1; q < WOOD.woodList.length; q++)
@@ -689,23 +690,31 @@ public final class QwerTech extends Abstract_Mod {
 			OreDictMaterial woodType = WOOD.woodList[q];
 			if (woodType != null)
 			{
-				machines.add(woodType.mNameLocal + " Countertop", "Countertops", 410 + q, 0, CuttingBoardTileEntity.class, 0, 16, wood, UT.NBT.make(null, CS.NBT_MATERIAL, woodType, CS.NBT_INV_SIZE, 9, CS.NBT_TEXTURE, "qwertech:wood", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(woodType.fRGBaSolid)), "S", "P", 'S', "slabWood", 'P', "plank" + woodType.mNameInternal);
-				machines.add(woodType.mNameLocal + " Compost Bin", "Compost Bins", 715 + q, 0, CompostBinTileEntity.class, 0, 64, wood, UT.NBT.make(null, CS.NBT_MATERIAL, woodType, CS.NBT_INV_SIZE, 12, CS.NBT_TEXTURE, "qwertech:wood", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(woodType.fRGBaSolid)), "SSS", " P ", 'S', "stickWood", 'P', "plank" + woodType.mNameInternal);
-                machines.add(woodType.mNameLocal + " Chest", "Chests", 1510 + q, 0, ChestTileEntity.class, 0, 64, wood, UT.NBT.make(null, CS.NBT_MATERIAL, woodType, CS.NBT_INV_SIZE, 27, CS.NBT_TEXTURE, "woodenchest", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(woodType.fRGBaSolid)));
+				machines.add(woodType.mNameLocal + " Countertop", "Countertops", 410 + q, 0, CuttingBoardTileEntity.class, 0, 16, wood, UT.NBT.make(NullBT, CS.NBT_MATERIAL, woodType, CS.NBT_INV_SIZE, 9, CS.NBT_TEXTURE, "qwertech:wood", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(woodType.fRGBaSolid)), "S", "P", 'S', "slabWood", 'P', "plank" + woodType.mNameInternal);
+				machines.add(woodType.mNameLocal + " Compost Bin", "Compost Bins", 715 + q, 0, CompostBinTileEntity.class, 0, 64, wood, UT.NBT.make(NullBT, CS.NBT_MATERIAL, woodType, CS.NBT_INV_SIZE, 12, CS.NBT_TEXTURE, "qwertech:wood", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(woodType.fRGBaSolid)), "SSS", " P ", 'S', "stickWood", 'P', "plank" + woodType.mNameInternal);
+                machines.add(woodType.mNameLocal + " Chest", "Chests", 1510 + q, 0, ChestTileEntity.class, 0, 64, wood, UT.NBT.make(NullBT, CS.NBT_MATERIAL, woodType, CS.NBT_INV_SIZE, 27, CS.NBT_TEXTURE, "woodenchest", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(woodType.fRGBaSolid)));
                 CR.shapeless(ST.make(Blocks.chest, 1, 0), CR.DEF, new Object[]{machines.getItem(1510 + q)});
                 OM.reg(OD.craftingChest, machines.getItem(1510 + q));
                 OM.reg("craftingChestWood", machines.getItem(1510 + q));
                 //move these afterwards because they use the chest in the recipe
-                machines.add(woodType.mNameLocal + " Counterdrawers", "Counterdrawers", 980 + q, 0, CountertopShelvesTileEntity.class, 0, 16, wood, UT.NBT.make(null, CS.NBT_MATERIAL, woodType, CS.NBT_INV_SIZE, 9 + 18, CS.NBT_TEXTURE, "qwertech:wood", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(woodType.fRGBaSolid)), "GCG", "PHP", 'C', machines.getItem(410 + q), 'P', "plank" + woodType.mNameInternal, 'H', machines.getItem(1510 + q), 'G', OD.itemGlue);
+                machines.add(woodType.mNameLocal + " Counterdrawers", "Counterdrawers", 980 + q, 0, CountertopShelvesTileEntity.class, 0, 16, wood, UT.NBT.make(NullBT, CS.NBT_MATERIAL, woodType, CS.NBT_INV_SIZE, 9 + 18, CS.NBT_TEXTURE, "qwertech:wood", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(woodType.fRGBaSolid)), "GCG", "PHP", 'C', machines.getItem(410 + q), 'P', "plank" + woodType.mNameInternal, 'H', machines.getItem(1510 + q), 'G', OD.itemGlue);
                 CR.shaped(machines.getItem(980 + q), new Object[]{"GCG", "PHP", 'C', machines.getItem(410 + q), 'P', "plank" + woodType.mNameInternal, 'H', machines.getItem(1510 + q), 'G', OD.slimeball});
+                machines.add(woodType.mNameLocal + " Nesting Box", "Nesting Boxes", 1780 + q, 0, NestBoxTileEntity.class, 0, 16, wood, UT.NBT.make(NullBT, CS.NBT_MATERIAL, woodType, CS.NBT_INV_SIZE, 5, CS.NBT_TEXTURE, "qwertech:wood", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(woodType.fRGBaSolid)), "GGP", "PPP", 'P', "plank" + woodType.mNameInternal, 'G', IL.Grass.get(1));
             }
         }
-        machines.add("Wooden Chest", "Chests", 1510, 0, ChestTileEntity.class, 0, 64, wood, UT.NBT.make(null, CS.NBT_MATERIAL, MT.Wood, CS.NBT_INV_SIZE, 27, CS.NBT_TEXTURE, "woodenchest", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(MT.Wood.fRGBaSolid)));
+        machines.add("Wooden Chest", "Chests", 1510, 0, ChestTileEntity.class, 0, 64, wood, UT.NBT.make(NullBT, CS.NBT_MATERIAL, MT.Wood, CS.NBT_INV_SIZE, 27, CS.NBT_TEXTURE, "woodenchest", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(MT.Wood.fRGBaSolid)));
         CR.shapeless(ST.make(Blocks.chest, 1, 0), CR.DEF, new Object[]{machines.getItem(1510)});
         OM.reg(OD.craftingChest, machines.getItem(1510));
         OM.reg("craftingChestWood", machines.getItem(1510));
         GameRegistry.addRecipe(new WoodSpecificCrafting(machines.getItem(1510), "PPP", "P P", "PPP", 'P', "plankWood"));
 
+        machines.add("Nest (ground)", "Natural", 1770, -1, NestTileEntity.class, 0, 1, wood, UT.NBT.make(NullBT, CS.NBT_INV_SIZE, 5, CS.NBT_HARDNESS, 1.0F, CS.NBT_RESISTANCE, 1.0F));
+        OreDictMaterial[] nestBoxMats = new OreDictMaterial[]{MT.Plastic, MT.Steel, MT.Bronze, MT.Brass, MT.Cu, MT.Ag, MT.Au, MT.Invar, MT.Electrum, MT.Concrete, MT.Asphalt, MT.Al, MT.Ti, MT.StainlessSteel, MT.SteelGalvanized, MT.Pt, MT.Ceramic};
+        for (int q = 0; q < nestBoxMats.length; q++)
+        {
+            OreDictMaterial mat = nestBoxMats[q];
+            machines.add(mat.mNameLocal + " Nesting Box", "Nesting Boxes", 2040 + q, 0, NestBoxTileEntity.class, 0, 16, metal, UT.NBT.make(NullBT, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 5, CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "GGP", "PPP", 'P', "plate" + mat.mNameInternal, 'G', IL.Grass.get(1));
+        }
     }
 
 	@Override
@@ -713,15 +722,15 @@ public final class QwerTech extends Abstract_Mod {
 		for (int q = 0; q < CS.BlocksGT.stones.length; q++)
 		{
 			BlockStones block = (BlockStones)CS.BlocksGT.stones[q];
-			machines.add(block.mMaterial.mNameLocal + " Countertop", "Countertops", 667 + (q * 3), 0, CuttingBoardTileEntity.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, block.mMaterial, CS.NBT_INV_SIZE, 9, CS.NBT_TEXTURE, q, "qt.metatex", 0, CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(block.mMaterial.fRGBaSolid)), "S", "P", 'S', ST.make(block.mSlabs[CS.SIDE_DOWN], 1, 0), 'P', ST.make(block, 1, 0));
-			machines.add("Smooth " + block.mMaterial.mNameLocal + " Countertop", "Countertops", 667 + (q * 3) + 1, 0, CuttingBoardTileEntity.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, block.mMaterial, CS.NBT_INV_SIZE, 9, CS.NBT_TEXTURE, q, "qt.metatex", 7, CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(block.mMaterial.fRGBaSolid)), "S", "P", 'S', ST.make(block.mSlabs[CS.SIDE_DOWN], 1, 7), 'P', ST.make(block, 1, 7));
-			machines.add(block.mMaterial.mNameLocal + " Cobblestone Countertop", "Countertops", 667 + (q * 3) + 2, 0, CuttingBoardTileEntity.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, block.mMaterial, CS.NBT_INV_SIZE, 9, CS.NBT_TEXTURE, q, "qt.metatex", 1, CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(block.mMaterial.fRGBaSolid)), "S", "P", 'S', ST.make(block.mSlabs[CS.SIDE_DOWN], 1, 1), 'P', ST.make(block, 1, 1));
+			machines.add(block.mMaterial.mNameLocal + " Countertop", "Countertops", 667 + (q * 3), 0, CuttingBoardTileEntity.class, 0, 16, metal, UT.NBT.make(NullBT, CS.NBT_MATERIAL, block.mMaterial, CS.NBT_INV_SIZE, 9, CS.NBT_TEXTURE, q, "qt.metatex", 0, CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(block.mMaterial.fRGBaSolid)), "S", "P", 'S', ST.make(block.mSlabs[CS.SIDE_DOWN], 1, 0), 'P', ST.make(block, 1, 0));
+			machines.add("Smooth " + block.mMaterial.mNameLocal + " Countertop", "Countertops", 667 + (q * 3) + 1, 0, CuttingBoardTileEntity.class, 0, 16, metal, UT.NBT.make(NullBT, CS.NBT_MATERIAL, block.mMaterial, CS.NBT_INV_SIZE, 9, CS.NBT_TEXTURE, q, "qt.metatex", 7, CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(block.mMaterial.fRGBaSolid)), "S", "P", 'S', ST.make(block.mSlabs[CS.SIDE_DOWN], 1, 7), 'P', ST.make(block, 1, 7));
+			machines.add(block.mMaterial.mNameLocal + " Cobblestone Countertop", "Countertops", 667 + (q * 3) + 2, 0, CuttingBoardTileEntity.class, 0, 16, metal, UT.NBT.make(NullBT, CS.NBT_MATERIAL, block.mMaterial, CS.NBT_INV_SIZE, 9, CS.NBT_TEXTURE, q, "qt.metatex", 1, CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(block.mMaterial.fRGBaSolid)), "S", "P", 'S', ST.make(block.mSlabs[CS.SIDE_DOWN], 1, 1), 'P', ST.make(block, 1, 1));
 
-			machines.add(block.mMaterial.mNameLocal + " Counterdrawers", "Counterdrawers", 1250 + (q * 3), 0, CountertopShelvesTileEntity.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, block.mMaterial, CS.NBT_INV_SIZE, 9 + 18, CS.NBT_TEXTURE, q, "qt.metatex", 0, CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(block.mMaterial.fRGBaSolid)), "GCG", "PHP", 'C', machines.getItem(667 + (q * 3)), 'P', ST.make(block, 1, 0), 'H', OD.craftingChest, 'G', OD.itemGlue);
+			machines.add(block.mMaterial.mNameLocal + " Counterdrawers", "Counterdrawers", 1250 + (q * 3), 0, CountertopShelvesTileEntity.class, 0, 16, metal, UT.NBT.make(NullBT, CS.NBT_MATERIAL, block.mMaterial, CS.NBT_INV_SIZE, 9 + 18, CS.NBT_TEXTURE, q, "qt.metatex", 0, CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(block.mMaterial.fRGBaSolid)), "GCG", "PHP", 'C', machines.getItem(667 + (q * 3)), 'P', ST.make(block, 1, 0), 'H', OD.craftingChest, 'G', OD.itemGlue);
 			CR.shaped(machines.getItem(1250 + (q * 3)), new Object[]{"GCG", "PHP", 'C', machines.getItem(667 + (q * 3)), 'P', ST.make(block, 1, 0), 'H', OD.craftingChest, 'G', OD.slimeball});
-			machines.add("Smooth " + block.mMaterial.mNameLocal + " Counterdrawers", "Counterdrawers", 1251 + (q * 3), 0, CountertopShelvesTileEntity.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, block.mMaterial, CS.NBT_INV_SIZE, 9 + 18, CS.NBT_TEXTURE, q, "qt.metatex", 7, CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(block.mMaterial.fRGBaSolid)), "GCG", "PHP", 'C', machines.getItem(668 + (q * 3)), 'P', ST.make(block, 1, 7), 'H', OD.craftingChest, 'G', OD.itemGlue);
+			machines.add("Smooth " + block.mMaterial.mNameLocal + " Counterdrawers", "Counterdrawers", 1251 + (q * 3), 0, CountertopShelvesTileEntity.class, 0, 16, metal, UT.NBT.make(NullBT, CS.NBT_MATERIAL, block.mMaterial, CS.NBT_INV_SIZE, 9 + 18, CS.NBT_TEXTURE, q, "qt.metatex", 7, CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(block.mMaterial.fRGBaSolid)), "GCG", "PHP", 'C', machines.getItem(668 + (q * 3)), 'P', ST.make(block, 1, 7), 'H', OD.craftingChest, 'G', OD.itemGlue);
 			CR.shaped(machines.getItem(1251 + (q * 3)), new Object[]{"GCG", "PHP", 'C', machines.getItem(668 + (q * 3)), 'P', ST.make(block, 1, 7), 'H', OD.craftingChest, 'G', OD.slimeball});
-			machines.add(block.mMaterial.mNameLocal + " Counterdrawers", "Counterdrawers", 1252 + (q * 3), 0, CountertopShelvesTileEntity.class, 0, 16, metal, UT.NBT.make(null, CS.NBT_MATERIAL, block.mMaterial, CS.NBT_INV_SIZE, 9 + 18, CS.NBT_TEXTURE, q, "qt.metatex", 1, CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(block.mMaterial.fRGBaSolid)), "GCG", "PHP", 'C', machines.getItem(669 + (q * 3)), 'P', ST.make(block, 1, 1), 'H', OD.craftingChest, 'G', OD.itemGlue);
+			machines.add(block.mMaterial.mNameLocal + " Counterdrawers", "Counterdrawers", 1252 + (q * 3), 0, CountertopShelvesTileEntity.class, 0, 16, metal, UT.NBT.make(NullBT, CS.NBT_MATERIAL, block.mMaterial, CS.NBT_INV_SIZE, 9 + 18, CS.NBT_TEXTURE, q, "qt.metatex", 1, CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(block.mMaterial.fRGBaSolid)), "GCG", "PHP", 'C', machines.getItem(669 + (q * 3)), 'P', ST.make(block, 1, 1), 'H', OD.craftingChest, 'G', OD.itemGlue);
 			CR.shaped(machines.getItem(1252 + (q * 3)), new Object[]{"GCG", "PHP", 'C', machines.getItem(669 + (q * 3)), 'P', ST.make(block, 1, 1), 'H', OD.craftingChest, 'G', OD.slimeball});
 		}
 

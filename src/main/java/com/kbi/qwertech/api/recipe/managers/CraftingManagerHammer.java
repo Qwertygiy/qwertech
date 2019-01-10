@@ -95,7 +95,7 @@ public class CraftingManagerHammer implements Runnable {
 		return removeIt;
 	}
 
-	public static boolean replaceItems(IRecipe recipe, Object[] items)
+	public static boolean replaceItems(int pos, IRecipe recipe, Object[] items)
 	{
 		boolean removeIt = false;
 		for (int w = 0; w < items.length; w++)
@@ -110,7 +110,28 @@ public class CraftingManagerHammer implements Runnable {
 					{
 						if (ST.equal(key, theSlot))
 						{
-							items[w] = OreDictionary.getOres(replacems.get(key));
+							if (items instanceof ItemStack[])
+							{
+								System.out.println("Attempting to replace recipe for " + recipe.getRecipeOutput());
+								ShapedRecipes sr = (ShapedRecipes)recipe;
+								Object[] inputs = new Object[sr.recipeHeight + 2];
+								for (int y = 0; y < sr.recipeHeight; y++)
+								{
+									inputs[y] = (sr.recipeWidth == 1 ? "X" : sr.recipeWidth == 2 ? "XX" : sr.recipeWidth == 3 ? "XXX" : "");
+								}
+								inputs[inputs.length - 2] = 'X';
+								inputs[inputs.length - 1] = sr.getRecipeOutput();
+								ShapedOreRecipe sor = new ShapedOreRecipe(recipe.getRecipeOutput(), inputs);
+								Object[] oldInputs = sor.getInput();
+								for (int y = 0; y < oldInputs.length; y++)
+								{
+									oldInputs[y] = items[y];
+								}
+								oldInputs[w] = OreDictionary.getOres(replacems.get(key));
+								CraftingManager.getInstance().getRecipeList().set(pos, sor);
+							} else {
+								items[w] = OreDictionary.getOres(replacems.get(key));
+							}
 						}
 					}
 				}
@@ -142,6 +163,7 @@ public class CraftingManagerHammer implements Runnable {
 			List oldRecipes = CraftingManager.getInstance().getRecipeList();
 			System.out.println("Parsing through " + oldRecipes.size() + " recipes to remove hammers...");
 	    	int count = 0;
+	    	int shapeless = 0;
 	    	for (int q = 0; q < oldRecipes.size(); q++)
 	    	{
 	    		try {
@@ -152,12 +174,17 @@ public class CraftingManagerHammer implements Runnable {
 						removelIt = replaceItems(recipe, items);
 					} else if (recipe instanceof ShapedOreRecipe) {
 						Object[] items = ((ShapedOreRecipe) recipe).getInput();
-						removelIt = replaceItems(recipe, items);
+						removelIt = replaceItems(q, recipe, items);
 					} else if (recipe instanceof ShapedRecipes) {
 						ItemStack[] items = ((ShapedRecipes) recipe).recipeItems;
-						removelIt = replaceItems(recipe, items);
+						removelIt = replaceItems(q, recipe, items);
 					} else if (recipe instanceof ShapelessRecipes) {
-						//immutable :/
+						ShapelessRecipes shrp = (ShapelessRecipes)recipe;
+						Object[] obs = shrp.recipeItems.toArray();
+						ShapelessOreRecipe shor = new ShapelessOreRecipe(shrp.getRecipeOutput(), obs);
+						oldRecipes.set(q, shor);
+						shapeless = shapeless + 1;
+						removelIt = replaceItems(q, shor, obs);
 					}
 					if (removelIt) {
 						instance.addRecipe(recipe);
@@ -168,9 +195,11 @@ public class CraftingManagerHammer implements Runnable {
 				} catch (Throwable t) {
 	    			System.out.println("Exception found!");
 	    			t.printStackTrace();
+	    			System.out.println("Caused by:");
+					t.getCause().printStackTrace();
 				}
 	    	}
-	    	System.out.println("Parsing complete, found " + count + " hammer recipes");
+	    	System.out.println("Parsing complete, found " + count + " hammer recipes and made " + shapeless + " shapeless recipes oredict friendly");
     	} else {
 			if (QTConfigs.anyHammers) {
 				String tCategory = ConfigCategories.Recipes.gregtechrecipes + ".";

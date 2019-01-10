@@ -1,5 +1,6 @@
 package com.kbi.qwertech.entities.genetic;
 
+import com.kbi.qwertech.QwerTech;
 import com.kbi.qwertech.api.data.COLOR;
 import com.kbi.qwertech.api.entities.GMIs;
 import com.kbi.qwertech.api.entities.IGeneticMob;
@@ -8,6 +9,7 @@ import com.kbi.qwertech.api.entities.Subtype;
 import com.kbi.qwertech.api.registry.MobSpeciesRegistry;
 import com.kbi.qwertech.entities.EntityHelperFunctions;
 import com.kbi.qwertech.entities.ai.EntityAIMoveTowardsSimpleTarget;
+import com.kbi.qwertech.entities.ai.EntityAINesting;
 import com.kbi.qwertech.loaders.RegisterSpecies;
 import gregapi.data.OP;
 import gregapi.item.multiitem.MultiItem;
@@ -43,6 +45,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static com.kbi.qwertech.loaders.RegisterSpecies.NAME_ENGLISH;
+
 public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMIs.IHitAggro, GMIs.IAutoAggro, GMIs.IEatStuffOnTheGround {
 
     private short[] data = new short[8];
@@ -56,6 +60,11 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
     private Species theSpecies = MobSpeciesRegistry.getSpecies(this.getClass(), (short)0);
     private Subtype theSubtype = theSpecies.getSubtype((short)0);
     public int angryTime = 0;
+
+    @Override
+    public String getCommandSenderName() {
+        return hasCustomNameTag() ? getCustomNameTag() : (String)this.getSpecies().getTag(NAME_ENGLISH) + " (" + (String)this.getSubtype().getTag(NAME_ENGLISH) + ")";
+    }
 
     @Override
     public boolean interact(EntityPlayer playa) {
@@ -72,7 +81,7 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
                     if (((Behavior_Tool)beep).mToolName.equals("magnifyingglass"))
                     {
                         List<String> chats = new ArrayList<String>();
-                        chats.add(this.theSubtype.getTag(RegisterSpecies.NAME_ENGLISH) + "(" + this.theSpecies.getTag(RegisterSpecies.NAME_LATIN) + ")");
+                        chats.add(this.theSubtype.getTag(NAME_ENGLISH) + "(" + this.theSpecies.getTag(RegisterSpecies.NAME_LATIN) + ")");
                         int randomStat = this.rand.nextInt(6);
                         switch (randomStat)
                         {
@@ -226,11 +235,12 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
         this.tasks.addTask(1, new EntityAILeapAtTarget(this, 0.4F));
         this.tasks.addTask(2, new EntityAIAttackOnCollide(this, 1.0D, true));
         this.tasks.addTask(3, new EntityAIMoveTowardsSimpleTarget(this, 1.0D, 16F));
+        this.tasks.addTask(1, new EntityAINesting(this, QwerTech.machines.getItem(1770)));
 
         if ((species == -1 || subtype == -1) && !p_i1682_1_.isRemote) {
             species = 0;
             subtype = 0;
-            BiomeGenBase theBiome = p_i1682_1_.getBiomeGenForCoords(this.serverPosX, this.serverPosZ);
+            BiomeGenBase theBiome = p_i1682_1_.getBiomeGenForCoords((int)Math.floor(this.posX), (int)Math.floor(this.posZ));
             List<Species> possible = MobSpeciesRegistry.getSpeciesForBiome(this.getClass(), theBiome);
             if (possible.size() > 0) {
                 short chosen = (short)p_i1682_1_.rand.nextInt(possible.size());
@@ -273,7 +283,7 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
             } else if (entity instanceof EntityLivingBase){
                 if (shouldAutoAggro(this, (EntityLivingBase)entity))
                 {
-                    System.out.println("We should attack " + entity + " because we're " + getSnarl());
+                    //System.out.println("We should attack " + entity + " because we're " + getSnarl());
                     this.setAttackTarget((EntityLivingBase)entity);
                     this.angryTime = 10000;
                     return;
@@ -282,15 +292,16 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
         }
         if (theFood != null && this.getGrowingAge() < 1000 && !this.isInLove())
         {
-            System.out.println("Going after food");
+            //System.out.println("Going after food");
             this.setTarget(theFood);
             if (this.getDistanceToEntity(theFood) < 1F)
             {
-                if (this.getGrowingAge() == 0)
+                int age = this.getGrowingAge();
+                if (age == 0)
                 {
                     this.func_146082_f(null);
-                } else {
-                    this.setGrowingAge(this.getGrowingAge() + 1000);
+                } else if (age < 0) {
+                    this.setGrowingAge(age + Math.min(1000, age * -1/10));
                 }
                 if (theFood.getEntityItem().stackSize > 1)
                 {
@@ -969,9 +980,12 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
     {
         //System.out.println("Our data is: " + data[0] + ", " + data[1] + ", " + data[2]);
         double health = (getSize() + (getStrength() * 0.5)) * 0.005;
-        double speed = (getStrength() - (getSize() * 0.5) + (getStamina() * 0.5)) * 0.0001;
+        double speed = 0.19 + ((getStrength() + getStamina() - getSize()) * 0.00001);
+        float currentHealth = this.getHealth() / this.getMaxHealth();
         this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(health);
-        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(Math.max(0.1D, Math.min(speed, 0.5D)));
+        this.setHealth((float)health * currentHealth);
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(Math.max(0.05D, Math.min(speed, 0.5D)));
+        this.setAIMoveSpeed((float)Math.max(0.05D, Math.min(speed, 0.5D)));
         //System.out.println("With a size of " + getSize() + ", strength of " + getStrength() + ", and stamina of " + getStamina() + ", Health is now " + health + " and we adjusted speed from " + speed + " to " + this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getBaseValue());
     }
 

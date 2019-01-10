@@ -178,7 +178,7 @@ public class RegisterSpecies {
 
     public static Species addEgg(Species spec, ItemStack eggItem, int eggColor)
     {
-        return addEgg(spec, eggItem, eggColor, true);
+        return addEgg(spec, eggItem, eggColor, false);
     }
 
     public static Species addEgg(Species spec, ItemStack eggItem, int eggColor, boolean laysEgg)
