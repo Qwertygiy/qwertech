@@ -42,6 +42,7 @@ public class NestTileEntity extends TileEntityBase05Inventories implements IMult
     @Override
     public void onTick(long aTimer, boolean aIsServerSide) {
         super.onTick(aTimer, aIsServerSide);
+        if (!hasWorldObj()) return;
         if (aIsServerSide) {
             if (mUpdatedGrid) {
                 sendDisplays();
@@ -115,7 +116,7 @@ public class NestTileEntity extends TileEntityBase05Inventories implements IMult
     public void readFromNBT2(NBTTagCompound aNBT) {
         super.readFromNBT2(aNBT);
         String entityID = aNBT.getString("ENT");
-        if (entityID != null && entityID.length() > 0)
+        if (worldObj != null && entityID != null && entityID.length() > 0)
         {
             UUID uuid = UUID.fromString(entityID);
             if (chosenEntity == null || chosenEntity.getUniqueID() != uuid)
@@ -132,7 +133,6 @@ public class NestTileEntity extends TileEntityBase05Inventories implements IMult
                 }
             }
         }
-        sendDisplays();
     }
 
     @Override

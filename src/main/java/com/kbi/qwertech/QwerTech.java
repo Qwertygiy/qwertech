@@ -700,6 +700,7 @@ public final class QwerTech extends Abstract_Mod {
                 //move these afterwards because they use the chest in the recipe
                 machines.add(woodType.mNameLocal + " Counterdrawers", "Counterdrawers", 980 + q, 0, CountertopShelvesTileEntity.class, 0, 16, wood, UT.NBT.make(NullBT, CS.NBT_MATERIAL, woodType, CS.NBT_INV_SIZE, 9 + 18, CS.NBT_TEXTURE, "qwertech:wood", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(woodType.fRGBaSolid)), "GCG", "PHP", 'C', machines.getItem(410 + q), 'P', "plank" + woodType.mNameInternal, 'H', machines.getItem(1510 + q), 'G', OD.itemGlue);
                 CR.shaped(machines.getItem(980 + q), new Object[]{"GCG", "PHP", 'C', machines.getItem(410 + q), 'P', "plank" + woodType.mNameInternal, 'H', machines.getItem(1510 + q), 'G', OD.slimeball});
+                machines.add(woodType.mNameLocal + " Nesting Box", "Nesting Boxes", 1780 + q, 0, NestBoxTileEntity.class, 0, 16, wood, UT.NBT.make(NullBT, CS.NBT_MATERIAL, woodType, CS.NBT_INV_SIZE, 5, CS.NBT_TEXTURE, "qwertech:wood", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(woodType.fRGBaSolid)), "GGP", "PPP", 'P', "plank" + woodType.mNameInternal, 'G', IL.Grass.get(1));
             }
         }
         machines.add("Wooden Chest", "Chests", 1510, 0, ChestTileEntity.class, 0, 64, wood, UT.NBT.make(NullBT, CS.NBT_MATERIAL, MT.Wood, CS.NBT_INV_SIZE, 27, CS.NBT_TEXTURE, "woodenchest", CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(MT.Wood.fRGBaSolid)));
@@ -709,6 +710,12 @@ public final class QwerTech extends Abstract_Mod {
         GameRegistry.addRecipe(new WoodSpecificCrafting(machines.getItem(1510), "PPP", "P P", "PPP", 'P', "plankWood"));
 
         machines.add("Nest (ground)", "Natural", 1770, -1, NestTileEntity.class, 0, 1, wood, UT.NBT.make(NullBT, CS.NBT_INV_SIZE, 5, CS.NBT_HARDNESS, 1.0F, CS.NBT_RESISTANCE, 1.0F));
+        OreDictMaterial[] nestBoxMats = new OreDictMaterial[]{MT.Plastic, MT.Steel, MT.Bronze, MT.Brass, MT.Cu, MT.Ag, MT.Au, MT.Invar, MT.Electrum, MT.Concrete, MT.Asphalt, MT.Al, MT.Ti, MT.StainlessSteel, MT.SteelGalvanized, MT.Pt, MT.Ceramic};
+        for (int q = 0; q < nestBoxMats.length; q++)
+        {
+            OreDictMaterial mat = nestBoxMats[q];
+            machines.add(mat.mNameLocal + " Nesting Box", "Nesting Boxes", 2040 + q, 0, NestBoxTileEntity.class, 0, 16, metal, UT.NBT.make(NullBT, CS.NBT_MATERIAL, mat, CS.NBT_INV_SIZE, 5, CS.NBT_HARDNESS, 3.0F, CS.NBT_RESISTANCE, 3.0F, CS.NBT_COLOR, UT.Code.getRGBInt(mat.fRGBaSolid)), "GGP", "PPP", 'P', "plate" + mat.mNameInternal, 'G', IL.Grass.get(1));
+        }
     }
 
 	@Override
