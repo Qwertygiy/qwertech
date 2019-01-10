@@ -89,6 +89,10 @@ public class NestTileEntity extends TileEntityBase05Inventories implements IMult
 
     @Override
     public ArrayListNoNulls<ItemStack> getDrops(int aFortune, boolean aSilkTouch) {
+        if (this.getClass() != NestTileEntity.class)
+        {
+            return super.getDrops(aFortune, aSilkTouch);
+        }
         if (aSilkTouch) return super.getDrops(aFortune, aSilkTouch);
         ArrayListNoNulls<ItemStack> returnable = new ArrayListNoNulls<>();
         returnable.add(IL.Grass_Moldy.get(2 + this.getRandomNumber(aFortune + 1)));

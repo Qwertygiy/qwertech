@@ -193,7 +193,7 @@ public class EntityAINesting extends EntityAIBase
         {
             return false;
         }
-        else if (this.entity.getRNG().nextInt(20) != 0)
+        else if (this.entity.getRNG().nextInt(10) != 0)
         {
             return false;
         }
