@@ -214,13 +214,42 @@ public class CountertopShelvesTileEntity extends CuttingBoardTileEntity {
                 block.setBlockBounds(PX_P[0], PX_P[10], PX_P[0], PX_P[16], PX_P[16], PX_P[16]);
                 break;
             case 1:
-                block.setBlockBounds(PX_P[xneg - (this.mFacing == CS.SIDE_X_NEG ? 1 : 0)], PX_P[0], PX_P[zneg - (this.mFacing == CS.SIDE_Z_NEG ? 1 : 0)], PX_P[xpos - (this.mFacing == CS.SIDE_X_POS ? 1 : 0)], PX_P[10], PX_P[zpos - (this.mFacing == CS.SIDE_Z_POS ? 1 : 0)]);
+                //big block
+                block.setBlockBounds(PX_P[xneg + (this.mFacing == CS.SIDE_X_NEG ? 1 : 0)], PX_P[0], PX_P[zneg + (this.mFacing == CS.SIDE_Z_NEG ? 1 : 0)], PX_P[xpos - (this.mFacing == CS.SIDE_X_POS ? 1 : 0)], PX_P[10], PX_P[zpos - (this.mFacing == CS.SIDE_Z_POS ? 1 : 0)]);
                 break;
             case 2:
-                block.setBlockBounds(PX_P[this.mFacing == CS.SIDE_Z_POS || this.mFacing == CS.SIDE_Z_NEG ? 2 : this.mFacing == CS.SIDE_X_NEG ? xneg - 1 : xpos - 1], PX_P[1], PX_P[this.mFacing == CS.SIDE_X_POS || this.mFacing == CS.SIDE_X_NEG ? 2 : this.mFacing == CS.SIDE_Z_NEG ? zneg - 1 : zpos - 1], PX_P[this.mFacing == CS.SIDE_Z_POS || this.mFacing == CS.SIDE_Z_NEG ? 14 : this.mFacing == CS.SIDE_X_NEG ? xneg : xpos], PX_P[8], PX_P[this.mFacing == CS.SIDE_X_POS || this.mFacing == CS.SIDE_X_NEG ? 14 : this.mFacing == CS.SIDE_Z_NEG ? zneg : zpos]);
+                //drawer
+                if (mFacing == CS.SIDE_X_NEG)
+                {
+                    block.setBlockBounds(PX_P[xneg], PX_P[1], PX_P[2], PX_P[xneg + 1], PX_P[8], PX_P[14]);
+                } else if (mFacing == CS.SIDE_X_POS)
+                {
+                    block.setBlockBounds(PX_P[xpos - 1], PX_P[1], PX_P[2], PX_P[xpos], PX_P[8], PX_P[14]);
+                } else if (mFacing == CS.SIDE_Z_NEG)
+                {
+                    block.setBlockBounds(PX_P[2], PX_P[1], PX_P[zneg], PX_P[14], PX_P[8], PX_P[zneg + 1]);
+                } else if (mFacing == CS.SIDE_Z_POS)
+                {
+                    block.setBlockBounds(PX_P[2], PX_P[1], PX_P[zpos - 1], PX_P[14], PX_P[8], PX_P[zpos]);
+                }
+                //block.setBlockBounds(PX_P[this.mFacing == CS.SIDE_Z_POS || this.mFacing == CS.SIDE_Z_NEG ? 2 : this.mFacing == CS.SIDE_X_NEG ? xneg + 2 : xpos - 1], PX_P[1], PX_P[this.mFacing == CS.SIDE_X_POS || this.mFacing == CS.SIDE_X_NEG ? 2 : this.mFacing == CS.SIDE_Z_NEG ? zneg + 2 : zpos - 1], PX_P[this.mFacing == CS.SIDE_Z_POS || this.mFacing == CS.SIDE_Z_NEG ? 14 : this.mFacing == CS.SIDE_X_NEG ? xneg + 1: xpos], PX_P[8], PX_P[this.mFacing == CS.SIDE_X_POS || this.mFacing == CS.SIDE_X_NEG ? 14 : this.mFacing == CS.SIDE_Z_NEG ? zneg + 1: zpos]);
                 break;
             case 3:
-                block.setBlockBounds(PX_P[this.mFacing == CS.SIDE_Z_POS || this.mFacing == CS.SIDE_Z_NEG ? 7 : this.mFacing == CS.SIDE_X_NEG ? xneg: xpos], PX_P[4], PX_P[this.mFacing == CS.SIDE_X_POS || this.mFacing == CS.SIDE_X_NEG ? 7 : this.mFacing == CS.SIDE_Z_NEG ? zneg: zpos], PX_P[this.mFacing == CS.SIDE_Z_POS || this.mFacing == CS.SIDE_Z_NEG ? 9 : this.mFacing == CS.SIDE_X_NEG ? xneg + 1 : xpos + 1], PX_P[7], PX_P[this.mFacing == CS.SIDE_X_POS || this.mFacing == CS.SIDE_X_NEG ? 9 : this.mFacing == CS.SIDE_Z_NEG ? zneg + 1: zpos + 1]);
+                //knob
+                if (mFacing == CS.SIDE_X_NEG)
+                {
+                    block.setBlockBounds(PX_P[xneg - 1], PX_P[4], PX_P[7], PX_P[xneg], PX_P[7], PX_P[9]);
+                } else if (mFacing == CS.SIDE_X_POS)
+                {
+                    block.setBlockBounds(PX_P[xpos], PX_P[4], PX_P[7], PX_P[xpos + 1], PX_P[7], PX_P[9]);
+                } else if (mFacing == CS.SIDE_Z_NEG)
+                {
+                    block.setBlockBounds(PX_P[7], PX_P[4], PX_P[zneg - 1], PX_P[9], PX_P[7], PX_P[zneg]);
+                } else if (mFacing == CS.SIDE_Z_POS)
+                {
+                    block.setBlockBounds(PX_P[7], PX_P[4], PX_P[zpos], PX_P[9], PX_P[7], PX_P[zpos + 1]);
+                }
+                //block.setBlockBounds(PX_P[this.mFacing == CS.SIDE_Z_POS || this.mFacing == CS.SIDE_Z_NEG ? 7 : this.mFacing == CS.SIDE_X_NEG ? xneg + 1: xpos], PX_P[4], PX_P[this.mFacing == CS.SIDE_X_POS || this.mFacing == CS.SIDE_X_NEG ? 7 : this.mFacing == CS.SIDE_Z_NEG ? zneg + 1: zpos], PX_P[this.mFacing == CS.SIDE_Z_POS || this.mFacing == CS.SIDE_Z_NEG ? 9 : this.mFacing == CS.SIDE_X_NEG ? xneg: xpos + 1], PX_P[7], PX_P[this.mFacing == CS.SIDE_X_POS || this.mFacing == CS.SIDE_X_NEG ? 9 : this.mFacing == CS.SIDE_Z_NEG ? zneg: zpos + 1]);
                 break;
         }
         return true;
