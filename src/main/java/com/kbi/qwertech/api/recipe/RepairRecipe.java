@@ -159,7 +159,7 @@ public class RepairRecipe implements ICraftingRecipeGT, IRecipe
 						return null;
 					}
 					IToolStats tStats = ((MultiItemTool)input).getToolStats(toRepair);
-					if (tStats != null && tStats instanceof ToolStats)
+					if (tStats instanceof ToolStats)
 					{
 						long totalDamage = MultiItemTool.getToolMaxDamage(toRepair);
 						long currentDamage = MultiItemTool.getToolDamage(toRepair);
@@ -167,7 +167,7 @@ public class RepairRecipe implements ICraftingRecipeGT, IRecipe
 						Object totallyMaterial = UT.Reflection.getFieldContent(tStats, "mMaterialAmount", true, false);
 						long totalMaterial = CS.U * 5;
 						
-						if (totallyMaterial != null && totallyMaterial instanceof Long)
+						if (totallyMaterial instanceof Long)
 						{
 							totalMaterial = (Long)totallyMaterial;
 						}

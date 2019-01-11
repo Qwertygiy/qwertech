@@ -741,9 +741,9 @@ public class CraftingTableT1 extends TileEntityBase09FacingSingle implements ITi
 		MultiItemTool.LAST_TOOL_COORDS_BEFORE_DAMAGE = getCoords();
 		
 		ItemStack aHoldStack;
-		
+
 		try {FMLCommonHandler.instance().firePlayerCraftingEvent(aPlayer, ST.copy(slot(10)), new InventoryCrafting(null, 3, 3));} catch(Throwable e) {e.printStackTrace(ERR);}
-		
+
 		boolean tOldToolSounds = TOOL_SOUNDS;
 		
 		for (int i = 0; i < 9; i++) if (slotHas(i)) {
@@ -756,7 +756,9 @@ public class CraftingTableT1 extends TileEntityBase09FacingSingle implements ITi
 
 			if (isRepair)
 			{
-				decrStackSize(i, 1);
+				if (OM.data(slot(i)) == null || (OM.data(slot(i)).mPrefix != OP.plate && OM.data(slot(i)).mPrefix != OP.plateTiny)) {
+					decrStackSize(i, 1);
+				}
 			}
 			
 			if (tNeeds) for (int j = 0; j < 9; j++) if (j == i) {
@@ -768,7 +770,7 @@ public class CraftingTableT1 extends TileEntityBase09FacingSingle implements ITi
 					// Consume the Item.
 					if (tContainer2 == null || (tContainer2.isItemStackDamageable() && tContainer2.getItemDamage() >= tContainer2.getMaxDamage())) {
 						decrStackSize(j, 1);
-					} else if (slot(j).stackSize == 1) {
+					} else if (slot(j).stackSize == 1 && !isRepair) {
 						slot(j, tContainer2);
 					} else {
 						decrStackSize(j, 1);
@@ -777,7 +779,7 @@ public class CraftingTableT1 extends TileEntityBase09FacingSingle implements ITi
 				}
 			}
 		}
-		
+
 		aHoldStack = ST.copy(slot(10));
 		
 		if (aPlayer != null)

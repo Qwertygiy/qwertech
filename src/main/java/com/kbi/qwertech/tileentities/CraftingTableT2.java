@@ -11,6 +11,7 @@ import gregapi.data.MT;
 import gregapi.data.OP;
 import gregapi.gui.Slot_Holo;
 import gregapi.gui.Slot_Normal;
+import gregapi.item.multiitem.MultiItemTool;
 import gregapi.network.INetworkHandler;
 import gregapi.network.packets.data.PacketSyncDataByte;
 import gregapi.old.Textures;
@@ -266,7 +267,13 @@ public class CraftingTableT2 extends CraftingTableT1 implements IMultiTileEntity
                 this.mInventoryPlayer.setInventorySlotContents(slot, currentlyHolding);
                 this.mInventoryPlayer.setInventorySlotContents(this.mInventoryPlayer.currentItem, ourHammer);
                 player.swingItem();
-                ct.handleHammer(this.mInventoryPlayer.player, this.mInventoryPlayer.getStackInSlot(getHammer()));
+                if (ourHammer.getItem() instanceof MultiItemTool) {
+					((MultiItemTool)ourHammer.getItem()).doDamage(ourHammer, UT.Code.units(ct.handleHammer(this.mInventoryPlayer.player, this.mInventoryPlayer.getStackInSlot(getHammer())), 10000, 400, true), this.mInventoryPlayer.player);
+				} else if (ourHammer.isItemStackDamageable())
+				{
+					ourHammer.damageItem(1, this.mInventoryPlayer.player);
+				}
+				this.mInventoryPlayer.setInventorySlotContents(this.mInventoryPlayer.currentItem, ourHammer);
             }
 		    return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
         }
