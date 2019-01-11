@@ -129,7 +129,7 @@ public class EntityAINesting extends EntityAIBase
     }
 
     public void successfulNesting() {
-        if (!laidTonight && !entity.isDead && ourNest != null && entity instanceof IGeneticMob)
+        if (!laidTonight && !entity.isDead && ourNest != null && entity instanceof IGeneticMob && !entity.isChild())
         {
             IGeneticMob igm = (IGeneticMob)entity;
             ItemStack egg = setEggData();
@@ -159,21 +159,23 @@ public class EntityAINesting extends EntityAIBase
                 egg.setTagCompound(nbt);
             }
             int randy = entity.worldObj.rand.nextInt(16000 + igm.getFertility());
+            int eggz = 1;
             if (randy > 26000)
             {
-                egg.stackSize = 3;
+                eggz = 3;
             } else if (randy > 16000)
             {
-                egg.stackSize = 2;
-            } else {
-                egg.stackSize = 1;
+                eggz = 2;
             }
             for (int q = 0; q < ourNest.invsize(); q++)
             {
-                if (ourNest.addStackToSlot(q, egg))
+                if (ourNest.addStackToSlot(q, egg.copy()))
                 {
-                    laidTonight = true;
-                    break;
+                    eggz = eggz - 1;
+                    if (eggz < 1) {
+                        laidTonight = true;
+                        break;
+                    }
                 }
             }
         }

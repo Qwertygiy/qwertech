@@ -78,6 +78,16 @@ public class NestTileEntity extends TileEntityBase05Inventories implements IMult
 
     @Override public boolean addStackToSlot(int aSlot, ItemStack aStack) {if (!ST.equal(aStack, slot(aSlot), F)) mUpdatedGrid = T; return super.addStackToSlot(aSlot, aStack); }
 
+    @Override
+    public int getInventoryStackLimit() {
+        return 1;
+    }
+
+    @Override
+    public int getInventoryStackLimitGUI(int aSlot) {
+        return 1;
+    }
+
     public void sendDisplays()
     {
         for (int q = 0; q < this.invsize(); q++)
@@ -227,18 +237,24 @@ public class NestTileEntity extends TileEntityBase05Inventories implements IMult
     public boolean setBlockBounds(Block aBlock, int aRenderPass, boolean[] aShouldSideBeRendered) {
         switch(aRenderPass) {
             case 9:
-                aBlock.setBlockBounds(PX_P[7], PX_P[1], PX_P[9], PX_P[10], PX_P[5], PX_P[12]);
+                //egg
+                aBlock.setBlockBounds(PX_P[10], PX_P[2], PX_P[9], PX_P[13], PX_P[6], PX_P[12]);
+                break;
             case 8:
-                aBlock.setBlockBounds(PX_P[9], PX_P[1], PX_P[5], PX_P[12], PX_P[5], PX_P[8]);
+                //egg
+                aBlock.setBlockBounds(PX_P[9], PX_P[2], PX_P[4], PX_P[12], PX_P[6], PX_P[7]);
                 break;
             case 7:
-                aBlock.setBlockBounds(PX_P[5], PX_P[1], PX_P[7], PX_P[8], PX_P[5], PX_P[11]);
+                //egg
+                aBlock.setBlockBounds(PX_P[4], PX_P[2], PX_P[9], PX_P[7], PX_P[6], PX_P[12]);
                 break;
             case 6:
-                aBlock.setBlockBounds(PX_P[5], PX_P[1], PX_P[6], PX_P[8], PX_P[5], PX_P[9]);
+                //egg
+                aBlock.setBlockBounds(PX_P[4], PX_P[2], PX_P[6], PX_P[7], PX_P[6], PX_P[9]);
                 break;
             case 5:
-                aBlock.setBlockBounds(PX_P[7], PX_P[1], PX_P[7], PX_P[10], PX_P[5], PX_P[10]);
+                //egg
+                aBlock.setBlockBounds(PX_P[7], PX_P[2], PX_P[7], PX_P[10], PX_P[6], PX_P[10]);
                 break;
             case 4:
                 aBlock.setBlockBounds(PX_P[0], PX_P[1], PX_P[14], PX_P[16], PX_P[3], PX_P[16]);
