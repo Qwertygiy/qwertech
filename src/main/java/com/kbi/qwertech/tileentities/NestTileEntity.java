@@ -4,6 +4,7 @@ import com.kbi.qwertech.api.data.QTI;
 import com.kbi.qwertech.network.packets.PacketInventorySync;
 import gregapi.block.multitileentity.IMultiTileEntity;
 import gregapi.code.ArrayListNoNulls;
+import gregapi.data.CS;
 import gregapi.data.IL;
 import gregapi.data.MT;
 import gregapi.data.OP;
@@ -20,6 +21,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -32,7 +34,7 @@ import java.util.UUID;
 
 import static gregapi.data.CS.*;
 
-public class NestTileEntity extends TileEntityBase05Inventories implements IMultiTileEntity.IMTE_GetBlocksMovement, IMultiTileEntity.IMTE_AddCollisionBoxesToList, IMultiTileEntity.IMTE_SetBlockBoundsBasedOnState, IMultiTileEntity.IMTE_GetSelectedBoundingBoxFromPool, IMultiTileEntity.IMTE_GetCollisionBoundingBoxFromPool, ISidedInventory {
+public class NestTileEntity extends TileEntityBase05Inventories implements IMultiTileEntity.IMTE_GetBlocksMovement, IMultiTileEntity.IMTE_AddCollisionBoxesToList, IMultiTileEntity.IMTE_SetBlockBoundsBasedOnState, IMultiTileEntity.IMTE_GetSelectedBoundingBoxFromPool, IMultiTileEntity.IMTE_GetCollisionBoundingBoxFromPool, ISidedInventory, IMultiTileEntity.IMTE_OnToolClick {
 
     protected boolean mUpdatedGrid = true;
 
@@ -191,16 +193,51 @@ public class NestTileEntity extends TileEntityBase05Inventories implements IMult
     }
 
     @Override
+    public boolean checkObstruction(EntityPlayer aPlayer, byte aSide, float aHitX, float aHitY, float aHitZ) {
+        if (aSide == CS.SIDE_TOP) return false;
+        return super.checkObstruction(aPlayer, aSide, aHitX, aHitY, aHitZ);
+    }
+
+    @Override
     public boolean onBlockActivated2(EntityPlayer aPlayer, byte aSide, float aHitX, float aHitY, float aHitZ) {
         ItemStack stack = aPlayer.getHeldItem();
-        if (stack != null && OM.is("magnifyingglass", stack))
+        System.out.println("x:" + aHitX + " y:" + aHitY + " z:" + aHitZ);
+        if (aHitX > 0.2F && aHitX < 0.8F && aHitZ > 0.2F && aHitZ < 0.8F && aHitY > 0.2F)
         {
-            List<String> chats = new ArrayList<String>();
-            if (getNestingEntity() == null)
+            for (int q = 0; q < this.invsize(); q++)
             {
-                chats.add("It seems this nest has been abandoned by its owner.");
-            } else {
-                chats.add("This nest belongs to a " + getNestingEntity().getCommandSenderName());
+                if (slotHas(q))
+                {
+                    ItemStack stacker = slot(q);
+                    if (stack == null)
+                    {
+                        aPlayer.setCurrentItemOrArmor(0, stacker);
+                        setInventorySlotContents(q, null);
+                    } else if (ST.equal(stack, stacker, false))
+                    {
+                        stack.stackSize = stack.stackSize + stacker.stackSize;
+                        aPlayer.setCurrentItemOrArmor(0, stack);
+                        setInventorySlotContents(q, null);
+                    }
+                    return true;
+                } else if (stack != null){
+                    NBTTagCompound tag = UT.NBT.getOrCreate(stack);
+                    if (tag.hasKey("Timer") && tag.hasKey("QTgenes"))
+                    {
+                        if (stack.stackSize == 1)
+                        {
+                            setInventorySlotContents(q, stack);
+                            aPlayer.setCurrentItemOrArmor(0, null);
+                        } else {
+                            ItemStack nuStack = stack.copy();
+                            nuStack.stackSize = 1;
+                            stack.stackSize = stack.stackSize - 1;
+                            setInventorySlotContents(q, nuStack);
+                            aPlayer.setCurrentItemOrArmor(0, stack);
+                        }
+                        return true;
+                    }
+                }
             }
         }
         return super.onBlockActivated2(aPlayer, aSide, aHitX, aHitY, aHitZ);
@@ -359,5 +396,35 @@ public class NestTileEntity extends TileEntityBase05Inventories implements IMult
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side) {
         return false;
+    }
+
+    @Override
+    public long onToolClick(String aTool, long aRemainingDurability, long aQuality, Entity aPlayer, List<String> aChatReturn, IInventory aPlayerInventory, boolean aSneaking, ItemStack aStack, byte aSide, float aHitX, float aHitY, float aHitZ) {
+        if (aTool.equals("magnifyingglass")) {
+            if (getNestingEntity() == null) {
+                aChatReturn.add("It seems this nest has been abandoned by its owner.");
+            } else {
+                aChatReturn.add("This nest belongs to a " + getNestingEntity().getCommandSenderName());
+            }
+            int eggs = 0;
+            int fert = 0;
+            for (int q = 0; q < this.invsize(); q++)
+            {
+                if (slotHas(q))
+                {
+                    eggs = eggs + 1;
+                    NBTTagCompound tag = UT.NBT.getOrCreate(slot(q));
+                    if (tag.hasKey("Timer"))
+                    {
+                        fert = fert + 1;
+                    }
+                }
+            }
+            if (eggs > 0)
+            {
+                aChatReturn.add("It has " + eggs + " eggs, " + fert + " of which is fertilized.");
+            }
+        }
+        return 0;
     }
 }
