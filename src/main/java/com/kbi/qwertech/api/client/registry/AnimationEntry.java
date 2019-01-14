@@ -11,6 +11,7 @@ public class AnimationEntry {
     public int priority;
     public ModelAnimation animation;
     public IModelAnimateable model;
+    public boolean looping;
 
     /**
      * AnimationEntry to be used in the AnimationsRegistry map.
@@ -19,14 +20,16 @@ public class AnimationEntry {
      * @param pri Priority of animation. Higher = more important.
      * @param dur How long in ticks the animation should run.
      * @param start The total world time at the start of the animation.
+     * @param loop Whether the animation should start again upon finishing.
      */
-    public AnimationEntry(IModelAnimateable mod, ModelAnimation anim, int pri, short dur, long start)
+    public AnimationEntry(IModelAnimateable mod, ModelAnimation anim, int pri, short dur, long start, boolean loop)
     {
         model = mod;
         animation = anim;
         priority = pri;
         duration = dur;
         startTime = start;
+        looping = loop;
     }
 
     /**
