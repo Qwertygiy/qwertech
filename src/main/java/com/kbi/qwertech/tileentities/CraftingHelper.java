@@ -132,7 +132,7 @@ public class CraftingHelper extends TileEntityBase04MultiTileEntities implements
 	}
 
 	@Override
-	public boolean onDrawBlockHighlight(DrawBlockHighlightEvent aEvent) {
+	public boolean onDrawBlockHighlight2(DrawBlockHighlightEvent aEvent) {
 		CraftingTableT1 table = getTable();
 		if (table != null)
 		{
