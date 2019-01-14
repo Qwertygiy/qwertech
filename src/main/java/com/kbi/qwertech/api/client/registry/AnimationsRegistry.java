@@ -136,7 +136,7 @@ public class AnimationsRegistry {
         if (entity == null || entity.worldObj == null) return false;
         if (overwrite)
         {
-            removeAnimation(entity, anim);
+            removeAnimation(entity, anim, false);
         } else {
             if (hasAnimation(entity, anim))
             {
@@ -162,7 +162,7 @@ public class AnimationsRegistry {
      */
     public boolean removeAnimation(Entity entity, int ID)
     {
-        return removeAnimation(entity, animationList[ID]);
+        return removeAnimation(entity, ID, true);
     }
 
     /**
@@ -173,16 +173,52 @@ public class AnimationsRegistry {
      */
     public boolean removeAnimation(Entity entity, String name)
     {
-        return removeAnimation(entity, animationNames.get(name));
+        return removeAnimation(entity, name, true);
+    }
+
+    /**
+     * Removes any ongoing instances of the given animation from the given entity.
+     * @param entity The entity to check.
+     * @param anim The name of the animation to search for.
+     * @return True if removed.
+     */
+    public boolean removeAnimation(Entity entity, ModelAnimation anim)
+    {
+        return removeAnimation(entity, anim, true);
+    }
+
+    /**
+     * Removes any ongoing instances of the given animation from the given entity.
+     * @param entity The entity to check.
+     * @param ID The ID of the animation to search for.
+     * @param letFinish If true, it will merely stop the animation from looping, rather than immediately ending it.
+     * @return True if removed.
+     */
+    public boolean removeAnimation(Entity entity, int ID, boolean letFinish)
+    {
+        return removeAnimation(entity, animationList[ID], letFinish);
+    }
+
+    /**
+     * Removes any ongoing instances of the given animation from the given entity.
+     * @param entity The entity to check.
+     * @param name The name of the animation to search for.
+     * @param letFinish If true, it will merely stop the animation from looping, rather than immediately ending it.
+     * @return True if removed.
+     */
+    public boolean removeAnimation(Entity entity, String name, boolean letFinish)
+    {
+        return removeAnimation(entity, animationList[animationNames.get(name)], letFinish);
     }
 
     /**
      * Removes any ongoing instances of the given animation from the given entity.
      * @param entity The entity to check.
      * @param anim The animation to search for.
+     * @param letFinish If true, it will merely stop the animation from looping, rather than immediately ending it.
      * @return True if removed.
      */
-    public boolean removeAnimation(Entity entity, ModelAnimation anim)
+    public boolean removeAnimation(Entity entity, ModelAnimation anim, boolean letFinish)
     {
         if (anim == null) return false;
         if (entity == null || entity.worldObj == null) return false;
@@ -194,8 +230,13 @@ public class AnimationsRegistry {
             AnimationEntry ae = listen.get(q);
             if (ae.animation == anim && ae.startTime <= entity.worldObj.getTotalWorldTime())
             {
-                listen.remove(q);
-                q = q - 1;
+                if (letFinish && ae.looping)
+                {
+                    ae.looping = false;
+                } else {
+                    listen.remove(q);
+                    q = q - 1;
+                }
                 didWe = true;
             }
         }
@@ -221,7 +262,7 @@ public class AnimationsRegistry {
      */
     public boolean hasAnimation(Entity entity, String name)
     {
-        return hasAnimation(entity, animationNames.get(name));
+        return hasAnimation(entity, animationList[animationNames.get(name)]);
     }
 
     /**
