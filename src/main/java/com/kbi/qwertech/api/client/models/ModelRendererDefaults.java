@@ -14,6 +14,7 @@ public class ModelRendererDefaults extends ModelRenderer {
     public float defaultRotateX;
     public float defaultRotateY;
     public float defaultRotateZ;
+    public boolean defaultHidden;
 
     public ModelRendererDefaults(ModelBase p_i1172_1_, String p_i1172_2_) {
         super(p_i1172_1_, p_i1172_2_);
@@ -74,12 +75,31 @@ public class ModelRendererDefaults extends ModelRenderer {
     }
 
     /**
-     * Sets all default parameters of the box.
+     * Sets whether the box should be hidden by default.
+     */
+    public void setDefaultHidden(boolean hide)
+    {
+        defaultHidden = hide;
+    }
+
+    /**
+     * Sets all default parameters of the box except visibility.
      */
     public void setDefaults(float originX, float originY, float originZ, float offsetX, float offsetY, float offsetZ, float rotateX, float rotateY, float rotateZ)
     {
         setDefaultOrigin(originX, originY, originZ);
         setDefaultOffset(offsetX, offsetY, offsetZ);
         setDefaultRotation(rotateX, rotateY, rotateZ);
+    }
+
+    /**
+     * Sets all default parameters of the box.
+     */
+    public void setDefaults(float originX, float originY, float originZ, float offsetX, float offsetY, float offsetZ, float rotateX, float rotateY, float rotateZ, boolean hidden)
+    {
+        setDefaultOrigin(originX, originY, originZ);
+        setDefaultOffset(offsetX, offsetY, offsetZ);
+        setDefaultRotation(rotateX, rotateY, rotateZ);
+        setDefaultHidden(hidden);
     }
 }

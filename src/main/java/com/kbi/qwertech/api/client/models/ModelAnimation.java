@@ -1,11 +1,6 @@
 package com.kbi.qwertech.api.client.models;
 
-import net.minecraft.client.model.ModelBase;
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 
 public class ModelAnimation {
 
@@ -28,6 +23,14 @@ public class ModelAnimation {
     public void setModel(IModelAnimateable aModel)
     {
         model = aModel;
+        for (String key : boxes.keySet())
+        {
+            ModelRendererDefaults mod = aModel.getBox(key);
+            if (mod != null)
+            {
+                boxes.get(key).setBox(mod);
+            }
+        }
     }
 
     /**
@@ -165,7 +168,7 @@ public class ModelAnimation {
             ModelRendererDefaults box = model.getBox(key);
             if (box != null)
             {
-                box.restore();
+                boxes.get(key).restore(box);
             }
         }
     }
@@ -177,13 +180,9 @@ public class ModelAnimation {
     public boolean restore()
     {
         if (model == null) return false;
-        for (String key : boxes.keySet())
+        for (BoxAnimation key : boxes.values())
         {
-            ModelRendererDefaults box = model.getBox(key);
-            if (box != null)
-            {
-                box.restore();
-            }
+            key.restore();
         }
         return true;
     }

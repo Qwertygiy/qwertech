@@ -380,4 +380,42 @@ public class BoxAnimation {
         if (should(visible)) box.isHidden = !getVisible(time);
         return true;
     }
+
+    /**
+     * Restore the box to defaults, if we could have changed anything there
+     * @param box The box to restore
+     */
+    public void restore(ModelRendererDefaults box)
+    {
+        if (should(originX)) box.rotationPointX = box.defaultRotateX;
+        if (should(originY)) box.rotationPointY = box.defaultRotateY;
+        if (should(originZ)) box.rotationPointZ = box.defaultRotateZ;
+        if (should(offsetX)) box.offsetX = box.defaultOffsetX;
+        if (should(offsetY)) box.offsetY = box.defaultOffsetY;
+        if (should(offsetZ)) box.offsetZ = box.defaultOffsetZ;
+        if (should(rotateX)) box.rotateAngleX = box.defaultRotateX;
+        if (should(rotateY)) box.rotateAngleY = box.defaultRotateY;
+        if (should(rotateZ)) box.rotateAngleZ = box.defaultRotateZ;
+        if (should(visible)) box.isHidden = box.defaultHidden;
+    }
+
+    /**
+     * If locked to a box, restore anything we changed about that box.
+     * @return true if locked to a box.
+     */
+    public boolean restore()
+    {
+        if (box == null) return false;
+        if (should(originX)) box.rotationPointX = box.defaultRotateX;
+        if (should(originY)) box.rotationPointY = box.defaultRotateY;
+        if (should(originZ)) box.rotationPointZ = box.defaultRotateZ;
+        if (should(offsetX)) box.offsetX = box.defaultOffsetX;
+        if (should(offsetY)) box.offsetY = box.defaultOffsetY;
+        if (should(offsetZ)) box.offsetZ = box.defaultOffsetZ;
+        if (should(rotateX)) box.rotateAngleX = box.defaultRotateX;
+        if (should(rotateY)) box.rotateAngleY = box.defaultRotateY;
+        if (should(rotateZ)) box.rotateAngleZ = box.defaultRotateZ;
+        if (should(visible)) box.isHidden = box.defaultHidden;
+        return true;
+    }
 }
