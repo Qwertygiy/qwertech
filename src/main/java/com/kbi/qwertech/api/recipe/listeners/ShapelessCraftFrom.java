@@ -4,8 +4,8 @@ import gregapi.code.ICondition;
 import gregapi.data.CS;
 import gregapi.data.MT;
 import gregapi.data.OP;
-import gregapi.oredict.IOreDictListenerEvent;
 import gregapi.oredict.OreDictPrefix;
+import gregapi.oredict.event.IOreDictListenerEvent;
 import gregapi.util.CR;
 import gregapi.util.ST;
 
