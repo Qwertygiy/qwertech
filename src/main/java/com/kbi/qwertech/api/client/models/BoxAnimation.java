@@ -31,6 +31,7 @@ public class BoxAnimation {
         rotateY = new HashMap<>();
         rotateZ = new HashMap<>();
         visible = new HashMap<>();
+        activeTimes = new ArrayList<>();
 
         setOrigin(0.0F, 0.0F, 0.0F, 0.0F);
         setOffset(0.0F, 0.0F, 0.0F, 0.0F);
@@ -126,15 +127,15 @@ public class BoxAnimation {
                 Object pastValue = map.get(pastTime);
                 Object futureValue = map.get(futureTime);
                 float percentagePassed = (time - pastTime) / (futureTime - pastTime);
+                //System.out.println("Past time of " + pastTime + ", future time of " + futureTime + ", current time of " + time + ", percentage " + percentagePassed);
                 if (pastValue instanceof Boolean)
                 {
                     return pastValue;
                 } else if (pastValue instanceof Float)
                 {
-                    return ((float)futureValue) - (((float)pastValue) * (1 - percentagePassed));
-                } else if (pastValue instanceof Integer)
-                {
-                    return Math.round(((float)futureValue) - (((float)pastValue) * (1 - percentagePassed)));
+                    float futuref = (float)futureValue;
+                    float pastf = (float)pastValue;
+                    return pastf + ((futuref - pastf) * percentagePassed);
                 }
             }
         } catch (Exception e)
@@ -180,19 +181,15 @@ public class BoxAnimation {
     private void cleanUp(Map<Float, ?> map)
     {
         Object firstly = map.get(0.0F);
-        List<Float> canRemove = new ArrayList<>();
         for (float key : map.keySet())
         {
-            if (map.get(key) != firstly)
+            Object blob = map.get(key);
+            if (!blob.equals(firstly))
             {
                 return; //there's a different value, we won't remove anything
             }
-            if (key != 0.0F && key != 1.0F) canRemove.add(key); //but if none are found, we'll stick it in there
         }
-        for (float keys : canRemove)
-        {
-            map.remove(keys);
-        }
+        map.clear();
     }
 
     /**
@@ -223,7 +220,7 @@ public class BoxAnimation {
             cleanUp();
             cleanedUp = true;
         }
-        return !(map.size() == 2 && map.get(0.0F) == map.get(1.0F));
+        return !(map.size() < 2);
     }
 
     public boolean getVisible(float time)
