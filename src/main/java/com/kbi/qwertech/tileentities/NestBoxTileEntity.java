@@ -109,19 +109,19 @@ public class NestBoxTileEntity extends NestTileEntity implements IMultiTileEntit
         switch(aRenderPass) {
             case 14:
                 //egg
-                aBlock.setBlockBounds(PX_P[7], PX_P[2], PX_P[9], PX_P[10], PX_P[6], PX_P[12]);
+                aBlock.setBlockBounds(PX_P[10], PX_P[2], PX_P[9], PX_P[13], PX_P[6], PX_P[12]);
                 break;
             case 13:
                 //egg
-                aBlock.setBlockBounds(PX_P[9], PX_P[2], PX_P[5], PX_P[12], PX_P[6], PX_P[8]);
+                aBlock.setBlockBounds(PX_P[9], PX_P[2], PX_P[4], PX_P[12], PX_P[6], PX_P[7]);
                 break;
             case 12:
                 //egg
-                aBlock.setBlockBounds(PX_P[5], PX_P[2], PX_P[7], PX_P[8], PX_P[6], PX_P[11]);
+                aBlock.setBlockBounds(PX_P[4], PX_P[2], PX_P[9], PX_P[7], PX_P[6], PX_P[12]);
                 break;
             case 11:
                 //egg
-                aBlock.setBlockBounds(PX_P[5], PX_P[2], PX_P[6], PX_P[8], PX_P[6], PX_P[9]);
+                aBlock.setBlockBounds(PX_P[4], PX_P[2], PX_P[6], PX_P[7], PX_P[6], PX_P[9]);
                 break;
             case 10:
                 //egg

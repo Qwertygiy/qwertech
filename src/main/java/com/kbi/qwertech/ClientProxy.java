@@ -1,5 +1,7 @@
 package com.kbi.qwertech;
 
+import com.kbi.qwertech.api.client.registry.AnimationsRegistry;
+import com.kbi.qwertech.api.client.registry.DefaultAnimations;
 import com.kbi.qwertech.api.data.FOOD;
 import com.kbi.qwertech.api.data.QTConfigs;
 import com.kbi.qwertech.api.data.QTI;
@@ -29,7 +31,9 @@ import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent;
 import gregapi.api.Abstract_Mod;
 import gregapi.block.multitileentity.MultiTileEntityRegistry;
 import gregapi.code.ItemStackContainer;
@@ -46,7 +50,13 @@ import java.util.*;
 
 public final class ClientProxy extends CommonProxy { // NO_UCD (unused code)
 	// Insert your Clientside-only implementation of Stuff here
-	
+
+
+	@Override
+	public void onProxyBeforePreInit(Abstract_Mod aMod, FMLPreInitializationEvent aEvent) {
+		new DefaultAnimations();
+	}
+
 	@Override
 	public void onProxyAfterInit			(Abstract_Mod aMod, FMLInitializationEvent		aEvent)
 	{
@@ -172,6 +182,12 @@ public final class ClientProxy extends CommonProxy { // NO_UCD (unused code)
 	@Override
 	public void onProxyAfterPostInit		(Abstract_Mod aMod, FMLPostInitializationEvent	aEvent) {
 		super.onProxyAfterPostInit(aMod, aEvent);
+	}
+
+	@SubscribeEvent
+	public void onRenderPre(TickEvent.RenderTickEvent rte)
+	{
+		AnimationsRegistry.partialTick = rte.renderTickTime;
 	}
 
 	@SubscribeEvent

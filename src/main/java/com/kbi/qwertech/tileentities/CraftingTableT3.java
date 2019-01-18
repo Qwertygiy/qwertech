@@ -10,6 +10,7 @@ import gregapi.data.MT;
 import gregapi.data.OP;
 import gregapi.gui.Slot_Holo;
 import gregapi.gui.Slot_Normal;
+import gregapi.item.multiitem.MultiItemTool;
 import gregapi.old.Textures;
 import gregapi.render.BlockTextureDefault;
 import gregapi.render.BlockTextureMulti;
@@ -18,6 +19,7 @@ import gregapi.render.ITexture;
 import gregapi.tileentity.delegate.DelegatorTileEntity;
 import gregapi.util.OM;
 import gregapi.util.ST;
+import gregapi.util.UT;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -302,7 +304,13 @@ public class CraftingTableT3 extends CraftingTableT1 implements IMultiTileEntity
 				this.mInventoryPlayer.setInventorySlotContents(slot, currentlyHolding);
 				this.mInventoryPlayer.setInventorySlotContents(this.mInventoryPlayer.currentItem, ourHammer);
 				player.swingItem();
-				ct.handleHammer(this.mInventoryPlayer.player, this.mInventoryPlayer.getStackInSlot(getHammer()));
+				if (ourHammer.getItem() instanceof MultiItemTool) {
+					((MultiItemTool)ourHammer.getItem()).doDamage(ourHammer, UT.Code.units(ct.handleHammer(this.mInventoryPlayer.player, this.mInventoryPlayer.getStackInSlot(getHammer())), 10000, 400, true), this.mInventoryPlayer.player);
+				} else if (ourHammer.isItemStackDamageable())
+				{
+					ourHammer.damageItem(1, this.mInventoryPlayer.player);
+				}
+				this.mInventoryPlayer.setInventorySlotContents(this.mInventoryPlayer.currentItem, ourHammer);
 			}
 			return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
 		}
