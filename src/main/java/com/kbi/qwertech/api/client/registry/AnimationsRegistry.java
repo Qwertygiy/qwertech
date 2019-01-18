@@ -12,6 +12,8 @@ import java.util.List;
 
 public class AnimationsRegistry {
     private static final HashMap<Entity, List<AnimationEntry>> registry = new HashMap<>();
+    private static final HashMap<Entity, Boolean[]> isPlaying = new HashMap<>();
+
     public static float partialTick = 0F;
     /**
      * The instance of PrioritySort that is used to sort animations by priority.
@@ -268,12 +270,19 @@ public class AnimationsRegistry {
         List<AnimationEntry> listen = registry.get(entity);
         if (listen == null)
         {
-            System.out.println("Creating the entry arraylist!");
+            //System.out.println("Creating the entry arraylist!");
             listen = new ArrayList<>();
             registry.put(entity, listen);
         }
         listen.add(new AnimationEntry(mod, anim, pri, dur, entity.worldObj.getTotalWorldTime(), loop));
         Collections.sort(listen, sort);
+        Boolean[] isPlay = isPlaying.get(entity);
+        if (isPlay == null)
+        {
+            isPlay = new Boolean[Short.MAX_VALUE];
+            isPlaying.put(entity, isPlay);
+        }
+        isPlay[anim.getID()] = true;
         System.out.println("Added and sorted " + anim.getName());
         return true;
     }
@@ -363,6 +372,11 @@ public class AnimationsRegistry {
                     //System.out.println("Removing " + ae.animation.getName());
                     ae.animation.restore(ae.model);
                     listen.remove(q);
+                    Boolean[] isPlay = isPlaying.get(entity);
+                    if (isPlay != null)
+                    {
+                        isPlay[anim.getID()] = false;
+                    }
                     q = q - 1;
                 }
                 didWe = true;
@@ -401,18 +415,11 @@ public class AnimationsRegistry {
      */
     public static boolean hasAnimation(Entity entity, ModelAnimation anim)
     {
-        if (anim == null) return false;
+        if (anim == null || anim.getID() < 0) return false;
         if (entity == null || entity.worldObj == null) return false;
-        List<AnimationEntry> listen = registry.get(entity);
-        if (listen == null || listen.size() == 0) return false;
-        for (AnimationEntry ae : listen)
-        {
-            if (ae.animation == anim && ae.startTime <= entity.worldObj.getTotalWorldTime())
-            {
-                return true;
-            }
-        }
-        return false;
+        Boolean[] isPlay = isPlaying.get(entity);
+        if (isPlay == null) return false;
+        return isPlay[anim.getID()];
     }
 
     /**
@@ -440,7 +447,7 @@ public class AnimationsRegistry {
             float percentage = ((float)timePassed + partialTick)/(float)ae.duration;
 
             if (percentage < 1.0F) {
-                ae.animation.apply(ae.model, percentage);
+                ae.animation.apply(ae.model, percentage, ae.model.getVariable(entity, ae.animation.getName()));
             } else {
                 if (ae.looping)
                 {
@@ -450,6 +457,11 @@ public class AnimationsRegistry {
                     //System.out.println("We're removing " + ae.animation.getName());
                     ae.animation.restore(ae.model);
                     listen.remove(q);
+                    Boolean[] isPlay = isPlaying.get(entity);
+                    if (isPlay != null)
+                    {
+                        isPlay[ae.animation.getID()] = false;
+                    }
                     q = q - 1;
                 }
             }

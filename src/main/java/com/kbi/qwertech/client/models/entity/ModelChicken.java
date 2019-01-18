@@ -3,11 +3,10 @@ package com.kbi.qwertech.client.models.entity;
 import com.kbi.qwertech.api.client.models.IModelAnimateable;
 import com.kbi.qwertech.api.client.models.ModelRendererDefaults;
 import com.kbi.qwertech.api.client.registry.AnimationHelper;
-import com.kbi.qwertech.api.client.registry.AnimationsRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.util.MathHelper;
 import org.lwjgl.opengl.GL11;
 
 import java.util.HashMap;
@@ -101,7 +100,7 @@ public class ModelChicken extends net.minecraft.client.model.ModelChicken implem
     public void setRotationAngles(float p_78087_1_, float p_78087_2_, float p_78087_3_, float p_78087_4_, float p_78087_5_, float p_78087_6_, Entity entity)
     {
         EntityLiving elb = (EntityLiving)entity;
-        /*this.head.rotateAngleX = p_78087_5_ / (180F / (float)Math.PI);
+        this.head.rotateAngleX = p_78087_5_ / (180F / (float)Math.PI);
         this.head.rotateAngleY = p_78087_4_ / (180F / (float)Math.PI);
         this.bill.rotateAngleX = this.head.rotateAngleX;
         this.bill.rotateAngleY = this.head.rotateAngleY;
@@ -113,7 +112,12 @@ public class ModelChicken extends net.minecraft.client.model.ModelChicken implem
         this.rightWing.rotateAngleZ = MathHelper.cos(p_78087_1_ * 0.666F) * 1.4F * p_78087_2_;
         if (this.rightWing.rotateAngleZ < 0) this.rightWing.rotateAngleZ *= -1F;
         this.leftWing.rotateAngleZ = MathHelper.cos(p_78087_1_ * 0.666F + (float)Math.PI) * 1.4F * p_78087_2_;
-        if (this.leftWing.rotateAngleZ > 0) this.leftWing.rotateAngleZ *= -1F;*/
+        if (this.leftWing.rotateAngleZ > 0) this.leftWing.rotateAngleZ *= -1F;
+/*
+        if (!AnimationsRegistry.hasAnimation(entity, "breathe"))
+        {
+            AnimationsRegistry.addAnimation(entity, this, "breathe", 0, (short)20, true, false);
+        }
 
         if (entity.onGround && (elb.limbSwingAmount > 0.1F))
         {
@@ -128,11 +132,11 @@ public class ModelChicken extends net.minecraft.client.model.ModelChicken implem
 
         if (!entity.onGround && entity.fallDistance != 0)
         {
-            AnimationsRegistry.addAnimation(entity, this, "fly", 1, (short)8, true, false);
+            AnimationsRegistry.addAnimation(entity, this, "fly", 1, (short)5, true, false);
         } else {
             AnimationsRegistry.removeAnimation(entity, "fly", true);
         }
-        AnimationsRegistry.setAnimations(entity);
+        AnimationsRegistry.setAnimations(entity);*/
     }
 
     @Override
@@ -148,5 +152,15 @@ public class ModelChicken extends net.minecraft.client.model.ModelChicken implem
     @Override
     public ModelRendererDefaults getBox(String name) {
         return boxes.get(name);
+    }
+
+    @Override
+    public float getVariable(Entity entity, String ID) {
+        switch(ID)
+        {
+            case "walk": return ((EntityLiving)entity).limbSwingAmount;
+            case "fly": return entity.fallDistance;
+            default: return 1F;
+        }
     }
 }

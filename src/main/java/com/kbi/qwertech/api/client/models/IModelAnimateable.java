@@ -1,6 +1,7 @@
 package com.kbi.qwertech.api.client.models;
 
-import java.util.List;
+import net.minecraft.entity.Entity;
+
 import java.util.Map;
 
 public interface IModelAnimateable {
@@ -22,4 +23,6 @@ public interface IModelAnimateable {
      * @return The box with that key
      */
     ModelRendererDefaults getBox(String name);
+
+    float getVariable(Entity entity, String ID);
 }

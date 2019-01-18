@@ -15,7 +15,7 @@ public class BoxAnimation {
     protected Map<Float, Float> rotateZ;
     protected Map<Float, Boolean> visible;
     protected List<Float> activeTimes;
-    private ModelRendererDefaults box;
+    protected ModelRendererDefaults box;
 
     private boolean cleanedUp = false;
 
@@ -35,11 +35,11 @@ public class BoxAnimation {
 
         setOrigin(0.0F, 0.0F, 0.0F, 0.0F);
         setOffset(0.0F, 0.0F, 0.0F, 0.0F);
-        setRotate(0.0F, 0, 0, 0);
+        setRotate(0.0F, 0.0F, 0.0F, 0.0F);
         setVisible(0.0F, true);
         setOrigin(1.0F, 0.0F, 0.0F, 0.0F);
         setOffset(1.0F, 0.0F, 0.0F, 0.0F);
-        setRotate(1.0F, 0, 0, 0);
+        setRotate(1.0F, 0.0F, 0.0F, 0.0F);
         setVisible(1.0F, true);
     }
 
@@ -67,8 +67,9 @@ public class BoxAnimation {
      * @param map The map containing values which is to be queried.
      * @return The value interpolated between the values of the map closest to the given time.
      */
-    private Object get(float time, Map map)
+    protected final Object get(float time, Map map)
     {
+        if (map.size() < 2) return 0.0F;
         if (time < 0.0F || time > 1.0F)
         {
             time = time % 1.0F;
@@ -153,7 +154,7 @@ public class BoxAnimation {
      * @param value The value to be added at the given time.
      * @return True if successful.
      */
-    private boolean set(float time, Map map, Object value)
+    protected final boolean set(float time, Map map, Object value)
     {
         if (time < 0.0F || time > 1.0F)
         {
@@ -178,7 +179,7 @@ public class BoxAnimation {
      * Removes any unchanged parameters. If one never changes, there is no need to calculate it.
      * @param map The map of values to clean up, if the values contained are all identical.
      */
-    private void cleanUp(Map<Float, ?> map)
+    protected void cleanUp(Map<Float, ?> map)
     {
         Object firstly = map.get(0.0F);
         for (float key : map.keySet())
@@ -195,7 +196,7 @@ public class BoxAnimation {
     /**
      * Clean ALL the things!
      */
-    private void cleanUp()
+    protected void cleanUp()
     {
         cleanUp(rotateX);
         cleanUp(rotateY);
@@ -213,7 +214,7 @@ public class BoxAnimation {
      * @param map The map containing the stat to check.
      * @return True if we should, false if it's empty.
      */
-    private boolean should(Map<Float, ?> map)
+    protected boolean should(Map<Float, ?> map)
     {
         if (!cleanedUp)
         {
@@ -357,6 +358,11 @@ public class BoxAnimation {
         if (should(visible)) box.isHidden = !getVisible(time);
     }
 
+    public void apply(ModelRendererDefaults box, float time, float variable)
+    {
+        apply(box, time);
+    }
+
     /**
      * If this animation has been locked to a model, animate that model for the given time.
      * @param time The time of the animation, from 0.0F at start to 1.0F at end.
@@ -376,6 +382,11 @@ public class BoxAnimation {
         if (should(rotateZ)) box.rotateAngleZ = box.defaultRotateZ + getRotateZ(time);
         if (should(visible)) box.isHidden = !getVisible(time);
         return true;
+    }
+
+    public boolean apply(float time, float variable)
+    {
+        return apply(time);
     }
 
     /**

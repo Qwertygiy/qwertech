@@ -124,7 +124,7 @@ public class ModelAnimation {
      * @param model The model to animate.
      * @param time The time, where 0.0f is start and 1.0f is end.
      */
-    public void apply(IModelAnimateable model, float time)
+    public void apply(IModelAnimateable model, float time, float variable)
     {
         for (String key : boxes.keySet())
         {
@@ -132,7 +132,7 @@ public class ModelAnimation {
             if (box != null)
             {
                 BoxAnimation toBox = boxes.get(key);
-                toBox.apply(box, time);
+                toBox.apply(box, time, variable);
             }
         }
     }
@@ -142,7 +142,7 @@ public class ModelAnimation {
      * @param time The time, where 0.0f is start and 1.0f is end.
      * @return True if locked to a model.
      */
-    public boolean apply(float time)
+    public boolean apply(float time, float variable)
     {
         if (model == null) return false;
         for (String key : boxes.keySet())
@@ -151,7 +151,7 @@ public class ModelAnimation {
             if (box != null)
             {
                 BoxAnimation toBox = boxes.get(key);
-                toBox.apply(box, time);
+                toBox.apply(box, time, variable);
             }
         }
         return true;
