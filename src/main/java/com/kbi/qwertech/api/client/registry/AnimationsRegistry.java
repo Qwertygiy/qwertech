@@ -3,6 +3,7 @@ package com.kbi.qwertech.api.client.registry;
 import com.kbi.qwertech.api.client.models.IModelAnimateable;
 import com.kbi.qwertech.api.client.models.ModelAnimation;
 import com.kbi.qwertech.api.client.registry.AnimationEntry.PrioritySort;
+import gregapi.util.UT;
 import net.minecraft.entity.Entity;
 
 import java.util.ArrayList;
@@ -280,10 +281,11 @@ public class AnimationsRegistry {
         if (isPlay == null)
         {
             isPlay = new Boolean[Short.MAX_VALUE];
+            UT.Code.fill(false, isPlay);
             isPlaying.put(entity, isPlay);
         }
         isPlay[anim.getID()] = true;
-        System.out.println("Added and sorted " + anim.getName());
+        //System.out.println("Added and sorted " + anim.getName() + " at spot " + anim.getID());
         return true;
     }
 
@@ -418,7 +420,7 @@ public class AnimationsRegistry {
         if (anim == null || anim.getID() < 0) return false;
         if (entity == null || entity.worldObj == null) return false;
         Boolean[] isPlay = isPlaying.get(entity);
-        if (isPlay == null) return false;
+        if (isPlay == null || isPlay.length <= anim.getID()) return false;
         return isPlay[anim.getID()];
     }
 
@@ -455,7 +457,6 @@ public class AnimationsRegistry {
                     ae.startTime = entity.worldObj.getTotalWorldTime();
                 } else {
                     //System.out.println("We're removing " + ae.animation.getName());
-                    ae.animation.restore(ae.model);
                     listen.remove(q);
                     Boolean[] isPlay = isPlaying.get(entity);
                     if (isPlay != null)

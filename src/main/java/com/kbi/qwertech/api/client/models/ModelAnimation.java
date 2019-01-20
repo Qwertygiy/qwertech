@@ -151,6 +151,7 @@ public class ModelAnimation {
             if (box != null)
             {
                 BoxAnimation toBox = boxes.get(key);
+                System.out.println("Now applying " + this.getName() + " on " + key);
                 toBox.apply(box, time, variable);
             }
         }

@@ -28,4 +28,13 @@ public class AnimationHelper {
     {
         box.setDefaults(box.rotationPointX, box.rotationPointY, box.rotationPointZ, box.offsetX, box.offsetY, box.offsetZ, box.rotateAngleX, box.rotateAngleY, box.rotateAngleZ);
     }
+
+    public static void reset(IModelAnimateable model)
+    {
+        Map<String, ModelRendererDefaults>boxes = model.getBoxes();
+        for (ModelRendererDefaults box : boxes.values())
+        {
+            box.restore();
+        }
+    }
 }

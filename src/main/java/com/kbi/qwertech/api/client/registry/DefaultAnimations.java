@@ -21,13 +21,13 @@ public class DefaultAnimations {
     {
         //walky
         BoxAnimationVariable left = new BoxAnimationVariable();
-        left.setRotateX(0.25F, 0.0F, 0.25F);
+        left.setRotateX(0.25F, 0.0F, 1F);
         left.setRotateX(0.50F, 0.0F, 0.0F);
-        left.setRotateX(0.75F, 0.0F, -0.25F);
+        left.setRotateX(0.75F, 0.0F, -1F);
         BoxAnimationVariable right = new BoxAnimationVariable();
-        right.setRotateX(0.25F, 0.0F, -0.25F);
+        right.setRotateX(0.25F, 0.0F, -1F);
         right.setRotateX(0.50F, 0.0F, 0.0F);
-        right.setRotateX(0.75F, 0.0F, 0.25F);
+        right.setRotateX(0.75F, 0.0F, 1F);
         ModelAnimation walk = new ModelAnimation();
         walk.addPart("leftLeg", left);
         walk.addPart("rightLeg", right);
@@ -35,17 +35,17 @@ public class DefaultAnimations {
 
         //fly
         left = new BoxAnimationVariable();
-        left.setRotateZ(0.0F, -0.5F);
-        left.setRotateZ(0.25F, -2F);
-        left.setRotateZ(0.5F, -0.5F);
-        left.setRotateZ(0.75F, -2F);
-        left.setRotateZ(1.0F, -0.5F);
+        left.setRotateZ(0.0F, -0.1F, -0.5F);
+        left.setRotateZ(0.25F, -0.25F, -1F);
+        left.setRotateZ(0.5F, -0.1F, -0.5F);
+        left.setRotateZ(0.75F, -0.25F, -1F);
+        left.setRotateZ(1.0F, -0.1F, -0.5F);
         right = new BoxAnimationVariable();
-        right.setRotateZ(0.0F, 0.5F);
-        right.setRotateZ(0.25F, 2F);
-        right.setRotateZ(0.5F, 0.5F);
-        right.setRotateZ(0.75F, 2F);
-        right.setRotateZ(1.0F, 0.5F);
+        right.setRotateZ(0.0F, 0.1F, 0.5F);
+        right.setRotateZ(0.25F, 0.25F, 1F);
+        right.setRotateZ(0.5F, 0.1F, 0.5F);
+        right.setRotateZ(0.75F, 0.25F, 1F);
+        right.setRotateZ(1.0F, 0.1F, 0.5F);
         ModelAnimation fly = new ModelAnimation();
         fly.addPart("leftWing", left);
         fly.addPart("rightWing", right);
@@ -53,15 +53,15 @@ public class DefaultAnimations {
 
         //idle
         BoxAnimation body = new BoxAnimation();
-        body.setOriginY(0.5F, -0.1F);
+        body.setOriginY(0.5F, -0.3F);
         BoxAnimation head = new BoxAnimation();
-        head.setOriginY(0.4F, -0.05F);
+        head.setOriginY(0.4F, -0.2F);
         BoxAnimation bill = new BoxAnimation();
-        bill.setOriginY(0.4F, -0.05F);
+        bill.setOriginY(0.4F, -0.2F);
         BoxAnimation chin = new BoxAnimation();
-        chin.setOriginY(0.4F, -0.05F);
+        chin.setOriginY(0.4F, -0.2F);
         BoxAnimation crest = new BoxAnimation();
-        crest.setOriginY(0.4F, -0.05F);
+        crest.setOriginY(0.4F, -0.2F);
         ModelAnimation breathe = new ModelAnimation();
         breathe.addPart("body", body);
         breathe.addPart("head", head);
