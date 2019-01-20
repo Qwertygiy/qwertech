@@ -16,7 +16,6 @@ import java.util.Map;
 public class ModelChicken extends net.minecraft.client.model.ModelChicken implements IModelAnimateable {
 
     private HashMap<String, ModelRendererDefaults> boxes = new HashMap<>();
-    private float partialTicks;
 
     public ModelChicken()
     {
@@ -33,7 +32,7 @@ public class ModelChicken extends net.minecraft.client.model.ModelChicken implem
         this.body = new ModelRendererDefaults(this, 0, 9);
         this.body.addBox(-3.0F, -4.0F, -3.0F, 6, 8, 6, 0.0F);
         this.body.setRotationPoint(0.0F, (float)b0, 0.0F);
-        this.body.rotateAngleX = 90;
+        this.body.rotateAngleX = 1.5708F;
         this.rightLeg = new ModelRendererDefaults(this, 26, 0);
         this.rightLeg.addBox(-1.0F, 0.0F, -3.0F, 3, 5, 3);
         this.rightLeg.setRotationPoint(-2.0F, (float)(3 + b0), 1.0F);
@@ -64,7 +63,9 @@ public class ModelChicken extends net.minecraft.client.model.ModelChicken implem
 
     public void render(Entity p_78088_1_, float p_78088_2_, float p_78088_3_, float p_78088_4_, float p_78088_5_, float p_78088_6_, float p_78088_7_)
     {
+        AnimationHelper.reset(this);
         this.setRotationAngles(p_78088_2_, p_78088_3_, p_78088_4_, p_78088_5_, p_78088_6_, p_78088_7_, p_78088_1_);
+        AnimationsRegistry.setAnimations(p_78088_1_);
 
         if (this.isChild)
         {
@@ -101,7 +102,6 @@ public class ModelChicken extends net.minecraft.client.model.ModelChicken implem
     @Override
     public void setRotationAngles(float p_78087_1_, float p_78087_2_, float p_78087_3_, float p_78087_4_, float p_78087_5_, float p_78087_6_, Entity entity)
     {
-        AnimationHelper.reset(this);
         EntityLiving elb = (EntityLiving)entity;
 
         this.head.rotateAngleX = p_78087_5_ / (180F / (float)Math.PI);
@@ -148,7 +148,6 @@ public class ModelChicken extends net.minecraft.client.model.ModelChicken implem
         {
             AnimationsRegistry.addAnimation(entity, this, "chickenhurt", 10, (short)10, false, false);
         }
-        AnimationsRegistry.setAnimations(entity);
     }
 
     @Override
