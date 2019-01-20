@@ -40,11 +40,11 @@ public class ModelChicken extends net.minecraft.client.model.ModelChicken implem
         this.leftLeg.addBox(-1.0F, 0.0F, -3.0F, 3, 5, 3);
         this.leftLeg.setRotationPoint(1.0F, (float)(3 + b0), 1.0F);
         this.rightWing = new ModelRendererDefaults(this, 24, 13);
-        this.rightWing.addBox(0.0F, 0.0F, -3.0F, 1, 4, 6);
-        this.rightWing.setRotationPoint(-4.0F, (float)(-3 + b0), 0.0F);
+        this.rightWing.addBox(-1.0F, 0.0F, -3.0F, 1, 4, 6);
+        this.rightWing.setRotationPoint(-3.0F, (float)(-3 + b0), 0.0F);
         this.leftWing = new ModelRendererDefaults(this, 24, 13);
-        this.leftWing.addBox(-1.0F, 0.0F, -3.0F, 1, 4, 6);
-        this.leftWing.setRotationPoint(4.0F, (float)(-3 + b0), 0.0F);
+        this.leftWing.addBox(0.0F, 0.0F, -3.0F, 1, 4, 6);
+        this.leftWing.setRotationPoint(3.0F, (float)(-3 + b0), 0.0F);
         addBox((ModelRendererDefaults)this.head, "head");
         addBox((ModelRendererDefaults)this.bill, "bill");
         addBox((ModelRendererDefaults)this.chin, "chin");
@@ -128,9 +128,11 @@ public class ModelChicken extends net.minecraft.client.model.ModelChicken implem
             double speed = elb.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue() - 0.25;
             speed = speed * 20;
             AnimationsRegistry.addAnimation(entity, this, "walk", 1, (short)(10 - Math.floor(speed)), true, false);
+            AnimationsRegistry.addAnimation(entity, this, "chickenheadbop", 1, (short)(10 - Math.floor(speed)), true, false);
         } else if (entity.prevPosX == entity.posX && entity.prevPosZ == entity.posZ)
         {
             AnimationsRegistry.removeAnimation(entity, "walk", true);
+            AnimationsRegistry.removeAnimation(entity, "chickenheadbop", true);
         }
 
         if (!entity.onGround && entity.fallDistance != 0)
