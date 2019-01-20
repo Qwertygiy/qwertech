@@ -33,6 +33,7 @@ public class ModelChicken extends net.minecraft.client.model.ModelChicken implem
         this.body = new ModelRendererDefaults(this, 0, 9);
         this.body.addBox(-3.0F, -4.0F, -3.0F, 6, 8, 6, 0.0F);
         this.body.setRotationPoint(0.0F, (float)b0, 0.0F);
+        this.body.rotateAngleX = 90;
         this.rightLeg = new ModelRendererDefaults(this, 26, 0);
         this.rightLeg.addBox(-1.0F, 0.0F, -3.0F, 3, 5, 3);
         this.rightLeg.setRotationPoint(-2.0F, (float)(3 + b0), 1.0F);
@@ -102,13 +103,14 @@ public class ModelChicken extends net.minecraft.client.model.ModelChicken implem
     {
         AnimationHelper.reset(this);
         EntityLiving elb = (EntityLiving)entity;
-        /*
+
         this.head.rotateAngleX = p_78087_5_ / (180F / (float)Math.PI);
         this.head.rotateAngleY = p_78087_4_ / (180F / (float)Math.PI);
         this.bill.rotateAngleX = this.head.rotateAngleX;
         this.bill.rotateAngleY = this.head.rotateAngleY;
         this.chin.rotateAngleX = this.head.rotateAngleX;
         this.chin.rotateAngleY = this.head.rotateAngleY;
+        /*
         this.body.rotateAngleX = ((float)Math.PI / 2F);
         this.rightLeg.rotateAngleX = MathHelper.cos(p_78087_1_ * 0.6662F) * 1.4F * p_78087_2_;
         this.leftLeg.rotateAngleX = MathHelper.cos(p_78087_1_ * 0.6662F + (float)Math.PI) * 1.4F * p_78087_2_;
@@ -140,6 +142,11 @@ public class ModelChicken extends net.minecraft.client.model.ModelChicken implem
             AnimationsRegistry.addAnimation(entity, this, "fly", 1, (short)5, true, false);
         } else {
             AnimationsRegistry.removeAnimation(entity, "fly", true);
+        }
+
+        if (elb.hurtTime > 0)
+        {
+            AnimationsRegistry.addAnimation(entity, this, "chickenhurt", 10, (short)10, false, false);
         }
         AnimationsRegistry.setAnimations(entity);
     }

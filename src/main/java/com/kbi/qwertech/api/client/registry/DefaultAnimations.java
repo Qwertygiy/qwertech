@@ -10,6 +10,8 @@ public class DefaultAnimations {
     private BoxAnimationVariable body;
     private BoxAnimationVariable left;
     private BoxAnimationVariable right;
+    private BoxAnimationVariable l2;
+    private BoxAnimationVariable r2;
 
     public DefaultAnimations()
     {
@@ -79,14 +81,48 @@ public class DefaultAnimations {
 
         //chickenbop
         head = new BoxAnimationVariable();
-        head.setOriginZ(0.35F, 2F);
+        head.setOriginZ(0.35F, 1.5F);
         head.setOriginZ(0.5F, 0F);
-        head.setOriginZ(0.85F, 2F);
+        head.setOriginZ(0.85F, 1.5F);
         ModelAnimation chickenBop = new ModelAnimation();
         chickenBop.addPart("head", head);
         chickenBop.addPart("bill", head);
         chickenBop.addPart("chin", head);
         chickenBop.addPart("crest", head);
         AnimationsRegistry.registerAnimation(chickenBop, 3, "chickenheadbop");
+
+        //chickenhurt
+        body = new BoxAnimationVariable();
+        body.setRotateX(0.25F, -0.175F);
+        body.setRotateX(0.75F, -0.175F);
+        left = new BoxAnimationVariable();
+        left.setRotateX(0.25F, -0.175F);
+        left.setRotateX(0.75F, -0.175F);
+        left.setOriginX(0.5F, -0.15F);
+        right = new BoxAnimationVariable();
+        right.setRotateX(0.25F, -0.175F);
+        right.setRotateX(0.75F, -0.175F);
+        right.setOriginX(0.5F, -0.15F);
+        head = new BoxAnimationVariable();
+        head.setRotateX(0.25F, -0.2F);
+        head.setRotateX(0.5F, -0.1F);
+        head.setRotateX(0.75F, -0.2F);
+        l2 = new BoxAnimationVariable();
+        l2.setRotateX(0.5F, -0.875F);
+        r2 = new BoxAnimationVariable();
+        r2.setRotateX(0.5F, 0.875F);
+        ModelAnimation chickenHurt = new ModelAnimation();
+        chickenHurt.addPart("body", body);
+        chickenHurt.addPart("leftWing", left);
+        chickenHurt.addPart("rightWing", right);
+        chickenHurt.addPart("leftLeg", l2);
+        chickenHurt.addPart("rightLeg", r2);
+        chickenHurt.addPart("leftArm", r2);
+        chickenHurt.addPart("rightArm", l2);
+        chickenHurt.addPart("head", head);
+        chickenHurt.addPart("chin", head);
+        chickenHurt.addPart("bill", head);
+        chickenHurt.addPart("crest", head);
+        AnimationsRegistry.registerAnimation(chickenHurt, 4, "chickenhurt");
     }
 }
