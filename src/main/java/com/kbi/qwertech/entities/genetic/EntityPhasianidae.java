@@ -729,6 +729,8 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
         this.dataWatcher.updateObject(20, size);
         data[0] = size;
         this.setSize((float)(size * 0.0004), (float)(size * 0.0006));
+        this.height = (float)(size * 0.0006);
+        this.width = (float)(size * 0.0004);
         updateHealthAndSpeed();
     }
 
@@ -994,6 +996,11 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
     {
         super.applyEntityAttributes();
         //this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(1.0D);
+    }
+
+    @Override
+    public float getEyeHeight() {
+        return super.getEyeHeight();
     }
 
     @Override
