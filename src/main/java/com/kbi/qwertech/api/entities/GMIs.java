@@ -1,10 +1,6 @@
 package com.kbi.qwertech.api.entities;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Vec3;
 
 /**
  * GMIs - Genetic Mob Interfaces
@@ -51,18 +47,4 @@ public class GMIs {
          */
         boolean shouldAutoAggro(IGeneticMob geneticMob, EntityLivingBase otherEntity);
     }
-
-    public interface IEatStuffOnTheGround {
-
-        /**
-         * shouldEatOffTheGround
-         * The desirability of this item to this mob
-         * @param geneticMob the mob that may be hungry
-         * @param itemEntity the item that may be food
-         * @return how likely this mob will go after this item, from 0 to 1
-         */
-        float shouldEatOffTheGround(IGeneticMob geneticMob, EntityItem itemEntity);
-    }
-
-
 }
