@@ -63,11 +63,14 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
 
     @Override
     public String getCommandSenderName() {
+        //System.out.println("Looking up " + this.species + " species and " + this.subtype + " subtype now");
         return hasCustomNameTag() ? getCustomNameTag() : (String)this.getSpecies().getTag(NAME_ENGLISH) + " (" + (String)this.getSubtype().getTag(NAME_ENGLISH) + ")";
     }
 
     @Override
     public boolean interact(EntityPlayer playa) {
+        //System.out.println("We have " + this.getSpecies().toString() + " and " + this.getSubtype().toString());
+        //System.out.println("Our IDS are " + this.getSpeciesID() + " and " + this.getSubtypeID());
         ItemStack stacky = playa.getHeldItem();
         if (ST.invalid(stacky)) return super.interact(playa);
         if (stacky.getItem() instanceof MultiItem)
@@ -644,12 +647,14 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
 
     @Override
     public short getSpeciesID() {
-        return this.dataWatcher.getWatchableObjectShort(18);
+        species = this.dataWatcher.getWatchableObjectShort(18);
+        return species;
     }
 
     @Override
     public short getSubtypeID() {
-        return this.dataWatcher.getWatchableObjectShort(19);
+        subtype = this.dataWatcher.getWatchableObjectShort(19);
+        return subtype;
     }
 
     @Override
@@ -1015,11 +1020,13 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
 
     @Override
     public Species getSpecies() {
+        theSpecies = MobSpeciesRegistry.getSpecies(this.getClass(), getSpeciesID());
         return theSpecies;
     }
 
     @Override
     public Subtype getSubtype() {
+        theSubtype = theSpecies.getSubtype(getSubtypeID());
         return theSubtype;
     }
 }
