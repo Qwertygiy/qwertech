@@ -1,17 +1,21 @@
 package com.kbi.qwertech.entities;
 
+import com.kbi.qwertech.QwerTech;
 import com.kbi.qwertech.api.data.COLOR;
 import com.kbi.qwertech.api.entities.IGeneticMob;
 import com.kbi.qwertech.api.entities.Species;
 import com.kbi.qwertech.api.entities.Subtype;
 import com.kbi.qwertech.api.entities.Taggable;
 import com.kbi.qwertech.api.registry.MobSpeciesRegistry;
+import com.kbi.qwertech.entities.ai.EntityAIEatFoodOffTheGround;
 import com.kbi.qwertech.entities.ai.EntityAILayEgg;
+import com.kbi.qwertech.entities.ai.EntityAINesting;
 import gregapi.data.CS;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
@@ -27,6 +31,7 @@ public class EntityHelperFunctions {
 
     public static void assignAI(EntityLiving entity, IGeneticMob mobData, List<String> tags, Taggable theKind)
     {
+    	boolean doesEAT = true;
         for (String tag : tags)
         {
             switch(tag)
@@ -45,6 +50,43 @@ public class EntityHelperFunctions {
                     break;
                 case AVOIDS_BLOCK:
                     break;
+				case IGNORES_GROUND_FOOD:
+					doesEAT = false;
+					if ((boolean)theKind.getTag(tag)) {
+						List tasks = entity.tasks.taskEntries;
+						for (int q = 0; q < tasks.size(); q++)
+						{
+							Object task = tasks.get(q);
+							if (task instanceof EntityAIEatFoodOffTheGround)
+							{
+								tasks.remove(task);
+								q = q - 1;
+							}
+						}
+					} else {
+						entity.tasks.addTask(4, new EntityAIEatFoodOffTheGround(entity));
+					}
+					break;
+				case NESTING_GROUND:
+					if ((boolean)theKind.getTag(tag)) {
+						if (theKind.hasTag(NEST_ITEM)) {
+							entity.tasks.addTask(1, new EntityAINesting(entity, (ItemStack)theKind.getTag(NEST_ITEM)));
+						} else {
+							entity.tasks.addTask(1, new EntityAINesting(entity, QwerTech.machines.getItem(1770)));
+						}
+					} else {
+						List tasks = entity.tasks.taskEntries;
+						for (int q = 0; q < tasks.size(); q++)
+						{
+							Object task = tasks.get(q);
+							if (task instanceof EntityAINesting)
+							{
+								tasks.remove(task);
+								q = q - 1;
+							}
+						}
+					}
+					break;
                 case LAYS_EGGS:
                     if ((boolean)theKind.getTag(tag)) {
                         entity.tasks.addTask(10, new EntityAILayEgg(entity, 2000, 32000));
@@ -65,6 +107,10 @@ public class EntityHelperFunctions {
                     break;
             }
         }
+        if (doesEAT)
+		{
+			entity.tasks.addTask(4, new EntityAIEatFoodOffTheGround(entity));
+		}
     }
 
 	public static void assignAI(EntityLiving entity, IGeneticMob mobData)

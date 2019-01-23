@@ -26,6 +26,7 @@ import com.kbi.qwertech.entities.neutral.EntityTurkey;
 import com.kbi.qwertech.entities.passive.EntityFrog;
 import com.kbi.qwertech.entities.projectile.*;
 import com.kbi.qwertech.loaders.RegisterSpecies;
+import com.kbi.qwertech.loaders.mod.WailaGeneticEntityHUD;
 import com.kbi.qwertech.tileentities.*;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -41,6 +42,7 @@ import gregapi.data.CS;
 import gregapi.data.LH;
 import gregapi.data.OP;
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -128,6 +130,24 @@ public final class ClientProxy extends CommonProxy { // NO_UCD (unused code)
 		wallRenderID = RenderingRegistry.getNextAvailableRenderId();
 		RenderingRegistry.registerBlockHandler(wallRenderID, new RenderCorrugated());
 		registerModels();
+
+		try {
+			Class MR = Class.forName("mcp.mobius.waila.api.impl.ModuleRegistrar");
+			if (MR != null)
+			{
+				try {
+					mcp.mobius.waila.api.impl.ModuleRegistrar.instance().registerBodyProvider(new WailaGeneticEntityHUD(), EntityLiving.class);
+				} catch (Exception e)
+				{
+					System.out.println("Error registering WAILA compatibility:");
+					e.printStackTrace();
+				}
+			}
+		} catch (Exception e)
+		{
+			System.out.println("WAILA not found, not adding WAILA compat");
+		}
+
 		System.out.println("REGISTEREDRENDERER");
 	}
 

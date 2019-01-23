@@ -17,6 +17,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import gregapi.data.*;
 import gregapi.item.multiitem.MultiItemTool;
+import gregapi.oredict.OreDictManager;
 import gregapi.oredict.OreDictMaterial;
 import gregapi.util.ST;
 import gregapi.util.UT;
@@ -36,6 +37,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.BiomeDictionary;
@@ -532,6 +534,60 @@ public class RegisterMobs {
 				event.target.setDead();
 				event.setCanceled(true);
 			}
+		} else if (event.target instanceof EntityAnimal && bottle != null)
+		{
+			EntityAnimal ea = (EntityAnimal)event.target;
+			boolean canEat = false;
+			if (ea.isBreedingItem(bottle))
+			{
+				canEat = true;
+			} else {
+				List<Object> results = null;
+				if (ea.isBreedingItem(new ItemStack(Items.wheat)))
+				{
+					results = MobBreedRegistry.getItemReplacements(Items.wheat);
+				} else if (ea.isBreedingItem(new ItemStack(Items.wheat_seeds)))
+				{
+					results = MobBreedRegistry.getItemReplacements(Items.wheat_seeds);
+				} else if (ea.isBreedingItem(new ItemStack(Items.carrot)))
+				{
+					results = MobBreedRegistry.getItemReplacements(Items.carrot);
+				} else if (ea.isBreedingItem(new ItemStack(Items.fish)))
+				{
+					results = MobBreedRegistry.getItemReplacements(Items.fish);
+				} else if (ea.isBreedingItem(new ItemStack(Items.porkchop)))
+				{
+					results = MobBreedRegistry.getItemReplacements(Items.porkchop);
+				}
+				if (results == null) return;
+				for (Object o : results)
+				{
+					if (o instanceof String)
+					{
+						if (OreDictManager.isItemStackInstanceOf(bottle, o))
+						{
+							canEat = true;
+							break;
+						}
+					} else if (o instanceof ItemStack)
+					{
+						if (ST.equal((ItemStack)o, bottle))
+						{
+							canEat = true;
+							break;
+						}
+					}
+				}
+			}
+			if (canEat)
+			{
+				float heal = 1;
+				if (bottle.getItem() instanceof ItemFood)
+				{
+					heal = ((ItemFood)bottle.getItem()).func_150905_g(bottle);
+				}
+				ea.heal(heal);
+			}
 		}
 	}
 	
@@ -654,7 +710,9 @@ public class RegisterMobs {
 						boolean shy = false;
 						if (ec instanceof EntityOcelot) shy = true;
 						addAI((EntityLiving)event.entity, new EntityAITemptAdvanced(ec, 1D, shy), tasks.get(q).priority, false, false);
+						addAI((EntityLiving)event.entity, new EntityAIEatFoodOffTheGround(ec), tasks.get(q).priority - 1, false, false);
 						ec.tasks.removeTask(action);
+						q = q - 1;
 					}
 				}
 			}

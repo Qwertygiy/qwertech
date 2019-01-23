@@ -1,5 +1,6 @@
 package com.kbi.qwertech.loaders;
 
+import com.kbi.qwertech.QwerTech;
 import com.kbi.qwertech.api.data.COLOR;
 import com.kbi.qwertech.api.data.QTI;
 import com.kbi.qwertech.api.entities.Species;
@@ -32,6 +33,7 @@ public class RegisterSpecies {
         starts with N: name
         starts with S: sound
         starts with T: texture
+        starts with V: avoids
      */
     public static final String
             SOUNDS_IDLE = "SI",
@@ -67,7 +69,10 @@ public class RegisterSpecies {
             AI_LIST = "LAI",
             LAYS_EGGS = "LEGG",
             AVOIDS_ENTITY = "VE",
-            AVOIDS_BLOCK = "VB";
+            AVOIDS_BLOCK = "VB",
+            IGNORES_GROUND_FOOD = "VF",
+            NESTING_GROUND = "HNG",
+            NEST_ITEM = "DN";
 
     public static Taggable setLatin(Taggable spec, String name)
     {
@@ -184,6 +189,21 @@ public class RegisterSpecies {
     public static Species addEgg(Species spec, ItemStack eggItem, int eggColor, boolean laysEgg)
     {
         return spec.addTag(ITEM_EGG, eggItem).addTag(COLOR_EGG, eggColor).addTag(LAYS_EGGS, laysEgg);
+    }
+
+    public static Taggable setNesting(Taggable spec)
+    {
+        return setNesting(spec, true);
+    }
+
+    public static Taggable setNesting(Taggable spec, boolean usesNest)
+    {
+        return setNesting(spec, usesNest, QwerTech.machines.getItem(1770));
+    }
+
+    public static Taggable setNesting(Taggable spec, boolean usesNest, ItemStack nestItem)
+    {
+        return spec.addTag(NESTING_GROUND, usesNest).addTag(NEST_ITEM, nestItem);
     }
 
     public static Taggable setPrimaryColor(Taggable spec, String color)
@@ -328,6 +348,7 @@ public class RegisterSpecies {
         UT.NBT.set(feather, tag);
 
         Species chicken = new Species(EntityPhasianidae.class);
+        setNesting(chicken);
         setPrimaryColors(chicken, "Black", "White"); setSecondaryColors(chicken, "Black", "White"); setNames(chicken, "Gallus gallus domesticus", "Chicken", "qwertech.phasian.chicken"); addEgg(chicken, QTI.qwerFood.getWithDamage(1, 32), COLOR.make(222, 205, 200)); addPrimaryDrop(chicken, QTI.chickenWholeRaw.get(1)); addSecondaryDrop(chicken, feather);
         chicken.setMinFertility(8000)     .setMaxFertility(Short.MAX_VALUE)   .setMinMaturity(16000)      .setMaxMaturity(Short.MAX_VALUE)    .setMinMutable(10)      .setMaxMutable(1000)    .setMinSize(400)   .setMaxSize(3000)   .setMinSmart(1) .setMaxSmart(10000) .setMinSnarl(0) .setMaxSnarl(20000) .setMinStamina(100) .setMaxStamina(16000)   .setMinStrength(100)    .setMaxStrength(8000);
         MobSpeciesRegistry.addSpecies(EntityPhasianidae.class, 0, chicken);
@@ -407,6 +428,7 @@ public class RegisterSpecies {
         chicken.setSubtype(12, superChick);
 
         Species redJunglefowl = new Species(EntityPhasianidae.class);
+        setNesting(redJunglefowl);
         setPrimaryColors(redJunglefowl, "Black",       "White"); setSecondaryColors(redJunglefowl, "Black",         "White"); setEnglish(redJunglefowl, "Red Junglefowl");           setLatin(redJunglefowl, "Gallus gallus"); setTranslate(redJunglefowl, "qwertech.phasian.redjungle");
         redJunglefowl.setMinFertility(2000)     .setMaxFertility(20000)   .setMinMaturity(8000)      .setMaxMaturity(20000)    .setMinMutable(10)      .setMaxMutable(1000)    .setMinSize(500)   .setMaxSize(2000)   .setMinSmart(100) .setMaxSmart(10000) .setMinSnarl(0) .setMaxSnarl(20000) .setMinStamina(1000) .setMaxStamina(16000)   .setMinStrength(1000)    .setMaxStrength(6000);
         addPrimaryDrop(redJunglefowl, QTI.junglefowlWholeRaw.get(1)); addSecondaryDrop(redJunglefowl, feather); addEgg(redJunglefowl, QTI.junglefowlEgg.get(1), COLOR.make(205, 160, 140));
@@ -437,6 +459,7 @@ public class RegisterSpecies {
         redJunglefowl.setSubtype(3, yeahboi);
 
         Species greyJunglefowl = new Species(EntityPhasianidae.class);
+        setNesting(greyJunglefowl);
         setPrimaryColors(greyJunglefowl, "Black",       "White");     setSecondaryColors(greyJunglefowl, "Black",         "White");     setEnglish(greyJunglefowl, "Grey Junglefowl");           setLatin(greyJunglefowl, "Gallus sonneratii"); setTranslate(greyJunglefowl, "qwertech.phasian.greyjungle");
         greyJunglefowl.setMinFertility(2000)     .setMaxFertility(20000)   .setMinMaturity(8000)      .setMaxMaturity(20000)    .setMinMutable(10)      .setMaxMutable(1000)    .setMinSize(500)   .setMaxSize(2000)   .setMinSmart(100) .setMaxSmart(10000) .setMinSnarl(0) .setMaxSnarl(20000) .setMinStamina(1000) .setMaxStamina(16000)   .setMinStrength(1000)    .setMaxStrength(6000);
         addPrimaryDrop(greyJunglefowl, QTI.junglefowlWholeRaw.get(1));  addSecondaryDrop(greyJunglefowl, feather); addEgg(greyJunglefowl, QTI.junglefowlEgg.get(1), COLOR.make(205, 160, 140));
@@ -449,6 +472,7 @@ public class RegisterSpecies {
         greyJunglefowl.setSubtype(0, sunnyrat);
 
         Species turkey = new Species(EntityPhasianidae.class);
+        setNesting(turkey);
         setPrimaryColors(turkey, "Black",       "White");     setSecondaryColors(turkey, "Black",         "White");     setEnglish(turkey, "Turkey");           setLatin(turkey, "Meleagris gallopavo"); setTranslate(turkey, "qwertech.phasian.turkey");
         turkey.setMinFertility(2000)     .setMaxFertility(20000)   .setMinMaturity(8000)      .setMaxMaturity(20000)    .setMinMutable(10)      .setMaxMutable(1000) .setMinSize(1000)   .setMaxSize(3000)   .setMinSmart(100) .setMaxSmart(10000) .setMinSnarl(0) .setMaxSnarl(20000) .setMinStamina(1000) .setMaxStamina(12000)   .setMinStrength(1000)    .setMaxStrength(8000);
         addPrimaryDrop(turkey, QTI.turkeyWholeRaw.get(1)); addSecondaryDrop(turkey, feather); addEgg(turkey, QTI.turkeyEgg.get(1), COLOR.make(205, 160, 140));

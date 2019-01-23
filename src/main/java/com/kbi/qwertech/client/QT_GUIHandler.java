@@ -122,6 +122,8 @@ public class QT_GUIHandler {
 
 	public void renderIcon(int xpos, int ypos, float uMin, float vMin, float uMax, float vMax, int xsize, int ysize)
 	{
+		xpos = xpos + (int)Math.floor((20 - xsize) * 0.5);
+		ypos = ypos + (int)Math.floor((20 - ysize) * 0.5);
 		//System.out.println(uMin + " " + vMin + " " + uMax + " " + vMax);
 		Tessellator tessellator = Tessellator.instance;
 		tessellator.startDrawingQuads();
@@ -367,11 +369,11 @@ public class QT_GUIHandler {
 			minecraft.renderEngine.bindTexture(armorIcons);
 			//minecraft.renderEngine.bindTexture(TextureMap.locationItemsTexture);
 			Float[] startSpots = getUV(protect);
-			renderIcon(x + 2, y + 2, 0, 2 + potions.length + extras, startSpots, 16, 16);
+			renderIcon(x, y, 0, 2 + potions.length + extras, startSpots, 16, 16);
 
 			String weighty = weight < 1 ? "weightNone" : weight < 20 ? "weightLight" : weight < 40 ? "weightLittle" : weight < 70 ? "weightSignificant" : "weightMuch";
 			startSpots = getUV(weighty);
-			renderIcon(x + 2, y + 2, 1, 2 + potions.length + extras, startSpots, 16, 16);
+			renderIcon(x, y, 1, 2 + potions.length + extras, startSpots, 16, 16);
 
             if (minecraft.thePlayer.isBurning())
             {
@@ -402,7 +404,7 @@ public class QT_GUIHandler {
                         int startX = l % 8 * 18;
                         int startY = l / 8 * 18;
                         Float[] borders = new Float[]{startX * 0.00390625F, (198 + startY) * 0.00390625F, (18) * 0.00390625F, (18) * 0.00390625F};
-                        renderIcon(x + 1, y + 1, 2 + q, 2 + extras + potions.length, borders, 18, 18);
+                        renderIcon(x, y, 2 + q, 2 + extras + potions.length, borders, 18, 18);
                     }
                 }
             }

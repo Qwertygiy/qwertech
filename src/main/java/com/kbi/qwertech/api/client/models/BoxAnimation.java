@@ -346,9 +346,9 @@ public class BoxAnimation {
      */
     public void apply(ModelRendererDefaults box, float time)
     {
-        if (should(originX)) box.rotationPointX = box.defaultRotateX + getRotateX(time);
-        if (should(originY)) box.rotationPointY = box.defaultRotateY + getRotateY(time);
-        if (should(originZ)) box.rotationPointZ = box.defaultRotateZ + getRotateZ(time);
+        if (should(originX)) box.rotationPointX = box.defaultOriginX + getOriginX(time);
+        if (should(originY)) box.rotationPointY = box.defaultOriginY + getOriginY(time);
+        if (should(originZ)) box.rotationPointZ = box.defaultOriginZ + getOriginZ(time);
         if (should(offsetX)) box.offsetX = box.defaultOffsetX + getOffsetX(time);
         if (should(offsetY)) box.offsetY = box.defaultOffsetY + getOffsetY(time);
         if (should(offsetZ)) box.offsetZ = box.defaultOffsetZ + getOffsetZ(time);
@@ -371,9 +371,9 @@ public class BoxAnimation {
     public boolean apply(float time)
     {
         if (box == null) return false;
-        if (should(originX)) box.rotationPointX = box.defaultRotateX + getRotateX(time);
-        if (should(originY)) box.rotationPointY = box.defaultRotateY + getRotateY(time);
-        if (should(originZ)) box.rotationPointZ = box.defaultRotateZ + getRotateZ(time);
+        if (should(originX)) box.rotationPointX = box.defaultOriginX + getOriginX(time);
+        if (should(originY)) box.rotationPointY = box.defaultOriginY + getOriginY(time);
+        if (should(originZ)) box.rotationPointZ = box.defaultOriginZ + getOriginZ(time);
         if (should(offsetX)) box.offsetX = box.defaultOffsetX + getOffsetX(time);
         if (should(offsetY)) box.offsetY = box.defaultOffsetY + getOffsetY(time);
         if (should(offsetZ)) box.offsetZ = box.defaultOffsetZ + getOffsetZ(time);
@@ -395,9 +395,9 @@ public class BoxAnimation {
      */
     public void restore(ModelRendererDefaults box)
     {
-        if (should(originX)) box.rotationPointX = box.defaultRotateX;
-        if (should(originY)) box.rotationPointY = box.defaultRotateY;
-        if (should(originZ)) box.rotationPointZ = box.defaultRotateZ;
+        if (should(originX)) box.rotationPointX = box.defaultOriginX;
+        if (should(originY)) box.rotationPointY = box.defaultOriginY;
+        if (should(originZ)) box.rotationPointZ = box.defaultOriginZ;
         if (should(offsetX)) box.offsetX = box.defaultOffsetX;
         if (should(offsetY)) box.offsetY = box.defaultOffsetY;
         if (should(offsetZ)) box.offsetZ = box.defaultOffsetZ;
@@ -414,9 +414,9 @@ public class BoxAnimation {
     public boolean restore()
     {
         if (box == null) return false;
-        if (should(originX)) box.rotationPointX = box.defaultRotateX;
-        if (should(originY)) box.rotationPointY = box.defaultRotateY;
-        if (should(originZ)) box.rotationPointZ = box.defaultRotateZ;
+        if (should(originX)) box.rotationPointX = box.defaultOriginX;
+        if (should(originY)) box.rotationPointY = box.defaultOriginY;
+        if (should(originZ)) box.rotationPointZ = box.defaultOriginZ;
         if (should(offsetX)) box.offsetX = box.defaultOffsetX;
         if (should(offsetY)) box.offsetY = box.defaultOffsetY;
         if (should(offsetZ)) box.offsetZ = box.defaultOffsetZ;

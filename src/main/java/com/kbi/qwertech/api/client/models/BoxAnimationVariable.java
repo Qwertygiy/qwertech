@@ -185,9 +185,9 @@ public class BoxAnimationVariable extends BoxAnimation {
     @Override
     public void apply(ModelRendererDefaults box, float time, float variable)
     {
-        if (should(originX)) box.rotationPointX = box.defaultRotateX + getRotateX(time, variable);
-        if (should(originY)) box.rotationPointY = box.defaultRotateY + getRotateY(time, variable);
-        if (should(originZ)) box.rotationPointZ = box.defaultRotateZ + getRotateZ(time, variable);
+        if (should(originX)) box.rotationPointX = box.defaultOriginX + getOriginX(time, variable);
+        if (should(originY)) box.rotationPointY = box.defaultOriginY + getOriginY(time, variable);
+        if (should(originZ)) box.rotationPointZ = box.defaultOriginZ + getOriginZ(time, variable);
         if (should(offsetX)) box.offsetX = box.defaultOffsetX + getOffsetX(time, variable);
         if (should(offsetY)) box.offsetY = box.defaultOffsetY + getOffsetY(time, variable);
         if (should(offsetZ)) box.offsetZ = box.defaultOffsetZ + getOffsetZ(time, variable);
@@ -207,9 +207,9 @@ public class BoxAnimationVariable extends BoxAnimation {
     public boolean apply(float time, float variable)
     {
         if (box == null) return false;
-        if (should(originX)) box.rotationPointX = box.defaultRotateX + getRotateX(time, variable);
-        if (should(originY)) box.rotationPointY = box.defaultRotateY + getRotateY(time, variable);
-        if (should(originZ)) box.rotationPointZ = box.defaultRotateZ + getRotateZ(time, variable);
+        if (should(originX)) box.rotationPointX = box.defaultOriginX + getOriginX(time, variable);
+        if (should(originY)) box.rotationPointY = box.defaultOriginY + getOriginY(time, variable);
+        if (should(originZ)) box.rotationPointZ = box.defaultOriginZ + getOriginZ(time, variable);
         if (should(offsetX)) box.offsetX = box.defaultOffsetX + getOffsetX(time, variable);
         if (should(offsetY)) box.offsetY = box.defaultOffsetY + getOffsetY(time, variable);
         if (should(offsetZ)) box.offsetZ = box.defaultOffsetZ + getOffsetZ(time, variable);

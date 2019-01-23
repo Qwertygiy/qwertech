@@ -1,5 +1,8 @@
 package com.kbi.qwertech.client.models.entity;
 
+import com.kbi.qwertech.api.client.models.ModelRendererDefaults;
+import com.kbi.qwertech.api.client.registry.AnimationHelper;
+import com.kbi.qwertech.api.client.registry.AnimationsRegistry;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import org.lwjgl.opengl.GL11;
@@ -18,37 +21,38 @@ public class ModelChickenTailed extends ModelChickenCrested {
     public ModelRenderer a2tail3;
 
     public ModelChickenTailed() {
+        super();
         this.textureWidth = 64;
         this.textureHeight = 32;
-        this.a2tail2 = new ModelRenderer(this, 40, 14);
+        this.a2tail2 = new ModelRendererDefaults(this, 40, 14);
         this.a2tail2.setRotationPoint(0.0F, 4.0F, 0.5F);
         this.a2tail2.addBox(-3.0F, 0.0F, -1.0F, 6, 3, 1, 0.0F);
         this.setRotateAngle(a2tail2, -0.8726646259971648F, 0.0F, 0.0F);
-        this.a3tail2 = new ModelRenderer(this, 40, 26);
+        this.a3tail2 = new ModelRendererDefaults(this, 40, 26);
         this.a3tail2.setRotationPoint(0.0F, 3.0F, 0.0F);
         this.a3tail2.addBox(-3.0F, 0.0F, -1.0F, 6, 2, 1, 0.0F);
         this.setRotateAngle(a3tail2, -0.8726646259971648F, 0.0F, 0.0F);
-        this.a2tail3 = new ModelRenderer(this, 40, 18);
+        this.a2tail3 = new ModelRendererDefaults(this, 40, 18);
         this.a2tail3.setRotationPoint(0.0F, 3.0F, 0.5F);
         this.a2tail3.addBox(-3.0F, 0.0F, -1.0F, 6, 3, 1, 0.0F);
         this.setRotateAngle(a2tail3, -0.8726646259971648F, 0.0F, 0.0F);
-        this.tail = new ModelRenderer(this, 26, 8);
+        this.tail = new ModelRendererDefaults(this, 26, 8);
         this.tail.setRotationPoint(0.0F, 13.5F, 3.5F);
         this.tail.addBox(-3.01F, 0.0F, -0.5F, 6, 4, 1, 0.0F);
         this.setRotateAngle(tail, 2.6179938779914944F, 0.0F, 0.0F);
-        this.tail2 = new ModelRenderer(this, 40, 0);
+        this.tail2 = new ModelRendererDefaults(this, 40, 0);
         this.tail2.setRotationPoint(0.0F, 15.0F, 3.5F);
         this.tail2.addBox(-3.01F, 0.0F, -0.5F, 6, 4, 1, 0.0F);
         this.setRotateAngle(tail2, 2.2689280275926285F, 0.0F, 0.0F);
-        this.tail3 = new ModelRenderer(this, 40, 5);
+        this.tail3 = new ModelRendererDefaults(this, 40, 5);
         this.tail3.setRotationPoint(0.0F, 16.5F, 3.5F);
         this.tail3.addBox(-3.01F, 0.0F, -0.5F, 6, 3, 1, 0.0F);
         this.setRotateAngle(tail3, 2.0943951023931953F, 0.0F, 0.0F);
-        this.a2tail = new ModelRenderer(this, 40, 9);
+        this.a2tail = new ModelRendererDefaults(this, 40, 9);
         this.a2tail.setRotationPoint(0.0F, 4.0F, 0.5F);
         this.a2tail.addBox(-3.0F, 0.0F, -1.0F, 6, 4, 1, 0.0F);
         this.setRotateAngle(a2tail, -1.0471975511965976F, 0.0F, 0.0F);
-        this.a3tail = new ModelRenderer(this, 40, 22);
+        this.a3tail = new ModelRendererDefaults(this, 40, 22);
         this.a3tail.setRotationPoint(0.0F, 4.0F, 0.0F);
         this.a3tail.addBox(-3.0F, 0.0F, -1.0F, 6, 3, 1, 0.0F);
         this.setRotateAngle(a3tail, -0.8726646259971648F, 0.0F, 0.0F);
@@ -61,11 +65,22 @@ public class ModelChickenTailed extends ModelChickenCrested {
         this.head.setRotationPoint(0.0F, 13.75F, -2.25F);
         this.bill.setRotationPoint(0.0F, 13.75F, -2.25F);
         this.crest.setRotationPoint(0.0F, 13.75F, -2.25F);
+        addBox((ModelRendererDefaults)this.tail, "tail");
+        addBox((ModelRendererDefaults)this.a2tail, "tail2-1");
+        addBox((ModelRendererDefaults)this.a2tail2, "tail2-2");
+        addBox((ModelRendererDefaults)this.a2tail3, "tail2-3");
+        addBox((ModelRendererDefaults)this.a3tail, "tail3-1");
+        addBox((ModelRendererDefaults)this.a3tail2, "tail3-2");
+        addBox((ModelRendererDefaults)this.tail2, "tail2");
+        addBox((ModelRendererDefaults)this.tail3, "tail3");
+        AnimationHelper.setAsDefault(this);
     }
 
     @Override
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+        AnimationHelper.reset(this);
         this.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+        AnimationsRegistry.setAnimations(entity);
 
         if (this.isChild)
         {
