@@ -72,16 +72,16 @@ public class RegisterArmor {
 		MT.Manasteel.addEnchantmentForArmors(Enchantment.aquaAffinity, 2);
 		MT.IronWood.addEnchantmentForArmors(Enchantment.respiration, 1);
 
-		addType("tcgoggles");
+		addType("helmet/tcgoggles");
 		addType("chainmail");
 		addType("plate");
-		addType("springs");
+		addType("boots/springs");
 		addType("lube");
 		addType("slime");
 		addType("curvedPlate");
-		addType("monocle");
-		addType("spur");
-		addType("feather");
+		addType("helmet/monocle");
+		addType("boots/spur");
+		addType("helmet/feather");
 		
 		try
 		{
@@ -204,13 +204,17 @@ public class RegisterArmor {
 	private void registerIcons()
 	{
 		iconTitle.put("qwertech:kazoo", new ArmorIcon("qwertech:kazoo"));
-		for (int q = 0; q < types.size(); q++)
+		for (String type : types)
 		{
-			String type = types.get(q);
-			iconTitle.put("qwertech:armor/helmet/" + type, new ArmorIcon("qwertech:armor/helmet/" + type));
-			iconTitle.put("qwertech:armor/chestplate/" + type, new ArmorIcon("qwertech:armor/chestplate/" + type));
-			iconTitle.put("qwertech:armor/leggings/" + type, new ArmorIcon("qwertech:armor/leggings/" + type));
-			iconTitle.put("qwertech:armor/boots/" + type, new ArmorIcon("qwertech:armor/boots/" + type));
+			if (type.contains("/"))
+			{
+				iconTitle.put("qwertech:armor/" + type, new ArmorIcon("qwertech:armor/" + type));
+			} else {
+				iconTitle.put("qwertech:armor/helmet/" + type, new ArmorIcon("qwertech:armor/helmet/" + type));
+				iconTitle.put("qwertech:armor/chestplate/" + type, new ArmorIcon("qwertech:armor/chestplate/" + type));
+				iconTitle.put("qwertech:armor/leggings/" + type, new ArmorIcon("qwertech:armor/leggings/" + type));
+				iconTitle.put("qwertech:armor/boots/" + type, new ArmorIcon("qwertech:armor/boots/" + type));
+			}
 		}
 		/*iconTitle.put("weightNone", new ArmorIcon("qwertech:armorui/armor/weightNone"));
 		iconTitle.put("weightLittle", new ArmorIcon("qwertech:armorui/armor/weightLittle"));
