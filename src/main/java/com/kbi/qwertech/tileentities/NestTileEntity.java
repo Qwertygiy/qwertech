@@ -13,7 +13,6 @@ import gregapi.render.BlockTextureDefault;
 import gregapi.render.IIconContainer;
 import gregapi.render.ITexture;
 import gregapi.tileentity.base.TileEntityBase05Inventories;
-import gregapi.util.OM;
 import gregapi.util.ST;
 import gregapi.util.UT;
 import net.minecraft.block.Block;
@@ -28,7 +27,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -201,7 +199,7 @@ public class NestTileEntity extends TileEntityBase05Inventories implements IMult
     @Override
     public boolean onBlockActivated2(EntityPlayer aPlayer, byte aSide, float aHitX, float aHitY, float aHitZ) {
         ItemStack stack = aPlayer.getHeldItem();
-        System.out.println("x:" + aHitX + " y:" + aHitY + " z:" + aHitZ);
+        //System.out.println("x:" + aHitX + " y:" + aHitY + " z:" + aHitZ);
         if (aHitX > 0.2F && aHitX < 0.8F && aHitZ > 0.2F && aHitZ < 0.8F && aHitY > 0.2F)
         {
             for (int q = 0; q < this.invsize(); q++)

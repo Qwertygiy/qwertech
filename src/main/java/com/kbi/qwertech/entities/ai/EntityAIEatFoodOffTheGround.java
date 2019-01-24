@@ -1,5 +1,6 @@
 package com.kbi.qwertech.entities.ai;
 
+import com.kbi.qwertech.api.registry.MobBreedRegistry;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.item.EntityItem;
@@ -64,7 +65,7 @@ public class EntityAIEatFoodOffTheGround extends EntityAIBase {
         minLost = minHealth;
         maxDist = maxDistance;
         heal = heals;
-        math = ourEntity.getRNG().nextInt(40);
+        math = ourEntity.getRNG().nextInt(20);
     }
 
     @Override
@@ -98,7 +99,7 @@ public class EntityAIEatFoodOffTheGround extends EntityAIBase {
         {
             if (ourEntity instanceof EntityAnimal)
             {
-                if (((EntityAnimal)ourEntity).isBreedingItem(ei.getEntityItem()))
+                if (MobBreedRegistry.isBreedingItem(((EntityAnimal)ourEntity), ei.getEntityItem()))
                 {
                     target = ei;
                     xPos = Math.floor(ei.posX);
@@ -129,7 +130,7 @@ public class EntityAIEatFoodOffTheGround extends EntityAIBase {
 
     @Override
     public boolean continueExecuting() {
-        if (target == null || target.worldObj != ourEntity.worldObj) return false;
+        if (target == null || target.isDead || target.worldObj != ourEntity.worldObj || target.getEntityItem() == null || target.getEntityItem().stackSize < 1) return false;
         if (ourEntity.getNavigator().noPath()) return false;
         if (Math.floor(target.posX) != xPos || Math.floor(target.posZ) != zPos)
         {

@@ -1,17 +1,10 @@
 package com.kbi.qwertech.entities.ai;
 
 import com.kbi.qwertech.api.registry.MobBreedRegistry;
-import gregapi.oredict.OreDictManager;
-import gregapi.util.ST;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 
 public class EntityAITemptAdvanced extends EntityAIBase
 {
@@ -38,7 +31,6 @@ public class EntityAITemptAdvanced extends EntityAIBase
     /** Whether the entity using this AI will be scared by the tempter's sudden movement. */
     private boolean scaredByPlayerMovement;
     private boolean field_75286_m;
-    private List<Object> replacements;
 
     public EntityAITemptAdvanced(EntityAnimal p_i45316_1_, double p_i45316_2_, boolean p_i45316_5_)
     {
@@ -71,42 +63,7 @@ public class EntityAITemptAdvanced extends EntityAIBase
             {
                 ItemStack itemstack = this.temptingPlayer.getCurrentEquippedItem();
                 if (itemstack == null) return false;
-                if (this.temptedEntity.isBreedingItem(itemstack)) return true;
-                if (this.replacements == null)
-                {
-                	HashMap<Item, List<Object>> hash = MobBreedRegistry.getMap();
-                	Iterator<Item> begin = hash.keySet().iterator();
-                	while (begin.hasNext())
-                	{
-                		Item toCheck = begin.next();
-                		if (this.temptedEntity.isBreedingItem(ST.make(toCheck, 1, 0)))
-                		{
-                			this.replacements = hash.get(toCheck);
-                			break;
-                		}
-                	}
-                }
-                if (this.replacements != null && this.replacements.size() > 0)
-                {
-                	for (int q = 0; q < replacements.size(); q++)
-                	{
-                		Object toCheck = replacements.get(q);
-                		if (toCheck instanceof String)
-                		{
-                			if (OreDictManager.isItemStackInstanceOf(itemstack, toCheck))
-                			{
-                				return true;
-                			}
-                		} else if (toCheck instanceof ItemStack)
-                		{
-                			if (ST.equal((ItemStack)toCheck, itemstack))
-                			{
-                				return true;
-                			}
-                		}
-                	}
-                }
-                return false;
+                return (MobBreedRegistry.isBreedingItem(this.temptedEntity, itemstack));
             }
         }
     }
