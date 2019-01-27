@@ -493,9 +493,9 @@ public class RegisterSpecies {
         MobSpeciesRegistry.addSpecies(EntityPhasianidae.class, 4, srJunglefowl);
 
         Subtype lafayette = new Subtype(srJunglefowl);
-        setSecondaryColors(lafayette, "Black", "Sky Blue");                            setPrimaryColors(sunnyrat, "Yellow",             "Orange");          setEnglish(lafayette, "Sri Lankan Junglefowl"); setTranslate(lafayette,"qwertech.phasian.srilankajungle.primary");
+        setSecondaryColors(lafayette, "Black", "Sky Blue");                            setPrimaryColors(lafayette, "Yellow",             "Orange");          setEnglish(lafayette, "Sri Lankan Junglefowl"); setTranslate(lafayette,"qwertech.phasian.srilankajungle.primary");
         lafayette.setFertility(2000, 8000, 20000)        .setMaturity(8000, 12000, 20000)    .setMutable(10, 100, 1000)    .setSize(500, 1200, 2000)   .setSmart(100, 1000, 10000) .setSnarl(0, 1000, 20000)      .setStamina(1000, 7000, 16000)   .setStrength(1000, 1500, 6000).addBiome(BiomeDictionary.Type.JUNGLE);
-        setTextureDir(lafayette, "qwertech:textures/entity/genetic/phasianidae/chicken_wild3/lafayetti"); addLivingSound(sunnyrat, "mob.chicken.say", 1, 0.5F); addHurtSound(sunnyrat, "mob.chicken.hurt", 1, 0.5F);
+        setTextureDir(lafayette, "qwertech:textures/entity/genetic/phasianidae/chicken_wild3/lafayetti"); addLivingSound(lafayette, "mob.chicken.say", 1, 0.5F); addHurtSound(lafayette, "mob.chicken.hurt", 1, 0.5F);
         srJunglefowl.setSubtype(0, lafayette);
     }
 }
