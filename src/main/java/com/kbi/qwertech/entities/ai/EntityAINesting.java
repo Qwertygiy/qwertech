@@ -195,12 +195,15 @@ public class EntityAINesting extends IMobAITimer.EntityAITimed
         {
             laidTonight = false;
             return false;
-        } else if (this.livingEntity.getAge() >= 100)
-        {
+        } else if (this.livingEntity.getAge() >= 100) {
             return false;
         }
         else
         {
+            if (livingEntity.isChild())
+            {
+                return false;
+            }
             cooldown = 20; //if you couldn't find one before, wait a moment before trying again
             if (livingEntity.worldObj.getTileEntity((int)Math.floor(livingEntity.posX), (int)Math.floor(livingEntity.posY), (int)Math.floor(livingEntity.posZ)) instanceof NestTileEntity)
             {
