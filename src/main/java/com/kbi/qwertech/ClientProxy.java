@@ -214,6 +214,7 @@ public final class ClientProxy extends CommonProxy { // NO_UCD (unused code)
 	@SubscribeEvent
 	    public void onTooltip(ItemTooltipEvent event)
 	    {
+	    	if (event.itemStack == null || event.entity == null || event.isCanceled()) return;
 	    	if (ArmorUpgradeRegistry.instance.getUpgrade(event.itemStack) != null)
 	    	{
 	    		event.toolTip.add(LH.Chat.GOLD + "Can be used to upgrade armor");
