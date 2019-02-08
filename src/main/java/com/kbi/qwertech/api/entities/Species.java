@@ -257,6 +257,23 @@ public class Species implements Taggable {
     }
 
     @Override
+    public <T> T getTag(Class<T> type, String tag) {
+        if (extraTags.containsKey(tag))
+        {
+            Object tagger = extraTags.get(tag);
+            if (type.isInstance(tagger))
+            {
+                return type.cast(tagger);
+            }
+        }
+        try {
+            return type.newInstance();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
     public List<String> getTags()
     {
         return new ArrayList<String>(extraTags.keySet());

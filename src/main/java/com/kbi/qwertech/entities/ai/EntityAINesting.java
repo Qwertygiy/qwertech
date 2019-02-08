@@ -3,6 +3,7 @@ package com.kbi.qwertech.entities.ai;
 import com.kbi.qwertech.api.entities.IGeneticMob;
 import com.kbi.qwertech.api.entities.Species;
 import com.kbi.qwertech.api.entities.Subtype;
+import com.kbi.qwertech.api.entities.ai.IMobAITimer;
 import com.kbi.qwertech.blocks.BlockSoil;
 import com.kbi.qwertech.entities.EntityHelperFunctions;
 import com.kbi.qwertech.loaders.RegisterSpecies;
@@ -12,7 +13,6 @@ import gregapi.util.WD;
 import net.minecraft.block.*;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -23,19 +23,19 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import java.lang.reflect.Constructor;
 
-public class EntityAINesting extends EntityAIBase
+public class EntityAINesting extends IMobAITimer.EntityAITimed
 {
-    private EntityLiving entity;
     private double xPosition;
     private double yPosition;
     private double zPosition;
     private ItemStack makeANest;
     private NestTileEntity ourNest;
     private boolean laidTonight = false;
+    private int cooldown = 0;
 
     public EntityAINesting(EntityLiving p1, ItemStack nestStack)
     {
-        this.entity = p1;
+        super(p1);
         this.makeANest = nestStack;
         this.setMutexBits(1);
     }
@@ -57,7 +57,7 @@ public class EntityAINesting extends EntityAIBase
                         int x = (int)Math.floor(el.posX) + x2;
                         int y = (int)Math.floor(el.posY) + y2;
                         int z = (int)Math.floor(el.posZ) + z2;
-                        if (!el.worldObj.getBlock(x, y + 1, z).canBeReplacedByLeaves(el.worldObj, x, y + 1, z) || !el.worldObj.getBlock(x, y + 2, z).canBeReplacedByLeaves(el.worldObj, x, y + 2, z))
+                        if (!el.worldObj.getBlock(x, y + 1, z).canBeReplacedByLeaves(el.worldObj, x, y + 1, z) && !el.worldObj.getBlock(x, y + 2, z).canBeReplacedByLeaves(el.worldObj, x, y + 2, z))
                         {
                             continue;
                         }
@@ -85,7 +85,7 @@ public class EntityAINesting extends EntityAIBase
                                 for (int q = 0; q < 4; q++)
                                 {
                                     Block check = checkList[q];
-                                    if (check instanceof BlockTallGrass || check instanceof BlockFlower || check instanceof BlockBush || check instanceof BlockCrops || check instanceof BlockReed)
+                                    if (check instanceof BlockBush || check instanceof BlockCrops || check instanceof BlockReed)
                                     {
                                         if (el.getNavigator().getPathToXYZ(x, y, z) != null) {
                                             return Vec3.createVectorHelper(x, y, z);
@@ -105,8 +105,8 @@ public class EntityAINesting extends EntityAIBase
 
     private ItemStack setEggData()
     {
-        Species species = ((IGeneticMob)entity).getSpecies();
-        Subtype subtype = ((IGeneticMob)entity).getSubtype();
+        Species species = ((IGeneticMob)livingEntity).getSpecies();
+        Subtype subtype = ((IGeneticMob)livingEntity).getSubtype();
         ItemStack toReturn = null;
         if (subtype.hasTag(RegisterSpecies.ITEM_EGG))
         {
@@ -129,9 +129,9 @@ public class EntityAINesting extends EntityAIBase
     }
 
     public void successfulNesting() {
-        if (!laidTonight && !entity.isDead && ourNest != null && entity instanceof IGeneticMob && !entity.isChild())
+        if (!laidTonight && !livingEntity.isDead && ourNest != null && livingEntity instanceof IGeneticMob && !livingEntity.isChild())
         {
-            IGeneticMob igm = (IGeneticMob)entity;
+            IGeneticMob igm = (IGeneticMob)livingEntity;
             ItemStack egg = setEggData();
             if (egg == null) return;
             NBTTagCompound nbt = UT.NBT.getOrCreate(egg);
@@ -140,11 +140,11 @@ public class EntityAINesting extends EntityAIBase
                 igm.setFertilized(false);
                 EntityLivingBase returnable;
                 try {
-                    Constructor constructor = entity.getClass().getConstructor(World.class);
-                    returnable = (EntityLivingBase)constructor.newInstance(entity.worldObj);
+                    Constructor constructor = livingEntity.getClass().getConstructor(World.class);
+                    returnable = (EntityLivingBase)constructor.newInstance(livingEntity.worldObj);
                     ((IGeneticMob)returnable).setSpeciesID((igm).getSpeciesID());
                     ((IGeneticMob)returnable).setSubtypeID((igm).getSubtypeID());
-                    EntityLivingBase fakeParent = (EntityLivingBase)constructor.newInstance(entity.worldObj);
+                    EntityLivingBase fakeParent = (EntityLivingBase)constructor.newInstance(livingEntity.worldObj);
                     fakeParent.readEntityFromNBT((igm).getMateNBT());
                     EntityHelperFunctions.createOffspring((IGeneticMob)returnable, igm, (IGeneticMob)fakeParent);
                     returnable.writeEntityToNBT(nbt);
@@ -153,12 +153,12 @@ public class EntityAINesting extends EntityAIBase
                 } catch (Exception e) {
                     System.out.println("Error in resolving mate:");
                     e.printStackTrace();
-                    entity.writeEntityToNBT(nbt);
+                    livingEntity.writeEntityToNBT(nbt);
                 }
-                nbt.setLong("Timer", entity.worldObj.getTotalWorldTime() + (Short.MAX_VALUE - (igm).getMaturity()));
+                nbt.setLong("Timer", livingEntity.worldObj.getTotalWorldTime() + (Short.MAX_VALUE - (igm).getMaturity()));
                 egg.setTagCompound(nbt);
             }
-            int randy = entity.worldObj.rand.nextInt(16000 + igm.getFertility());
+            int randy = livingEntity.worldObj.rand.nextInt(16000 + igm.getFertility());
             int eggz = 1;
             if (randy > 26000)
             {
@@ -187,41 +187,45 @@ public class EntityAINesting extends EntityAIBase
     @Override
     public boolean shouldExecute()
     {
-        if (this.entity.worldObj.isDaytime())
+        if (cooldown > 0)
+        {
+            cooldown = cooldown - 1;
+            return false;
+        } else if (this.livingEntity.worldObj.isDaytime())
         {
             laidTonight = false;
             return false;
-        } else if (this.entity.getAge() >= 100)
-        {
-            return false;
-        }
-        else if (this.entity.getRNG().nextInt(10) != 0)
-        {
+        } else if (this.livingEntity.getAge() >= 100) {
             return false;
         }
         else
         {
-            if (entity.worldObj.getTileEntity((int)Math.floor(entity.posX), (int)Math.floor(entity.posY), (int)Math.floor(entity.posZ)) instanceof NestTileEntity)
-            {
-                //System.out.println("We're in a nest already, hmph");
-                return false;
-            } else if (entity.worldObj.getTileEntity((int)Math.floor(entity.posX), (int)Math.floor(entity.posY - 1), (int)Math.floor(entity.posZ)) instanceof NestTileEntity)
+            if (livingEntity.isChild())
             {
                 return false;
             }
-            //System.out.println("We're lookin' for a nest here at " + entity.posX + ", " + entity.posZ);
+            cooldown = 20; //if you couldn't find one before, wait a moment before trying again
+            if (livingEntity.worldObj.getTileEntity((int)Math.floor(livingEntity.posX), (int)Math.floor(livingEntity.posY), (int)Math.floor(livingEntity.posZ)) instanceof NestTileEntity)
+            {
+                //System.out.println("We're in a nest already, hmph");
+                return false;
+            } else if (livingEntity.worldObj.getTileEntity((int)Math.floor(livingEntity.posX), (int)Math.floor(livingEntity.posY - 1), (int)Math.floor(livingEntity.posZ)) instanceof NestTileEntity)
+            {
+                return false;
+            }
+            //System.out.println("We're lookin' for a nest here at " + livingEntity.posX + ", " + livingEntity.posZ);
             Vec3 vec3;
-            if (ourNest != null && ourNest.getWorld() == entity.worldObj && entity.worldObj.getTileEntity(ourNest.xCoord, ourNest.yCoord, ourNest.zCoord) == ourNest)
+            if (ourNest != null && ourNest.getWorld() == livingEntity.worldObj && livingEntity.worldObj.getTileEntity(ourNest.xCoord, ourNest.yCoord, ourNest.zCoord) == ourNest)
             {
                 vec3 = Vec3.createVectorHelper(ourNest.xCoord, ourNest.yCoord, ourNest.zCoord);
             } else {
                 ourNest = null;
-                vec3 = findSuitableNest(entity, 16, true);
+                vec3 = findSuitableNest(livingEntity, 16, true);
             }
 
             if (vec3 == null)
             {
-                vec3 = findSuitableNest(entity, 8, false);
+                vec3 = findSuitableNest(livingEntity, 8, false);
             }
             if (vec3 == null)
             {
@@ -245,12 +249,13 @@ public class EntityAINesting extends EntityAIBase
     @Override
     public boolean continueExecuting()
     {
-        if (Math.floor(this.entity.posX) == this.xPosition && Math.floor(this.entity.posZ) == this.zPosition && this.entity.posY - this.yPosition > -0.1 && this.entity.posY - this.yPosition < 1.1)
+        super.continueExecuting();
+        if (Math.floor(this.livingEntity.posX) == this.xPosition && Math.floor(this.livingEntity.posZ) == this.zPosition && this.livingEntity.posY - this.yPosition > -0.1 && this.livingEntity.posY - this.yPosition < 1.1)
         {
             int x = (int)Math.floor(xPosition);
             int y = (int)Math.floor(yPosition);
             int z = (int)Math.floor(zPosition);
-            World world = this.entity.worldObj;
+            World world = this.livingEntity.worldObj;
             TileEntity te = world.getTileEntity(x, y, z);
             if (!(te instanceof NestTileEntity))
             {
@@ -265,7 +270,7 @@ public class EntityAINesting extends EntityAIBase
                         WD.set(world, x, y + 1, z, makeANest);
                         WD.air(world, x, y + 2, z);
                         te = world.getTileEntity(x, y + 1, z);
-                        ((NestTileEntity)te).setNestingEntity(this.entity);
+                        ((NestTileEntity)te).setNestingEntity(this.livingEntity);
                         ourNest = (NestTileEntity)te;
                         //System.out.println("There should be a nest here now");
                     }
@@ -290,10 +295,10 @@ public class EntityAINesting extends EntityAIBase
                 return false;
             }
         }
-        //System.out.println("We're trying to get to " + this.xPosition + ", " + this.yPosition + ", " + this.zPosition + " but we're at " + Math.floor(entity.posX) + ", " + Math.floor(entity.posY) + ", " + Math.floor(entity.posZ));
-        if (this.entity.getNavigator().noPath())
+        //System.out.println("We're trying to get to " + this.xPosition + ", " + this.yPosition + ", " + this.zPosition + " but we're at " + Math.floor(livingEntity.posX) + ", " + Math.floor(livingEntity.posY) + ", " + Math.floor(livingEntity.posZ));
+        if (this.livingEntity.getNavigator().noPath())
         {
-            this.entity.getNavigator().tryMoveToXYZ(this.xPosition, this.yPosition, this.zPosition, 1);
+            this.livingEntity.getNavigator().tryMoveToXYZ(this.xPosition, this.yPosition, this.zPosition, 1);
         }
         return true;
     }
@@ -304,7 +309,16 @@ public class EntityAINesting extends EntityAIBase
     @Override
     public void startExecuting()
     {
-        this.entity.getNavigator().tryMoveToXYZ(this.xPosition, this.yPosition, this.zPosition, 1);
+        super.startExecuting();
+        this.livingEntity.getNavigator().tryMoveToXYZ(this.xPosition, this.yPosition, this.zPosition, 1);
+        setMaxTime(200);
+        cooldown = 0; //we're hot, no need to cool down
         //System.out.println("We're trying... moving at 1");
+    }
+
+    @Override
+    public void resetTask() {
+        super.resetTask();
+        setMaxTime(-1);
     }
 }

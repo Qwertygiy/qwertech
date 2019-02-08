@@ -352,8 +352,8 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
         data[6] = (short)(theSubtype.getPrefFertility() + (Math.round((data[6] - theSubtype.getPrefFertility()) * rand.nextFloat() * rand.nextFloat() * rand.nextFloat())));
         data[7] = (short)(rand.nextInt(theSubtype.getMaxMaturity() - theSubtype.getMinMaturity()) + theSubtype.getMinMaturity());
         data[7] = (short)(theSubtype.getPrefMaturity() + (Math.round((data[7] - theSubtype.getPrefMaturity()) * rand.nextFloat() * rand.nextFloat() * rand.nextFloat())));
-        primaryColor = COLOR.getRandom((Integer)theSubtype.getTag(RegisterSpecies.COLOR_PRIMARY_MIN), (Integer)theSubtype.getTag(RegisterSpecies.COLOR_PRIMARY_MAX));
-        secondaryColor = COLOR.getRandom((Integer)theSubtype.getTag(RegisterSpecies.COLOR_SECONDARY_MIN), (Integer)theSubtype.getTag(RegisterSpecies.COLOR_SECONDARY_MAX));
+        primaryColor = COLOR.getRandom(theSubtype.getTag(Integer.class, RegisterSpecies.COLOR_PRIMARY_MIN), theSubtype.getTag(Integer.class, RegisterSpecies.COLOR_PRIMARY_MAX));
+        secondaryColor = COLOR.getRandom(theSubtype.getTag(Integer.class, RegisterSpecies.COLOR_SECONDARY_MIN), theSubtype.getTag(Integer.class, RegisterSpecies.COLOR_SECONDARY_MAX));
         setPrimaryColor(primaryColor);
         setSecondaryColor(secondaryColor);
         setSize(data[0]);

@@ -484,5 +484,18 @@ public class RegisterSpecies {
         bbb.setFertility(4000, 8000, 24000).setMaturity(8000, 12000, 20000).setMutable(10, 100, 1000).setSize(1000, 1100, 3000).setSmart(100, 5000, 10000).setSnarl(10, 15000, 20000).setStamina(1000, 3000, 6000).setStrength(1000, 4000, 8000).addBiome(BiomeDictionary.Type.FOREST);
         setTextureDir(bbb, "qwertech:textures/entity/genetic/phasianidae/turkey_domestic/broadbronze"); addLivingSound(bbb, "qwertech:mob.turkey.say", 1, 0.5F); addHurtSound(bbb,"qwertech:mob.turkey.hurt", 1, 0.5F);   addDeathSound(bbb, "qwertech:mob.turkey.death", 1, 0.5F);
         turkey.setSubtype(0, bbb);
+
+        Species srJunglefowl = new Species(EntityPhasianidae.class);
+        setNesting(srJunglefowl);
+        setPrimaryColors(srJunglefowl, "Black",       "White");     setSecondaryColors(srJunglefowl, "Black",         "White");     setEnglish(srJunglefowl, "Sri Lankan Junglefowl");           setLatin(srJunglefowl, "Gallus Lafayetti"); setTranslate(srJunglefowl, "qwertech.phasian.srilankajungle");
+        srJunglefowl.setMinFertility(2000)     .setMaxFertility(20000)   .setMinMaturity(8000)      .setMaxMaturity(20000)    .setMinMutable(10)      .setMaxMutable(1000)    .setMinSize(500)   .setMaxSize(2000)   .setMinSmart(100) .setMaxSmart(10000) .setMinSnarl(0) .setMaxSnarl(20000) .setMinStamina(1000) .setMaxStamina(16000)   .setMinStrength(1000)    .setMaxStrength(6000);
+        addPrimaryDrop(srJunglefowl, QTI.junglefowlWholeRaw.get(1));  addSecondaryDrop(srJunglefowl, feather); addEgg(srJunglefowl, QTI.junglefowlEgg.get(1), COLOR.make(205, 160, 140));
+        MobSpeciesRegistry.addSpecies(EntityPhasianidae.class, 4, srJunglefowl);
+
+        Subtype lafayette = new Subtype(srJunglefowl);
+        setSecondaryColors(lafayette, "Black", "Cyan");                            setPrimaryColors(lafayette, COLOR.make(240, 200, 60),             COLOR.make(220, 150, 40));          setEnglish(lafayette, "Sri Lankan Junglefowl"); setTranslate(lafayette,"qwertech.phasian.srilankajungle.primary");
+        lafayette.setFertility(2000, 8000, 20000)        .setMaturity(8000, 12000, 20000)    .setMutable(10, 100, 1000)    .setSize(500, 1200, 2000)   .setSmart(100, 1000, 10000) .setSnarl(0, 1000, 20000)      .setStamina(1000, 7000, 16000)   .setStrength(1000, 1500, 6000).addBiome(BiomeDictionary.Type.JUNGLE);
+        setTextureDir(lafayette, "qwertech:textures/entity/genetic/phasianidae/chicken_wild3/lafayetti"); addLivingSound(lafayette, "mob.chicken.say", 1, 0.5F); addHurtSound(lafayette, "mob.chicken.hurt", 1, 0.5F);
+        srJunglefowl.setSubtype(0, lafayette);
     }
 }

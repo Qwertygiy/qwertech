@@ -17,7 +17,6 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import gregapi.data.*;
 import gregapi.item.multiitem.MultiItemTool;
-import gregapi.oredict.OreDictManager;
 import gregapi.oredict.OreDictMaterial;
 import gregapi.util.ST;
 import gregapi.util.UT;
@@ -537,49 +536,7 @@ public class RegisterMobs {
 		} else if (event.target instanceof EntityAnimal && bottle != null)
 		{
 			EntityAnimal ea = (EntityAnimal)event.target;
-			boolean canEat = false;
-			if (ea.isBreedingItem(bottle))
-			{
-				canEat = true;
-			} else {
-				List<Object> results = null;
-				if (ea.isBreedingItem(new ItemStack(Items.wheat)))
-				{
-					results = MobBreedRegistry.getItemReplacements(Items.wheat);
-				} else if (ea.isBreedingItem(new ItemStack(Items.wheat_seeds)))
-				{
-					results = MobBreedRegistry.getItemReplacements(Items.wheat_seeds);
-				} else if (ea.isBreedingItem(new ItemStack(Items.carrot)))
-				{
-					results = MobBreedRegistry.getItemReplacements(Items.carrot);
-				} else if (ea.isBreedingItem(new ItemStack(Items.fish)))
-				{
-					results = MobBreedRegistry.getItemReplacements(Items.fish);
-				} else if (ea.isBreedingItem(new ItemStack(Items.porkchop)))
-				{
-					results = MobBreedRegistry.getItemReplacements(Items.porkchop);
-				}
-				if (results == null) return;
-				for (Object o : results)
-				{
-					if (o instanceof String)
-					{
-						if (OreDictManager.isItemStackInstanceOf(bottle, o))
-						{
-							canEat = true;
-							break;
-						}
-					} else if (o instanceof ItemStack)
-					{
-						if (ST.equal((ItemStack)o, bottle))
-						{
-							canEat = true;
-							break;
-						}
-					}
-				}
-			}
-			if (canEat)
+			if (MobBreedRegistry.isBreedingItem(ea, bottle))
 			{
 				float heal = 1;
 				if (bottle.getItem() instanceof ItemFood)

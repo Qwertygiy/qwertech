@@ -7,4 +7,5 @@ public interface Taggable {
     Taggable addTag(String tag, Object obby);
     boolean hasTag(String tag);
     List<String> getTags();
+    <T extends Object> T getTag(Class<T> type, String tag);
 }

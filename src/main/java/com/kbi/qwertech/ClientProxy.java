@@ -194,9 +194,10 @@ public final class ClientProxy extends CommonProxy { // NO_UCD (unused code)
 		registerModel(EntityPhasianidae.class, 1, 3, new ModelGallusGallusJabouille());
 		//grey junglefowl
 		registerModel(EntityPhasianidae.class, 2, -1, new ModelGallusGallusJabouille());
-
 		//turkey
 		registerModel(EntityPhasianidae.class, 3, -1, new ModelTurkeyFat());
+		//sri lankan junglefowl
+		registerModel(EntityPhasianidae.class, 4, -1, new ModelGallusLafayetti());
 	}
 	
 	@Override
@@ -213,6 +214,7 @@ public final class ClientProxy extends CommonProxy { // NO_UCD (unused code)
 	@SubscribeEvent
 	    public void onTooltip(ItemTooltipEvent event)
 	    {
+	    	if (event.itemStack == null || event.entity == null || event.isCanceled()) return;
 	    	if (ArmorUpgradeRegistry.instance.getUpgrade(event.itemStack) != null)
 	    	{
 	    		event.toolTip.add(LH.Chat.GOLD + "Can be used to upgrade armor");

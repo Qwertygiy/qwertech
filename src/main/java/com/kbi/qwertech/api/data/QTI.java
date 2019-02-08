@@ -50,6 +50,7 @@ public enum QTI implements IItemContainer {
 	qwerTool,
 	qwerFood,
 	qwerArmor,
+	qwerComponents,
 	mozzarella,
 	parmesanRaw,
 	parmesan,
@@ -262,6 +263,30 @@ public enum QTI implements IItemContainer {
 		if (ST.invalid(rStack)) return null;
 		UT.NBT.set(rStack, aNBT);
 		if (aDisplayName != null) rStack.setStackDisplayName(aDisplayName);
+		return ST.amount(aAmount, rStack);
+	}
+
+	public ItemStack getWithChargeAndMeta(long aAmount, long aMetaValue, long aEnergy, Object... aReplacements)
+	{
+		ItemStack rStack = getWithMeta(1, aMetaValue, aReplacements);
+		if (ST.invalid(rStack)) return null;
+		if (rStack.getItem() instanceof IItemEnergy) for (TagData tEnergyType : ((IItemEnergy)rStack.getItem()).getEnergyTypes(rStack)) ((IItemEnergy)rStack.getItem()).setEnergyStored(tEnergyType, rStack, aEnergy);
+		return ST.amount(aAmount, rStack);
+	}
+
+	public ItemStack getWithMaxCharge(long aAmount, long aMetaValue, long aEnergy, long aMaxEnergy, Object... aReplacements)
+	{
+		ItemStack rStack = getWithMeta(1, aMetaValue, aReplacements);
+		if (ST.invalid(rStack)) return null;
+		if (this == qwerComponents)
+		{
+			NBTTagCompound nbt = UT.NBT.getOrCreate(rStack);
+			nbt.setLong("c", aMaxEnergy);
+			nbt.setLong("e", aEnergy);
+			rStack.setTagCompound(nbt);
+		} else {
+			if (rStack.getItem() instanceof IItemEnergy) for (TagData tEnergyType : ((IItemEnergy)rStack.getItem()).getEnergyTypes(rStack)) ((IItemEnergy)rStack.getItem()).setEnergyStored(tEnergyType, rStack, aEnergy);
+		}
 		return ST.amount(aAmount, rStack);
 	}
 	
