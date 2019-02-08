@@ -33,7 +33,7 @@ public class CountertopShelvesTileEntity extends CuttingBoardTileEntity {
         if (aGUIID == 0) {
             return new GUIClientCuttingBoard(aPlayer.inventory, this);
         } else {
-            return new ContainerClientDefault(new ContainerCommonDefault(aPlayer.inventory, this, 9, 18));
+            return new ContainerClientDefault(new ContainerCommonDefault(aPlayer.inventory, this, aGUIID, 9, 18));
         }
     }
     @Override public Object getGUIServer2(int aGUIID, EntityPlayer aPlayer)
@@ -41,7 +41,7 @@ public class CountertopShelvesTileEntity extends CuttingBoardTileEntity {
         if (aGUIID == 0) {
             return new GUICommonCuttingBoard(aPlayer.inventory, this);
         } else {
-            return new ContainerCommonDefault(aPlayer.inventory, this, 9, 18);
+            return new ContainerCommonDefault(aPlayer.inventory, this, aGUIID, 9, 18);
         }
     }
 

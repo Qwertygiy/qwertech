@@ -84,7 +84,7 @@ public class ChestTileEntity extends MultiTileEntityChest {
         private int mRows;
 
         public ContainerClientChest2(InventoryPlayer aInventoryPlayer, ITileEntityInventoryGUI aTileEntity) {
-            this(new ContainerCommonChest(aInventoryPlayer, aTileEntity));
+            this(new ContainerCommonChest(aInventoryPlayer, aTileEntity, 0));
         }
 
         public ContainerClientChest2(ContainerCommonChest aContainer) {

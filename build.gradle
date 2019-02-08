@@ -47,7 +47,7 @@ repositories {
 
 apply plugin: 'forge'
 
-version = "1.0.0-a.46"
+version = "1.0.0-a.47"
 group= "com.kbi.qwertech" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "qwertech"
 
