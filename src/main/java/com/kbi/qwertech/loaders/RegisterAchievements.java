@@ -508,12 +508,12 @@ public class RegisterAchievements {
     			} else if(MachineType.equals("gregtech.tileentity.energy.MultiTileEntityTurbineSteam")) {
     				issueAchievement(event.player, "bronzeAge");
     				issueAchievement(event.player, "craftTurbine");
-    			} else if (MachineType.toLowerCase().contains(("craftingtable"))) {
+    			} else if (MachineType.toLowerCase().contains(("crafting"))) {
     				event.player.triggerAchievement(AchievementList.buildWorkBench);
-    				if (MachineType.contains("T2"))
+    				if (MachineType.contains("2"))
     				{
     					issueAchievement(event.player, "stoneCraft");
-    				} else if (MachineType.contains("T3"))
+    				} else if (MachineType.contains("3"))
     				{
     					issueAchievement(event.player, "stoneCraft");
     					issueAchievement(event.player, "bronzeCraft");
@@ -543,8 +543,22 @@ public class RegisterAchievements {
     				}
     				
     			}
-    		}
-    		
+    		} else if (qRegistry.getNewTileEntity(result) != null) {
+				TileEntity mte = qRegistry.getNewTileEntity(result);
+				String MachineType = mte.getClass().getName();
+				//System.out.println("Crafted a" + MachineType);
+				if (MachineType.toLowerCase().contains(("crafting"))) {
+					event.player.triggerAchievement(AchievementList.buildWorkBench);
+					if (MachineType.contains("2"))
+					{
+						issueAchievement(event.player, "stoneCraft");
+					} else if (MachineType.contains("3"))
+					{
+						issueAchievement(event.player, "stoneCraft");
+						issueAchievement(event.player, "bronzeCraft");
+					}
+				}
+			}
     	}
     }
     
