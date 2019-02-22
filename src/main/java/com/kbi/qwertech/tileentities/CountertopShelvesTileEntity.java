@@ -51,6 +51,7 @@ public class CountertopShelvesTileEntity extends CuttingBoardTileEntity {
         if (aSide > 1 && openGUI(aPlayer, 0)) return true;
         int aSlot = -1;
         short sided = this.getFacing();
+        aPlayer.getEquipmentInSlot(3);
         //System.out.println("Facing " + sided);
         switch (sided)
         {

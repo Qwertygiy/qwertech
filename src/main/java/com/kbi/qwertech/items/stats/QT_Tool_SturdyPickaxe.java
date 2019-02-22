@@ -22,7 +22,7 @@ public class QT_Tool_SturdyPickaxe extends GT_Tool_Pickaxe {
 	{
 		Block aBlock = world.getBlock(x, y, z);
 		int aMetadata = world.getBlockMetadata(x, y, z);
-		if (aBlock.canHarvestBlock(player, aMetadata) && this.isMinableBlock(aBlock, (byte)aMetadata) && aBlock.getBlockHardness(world, x, y, z) >= 0)
+		if (aBlock.canHarvestBlock(player, aMetadata) && this.isMinableBlock(aBlock, (byte)aMetadata) && aBlock.getPlayerRelativeBlockHardness(player, world, x, y, z) > 0)
 		{
 			if (doBreak)
 			{
