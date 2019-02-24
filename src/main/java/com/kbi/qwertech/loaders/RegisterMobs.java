@@ -4,6 +4,9 @@ import com.kbi.qwertech.QwerTech;
 import com.kbi.qwertech.api.armor.MultiItemArmor;
 import com.kbi.qwertech.api.data.QTConfigs;
 import com.kbi.qwertech.api.data.QTI;
+import com.kbi.qwertech.api.entities.IGeneticMob;
+import com.kbi.qwertech.api.entities.Species;
+import com.kbi.qwertech.api.entities.Subtype;
 import com.kbi.qwertech.api.registry.MobBloodRegistry;
 import com.kbi.qwertech.api.registry.MobBreedRegistry;
 import com.kbi.qwertech.api.registry.MobGearRegistry;
@@ -39,6 +42,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -776,5 +780,32 @@ public class RegisterMobs {
     			((MultiItemArmor)armorPiece.getItem()).onArmorHit(event.entity.worldObj, (EntityLivingBase)event.entity, armorPiece, q, event.source, event.ammount, event);
     		}
     	}
+    	if (event.entity instanceof IGeneticMob)
+		{
+			IGeneticMob igm = (IGeneticMob)event.entity;
+			Species species = igm.getSpecies();
+			Subtype subtype = igm.getSubtype();
+			float flammable = -10.0F;
+			boolean shouldBoom = false;
+			if (subtype.hasTag("f-e")) {
+				flammable = (float)subtype.getTag("f-e");
+			} else if (species.hasTag("f-e")) {
+				flammable = (float)species.getTag("f-e");
+			}
+			if (event.source == DamageSource.onFire)
+			{
+				shouldBoom = event.entityLiving.getRNG().nextFloat() < flammable;
+			} else if (event.source == DamageSource.inFire)
+			{
+				shouldBoom = event.entityLiving.getRNG().nextFloat() < (flammable * 2);
+			} else if (event.source == DamageSource.lava)
+			{
+				shouldBoom = event.entityLiving.getRNG().nextFloat() < (flammable * 3);
+			}
+			if (shouldBoom)
+			{
+				event.entity.worldObj.createExplosion(event.entity, event.entity.posX, event.entity.posY - 0.1, event.entity.posZ, igm.getSize() * 0.002F, false);
+			}
+		}
     }
 }

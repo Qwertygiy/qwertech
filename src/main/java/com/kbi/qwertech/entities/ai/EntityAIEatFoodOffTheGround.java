@@ -71,7 +71,7 @@ public class EntityAIEatFoodOffTheGround extends EntityAIBase {
     @Override
     public boolean shouldExecute() {
         //we have a random integer as our timer so they don't all notice the food at once
-        if (ourEntity.worldObj.getTotalWorldTime() % 30 != math) return false;
+        if (ourEntity.worldObj.getTotalWorldTime() % 40 < math) return false;
 
         //hunger overrides the normal reasons an entity wouldn't care for food
         if (!ourEntity.isPotionActive(Potion.hunger)) {
@@ -101,6 +101,7 @@ public class EntityAIEatFoodOffTheGround extends EntityAIBase {
             {
                 if (MobBreedRegistry.isBreedingItem(((EntityAnimal)ourEntity), ei.getEntityItem()))
                 {
+                    //System.out.println("WE FOUND FOOD");
                     target = ei;
                     xPos = Math.floor(ei.posX);
                     yPos = Math.floor(ei.posY);
@@ -124,19 +125,27 @@ public class EntityAIEatFoodOffTheGround extends EntityAIBase {
     @Override
     public void startExecuting()
     {
-        this.ourEntity.getNavigator().tryMoveToXYZ(this.xPos, this.yPos, this.zPos, 1);
+        this.ourEntity.getNavigator().clearPathEntity();
+        this.ourEntity.getNavigator().tryMoveToEntityLiving(target, 1);
+        //this.ourEntity.getNavigator().tryMoveToXYZ(this.xPos, this.yPos - 1, this.zPos, 1);
         //System.out.println("We're trying... moving at 1");
     }
 
     @Override
     public boolean continueExecuting() {
+        //System.out.println("We're checking!");
         if (target == null || target.isDead || target.worldObj != ourEntity.worldObj || target.getEntityItem() == null || target.getEntityItem().stackSize < 1) return false;
+        //System.out.println("Target is real!");
+        //System.out.println("Trying to move to  X" + xPos + " Y" + yPos + " Z" + zPos);
+        //System.out.println("We are " + ourEntity.posX + " Y" + ourEntity.posY + " Z" + ourEntity.posZ);
+        //System.out.println("Our target is X" + target.posX + " Y" + target.posY + " Z" + target.posZ);
         if (ourEntity.getNavigator().noPath()) return false;
         if (Math.floor(target.posX) != xPos || Math.floor(target.posZ) != zPos)
         {
             xPos = Math.floor(target.posX);
             yPos = Math.floor(target.posY);
             zPos = Math.floor(target.posZ);
+            //startExecuting();
         }
         if (Math.floor(ourEntity.posX) == this.xPos && Math.floor(ourEntity.posZ) == this.zPos && ourEntity.posY - this.yPos > -0.1 && ourEntity.posY - this.yPos < 0.5) {
             float amount = heal;

@@ -429,7 +429,7 @@ public class RegisterItems {
 			addItem(41, "Fried Junglefowl Leg"		, "",									"listAllmeatcooked", "listAllchickencooked", new FoodStat(5, 0.6F, 0.0F, 311.0F, 0.5F, 0, 0, 0, 0, 26, EnumAction.eat, null, false, true, false, true));
 			addItem(42, "Fried Junglefowl Wing"		, "",									"listAllmeatcooked", "listAllchickencooked", new FoodStat(5, 0.6F, 0.0F, 311.0F, 0.5F, 0, 0, 0, 0, 26, EnumAction.eat, null, false, true, false, true));
 			addItem(43, "Junglefowl Egg"			, "",  									"listAllegg");
-
+			addItem(44, "Sulphuric Feather"			, "Smells Rotten", 					  	"itemFeather", "feather", "craftingFeather");
 
 			addItem(1000, "Tomato Sauce"			, "", 									UT.Fluids.make("tomatosauce", 250L), FoodStatFluid.INSTANCE );
 			addItem(1001, "Salsa"					, "Mild", 								UT.Fluids.make("mildsalsa", 250L), FoodStatFluid.INSTANCE );
@@ -541,6 +541,9 @@ public class RegisterItems {
 			RM.Bath.addRecipe1(true, 0L, 16L, QTI.turkeyWingRaw.get(1), UT.Fluids.make("hotfryingoil", 10), null, QTI.turkeyWingFried.get(1));
 			RM.Bath.addRecipe1(true, 0L, 16L, QTI.junglefowlLegRaw.get(1), UT.Fluids.make("hotfryingoil", 10), null, QTI.junglefowlLegFried.get(1));
 			RM.Bath.addRecipe1(true, 0L, 16L, QTI.junglefowlWingRaw.get(1), UT.Fluids.make("hotfryingoil", 10), null, QTI.junglefowlLegFried.get(1));
+
+			//sulphur feather
+			RM.Mortar.addRecipe1(true, 0L, 16L, make(44), OP.dustSmall.mat(MT.Gunpowder, 1));
 
 			//make sure turkey feathers can be quills too
 			CR.shapeless(ST.make(Items.writable_book, 1, 0), CR.DEF, new Object[]{ST.make(Items.book, 1, 0), "feather", "dyeBlack"});
