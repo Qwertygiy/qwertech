@@ -26,7 +26,6 @@ import com.kbi.qwertech.entities.neutral.EntityTurkey;
 import com.kbi.qwertech.entities.passive.EntityFrog;
 import com.kbi.qwertech.entities.projectile.*;
 import com.kbi.qwertech.loaders.RegisterSpecies;
-import com.kbi.qwertech.loaders.mod.WailaGeneticEntityHUD;
 import com.kbi.qwertech.tileentities.*;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -48,6 +47,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 
+import java.lang.reflect.Method;
 import java.util.*;
 
 public final class ClientProxy extends CommonProxy { // NO_UCD (unused code)
@@ -136,7 +136,10 @@ public final class ClientProxy extends CommonProxy { // NO_UCD (unused code)
 			if (MR != null)
 			{
 				try {
-					mcp.mobius.waila.api.impl.ModuleRegistrar.instance().registerBodyProvider(new WailaGeneticEntityHUD(), EntityLiving.class);
+					Object moduleRegistrar = MR.getMethod("instance").invoke(null);
+					Class entityProvider = Class.forName("mcp.mobius.waila.api.IWailaEntityProvider");
+					Method register = MR.getMethod("registerBodyProvider", entityProvider, Class.class);
+					register.invoke(moduleRegistrar, new com.kbi.qwertech.loaders.mod.WailaGeneticEntityHUD(), EntityLiving.class);
 				} catch (Exception e)
 				{
 					System.out.println("Error registering WAILA compatibility:");
