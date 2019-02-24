@@ -505,6 +505,9 @@ public class EntityPhasianidae extends EntityChicken implements IGeneticMob, GMI
         short maxSize = theSubtype.getMaxSize();
         short range = (short)(maxSize - minSize);
         ArrayList<ItemStack> secondaries = (ArrayList<ItemStack>)theSpecies.getTag(RegisterSpecies.DROP_SECONDARY);
+        if (secondaries != null && theSubtype.hasTag(RegisterSpecies.DROP_SECONDARY)) {
+            secondaries.addAll((ArrayList<ItemStack>) theSubtype.getTag(RegisterSpecies.DROP_SECONDARY));
+        }
         if (secondaries != null && !secondaries.isEmpty()) {
             ItemStack drop = secondaries.get(rand.nextInt(secondaries.size())).copy();
             drop.stackSize = getSize() < minSize + (range * 0.2) ? 1 : getSize() > maxSize - (range * 0.2) ? 3 : 2;

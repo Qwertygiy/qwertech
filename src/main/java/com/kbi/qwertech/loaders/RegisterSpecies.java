@@ -10,6 +10,7 @@ import com.kbi.qwertech.api.registry.MobSpeciesRegistry;
 import com.kbi.qwertech.entities.genetic.EntityPhasianidae;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import gregapi.util.ST;
 import gregapi.util.UT;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.EntityAIBase;
@@ -426,6 +427,14 @@ public class RegisterSpecies {
         setTextureDir(superChick, "qwertech:textures/entity/genetic/phasianidae/chicken_caped/super"); addLivingSound(superChick,"qwertech:mob.chicken.super", 1, 0.5F); addHurtSound(superChick, "mob.chicken.hurt", 1, 0.5F);
         superChick.addTag(ATTACK_ON_SIGHT, new Class[]{EntityMob.class}).addTag(ATTACK_ON_SPECIESORPLAYERHIT, new Class[]{Entity.class});
         chicken.setSubtype(12, superChick);
+
+        Subtype boom = new Subtype(chicken);
+        setPrimaryColors(boom, COLOR.make(255, 255, 255), COLOR.make(150, 150, 150)); setSecondaryColors(boom, COLOR.make(255, 100, 0), COLOR.make(255, 255, 0)); setEnglish(boom, "Silver Sulphurious"); setTranslate(boom, "qwertech.phasian.chicken.sulphurious");
+        boom.setFertility(10000, 12000, 30000)              .setMaturity(16000, 17000, 32000)       .setMutable(10, 200, 1500)      .setSize(700, 1100, 1600)   .setSmart(100, 3000, 8000).setSnarl(1000, 8000, 20000)    .setStamina(1000, 10000, 16000) .setStrength(500, 2500, 7500);
+        setTextureDir(boom, "qwertech:textures/entity/genetic/phasianidae/chicken_crested/bomb");addLivingSound(boom,"qwertech:mob.chicken.super", 0.8F, 0.5F); addHurtSound(boom, "mob.chicken.hurt", 0.8F, 0.5F);
+        addSecondaryDrop(boom, ST.make(feather.getItem(), 1, 44));
+        boom.addTag("f-e", 0.25F);
+        chicken.setSubtype(13, boom);
 
         Species redJunglefowl = new Species(EntityPhasianidae.class);
         setNesting(redJunglefowl);

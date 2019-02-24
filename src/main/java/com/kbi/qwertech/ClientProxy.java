@@ -188,6 +188,7 @@ public final class ClientProxy extends CommonProxy { // NO_UCD (unused code)
 			registerModel(EntityPhasianidae.class, 0, q, new ModelChickenTailed());
 		}
 		registerModel(EntityPhasianidae.class, 0, 12, new ModelSuperChicken());
+		registerModel(EntityPhasianidae.class, 0, 13, new ModelChickenCrested());
 
 		//red junglefowl
 		registerModel(EntityPhasianidae.class, 1, -1, new ModelWildChicken());
