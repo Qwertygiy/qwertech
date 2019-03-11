@@ -4,6 +4,7 @@ import com.kbi.qwertech.api.entities.IGeneticMob;
 import cpw.mods.fml.common.Optional;
 import gregapi.data.CS;
 import gregapi.data.LH;
+import mcp.mobius.waila.api.IWailaEntityProvider;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,7 +15,7 @@ import java.util.List;
 @Optional.InterfaceList(value = {
         @Optional.Interface(iface = "mcp.mobius.waila.api.IWailaEntityProvider", modid = CS.ModIDs.WAILA)
 })
-public class WailaGeneticEntityHUD implements mcp.mobius.waila.api.IWailaEntityProvider {
+public class WailaGeneticEntityHUD implements IWailaEntityProvider {
 
     String b = LH.Chat.ITALIC;
     String r = LH.Chat.RESET_TOOLTIP;
