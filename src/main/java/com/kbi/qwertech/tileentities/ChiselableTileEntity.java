@@ -11,6 +11,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.IBlockAccess;
 
 import static gregapi.data.CS.*;
 
@@ -56,7 +57,7 @@ public class ChiselableTileEntity extends PrefixBlockTileEntity {
 	}
 	
 	@Override public boolean renderItem(Block aBlock, RenderBlocks aRenderer) {return F;}
-	@Override public boolean renderBlock(Block aBlock, RenderBlocks aRenderer) {return F;}
+	@Override public boolean renderBlock(Block aBlock, RenderBlocks aRenderer, IBlockAccess aWorld, int aX, int aY, int aZ) {return F;}
 	@Override public boolean setBlockBounds(Block aBlock, int aRenderPass, boolean[] aShouldSideBeRendered) {return F;}
 	@Override public int getRenderPasses(Block aBlock, boolean[] aShouldSideBeRendered) {return 1;}
 	@Override public void readFromNBT(NBTTagCompound aNBT) {

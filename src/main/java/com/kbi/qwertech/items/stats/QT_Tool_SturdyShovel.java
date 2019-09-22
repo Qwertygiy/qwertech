@@ -1,23 +1,36 @@
 package com.kbi.qwertech.items.stats;
 
-import com.kbi.qwertech.entities.EntityHelperFunctions;
 import gregtech.items.tools.early.GT_Tool_Shovel;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
-import net.minecraftforge.event.world.BlockEvent;
-
-import java.util.List;
 
 public class QT_Tool_SturdyShovel extends GT_Tool_Shovel {
 	
-boolean LOCK = false;
+	boolean LOCK = false;
 	
 	public MovingObjectPosition MOP;
-	
+
+	@Override
+	public float getMaxDurabilityMultiplier()
+	{
+		return 2F;
+	}
+
+	@Override
+	public int getToolDamagePerBlockBreak()
+	{
+		return 75;
+	}
+
+	@Override
+	public int getToolDamagePerDropConversion()
+	{
+		return 75;
+	}
+
+	/*
 		public float breakCheck(EntityPlayer player, World world, int x, int y, int z, boolean doBreak)
 		{
 			Block aBlock = world.getBlock(x, y, z);
@@ -32,24 +45,6 @@ boolean LOCK = false;
 				return super.getMiningSpeed(aBlock, (byte)aMetadata);
 			}
 			return 0;
-		}
-		
-		@Override
-		public float getMaxDurabilityMultiplier()
-		{
-		    return 2F;
-		}
-		
-		@Override
-		public int getToolDamagePerBlockBreak()
-		{
-		    return 75;
-		}
-		
-		@Override
-		public int getToolDamagePerDropConversion()
-		{
-		    return 75;
 		}
 		
 		public void calculateSides(boolean[] pos, boolean[] loc)
@@ -157,13 +152,16 @@ boolean LOCK = false;
 			LOCK = false;
 			return returnable;
 		}
-		
+		*/
+
 		@Override
 		public float getMiningSpeed(Block aBlock, byte aMetaData, float aDefault, EntityPlayer aPlayer, World aWorld, int aX, int aY, int aZ)
 		{
+			/*
 			MOP = EntityHelperFunctions.getEntityLookTrace(aWorld, aPlayer, false, 5D);
 			float returnable = super.getMiningSpeed(aBlock, aMetaData, aDefault, aPlayer, aWorld, aX, aY, aZ);
 			returnable = returnable + checkBlocks(aPlayer, aX, aY, aZ, false);
-			return returnable/5;
+			return returnable/5;*/
+			return super.getMiningSpeed(aBlock, aMetaData, aDefault, aPlayer, aWorld, aX, aY, aZ) + 1;
 		}
 }
