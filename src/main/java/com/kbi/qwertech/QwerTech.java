@@ -337,7 +337,7 @@ public final class QwerTech extends Abstract_Mod {
 		shuriken.setLocalItemName("", " Shuriken");
 		shuriken.setCondition(HAS_TOOL_STATS);
 		shuriken.add(UNIFICATABLE, BURNABLE, RECYCLABLE, SCANNABLE).setStacksize(64,16).aspects(TC.TELUM, 2, TC.MOTUS, 1);
-		shuriken.setMaterialStats(OP.stick.mAmount * 4);
+		shuriken.setMaterialStats(OP.stick.mAmount);
 		
 		final OreDictPrefix link = OreDictPrefix.createPrefix("link");
 		link.setCategoryName("Links");
