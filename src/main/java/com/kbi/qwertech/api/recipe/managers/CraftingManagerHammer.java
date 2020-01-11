@@ -181,10 +181,13 @@ public class CraftingManagerHammer implements Runnable {
 					} else if (recipe instanceof ShapelessRecipes) {
 						ShapelessRecipes shrp = (ShapelessRecipes)recipe;
 						Object[] obs = shrp.recipeItems.toArray();
-						ShapelessOreRecipe shor = new ShapelessOreRecipe(shrp.getRecipeOutput(), obs);
-						oldRecipes.set(q, shor);
-						shapeless = shapeless + 1;
-						removelIt = replaceItems(q, shor, obs);
+						ItemStack op = shrp.getRecipeOutput();
+						if (op != null) {
+							ShapelessOreRecipe shor = new ShapelessOreRecipe(op, obs);
+							oldRecipes.set(q, shor);
+							shapeless = shapeless + 1;
+							removelIt = replaceItems(q, shor, obs);
+						}
 					}
 					if (removelIt) {
 						instance.addRecipe(recipe);

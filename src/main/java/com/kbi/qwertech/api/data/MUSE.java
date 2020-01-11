@@ -51,5 +51,9 @@ public class MUSE {
         addSong(new NOTE[]{A4, B4, C4, B4, A4, B4, C4, B4, A4, B4, C4, B4, C4, B4, C4, A4, B4, C4, B4, A4, B4, C4, B4, A4, B4, C4, B4, C4, B4, C4, C4, C4, C4, C4, C4, C4, B4, B4, B4, A4, G4, A4, C4, C4, C4, C4, C4, C4, C4, B4, B4, B4, A4, G4, A4});
         //Batman
         addSong(new NOTE[]{B4, B4, A$4, A$4, A4, A4, A$4, A$4, B4, B4, A$4, A$4, A4, A4, A$4, A$4, B3, B3, A$3, A$3});
+        //Frozen
+        addSong(new NOTE[]{B4, C4, A4, B4, C4, C4, B4, G3, C4, B4, A4, B4, G3, A4, B4, G3, E3, D3, /*end intro*/ D3, E3, E3, E3, E3, E3, E3, D3, C3, C3, C3, C3, D3, D3, C3, B3, A3, D3, E3, E3, E3, E3, A4, G3, E3, D3, C3, D3, E3, D3, C3, D3, E3, E3, G3, A4, G3, E3, G3, G3, G3, F3, E3, F3, E3, E3, E3, D3, C3, D3, D3, E3, D3, C3, A3, G2, G2, C3, C3, G2, G2, D3, D3, D3, C3, D3, D3, C3, D3, E3, F3, E3, E3, G2, G2, C3, C3, G2, G2, D3, D3, C3, D3, E3, F3, A3, B3, C3, G2, G2, D3, C3, A3, G2, A3, A3, B3, C3, A3, B3, C3, G2, E3, D3, C3, D3, E3, E3, F3, E3, D3, C3, G3, E3, D3, C3, C3, G3, E3, C3, C3, C3, B3, C3, G3, C3, F3, F3, E3, F3, E3, F3, F3, E3, C3});
+        //Phantom
+        addSong(new NOTE[]{A5, A5, G$4, G4, F$4, F4, F4, F$4, G4, G$4, A5, E4, A5, E4, G4, F4, F4, D4, G4, D4, E4, E4, A5, E4, G4, F4, F4, D4, G4, D4, E4, A4, A4, C4, E4, D4, D4, D4, G4, D4, E4, E4, A5, G4, F4, E4, D4, C4, B4, A4, G$3, F3, F3, E3, E3});
     }
 }
