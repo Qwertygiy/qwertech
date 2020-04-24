@@ -1,6 +1,7 @@
 package com.kbi.qwertech.api.data;
 
 import gregapi.code.ModData;
+import gregapi.data.ANY;
 import gregapi.data.MD;
 import gregapi.data.MT;
 import gregapi.oredict.OreDictMaterial;
@@ -35,7 +36,7 @@ public class WOOD {
 	Mossy	 			= 		makeWood(19, 	"Mossy"				, "Mossy",				MD.GT,		29, 	127, 	0, 		255		,"Moss"										),
 	Rainbowood 			= 		makeWood(20, 	"Rainbowood"		, "Rainbow Wood",		MD.GT,		200, 	64, 	245, 	255		,"Rainbowwood", "Rainbow Wood", "RainbowWood", "Rainbow"),
 	Rotten	 			= 		makeWood(21, 	"Rotten"			, "Rotten",				MD.GT,		22, 	44, 	15, 	255		,"Rotted","Decayed","Rotting"				),
-	Treated				=		copyWood(22, MT.WoodSealed),
+	Treated				=		copyWood(22, MT.WoodSealed).addReRegistrations(ANY.Wood, ANY.WoodTreated),
 	
 	Autumn 				= 		makeWood(30, 	"Autumn"			, "Autumn", 			MD.EBXL,	191, 	64, 	35, 	255		,"Fall"										),
 	BaldCypress			= 		makeWood(31, 	"BaldCypress"		, "Bald Cypress",		MD.EBXL,	195, 	183, 	171, 	255		,"Bald Cypress"								),
@@ -72,17 +73,17 @@ public class WOOD {
 	Wenge				= 		makeWood(63,	 "Wenge"			, "Wenge",				MD.FR,		88, 	81, 	70, 	255													),
 	Zebrawood			= 		makeWood(64,	 "Zebrawood"		, "Zebrawood",			MD.FR,		172, 	139, 	86, 	255		,"Zebra"									),
 	
-	Dark				= 		makeWood(70,	 "Dark"				, "Dark",				MD.BoP,		51, 	45, 	54, 	255		,"Darkwood","DarkWood"						),
-	Ethereal			= 		makeWood(71,	 "Ethereal"			, "Ethereal",			MD.BoP,		76, 	150, 	115, 	255													),
+	Dark				= 		makeWood(70,	 "Dark"				, "Dark",				MD.BoP,		51, 	45, 	54, 	255, false, true		,"Darkwood","DarkWood"						),
+	Ethereal			= 		makeWood(71,	 "Ethereal"			, "Ethereal",			MD.BoP,		76, 	150, 	115, 	255, false, true													),
 	Gold				= 		makeWood(72,	 "Gold"				, "Gold",				MD.BoP,		210, 	187, 	151, 	255		,"Golden"									),
-	HellBark			= 		makeWood(73,	 "Hellbark"			, "Hellbark",			MD.BoP,		200, 	150, 	100, 	255													),		
+	HellBark			= 		makeWood(73,	 "Hellbark"			, "Hellbark",			MD.BoP,		200, 	150, 	100, 	255, false, true													),
 	Jacaranda			= 		makeWood(74,	 "Jacaranda"		, "Jacaranda",			MD.BoP,		201, 	171, 	162, 	255													),
-	Magic				= 		makeWood(75,	 "Magic"			, "Magic",				MD.BoP,		90, 	105, 	180, 	255		,"Magical"									),
+	Magic				= 		makeWood(75,	 "Magic"			, "Magic",				MD.BoP,		90, 	105, 	180, 	255, false, true		,"Magical"									),
 	Mangrove			= 		makeWood(76,	 "Mangrove"			, "Mangrove",			MD.BoP,		236, 	228, 	217, 	255													),
 	SacredOak			= 		makeWood(77,	 "SacredOak"		, "SacredOak",			MD.BoP,		159, 	132, 	77, 	255		,"OakSacred","Sacred Oak"					),
 	
-	Greatwood			= 		makeWood(80,	 "Greatwood"		, "Greatwood",			MD.TC,		47, 	33, 	29, 	255		,"GreatWood","Great"						),
-	Silverwood			= 		makeWood(81,	 "Silverwood"		, "Silverwood",			MD.TC,		230, 	230, 	235, 	255		,"SilverWood","Silver"						),
+	Greatwood			= 		makeWood(80,	 "Greatwood"		, "Greatwood",			MD.TC,		47, 	33, 	29, 	255, false, true		,"GreatWood","Great"						),
+	Silverwood			= 		makeWood(81,	 "Silverwood"		, "Silverwood",			MD.TC,		230, 	230, 	235, 	255, false, true		,"SilverWood","Silver"						),
 	Alder				= 		makeWood(82,	 "Alder"			, "Alder",				MD.WTCH,	177, 	95, 	87, 	255													),
 	Hawthorn			= 		makeWood(83,	 "Hawthorn"			, "Hawthorn",			MD.WTCH,	188, 	182, 	178, 	255													),
 	Rowan				= 		makeWood(84,	 "Rowan"			, "Rowan",				MD.WTCH,	205, 	172, 	87, 	255													),
@@ -117,21 +118,21 @@ public class WOOD {
 	Whitebeam			= 		makeWood(117,	 "Whitebeam"		, "Whitebeam",		MD.BINNIE_TREE,	192, 	183, 	174, 	255		,"WhiteBeam"								),
 	Yew					= 		makeWood(118,	 "Yew"				, "Yew",			MD.BINNIE_TREE,	226, 	160, 	114, 	255													),
 	
-	Towerwood			= 		makeWood(120,	 "Towerwood"		, "Towerwood",			MD.TF,		166, 	101, 	58, 	255		,"Tower","TowerWood"						),
+	Towerwood			= 		makeWood(120,	 "Towerwood"		, "Towerwood",			MD.TF,		166, 	101, 	58, 	255, true, true		,"Tower","TowerWood"						),
 	
-	Witchwood			= 		makeWood(121,	 "Witchwood"		, "Witchwood",			MD.ARS,		118, 	112, 	142, 	255		,"Witch","WitchWood"						),
+	Witchwood			= 		makeWood(121,	 "Witchwood"		, "Witchwood",			MD.ARS,		118, 	112, 	142, 	255, false, true		,"Witch","WitchWood"						),
 	
-	Shimmerwood			= 		makeWood(122,	 "Shimmerwood"		, "Shimmerwood",		MD.BOTA,	255, 	0, 		0,	 	255		,"Shimmer","ShimmerWood"					),
+	Shimmerwood			= 		makeWood(122,	 "Shimmerwood"		, "Shimmerwood",		MD.BOTA,	255, 	0, 		0,	 	255, false, true		,"Shimmer","ShimmerWood"					),
 			
-	Bloodwood			= 		makeWood(125,	 "Bloodwood"		, "Bloodwood",			NAT,		151, 	38, 	23,	 	255		,"Blood","BloodWood"						),
-	Fusewood			= 		makeWood(126,	 "Fusewood"			, "Fusewood",			NAT,		81, 	117, 	111, 	255		,"Fuse","FuseWood"							),
-	Ghostwood			= 		makeWood(127,	 "Ghostwood"		, "Ghostwood",			NAT,		191, 	191, 	191, 	255		,"Ghost","GhostWood"						),
+	Bloodwood			= 		makeWood(125,	 "Bloodwood"		, "Bloodwood",			NAT,		151, 	38, 	23,	 	255, false, true		,"Blood","BloodWood"						),
+	Fusewood			= 		makeWood(126,	 "Fusewood"			, "Fusewood",			NAT,		81, 	117, 	111, 	255, false, true		,"Fuse","FuseWood"							),
+	Ghostwood			= 		makeWood(127,	 "Ghostwood"		, "Ghostwood",			NAT,		191, 	191, 	191, 	255, false, true		,"Ghost","GhostWood"						),
 	Hopseed				= 		makeWood(128,	 "Hopseed"			, "Hopseed",			NAT,		207, 	158, 	127, 	255													),
 	Silverbell			= 		makeWood(129,	 "Silverbell"		, "Silverbell",			NAT,		198, 	193, 	174, 	255													),
 	Tiger				= 		makeWood(130,	 "Tiger"			, "Tiger",				NAT,		164, 	98, 	0,	 	255		,"Tigerwood","TigerWood"					),
 	
-	Ogre				= 		makeWood(135,	 "Ogre"				, "Ogre",				MD.MoCr,	180, 	90, 	106,	255		,"Ogrewood","OgreWood"						),
-	Wyvern				= 		makeWood(136,	 "Wyvern"			, "Wyvern",				MD.MoCr,	90, 	180, 	72,		255		,"Wyvernwood","WyvernWood"					),
+	Ogre				= 		makeWood(135,	 "Ogre"				, "Ogre",				MD.MoCr,	180, 	90, 	106,	255, false, true		,"Ogrewood","OgreWood"						),
+	Wyvern				= 		makeWood(136,	 "Wyvern"			, "Wyvern",				MD.MoCr,	90, 	180, 	72,		255, false, true		,"Wyvernwood","WyvernWood"					),
 	
 	Aspen				= 		makeWood(140,	 "Aspen"			, "Aspen",				MD.TFC,		68, 	65, 	50,		255													),
 	DouglasFir			= 		makeWood(141,	 "DouglasFir"		, "Douglas Fir",		MD.TFC,		249, 	197, 	154,	255		,"Douglas Fir","Douglasfir"					),
@@ -157,13 +158,27 @@ public class WOOD {
 
 	public static OreDictMaterial makeWood(int ID, String oreName, String local, ModData originalMod, int red, int green, int blue, int alpha, String... identicalNames)
 	{
+		return makeWood(ID, oreName, local, originalMod, red, green, blue, alpha, true, false, identicalNames);
+	}
+
+	public static OreDictMaterial makeWood(int ID, String oreName, String local, ModData originalMod, int red, int green, int blue, int alpha, boolean untreated, boolean magical, String... identicalNames)
+	{
 		for (int q = 0; q < identicalNames.length; q++)
 		{
 			identicalNames[q] = "Wood" + identicalNames[q];
 		}
-		OreDictMaterial returnable = OreDictMaterial.createMaterial(-1, "Wood" + oreName, local).steal(MT.Wood).setOriginalMod(originalMod).setRGBa(red, green, blue, alpha).addIdenticalNames(identicalNames);
+		OreDictMaterial returnable = OreDictMaterial.createMaterial(-1, "Wood" + oreName, local).steal(MT.Wood).setOriginalMod(originalMod).setRGBa(red, green, blue, alpha).addIdenticalNames(identicalNames).addReRegistrations(ANY.Wood);
 		woodList[ID] = returnable;
 		woodMap.put("Wood" + oreName, ID);
+		if (untreated && !magical) {
+			returnable.addReRegistrations(ANY.Wood, ANY.WoodDefault, ANY.WoodUntreated, ANY.WoodNormal);
+		} else if (untreated) {
+			returnable.addReRegistrations(ANY.Wood, ANY.WoodUntreated, ANY.WoodMagical);
+		} else if (magical) {
+			returnable.addReRegistrations(ANY.Wood, ANY.WoodTreated, ANY.WoodMagical);
+		} else {
+			returnable.addReRegistrations(ANY.Wood, ANY.WoodTreated);
+		}
 		return returnable;
 	}
 	
